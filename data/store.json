@@ -38,6 +38,29 @@
   },
   "reviews": [
     {
+      "id": "rev-1792746685531",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_3r2btr",
+      "reviewerName": "Amit Saxena",
+      "rating": 5,
+      "text": "Superb clinic! Root canal was completely painless.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792746685565",
+        "reviewId": "rev-1792746685531",
+        "draftText": "Thank you so much Amit Saxena for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Amit Saxena for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
       "id": "rev-1792737826641",
       "locationId": "loc-01",
       "googleReviewId": "gbp_gsa0rp",
