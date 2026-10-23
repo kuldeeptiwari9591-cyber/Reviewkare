@@ -19,28 +19,28 @@ function renderLoginPage(query = {}) {
           <span class="font-heading font-black text-2xl tracking-tight text-slate-900">Replyo</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          Sign in to Clinic Autopilot
+          Sign in to Replyo Enterprise OS
         </h1>
         <p class="mt-2 text-xs text-slate-500 font-medium">
-          Access your Google Business Profile review automation & staff leaderboard.
+          Manage Google Business reviews, frontline staff attribution & in-store QR flows across your locations.
         </p>
       </div>
 
-      <!-- Quick 1-Click Demo Account Card -->
-      <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50/80 to-emerald-100/60 border border-brand-200/80 shadow-sm">
+      <!-- Quick 1-Click Multi-Vertical Demo Account Card -->
+      <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-indigo-50/60 border border-brand-200 shadow-sm">
         <div class="flex items-start justify-between gap-3">
           <div class="space-y-1">
-            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-brand-600 text-white text-[10px] font-bold tracking-wide uppercase">
-              ${getSvgIcon('sparkles', 'w-3 h-3')} 1-Click Instant Demo
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-brand-600 text-white text-[10px] font-bold tracking-wide uppercase font-mono">
+              ${getSvgIcon('sparkles', 'w-3 h-3')} 1-Click Multi-Vertical Demo
             </div>
-            <h2 class="text-xs font-bold text-slate-900">Dr. Sharma Dental & Implant Clinic</h2>
+            <h2 class="text-xs font-bold text-slate-900">Dr. Sharma Dental, The Roastery Cafe, Bounce Salon & IronVault Gym</h2>
             <p class="text-[11px] text-slate-600 leading-relaxed">
-              Explore the live executive dashboard with 8 real patient reviews, multi-branch Indiranagar clinic, and 4 staff members.
+              Explore the live executive dashboard with 4 multi-vertical businesses, real-world reviews, and frontline staff leaderboards.
             </p>
           </div>
         </div>
         <button type="button" onclick="fillDemoAndLogin()" class="mt-3 w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-          <span>Enter as Dr. Sharma (Demo Mode)</span>
+          <span>Enter Live Workspace (Instant 1-Click)</span>
           ${getSvgIcon('arrowRight', 'w-4 h-4')}
         </button>
       </div>
@@ -237,30 +237,31 @@ function renderSignupPage() {
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="clinicName" class="block text-xs font-bold text-slate-700 mb-1">
-                Clinic / Salon / Brand Name
+                Business / Clinic / Brand Name
               </label>
               <input 
                 id="clinicName" 
                 type="text" 
                 required 
-                placeholder="Apex Dental Care" 
+                placeholder="Dr. Sharma Dental, Roastery Cafe, or Bounce Salon" 
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
               />
             </div>
             <div>
               <label for="industrySelect" class="block text-xs font-bold text-slate-700 mb-1">
-                Specialty Category
+                Industry Specialty
               </label>
               <select 
                 id="industrySelect" 
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none bg-white"
               >
                 <option value="dental">Dental & Implant Clinic</option>
-                <option value="derma">Dermatology & Aesthetics</option>
-                <option value="salon">Salon & Luxury Spa</option>
-                <option value="ortho">Orthopedic & Physiotherapy</option>
-                <option value="restaurant">Fine Dining & Cafe</option>
-                <option value="other">Other Healthcare Service</option>
+                <option value="derma">Dermatology, Trichology & Aesthetics</option>
+                <option value="cafe">Specialty Cafe, Bakery & Bistro</option>
+                <option value="restaurant">Fine Dining, Bar & Restobar</option>
+                <option value="salon">Hair Studio & Luxury Spa</option>
+                <option value="gym">Gym, CrossFit & Athletic Club</option>
+                <option value="coaching">Coaching & Academic Institute</option>
               </select>
             </div>
           </div>

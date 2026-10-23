@@ -253,10 +253,12 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/simulate-review' && method === 'POST') {
       const store = getStore();
       const samples = [
-        { reviewerName: 'Vikram Sengupta', rating: 5, text: 'Had a severe toothache on Sunday morning. Dr. Sharma did a painless root canal and Dr. Sneha was so gentle. The Indiranagar clinic is sparkling clean and modern!' },
-        { reviewerName: 'Meera Krishnan', rating: 5, text: 'Best dental clinic in Bangalore for teeth aligners! The staff and Nurse Preeti explained everything with so much patience.' },
-        { reviewerName: 'Rajesh Gokhale', rating: 1, text: 'Waited 35 mins despite booking a 4 PM slot on 100ft road. Receptionist Kavita did not inform us about the delay.' },
-        { reviewerName: 'Deepa Hegde', rating: 5, text: 'Bohot acha treatment tha! Dr. Sharma ne dar bilkul nikal diya. Clinic ka ambience 5 star jaisa hai.' }
+        { reviewerName: 'Vikramaditya Sengupta', rating: 5, text: 'Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!' },
+        { reviewerName: 'Ananya Roy', rating: 5, text: 'Best pour-over coffee in Indiranagar! Barista Shreyas recommended the light-roast Ethiopian beans and explained the flavor notes so well. Fresh sourdough croissants!' },
+        { reviewerName: 'Tanvi Kapur', rating: 5, text: 'Got my balayage done with Master Stylist Farhan at Bounce Lavelle Road. He understood the exact ash tone I wanted. Heavenly scalp massage!' },
+        { reviewerName: 'Rohan Deshmukh', rating: 5, text: 'IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!' },
+        { reviewerName: 'Rajesh Gokhale', rating: 1, text: 'Waited 35 mins despite booking a 4 PM slot on 100ft road. Receptionist did not inform us about the delay.' },
+        { reviewerName: 'Deepa Hegde', rating: 5, text: 'Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai.' }
       ];
       const pick = samples[Math.floor(Math.random() * samples.length)];
       const newReview = {
@@ -339,11 +341,19 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/branch/switch' && method === 'POST') {
       const body = await parseJsonBody(req);
       const store = getStore();
-      const branch = (store.branches || []).find(b => b.id === body.branchId);
-      if (branch) {
-        store.location.name = branch.name;
-        store.location.area = branch.area;
-        store.location.city = branch.city;
+      const target = (store.businesses || []).find(b => b.id === body.branchId) || (store.branches || []).find(b => b.id === body.branchId);
+      if (target) {
+        store.activeBusinessId = target.id;
+        store.location.id = target.id;
+        store.location.name = target.name;
+        store.location.area = target.area;
+        store.location.city = target.city;
+        store.location.vertical = target.vertical || 'clinic';
+        store.location.rating = target.rating || 4.9;
+        store.location.reviewsCount = target.reviewsCount || 143;
+        store.location.phone = target.phone || store.location.phone;
+        store.location.managerPhone = target.managerPhone || store.location.managerPhone;
+        store.location.defaultKeywords = target.topKeywords || store.location.defaultKeywords;
         saveStore(store);
       }
       return sendJson(200, { success: true, location: store.location });

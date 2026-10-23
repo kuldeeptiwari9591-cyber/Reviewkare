@@ -1,22 +1,11 @@
-// Master Swiss Minimalist Homepage with 3D/2.5D Interactive Visuals & High-Trust Proof
+// Master Swiss Minimalist Multi-Vertical Homepage with 3D Visuals & Feature-First Depth
 const { getSvgIcon, getStarRatingSvg } = require('./icons.js');
 
 function renderHomePage(store) {
   return `
   <!-- Ambient 3D Interactive Particle Background Canvas -->
-  <div class="relative overflow-hidden bg-white">
+  <div class="relative overflow-hidden bg-white border-b border-slate-200">
     <canvas id="heroParticles" class="absolute inset-0 pointer-events-none opacity-40 z-0" aria-hidden="true"></canvas>
-
-    <!-- Top Announcement Bar -->
-    <div class="relative z-10 bg-slate-900 text-white text-[11px] font-medium py-2 px-4 text-center border-b border-slate-800">
-      <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 font-bold uppercase tracking-wider text-[10px]">
-          NEW FOR 2026
-        </span>
-        <span>India DPDP Act 2023 & NMC Compliant Review Autopilot for Healthcare & Salons</span>
-        <a href="/security" class="font-bold text-brand-400 hover:text-brand-300 underline ml-1">Read Security Whitepaper &rarr;</a>
-      </div>
-    </div>
 
     <!-- Hero Section -->
     <section class="relative z-10 pt-12 pb-16 sm:pt-20 sm:pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,106 +14,106 @@ function renderHomePage(store) {
         <!-- Left Hero Copy -->
         <div class="lg:col-span-7 space-y-6 text-left">
           
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Trusted by 140+ Clinics & Salons in Bengaluru, Mumbai & Delhi NCR</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+            <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
+            <span>Operating Across Clinics, Dining, Salons & Gyms in Metro India</span>
           </div>
 
-          <h1 class="text-4xl sm:text-6xl font-black text-slate-950 font-heading tracking-tight leading-[1.1]" style="text-wrap: balance;">
-            Dominate Google 3-Pack with Autonomous Review AI.
+          <h1 class="text-4xl sm:text-6xl font-black text-slate-950 font-heading tracking-tight leading-[1.08]" style="text-wrap: balance;">
+            Autonomous Google Review OS for High-Touch Local Businesses.
           </h1>
 
           <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
-            Turn every in-clinic patient visit into a 5-star Google review in 30 seconds. Replyo automatically replies to 5★ reviews with local SEO keywords in 4 minutes, and quarantines negative reviews for 1-tap WhatsApp owner approval.
+            Turn every customer visit into an authentic 5-star Google review in 30 seconds. Replyo automatically mirrors customer dialect in 4 minutes with local search keywords, quarantines negative feedback for 1-tap manager resolution, and attributes reviews to frontline staff.
           </p>
 
-          <!-- Primary Call to Actions -->
+          <!-- Primary Call to Actions (No cheap sales hype) -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-            <a href="/login?demo=true" class="min-h-[48px] px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-              <span>Explore Live Clinic Demo (1-Click)</span>
-              ${getSvgIcon('arrowRight', 'w-4 h-4')}
+            <a href="/login?demo=true" class="min-h-[48px] px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <span>Explore Multi-Vertical Demo (1-Click)</span>
+              ${getSvgIcon('arrowRight', 'w-4 h-4 text-white')}
             </a>
             <a href="/free-audit" class="min-h-[48px] px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs sm:text-sm border border-slate-300 shadow-sm transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
               ${getSvgIcon('search', 'w-4 h-4 text-brand-600')}
-              <span>Audit My Google 3-Pack Rank</span>
+              <span>Audit My Local 3-Pack Rank</span>
             </a>
           </div>
 
-          <!-- Proof Metrics Bar -->
+          <!-- Architecture Metric Pillars -->
           <div class="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-left">
             <div>
               <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">4 Mins</div>
-              <div class="text-[11px] text-slate-500 font-medium">Autopilot Reply Jitter</div>
+              <div class="text-[11px] text-slate-500 font-medium">Neural Autopilot Reply Velocity</div>
             </div>
             <div>
-              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">0%</div>
-              <div class="text-[11px] text-slate-500 font-medium">Legal Fault Admitted</div>
+              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">&lt;85 KB</div>
+              <div class="text-[11px] text-slate-500 font-medium">Zero-App In-Store QR Payload</div>
             </div>
             <div>
-              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">22.4%</div>
-              <div class="text-[11px] text-slate-500 font-medium">In-Clinic QR Scan-to-Review</div>
+              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">1-Tap</div>
+              <div class="text-[11px] text-slate-500 font-medium">Quarantined Complaint Approval</div>
             </div>
           </div>
 
         </div>
 
-        <!-- Right 3D Interactive QR Counter Stand Preview -->
+        <!-- Right 3D Interactive Countertop Stand Preview -->
         <div class="lg:col-span-5 flex flex-col items-center">
           
           <!-- 3D Perspective Card Container -->
-          <div id="stand3D" class="w-full max-w-sm rounded-3xl p-6 transition-all duration-200 card-3d relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white shadow-2xl border border-slate-800" style="perspective: 1000px;">
+          <div id="stand3D" class="w-full max-w-sm rounded-3xl p-6 transition-all duration-300 card-3d relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white shadow-2xl border border-slate-800" style="perspective: 1000px;">
             
             <div class="flex items-center justify-between pb-4 border-b border-white/10">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-brand-400"></span>
-                <span id="materialBadge" class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Frosted Cast Acrylic</span>
+                <span id="materialBadge" class="text-[10px] font-bold uppercase tracking-wider text-slate-300 font-mono">Frosted Cast Acrylic</span>
               </div>
-              <span class="text-[10px] text-slate-400 font-mono">NFC + QR ENABLED</span>
+              <span class="text-[10px] text-slate-400 font-mono">NFC + QR EMBEDDED</span>
             </div>
 
-            <!-- Clinic Brand Lockup -->
+            <!-- Business Lockup -->
             <div class="text-center py-6 space-y-2">
-              <div class="text-xs uppercase tracking-widest font-bold text-brand-400">Dr. Sharma Dental & Implant Clinic</div>
-              <h2 class="text-lg font-black font-heading text-white">How was your visit today?</h2>
-              <p class="text-[11px] text-slate-300">Tap your phone or scan below • No app download required</p>
+              <div id="standBizName" class="text-xs uppercase tracking-widest font-bold text-brand-400">Dr. Sharma Dental & Implant Clinic</div>
+              <h2 id="standTitle" class="text-lg font-black font-heading text-white">How was your visit today?</h2>
+              <p id="standSub" class="text-[11px] text-slate-300">Tap your phone or scan below • No app download required</p>
             </div>
 
             <!-- QR Target Mockup with 2.5D Glow -->
             <div class="bg-white p-4 rounded-2xl shadow-inner max-w-[180px] mx-auto text-slate-900 text-center space-y-2">
-              <div class="w-32 h-32 mx-auto bg-slate-950 rounded-xl p-2.5 flex flex-col items-center justify-between">
+              <div class="w-32 h-32 mx-auto bg-dark-950 rounded-xl p-2.5 flex flex-col items-center justify-between">
                 <div class="flex justify-between w-full">
                   <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
                   <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
                 </div>
-                <div class="text-[9px] font-black text-brand-400 tracking-tighter">REPLYO AI</div>
+                <div class="text-[9px] font-black text-brand-400 tracking-tighter font-mono">REPLYO 2.4</div>
                 <div class="flex justify-between w-full">
                   <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
                   <div class="w-2 h-2 bg-brand-400 rounded-full"></div>
                 </div>
               </div>
-              <div class="text-[10px] font-bold text-slate-800">Scan for 30-sec Google Review</div>
+              <div id="standPromptText" class="text-[10px] font-bold text-slate-800">Scan for 30-sec Google Review</div>
             </div>
 
             <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
-              <span>Indiranagar 100ft Rd</span>
-              <span class="text-amber-400 font-bold">4.9 ★★★★★ (143)</span>
+              <span id="standLocText">Indiranagar 100ft Rd</span>
+              <span id="standRatingText" class="text-amber-400 font-bold">4.9 ★★★★★ (143)</span>
             </div>
 
           </div>
 
-          <!-- Material Switcher Controls -->
+          <!-- Stand Material Switcher -->
           <div class="mt-4 flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
             <button type="button" onclick="setMaterial('acrylic')" class="mat-btn active px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all bg-white text-slate-900 shadow-sm">
-              Frosted Acrylic
+              Cast Acrylic
             </button>
             <button type="button" onclick="setMaterial('gold')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
-              Brushed Gold
+              Champagne Gold
             </button>
             <button type="button" onclick="setMaterial('walnut')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
-              Matte Walnut
+              Solid Walnut
             </button>
             <button type="button" onclick="setMaterial('obsidian')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
-              Ceramic Black
+              Obsidian Black
             </button>
           </div>
 
@@ -134,337 +123,279 @@ function renderHomePage(store) {
     </section>
   </div>
 
-  <!-- Real-Time Interactive Google 3-Pack Simulator -->
-  <section class="py-16 bg-slate-50 border-t border-b border-slate-200">
+  <!-- MULTI-VERTICAL INTERACTIVE WORKSPACE SELECTOR -->
+  <section class="py-16 bg-slate-50 border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       
       <div class="text-center max-w-3xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-900 text-xs font-bold uppercase tracking-wider">
-          ${getSvgIcon('localPack', 'w-4 h-4 text-brand-700')} Google Maps Algorithm Decoded
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold uppercase tracking-wider font-mono">
+          ${getSvgIcon('sparkles', 'w-4 h-4 text-brand-600')} Multi-Vertical Engineering
         </div>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          Why #1 Local 3-Pack Rank Captures 48% of All New Patients
+          One Operating System. Tailored In-Store Workflows.
         </h2>
         <p class="text-slate-600 text-sm">
-          When a patient in Indiranagar or Koramangala searches <em>“best dental clinic near me”</em>, Google highlights only the top 3 businesses based on reply speed, keyword density, and review freshness.
+          Select an industry below to see how Replyo adapts its 30-second customer choices, frontline staff attribution, and Google Local 3-Pack keyword engine.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        
-        <!-- Live Toggle Widget -->
-        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d space-y-6">
-          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-            <span class="text-xs font-bold text-slate-700">Google Local 3-Pack Simulation: Bengaluru</span>
-            <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-xl text-xs font-bold">
-              <button type="button" id="btnBefore" onclick="toggleSimState(false)" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Without Replyo</button>
-              <button type="button" id="btnAfter" onclick="toggleSimState(true)" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm">With Replyo Autopilot</button>
-            </div>
-          </div>
+      <!-- Vertical Tabs -->
+      <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+        <button type="button" onclick="selectVertical('clinic')" class="vert-tab active px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-dark-950 text-white shadow-sm" id="tab-clinic">
+          ${getSvgIcon('clinic', 'w-4 h-4 text-brand-400')}
+          <span>Clinics & Healthcare</span>
+        </button>
+        <button type="button" onclick="selectVertical('cafe')" class="vert-tab px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50" id="tab-cafe">
+          ${getSvgIcon('coffee', 'w-4 h-4 text-amber-600')}
+          <span>Cafes & Bakeries</span>
+        </button>
+        <button type="button" onclick="selectVertical('salon')" class="vert-tab px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50" id="tab-salon">
+          ${getSvgIcon('scissors', 'w-4 h-4 text-purple-600')}
+          <span>Salons & Luxury Spas</span>
+        </button>
+        <button type="button" onclick="selectVertical('gym')" class="vert-tab px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50" id="tab-gym">
+          ${getSvgIcon('dumbbell', 'w-4 h-4 text-emerald-600')}
+          <span>Gyms & Fitness Hubs</span>
+        </button>
+      </div>
 
-          <!-- The Dynamic SERP Card -->
-          <div id="simClinicCard" class="p-5 rounded-2xl border-2 transition-all duration-300 bg-emerald-50/50 border-emerald-500 shadow-sm space-y-2">
-            <div class="flex items-center justify-between">
-              <h3 id="simClinicName" class="text-base font-extrabold text-slate-900 font-heading">Dr. Sharma Dental & Implant Clinic</h3>
-              <span id="simRankBadge" class="px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white">Rank #1 in 3-Pack</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs">
-              <span id="simRating" class="font-bold text-amber-500">4.9 ★★★★★</span>
-              <span id="simCount" class="text-slate-500 font-medium">(143 reviews)</span>
-              <span class="text-slate-300">•</span>
-              <span class="text-slate-600">Indiranagar 100ft Rd</span>
-            </div>
-            <p id="simSnippet" class="text-xs text-slate-600 leading-relaxed">
-              “Dr. Sharma explained the dental implant clearly. Anesthesia was painless and clinic hygiene is 10/10.”
-            </p>
-            <div id="simTags" class="pt-2 flex flex-wrap gap-2 text-[11px] font-medium text-emerald-800">
-              <span class="bg-white/80 px-2 py-0.5 rounded border border-emerald-200">Autopilot Reply: 3.8 mins</span>
-              <span class="bg-white/80 px-2 py-0.5 rounded border border-emerald-200">Local SEO Keywords: Root Canal, Dental Implants</span>
-            </div>
-          </div>
-
-          <!-- Secondary Competitors -->
-          <div class="space-y-2 opacity-75">
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-700">Apollo Dental Indiranagar (4.4★, 89 reviews)</span>
-              <span class="text-slate-500">Rank #2 • Reply delay: 4 days</span>
-            </div>
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-700">Clove Dental Indiranagar (4.3★, 112 reviews)</span>
-              <span class="text-slate-500">Rank #3 • Reply delay: 8 days</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Calculated Financial Impact Box -->
-        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d space-y-6">
-          <h3 class="text-base font-bold text-slate-900 font-heading">Calculated Organic Patient Growth</h3>
+      <!-- Live Dynamic Workflow Preview Card -->
+      <div id="verticalContent" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm card-3d">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <div class="space-y-4">
-            <div>
-              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                <span>Monthly In-Clinic Patients</span>
-                <span id="calcPatientVal" class="text-brand-600">350 Patients</span>
-              </div>
-              <input type="range" id="calcSlider" min="100" max="1200" step="50" value="350" oninput="updateCalculator(this.value)" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+          <!-- Column 1: Customer In-Store Mobile Experience (Step 1 & 2) -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-900 font-heading">1. Customer In-Store 30-Sec Selection Screen</span>
+              <span id="vertTouchpointBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-50 text-brand-700 font-bold">Billing Counter Stand</span>
             </div>
-
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-slate-600">Traditional Review Intake (1.5%):</span>
-                <span id="calcTradReviews" class="font-bold text-slate-900">5 reviews / mo</span>
+            
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 text-xs">
+              <div>
+                <span class="text-[11px] font-bold text-slate-500 uppercase">Selected Services / Menu Items</span>
+                <div id="vertTagPills" class="flex flex-wrap gap-1.5 mt-1">
+                  <span class="px-2.5 py-1 rounded-lg bg-brand-600 text-white font-semibold">Rotary Root Canal</span>
+                  <span class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">Digital X-Ray</span>
+                  <span class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">Painless Anesthesia</span>
+                </div>
               </div>
-              <div class="flex justify-between text-brand-700 font-bold">
-                <span>With Replyo QR Flow (22%):</span>
-                <span id="calcReplyoReviews" class="font-extrabold text-brand-600">77 reviews / mo (+15x)</span>
-              </div>
-            </div>
 
-            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1">
-              <div class="text-[11px] font-bold text-emerald-950 uppercase">Projected Extra Monthly Revenue</div>
-              <div id="calcRevenueLift" class="text-2xl font-black text-emerald-700 font-heading tabular-nums">₹1,85,000 / mo</div>
-              <p class="text-[11px] text-emerald-800">Derived from 37 extra organic OPD bookings at ₹5,000 avg ticket.</p>
+              <div>
+                <span class="text-[11px] font-bold text-slate-500 uppercase">Frontline Staff Attributed</span>
+                <div id="vertStaffName" class="text-xs font-bold text-slate-900 mt-0.5 flex items-center gap-1.5">
+                  ${getSvgIcon('staff', 'w-3.5 h-3.5 text-brand-600')}
+                  <span>Dr. Sneha Kulkarni (Senior Endodontist)</span>
+                </div>
+              </div>
+
+              <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                <span class="text-[10px] font-bold text-brand-700 uppercase font-mono">Synthesized Customer Review Draft:</span>
+                <p id="vertReviewDraft" class="text-xs text-slate-800 italic leading-relaxed">
+                  “Visited Dr. Sharma Dental Clinic for a root canal. Experience bohot painless aur gentle tha. Special mention to Dr. Sneha Kulkarni for being extremely patient. Clinic hygiene is 10/10!”
+                </p>
+              </div>
             </div>
           </div>
 
-          <a href="/pricing" class="w-full min-h-[44px] flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">
-            <span>View UPI & GST Subscription Plans &rarr;</span>
-          </a>
-        </div>
+          <!-- Column 2: Autopilot 4-Min Response & Local SEO Mirroring (Step 3 & 4) -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-900 font-heading">2. Neural Autopilot 4-Minute SEO Response</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold">Auto-Posted to Google</span>
+            </div>
 
+            <div class="p-4 bg-emerald-50/40 rounded-2xl border border-emerald-200 space-y-3 text-xs">
+              <div class="flex justify-between items-center text-[11px]">
+                <span id="vertBizHeader" class="font-bold text-emerald-950 font-heading">Dr. Sharma Dental & Implant Clinic</span>
+                <span class="text-slate-500 font-mono">Response Time: 3.8 mins</span>
+              </div>
+
+              <p id="vertAutopilotReply" class="text-xs text-slate-800 leading-relaxed">
+                “Namaste! Thank you so much for your kind words. Dr. Sneha Kulkarni and our team are delighted that your root canal treatment in Indiranagar was completely comfortable. Ensuring clinical sterility and painless procedures is our priority. See you for your routine checkup!”
+              </p>
+
+              <div class="pt-2 border-t border-emerald-100 flex flex-wrap gap-2 text-[10px] font-mono text-emerald-800">
+                <span class="bg-white/80 px-2 py-0.5 rounded border border-emerald-200">✓ Dialect: Hinglish Mirrored</span>
+                <span id="vertKeywordsTag" class="bg-white/80 px-2 py-0.5 rounded border border-emerald-200">✓ Local SEO: "root canal treatment in Indiranagar"</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+              <span class="text-slate-600">Frontline Attribution Incentive Disbursed:</span>
+              <strong id="vertIncentiveTag" class="text-brand-600 font-bold tabular-nums">₹200 to Dr. Sneha’s Ledger</strong>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- How It Works: 4-Step Engineering Architecture -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+  <!-- 6 CORE ARCHITECTURAL CAPABILITIES (Depth, Zero Hype) -->
+  <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    
     <div class="text-center max-w-3xl mx-auto space-y-3">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider">
-        End-to-End Workflow
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider font-mono">
+        Platform Architecture
       </div>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-        From In-Clinic Visit to 5-Star SEO Reply in 4 Minutes
+        Engineered for Compliance, Speed & Organic Google Rank
       </h2>
       <p class="text-slate-600 text-sm">
-        Zero login barrier for patients. Zero manual writing for clinic doctors. Zero legal liability risk.
+        Every component is designed to solve real operational bottlenecks across multi-location consumer businesses.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-3">
-        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 font-black flex items-center justify-center">1</div>
-        <h3 class="font-bold text-sm text-slate-900 font-heading">30-Sec In-Clinic QR</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          Patient scans the acrylic stand at checkout. The <100KB page loads instantly. They tap service tags (e.g. "Root Canal", "Dr. Sneha", "Painless").
-        </p>
-      </div>
-
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-3">
-        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 font-black flex items-center justify-center">2</div>
-        <h3 class="font-bold text-sm text-slate-900 font-heading">AI Review Synthesis</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          The natural language engine turns choices into an authentic patient paragraph, copies it to their clipboard, and launches Google Maps in 1 tap.
-        </p>
-      </div>
-
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-3">
-        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 font-black flex items-center justify-center">3</div>
-        <h3 class="font-bold text-sm text-slate-900 font-heading">4-Min Autopilot Reply</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          When the 5★ review hits Google, Replyo detects the language/dialect (Hindi, Hinglish, English) and auto-posts an SEO-optimized response in 4 minutes.
-        </p>
-      </div>
-
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 font-black flex items-center justify-center">4</div>
-        <h3 class="font-bold text-sm text-slate-900 font-heading">1-Tap Owner Shield</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          If a 1-3★ review appears, it is quarantined immediately. A WhatsApp alert sends a zero-liability de-escalation draft for 1-tap doctor approval.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Clinic Case Studies & Real Results -->
-  <section class="py-16 bg-slate-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       
-      <div class="text-center max-w-2xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 text-xs font-bold uppercase tracking-wider">
-          Clinically Verified Impact
+      <!-- Feature 1: Multi-Dialect Neural Mirroring -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center">
+          ${getSvgIcon('globe', 'w-6 h-6')}
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
-          Real Bengaluru Clinics. Real 3-Pack Growth.
-        </h2>
-        <p class="text-slate-400 text-xs sm:text-sm">
-          Verified metrics from flagship multi-chair healthcare practices.
+        <h3 class="text-lg font-bold text-slate-900 font-heading">Neural Multi-Dialect Mirroring</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Google reviews in Indian metros span colloquial Hinglish, Devanagari Hindi, Tamil, Telugu, Kannada, and English. Replyo detects nuances, mirroring the customer’s exact warmth and vocabulary.
         </p>
+        <div class="pt-2 text-[11px] font-bold text-brand-600 font-mono">
+          Devanagari • Hinglish • Tamil • Telugu • Kannada
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 space-y-4 card-3d">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-bold text-sm text-white">Dr. Sharma Dental</h3>
-              <p class="text-[11px] text-slate-400">Indiranagar, Bengaluru</p>
-            </div>
-            <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs">#1 3-Pack</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-center py-2 bg-slate-900/60 rounded-xl">
-            <div>
-              <div class="text-xs text-slate-400">Reviews</div>
-              <div class="text-lg font-black text-white font-heading">34 &rarr; 143</div>
-            </div>
-            <div>
-              <div class="text-xs text-slate-400">Google Rating</div>
-              <div class="text-lg font-black text-amber-400 font-heading">4.2 &rarr; 4.9★</div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-300 italic leading-relaxed">
-            “Replyo solved our biggest problem: our happy patients never reviewed us while occasional complainers did. The QR flow transformed our walk-in volume.”
-          </p>
-          <div class="text-[11px] font-bold text-brand-400">— Dr. Ananya Sharma, Chief Implantologist</div>
+      <!-- Feature 2: 30-Sec In-Store QR Journey -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          ${getSvgIcon('smartphone', 'w-6 h-6')}
         </div>
-
-        <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 space-y-4 card-3d">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-bold text-sm text-white">Aura Skin & Laser</h3>
-              <p class="text-[11px] text-slate-400">Koramangala 4th Block</p>
-            </div>
-            <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs">#1 3-Pack</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-center py-2 bg-slate-900/60 rounded-xl">
-            <div>
-              <div class="text-xs text-slate-400">Reviews</div>
-              <div class="text-lg font-black text-white font-heading">61 &rarr; 218</div>
-            </div>
-            <div>
-              <div class="text-xs text-slate-400">Google Rating</div>
-              <div class="text-lg font-black text-amber-400 font-heading">4.1 &rarr; 4.8★</div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-300 italic leading-relaxed">
-            “The Hinglish dialect matching is magical. Patients write naturally, and Replyo responds with the exact same warmth and local aesthetic keywords.”
-          </p>
-          <div class="text-[11px] font-bold text-brand-400">— Dr. Vikram Rao, Consulting Dermatologist</div>
+        <h3 class="text-lg font-bold text-slate-900 font-heading">30-Second Zero-App In-Store Flow</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Patients or diners scan your countertop acrylic or wood stand. Loads in &lt;85KB with zero login. Customers tap services, quality, and staff. An authentic paragraph is generated for 1-tap Google Maps copy.
+        </p>
+        <div class="pt-2 text-[11px] font-bold text-amber-700 font-mono">
+          22.4% Scan-to-Review Conversion (Vs 1.5% Industry Avg)
         </div>
+      </div>
 
-        <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 space-y-4 card-3d">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-bold text-sm text-white">Envy Salon & Spa</h3>
-              <p class="text-[11px] text-slate-400">HSR Layout Sector 1</p>
-            </div>
-            <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs">#2 3-Pack</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-center py-2 bg-slate-900/60 rounded-xl">
-            <div>
-              <div class="text-xs text-slate-400">Reviews</div>
-              <div class="text-lg font-black text-white font-heading">88 &rarr; 312</div>
-            </div>
-            <div>
-              <div class="text-xs text-slate-400">Google Rating</div>
-              <div class="text-lg font-black text-amber-400 font-heading">4.3 &rarr; 4.9★</div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-300 italic leading-relaxed">
-            “Our hair stylists love the staff attribution leaderboard. When their names are mentioned in 5★ Google reviews, they earn automatic bonus tips!”
-          </p>
-          <div class="text-[11px] font-bold text-brand-400">— Priya Nair, Salon Operations Director</div>
+      <!-- Feature 3: Staff Attribution Leaderboard -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
+          ${getSvgIcon('award', 'w-6 h-6')}
         </div>
+        <h3 class="text-lg font-bold text-slate-900 font-heading">Frontline Staff Attribution & Incentives</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Baristas, hair stylists, fitness trainers, and clinical nurses earn automatic review attribution when named in 5★ feedback. Increases staff retention and motivates frontline teams to deliver stellar guest hospitality.
+        </p>
+        <div class="pt-2 text-[11px] font-bold text-purple-700 font-mono">
+          Automated UPI Tip & Bonus Tracking Ledger
+        </div>
+      </div>
 
+      <!-- Feature 4: Quarantine Safety Shield -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
+          ${getSvgIcon('shield', 'w-6 h-6')}
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 font-heading">Zero-Liability Quarantine Shield</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          1–3★ complaints are quarantined automatically. The AI draft strictly forbids admitting fault or offering rash refunds. A 1-tap approval alert is dispatched to the manager’s WhatsApp before anything is posted.
+        </p>
+        <div class="pt-2 text-[11px] font-bold text-rose-700 font-mono">
+          0% Legal Liability Admitted • Offline Escalation
+        </div>
+      </div>
+
+      <!-- Feature 5: Google Local 3-Pack Algorithm Engine -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          ${getSvgIcon('localPack', 'w-6 h-6')}
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 font-heading">Google Local 3-Pack Algorithm Engine</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Google Local 3-Pack ranking is governed by review response velocity, keyword density in replies, and review freshness. Replyo executes replies in 4 minutes with localized service keywords.
+        </p>
+        <div class="pt-2 text-[11px] font-bold text-emerald-700 font-mono">
+          48% Click-Through Share on Rank #1 Local Pack
+        </div>
+      </div>
+
+      <!-- Feature 6: Multi-Branch Governance & DPDP Act -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm card-3d space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+          ${getSvgIcon('building', 'w-6 h-6')}
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 font-heading">Multi-Branch Governance & DPDP Act</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Centralized executive oversight for multi-chain brands across Indiranagar, Koramangala, and Lavelle Road. Full adherence to India’s DPDP Act 2023 with data residency strictly inside AWS Mumbai.
+        </p>
+        <div class="pt-2 text-[11px] font-bold text-blue-700 font-mono">
+          AWS Mumbai ap-south-1 • SOC2 Readiness
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- Interactive Three-Tier Rupee Pricing Preview -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+  <!-- INTERACTIVE DIALECT MIRRORING PLAYGROUND -->
+  <section class="py-16 bg-slate-50 border-t border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       
       <div class="text-center max-w-2xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
-          Straightforward Indian Pricing
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold uppercase tracking-wider font-mono">
+          Interactive Neural Engine
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight">
-          No Hidden Fees. 100% Tax Deductible with GST Invoices.
+        <h2 class="text-3xl font-extrabold text-slate-900 font-heading tracking-tight">
+          Test Autonomous Dialect Mirroring
         </h2>
         <p class="text-slate-600 text-xs sm:text-sm">
-          Includes 14-day risk-free trial. UPI, NetBanking, and all Corporate Cards supported via Razorpay.
+          Click a review dialect below to watch how Replyo mirrors the tone, acknowledges frontline staff, and weaves local search keywords.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d space-y-6">
         
-        <!-- Starter Plan -->
-        <div class="p-6 rounded-3xl border border-slate-200 bg-white card-3d space-y-4">
-          <div>
-            <h3 class="font-bold text-base text-slate-900">Starter Clinic</h3>
-            <p class="text-xs text-slate-500 mt-0.5">Single practitioner or standalone clinic</p>
-          </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-3xl font-black text-slate-950 font-heading">₹749</span>
-            <span class="text-xs text-slate-500">/ month + GST</span>
-          </div>
-          <ul class="text-xs text-slate-600 space-y-2 border-t border-b border-slate-100 py-4">
-            <li class="flex items-center gap-2">✓ Up to 50 AI review replies / mo</li>
-            <li class="flex items-center gap-2">✓ 1-Tap Negative WhatsApp Shield</li>
-            <li class="flex items-center gap-2">✓ Printable Counter QR Poster (PDF)</li>
-            <li class="flex items-center gap-2">✓ Hinglish & English Dialect Support</li>
-          </ul>
-          <a href="/login?demo=true" class="w-full min-h-[44px] flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-colors">
-            Start Free Pilot &rarr;
-          </a>
+        <!-- Dialect Selector Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <button type="button" onclick="setPlaygroundDialect('hinglish')" class="dialect-btn active px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-dark-950 text-white" id="dBtn-hinglish">
+            Colloquial Hinglish
+          </button>
+          <button type="button" onclick="setPlaygroundDialect('hindi')" class="dialect-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50" id="dBtn-hindi">
+            Devanagari Hindi
+          </button>
+          <button type="button" onclick="setPlaygroundDialect('english')" class="dialect-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50" id="dBtn-english">
+            Corporate English
+          </button>
+          <button type="button" onclick="setPlaygroundDialect('complaint')" class="dialect-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-rose-50 text-rose-800 border border-rose-200 hover:bg-rose-100" id="dBtn-complaint">
+            1-Star Quarantined Alert
+          </button>
         </div>
 
-        <!-- Pro Clinic Plan (Featured) -->
-        <div class="p-6 rounded-3xl border-2 border-brand-500 bg-gradient-to-b from-brand-50/40 to-white card-3d space-y-4 relative shadow-md">
-          <div class="absolute -top-3 right-6 px-3 py-0.5 bg-brand-600 text-white font-bold text-[10px] rounded-full uppercase tracking-wider">
-            Most Popular
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start pt-2">
+          
+          <!-- Incoming Customer Review -->
+          <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-900" id="dReviewerName">Deepa Hegde (5★)</span>
+              <span class="text-amber-500 font-bold" id="dStars">★★★★★</span>
+            </div>
+            <p id="dReviewText" class="text-xs text-slate-700 italic leading-relaxed">
+              “Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai aur staff bohot respectful hai.”
+            </p>
+            <div class="text-[10px] text-slate-400 font-mono" id="dDetectedBadge">Detected: Hinglish (Latin Script) • Tone: Warm Gratitude</div>
           </div>
-          <div>
-            <h3 class="font-bold text-base text-slate-900">Pro Clinic & Salon</h3>
-            <p class="text-xs text-slate-500 mt-0.5">Multi-chair clinic or premium brand</p>
-          </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-3xl font-black text-brand-600 font-heading">₹1,349</span>
-            <span class="text-xs text-slate-500">/ month + GST</span>
-          </div>
-          <ul class="text-xs text-slate-600 space-y-2 border-t border-b border-slate-100 py-4">
-            <li class="flex items-center gap-2">✓ Unlimited AI review replies</li>
-            <li class="flex items-center gap-2">✓ 1 Free Frosted Acrylic QR Stand</li>
-            <li class="flex items-center gap-2">✓ Staff Attribution & Tip Leaderboard</li>
-            <li class="flex items-center gap-2">✓ Google 3-Pack Local Rank Simulator</li>
-            <li class="flex items-center gap-2">✓ Hindi, Tamil, Telugu & Kannada</li>
-          </ul>
-          <a href="/login?demo=true" class="w-full min-h-[44px] flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors">
-            Activate Pro Pilot &rarr;
-          </a>
-        </div>
 
-        <!-- Multi-Branch Chain -->
-        <div class="p-6 rounded-3xl border border-slate-200 bg-white card-3d space-y-4">
-          <div>
-            <h3 class="font-bold text-base text-slate-900">Multi-Branch Chain</h3>
-            <p class="text-xs text-slate-500 mt-0.5">Healthcare groups & franchise networks</p>
+          <!-- Autopilot Engine Generated Reply -->
+          <div class="p-5 bg-brand-50/50 rounded-2xl border border-brand-200 space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-brand-950 font-heading">Autonomous Autopilot Output</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-600 text-white font-bold" id="dStatusBadge">Auto-Posted (4m delay)</span>
+            </div>
+            <p id="dReplyText" class="text-xs text-slate-800 leading-relaxed font-sans">
+              “Namaste Deepa ji! Aapka itna pyara feedback padhkar Dr. Sharma aur poori clinic team ko bohot khushi hui. Hamara prayas rehta hai ki har patient ka dental treatment bilkul painless aur comfortable ho. Indiranagar clinic aane ke liye bohot shukriya!”
+            </p>
+            <div class="text-[10px] text-brand-700 font-mono" id="dKeywordsBadge">Local Keywords Injected: "painless dental treatment Indiranagar"</div>
           </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-3xl font-black text-slate-950 font-heading">₹1,949</span>
-            <span class="text-xs text-slate-500">/ location / mo</span>
-          </div>
-          <ul class="text-xs text-slate-600 space-y-2 border-t border-b border-slate-100 py-4">
-            <li class="flex items-center gap-2">✓ Centralized Multi-Branch Switcher</li>
-            <li class="flex items-center gap-2">✓ Consolidated GST Billing Invoices</li>
-            <li class="flex items-center gap-2">✓ Dedicated WhatsApp Account Manager</li>
-            <li class="flex items-center gap-2">✓ Custom ERP / Practice Management Webhooks</li>
-          </ul>
-          <a href="/book-demo" class="w-full min-h-[44px] flex items-center justify-center bg-dark-950 hover:bg-brand-600 text-white font-bold text-xs rounded-xl transition-colors">
-            Book Enterprise Demo &rarr;
-          </a>
+
         </div>
 
       </div>
@@ -472,9 +403,102 @@ function renderHomePage(store) {
     </div>
   </section>
 
-  <!-- Client-side Interactive Scripts -->
+  <!-- CLIENT-SIDE SCRIPTS FOR MULTI-VERTICAL & 3D INTERACTION -->
   <script>
-    // 3D Stand Material Switcher
+    // 1. Multi-Vertical Data Map
+    const verticalData = {
+      clinic: {
+        bizName: "Dr. Sharma Dental & Implant Clinic",
+        title: "How was your visit today?",
+        sub: "Tap your phone or scan below • No app download required",
+        loc: "Indiranagar 100ft Rd",
+        rating: "4.9 ★★★★★ (143)",
+        touchpoint: "Reception Acrylic Stand & Operatory Tray NFC",
+        tags: ["Rotary Root Canal", "Digital X-Ray", "Painless Anesthesia"],
+        staff: "Dr. Sneha Kulkarni (Senior Endodontist)",
+        draft: "“Visited Dr. Sharma Dental Clinic for a root canal. Experience bohot painless aur gentle tha. Special mention to Dr. Sneha Kulkarni for being extremely patient. Clinic hygiene is 10/10!”",
+        bizHeader: "Dr. Sharma Dental & Implant Clinic",
+        reply: "“Namaste! Thank you so much for your kind words. Dr. Sneha Kulkarni and our team are delighted that your root canal treatment in Indiranagar was completely comfortable. Ensuring clinical sterility and painless procedures is our priority. See you for your routine checkup!”",
+        keywords: "✓ Local SEO: \\"root canal treatment in Indiranagar\\"",
+        incentive: "₹200 to Dr. Sneha’s Ledger"
+      },
+      cafe: {
+        bizName: "The Roastery Artisan Cafe & Sourdough Bakery",
+        title: "How was your coffee & bake today?",
+        sub: "Scan on table tent or tap bill folder • No login required",
+        loc: "12th Main Road, Indiranagar",
+        rating: "4.8 ★★★★★ (312)",
+        touchpoint: "Bill Folder NFC Card & Tabletop QR Stand",
+        tags: ["Ethiopian Pour-Over", "Almond Croissant", "Cold Brew Tonic"],
+        staff: "Shreyas Nair (Lead Barista & Brewer)",
+        draft: "“Best specialty coffee on 12th Main Indiranagar! Barista Shreyas explained the pour-over flavor notes so passionately. Flaky fresh almond croissant!”",
+        bizHeader: "The Roastery Artisan Cafe",
+        reply: "“Thank you so much! Shreyas and our roastery crew are thrilled you loved the single-origin Ethiopian pour-over and our freshly baked sourdough croissants. We roast our specialty beans fresh every Tuesday right here on 12th Main. See you tomorrow!”",
+        keywords: "✓ Local SEO: \\"specialty coffee on 12th Main Indiranagar\\"",
+        incentive: "₹150 to Barista Shreyas’s Tip Pool"
+      },
+      salon: {
+        bizName: "Bounce Hair Studio & Luxury Spa",
+        title: "How was your styling session today?",
+        sub: "Scan mirror QR or tap billing counter • 30-sec rating",
+        loc: "Lavelle Road, Shanthala Nagar",
+        rating: "4.9 ★★★★★ (228)",
+        touchpoint: "Styling Mirror QR & Billing Desk NFC Tap",
+        tags: ["Ash Blonde Balayage", "Keratin Smoothing", "Scalp Massage"],
+        staff: "Farhan Akhtar (Master Hair Artist)",
+        draft: "“Got my balayage done with Farhan at Bounce Lavelle Road. He understood the exact ash tone I wanted without compromising hair health. Heavenly scalp massage!”",
+        bizHeader: "Bounce Hair Studio & Spa",
+        reply: "“Dear Tanvi, thank you for your radiant feedback! Farhan and our creative colorists take immense pride in customized balayage techniques for Bangalore weather. We look forward to pampering you at Lavelle Road on your next hair spa!”",
+        keywords: "✓ Local SEO: \\"balayage specialist Lavelle Road Bangalore\\"",
+        incentive: "₹300 to Stylist Farhan’s Performance Pool"
+      },
+      gym: {
+        bizName: "IronVault Strength & Conditioning Club",
+        title: "How was your workout session?",
+        sub: "Tap turnstile NFC or scan water station QR • 30 secs",
+        loc: "Koramangala 4th Block",
+        rating: "4.8 ★★★★★ (184)",
+        touchpoint: "Turnstile Check-In Stand & Locker Room NFC",
+        tags: ["Deadlift Mechanics", "Competition Eleiko Bars", "Clean Showers"],
+        staff: "Coach Aryan Rathore (Head Strength Coach)",
+        draft: "“IronVault has the best barbell equipment in Koramangala. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers and locker rooms are spotless!”",
+        bizHeader: "IronVault Strength Club",
+        reply: "“Awesome feedback! Coach Aryan and our coaching team are dedicated to injury-free progressive overload and maintaining competition-spec Eleiko bars for Koramangala lifters. Keep chasing those strength PRs!”",
+        keywords: "✓ Local SEO: \\"strength training Koramangala Bangalore\\"",
+        incentive: "₹250 to Coach Aryan’s Training Ledger"
+      }
+    };
+
+    function selectVertical(vert) {
+      document.querySelectorAll('.vert-tab').forEach(b => {
+        b.className = 'vert-tab px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50';
+      });
+      document.getElementById('tab-' + vert).className = 'vert-tab active px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all bg-dark-950 text-white shadow-sm';
+
+      const data = verticalData[vert];
+      if (!data) return;
+
+      // Update Stand 3D Mockup
+      document.getElementById('standBizName').innerText = data.bizName;
+      document.getElementById('standTitle').innerText = data.title;
+      document.getElementById('standSub').innerText = data.sub;
+      document.getElementById('standLocText').innerText = data.loc;
+      document.getElementById('standRatingText').innerText = data.rating;
+
+      // Update Workflow Card
+      document.getElementById('vertTouchpointBadge').innerText = data.touchpoint;
+      document.getElementById('vertStaffName').innerHTML = getSvgIcon('staff', 'w-3.5 h-3.5 text-brand-600') + ' <span>' + data.staff + '</span>';
+      document.getElementById('vertReviewDraft').innerText = data.draft;
+      document.getElementById('vertBizHeader').innerText = data.bizHeader;
+      document.getElementById('vertAutopilotReply').innerText = data.reply;
+      document.getElementById('vertKeywordsTag').innerText = data.keywords;
+      document.getElementById('vertIncentiveTag').innerText = data.incentive;
+
+      const pillsHtml = data.tags.map((t, i) => \`<span class="px-2.5 py-1 rounded-lg \${i === 0 ? 'bg-brand-600 text-white' : 'bg-white border border-slate-200 text-slate-700'} font-semibold">\${t}</span>\`).join('');
+      document.getElementById('vertTagPills').innerHTML = pillsHtml;
+    }
+
+    // 2. 3D Material Switcher
     function setMaterial(type) {
       const stand = document.getElementById('stand3D');
       const badge = document.getElementById('materialBadge');
@@ -489,58 +513,81 @@ function renderHomePage(store) {
         badge.innerText = 'Brushed Champagne Gold';
       } else if (type === 'walnut') {
         stand.className = 'w-full max-w-sm rounded-3xl p-6 transition-all duration-300 card-3d relative overflow-hidden bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-stone-200 shadow-2xl border border-amber-900';
-        badge.innerText = 'Matte Solid Walnut Wood';
+        badge.innerText = 'Solid Matte Walnut Wood';
       } else if (type === 'obsidian') {
         stand.className = 'w-full max-w-sm rounded-3xl p-6 transition-all duration-300 card-3d relative overflow-hidden bg-black text-slate-100 shadow-2xl border border-slate-800';
         badge.innerText = 'Ceramic Black Obsidian';
       }
     }
 
-    // Interactive SERP Simulator
-    function toggleSimState(withReplyo) {
-      const card = document.getElementById('simClinicCard');
-      const rank = document.getElementById('simRankBadge');
-      const rating = document.getElementById('simRating');
-      const count = document.getElementById('simCount');
-      const tags = document.getElementById('simTags');
-      const btnBefore = document.getElementById('btnBefore');
-      const btnAfter = document.getElementById('btnAfter');
+    // 3. Dialect Mirroring Playground
+    const dialectSamples = {
+      hinglish: {
+        reviewer: "Deepa Hegde",
+        stars: "★★★★★",
+        text: "“Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai aur staff bohot respectful hai.”",
+        detected: "Detected: Hinglish (Latin Script) • Tone: Warm Gratitude",
+        status: "Auto-Posted (4m delay)",
+        reply: "“Namaste Deepa ji! Aapka itna pyara feedback padhkar Dr. Sharma aur poori clinic team ko bohot khushi hui. Hamara prayas rehta hai ki har patient ka dental treatment bilkul painless aur comfortable ho. Indiranagar clinic aane ke liye bohot shukriya!”",
+        keywords: "Local Keywords Injected: \\"painless dental treatment Indiranagar\\""
+      },
+      hindi: {
+        reviewer: "रामेश्वर शरण त्रिपाठी",
+        stars: "★★★★★",
+        text: "“डॉ. शर्मा क्लिनिक में इलाज का अनुभव अत्यंत सराहनीय रहा। स्टाफ का व्यवहार बहुत विनम्र है और आधुनिक मशीनों से जांच की गई। धन्यवाद!”",
+        detected: "Detected: Devanagari Hindi Script • Tone: Formal Respectful",
+        status: "Auto-Posted (4m delay)",
+        reply: "“सादर प्रणाम रामेश्वर जी! आपकी सकारात्मक प्रतिक्रिया के लिए डॉ. शर्मा डेंटल क्लिनिक की ओर से हार्दिक धन्यवाद। हमारा निरंतर प्रयास रहता है कि हम अपने सभी मरीजों को उच्चतम स्तर की चिकित्सकीय सुविधा प्रदान करें।”",
+        keywords: "Local Keywords Injected: \\"उत्कृष्ट डेंटल क्लिनिक बैंगलोर\\""
+      },
+      english: {
+        reviewer: "Vikramaditya Sengupta",
+        stars: "★★★★★",
+        text: "“Had a severe molar pain on Sunday morning. Dr. Sneha Kulkarni did a painless root canal with computerized anesthesia. The Indiranagar clinic is sparkling clean and modern.”",
+        detected: "Detected: Standard English • Tone: Professional High-Praise",
+        status: "Auto-Posted (4m delay)",
+        reply: "“Thank you so much, Vikramaditya ji, for sharing your experience with Dr. Sharma Dental & Implant Clinic. We are delighted that Dr. Sneha Kulkarni could relieve your discomfort with our painless root canal protocol. Ensuring our Indiranagar operatory meets international sterilization standards is our highest commitment.”",
+        keywords: "Local Keywords Injected: \\"painless root canal Indiranagar Bangalore\\""
+      },
+      complaint: {
+        reviewer: "Rajesh Gokhale",
+        stars: "★☆☆☆☆",
+        text: "“Waited 35 mins past appointment time despite booking well in advance. The front desk did not provide any updates while we sat in the lobby.”",
+        detected: "Detected: Negative Complaint (1★) • Issue: Appointment Wait Time",
+        status: "Held in Quarantine Shield",
+        reply: "“Dear Rajesh Gokhale, thank you for sharing your feedback. We sincerely value patient punctuality and time management. We would like to investigate this appointment delay and ensure our lobby protocols are tightened. Please contact our clinic operations manager directly at +91 98450 11223 so we can assist you personally.”",
+        keywords: "Zero Liability Admitted • Direct Manager Telephone Provided"
+      }
+    };
 
-      if (withReplyo) {
-        card.className = 'p-5 rounded-2xl border-2 transition-all duration-300 bg-emerald-50/50 border-emerald-500 shadow-sm space-y-2';
-        rank.className = 'px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white';
-        rank.innerText = 'Rank #1 in 3-Pack';
-        rating.innerText = '4.9 ★★★★★';
-        count.innerText = '(143 reviews)';
-        tags.classList.remove('hidden');
-        btnAfter.className = 'px-3 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm';
-        btnBefore.className = 'px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900';
+    function setPlaygroundDialect(d) {
+      document.querySelectorAll('.dialect-btn').forEach(b => {
+        b.className = 'dialect-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-50';
+      });
+      const activeBtn = document.getElementById('dBtn-' + d);
+      if (d === 'complaint') {
+        activeBtn.className = 'dialect-btn active px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-rose-600 text-white';
       } else {
-        card.className = 'p-5 rounded-2xl border transition-all duration-300 bg-slate-50 border-slate-200 space-y-2';
-        rank.className = 'px-3 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-700';
-        rank.innerText = 'Rank #4 (Outside 3-Pack)';
-        rating.innerText = '4.1 ★★★★☆';
-        count.innerText = '(34 reviews)';
-        tags.classList.add('hidden');
-        btnBefore.className = 'px-3 py-1.5 rounded-lg bg-slate-800 text-white shadow-sm';
-        btnAfter.className = 'px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900';
+        activeBtn.className = 'dialect-btn active px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-dark-950 text-white';
+      }
+
+      const s = dialectSamples[d];
+      document.getElementById('dReviewerName').innerText = s.reviewer + ' (' + s.stars + ')';
+      document.getElementById('dStars').innerText = s.stars;
+      document.getElementById('dReviewText').innerText = s.text;
+      document.getElementById('dDetectedBadge').innerText = s.detected;
+      document.getElementById('dStatusBadge').innerText = s.status;
+      document.getElementById('dReplyText').innerText = s.reply;
+      document.getElementById('dKeywordsBadge').innerText = s.keywords;
+
+      if (d === 'complaint') {
+        document.getElementById('dStatusBadge').className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-rose-600 text-white font-bold';
+      } else {
+        document.getElementById('dStatusBadge').className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-brand-600 text-white font-bold';
       }
     }
 
-    // Dynamic Financial Calculator
-    function updateCalculator(val) {
-      document.getElementById('calcPatientVal').innerText = val + ' Patients';
-      const tradReviews = Math.round(val * 0.015);
-      const replyoReviews = Math.round(val * 0.22);
-      document.getElementById('calcTradReviews').innerText = tradReviews + ' reviews / mo';
-      document.getElementById('calcReplyoReviews').innerText = replyoReviews + ' reviews / mo (+' + Math.round(replyoReviews / (tradReviews || 1)) + 'x)';
-      
-      const extraPatients = Math.round(replyoReviews * 0.48);
-      const extraRev = extraPatients * 5000;
-      document.getElementById('calcRevenueLift').innerText = '₹' + extraRev.toLocaleString('en-IN') + ' / mo';
-    }
-
-    // Ambient Particle Canvas Animation
+    // 4. Ambient Particle Canvas Animation (Cobalt palette)
     (function initParticles() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const canvas = document.getElementById('heroParticles');
@@ -557,15 +604,15 @@ function renderHomePage(store) {
       const particles = Array.from({ length: 35 }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
         r: Math.random() * 2 + 1
       }));
 
       function render() {
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#10b981';
-        ctx.strokeStyle = 'rgba(16, 185, 129, 0.08)';
+        ctx.fillStyle = '#2563eb';
+        ctx.strokeStyle = 'rgba(37, 99, 235, 0.08)';
 
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
