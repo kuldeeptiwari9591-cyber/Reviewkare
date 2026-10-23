@@ -1,0 +1,286 @@
+{
+  "location": {
+    "id": "loc-01",
+    "name": "Dr. Sharma Dental & Implant Clinic",
+    "category": "Dental Clinic",
+    "city": "Bengaluru",
+    "area": "Indiranagar",
+    "googlePlaceId": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+    "services": [
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Teeth Whitening",
+      "Invisalign & Clear Aligners",
+      "Tooth Extraction",
+      "Pediatric Dentistry"
+    ],
+    "brandTone": "professional_clinical",
+    "managerName": "Dr. Ananya Sharma",
+    "managerPhone": "+91 98450 12345",
+    "managerEmail": "manager@sharmadental.in",
+    "bannedWords": [
+      "guarantee",
+      "100% cure",
+      "free replacement",
+      "refund"
+    ],
+    "autopilotLevel": "negatives_held",
+    "minStarAutoPost": 4,
+    "targetKeywords": [
+      "best dental clinic in Indiranagar",
+      "painless root canal Bangalore",
+      "dental implants in Indiranagar"
+    ],
+    "autoKeywordWeaving": true,
+    "smsAlertsEnabled": true,
+    "emailAlertsEnabled": true,
+    "pushAlertsEnabled": true
+  },
+  "reviews": [
+    {
+      "id": "rev-1792737826641",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_gsa0rp",
+      "reviewerName": "Rahul Deshmukh",
+      "rating": 1,
+      "text": "Doctor did not explain charges properly and charged extra for medication. Disappointed.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "frustrated",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792737826644",
+        "reviewId": "rev-1792737826641",
+        "draftText": "Dear Rahul Deshmukh, thank you for your feedback. Providing a high standard of care and comfort at Dr. Sharma Dental & Implant Clinic is our top priority. We would appreciate the opportunity to speak with you directly. Please reach out to our manager at +91 98450 12345.",
+        "status": "held",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": "appr-7c7ma0bq"
+      }
+    },
+    {
+      "id": "rev-1792737811135",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_vil4pd",
+      "reviewerName": "Kavita Menon",
+      "rating": 5,
+      "text": "Dr. Sharma clinic is so hygienic and modern. Root canal was totally painless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792737811142",
+        "reviewId": "rev-1792737811135",
+        "draftText": "Thank you so much Kavita Menon for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Kavita Menon for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-01",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_rev_98124",
+      "reviewerName": "Rohit Kulkarni",
+      "rating": 5,
+      "text": "Dr. Sharma ke clinic me root canal karwaya. Bohot hi painless procedure tha aur staff bohot cooperative hai. Ekdum clean clinic!",
+      "isStarOnly": false,
+      "detectedLanguage": "hi-en",
+      "detectedTone": "enthusiastic",
+      "createdAt": "2 hours ago",
+      "reply": {
+        "id": "rep-01",
+        "reviewId": "rev-01",
+        "draftText": "Thank you so much Rohit ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Our team works hard every day to remain the best dental clinic in Indiranagar. Looking forward to serving you again at Dr. Sharma Dental & Implant Clinic!",
+        "finalText": "Thank you so much Rohit ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Our team works hard every day to remain the best dental clinic in Indiranagar. Looking forward to serving you again at Dr. Sharma Dental & Implant Clinic!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "1 hour ago"
+      }
+    },
+    {
+      "id": "rev-02",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_rev_98125",
+      "reviewerName": "Priya Narang",
+      "rating": 1,
+      "text": "Waited 45 mins past appointment time. Receptionist was completely dismissive and the doctor rushed through the consultation without explaining the procedure.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "angry",
+      "createdAt": "4 hours ago",
+      "reply": {
+        "id": "rep-02",
+        "reviewId": "rev-02",
+        "draftText": "Dear Priya Narang, thank you for sharing your feedback. We sincerely value patient comfort and punctuality at Dr. Sharma Dental & Implant Clinic. We take this seriously and would appreciate the opportunity to speak with you directly. Please contact our clinic manager at +91 98450 12345.",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": null,
+        "approvalExpiresAt": "Tomorrow, 5:00 PM",
+        "validatorNotes": [
+          "Safety Check: Zero admission of legal liability",
+          "Safety Check: No refund promised",
+          "Directs patient to offline manager phone"
+        ],
+        "finalText": "Dear Priya Narang, thank you for sharing your feedback. We sincerely value patient comfort and punctuality at Dr. Sharma Dental & Implant Clinic. We take this seriously and would appreciate the opportunity to speak with you directly. Please contact our clinic manager at +91 98450 12345.",
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-03",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_rev_98126",
+      "reviewerName": "Suresh Verma",
+      "rating": 5,
+      "text": "",
+      "isStarOnly": true,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "1 day ago",
+      "reply": {
+        "id": "rep-03",
+        "reviewId": "rev-03",
+        "draftText": "Thank you so much Suresh Verma for the 5-star rating! The entire team at Dr. Sharma Dental & Implant Clinic truly appreciates your support.",
+        "finalText": "Thank you so much Suresh Verma for the 5-star rating! The entire team at Dr. Sharma Dental & Implant Clinic truly appreciates your support.",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "1 day ago"
+      }
+    },
+    {
+      "id": "rev-04",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_rev_98127",
+      "reviewerName": "मनोज कुमार",
+      "rating": 5,
+      "text": "डॉक्टर शर्मा जी बहुत ही अनुभवी हैं। दांत में बहुत दर्द था लेकिन इलाज के बाद तुरंत राहत मिल गई। बहुत बढ़िया अस्पताल।",
+      "isStarOnly": false,
+      "detectedLanguage": "hi",
+      "detectedTone": "enthusiastic",
+      "createdAt": "2 days ago",
+      "reply": {
+        "id": "rep-04",
+        "reviewId": "rev-04",
+        "draftText": "नमस्ते मनोज कुमार जी! अपनी बहुमूल्य समीक्षा साझा करने के लिए बहुत-बहुत धन्यवाद। हमारी टीम को यह जानकर बेहद खुशी हुई कि आपका अनुभव बेहतरीन रहा। हम आपके उत्तम स्वास्थ्य और मुस्कान की कामना करते हैं!",
+        "finalText": "नमस्ते मनोज कुमार जी! अपनी बहुमूल्य समीक्षा साझा करने के लिए बहुत-बहुत धन्यवाद। हमारी टीम को यह जानकर बेहद खुशी हुई कि आपका अनुभव बेहतरीन रहा। हम आपके उत्तम स्वास्थ्य और मुस्कान की कामना करते हैं!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "2 days ago"
+      }
+    },
+    {
+      "id": "rev-05",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_rev_98128",
+      "reviewerName": "Vikram Sundaram",
+      "rating": 2,
+      "text": "Clinic infrastructure is modern but billing department had confusion regarding insurance claim and medicine charges were high.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "frustrated",
+      "createdAt": "Yesterday",
+      "reply": {
+        "id": "rep-05",
+        "reviewId": "rev-05",
+        "draftText": "Dear Vikram Sundaram, thank you for your feedback regarding your visit. We maintain transparent billing standards and would like to review your invoice details personally. Please connect with our clinic manager at +91 98450 12345 so we can assist you promptly.",
+        "status": "held",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": "sharma-appr-vikram-02",
+        "approvalExpiresAt": "Tomorrow, 6:30 PM",
+        "validatorNotes": [
+          "Safety Check: Zero admission of legal negligence",
+          "Safety Check: No refund promised",
+          "Routes patient to offline phone"
+        ]
+      }
+    }
+  ],
+  "qrcodes": [
+    {
+      "id": "qr-01",
+      "locationId": "loc-01",
+      "name": "Reception Counter Card (A6)",
+      "shortCode": "sharma-dent-01",
+      "branchName": "Indiranagar Main",
+      "templateType": "counter_card",
+      "scansCount": 184,
+      "draftsGeneratedCount": 132,
+      "reviewsCompletedCount": 98,
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": "qr-02",
+      "locationId": "loc-01",
+      "name": "Waiting Lounge Standee",
+      "shortCode": "sharma-lounge-02",
+      "branchName": "Indiranagar Main",
+      "templateType": "standee",
+      "scansCount": 112,
+      "draftsGeneratedCount": 79,
+      "reviewsCompletedCount": 61,
+      "createdAt": "2026-09-10"
+    },
+    {
+      "id": "qr-03",
+      "locationId": "loc-01",
+      "name": "Dr. Sneha Operatory Card",
+      "shortCode": "sharma-dr-sneha",
+      "staffName": "Dr. Sneha",
+      "branchName": "Indiranagar Main",
+      "templateType": "table_tent",
+      "scansCount": 64,
+      "draftsGeneratedCount": 52,
+      "reviewsCompletedCount": 44,
+      "createdAt": "2026-09-15"
+    }
+  ],
+  "competitors": [
+    {
+      "name": "Dr. Sharma Dental (Your Clinic)",
+      "rating": 4.8,
+      "totalReviews": 482,
+      "unansweredReviews": 2,
+      "responseRate": 99.6,
+      "averageResponseTime": "4 mins"
+    },
+    {
+      "name": "Apollo White Dental - Indiranagar",
+      "rating": 4.4,
+      "totalReviews": 310,
+      "unansweredReviews": 64,
+      "responseRate": 79.3,
+      "averageResponseTime": "48 hours"
+    },
+    {
+      "name": "Clove Dental - CMH Road",
+      "rating": 4.2,
+      "totalReviews": 245,
+      "unansweredReviews": 82,
+      "responseRate": 66.5,
+      "averageResponseTime": "5 days"
+    },
+    {
+      "name": "Smile Care Center Indiranagar",
+      "rating": 4.1,
+      "totalReviews": 120,
+      "unansweredReviews": 55,
+      "responseRate": 54.1,
+      "averageResponseTime": "Rarely replies"
+    }
+  ]
+}
