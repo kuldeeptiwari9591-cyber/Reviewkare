@@ -34,45 +34,14 @@ const { PLANS } = require('./dist/src/lib/store/db.js');
 
 const PORT = process.env.PORT || 3000;
 
-// Universal Accessible Vector SVG Icon System (Zero Emojis, UI/UX Pro Max & Web Guidelines Standard)
-function getSvgIcon(name, extraClasses = 'w-4 h-4') {
-  const icons = {
-    dashboard: '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
-    reviews: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
-    approvals: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
-    qr: '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>',
-    growth: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
-    health: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-    posters: '<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
-    reports: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
-    settings: '<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
-    billing: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
-    team: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    check: '<polyline points="20 6 9 17 4 12"/>',
-    arrowRight: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
-    shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
-    sparkles: '<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>',
-    globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
-    mapPin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
-    phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
-    smartphone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
-    printer: '<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/>',
-    copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
-    trash: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>'
-  };
-
-  const pathContent = icons[name] || icons.check;
-  return `<svg class="${extraClasses} inline-block align-middle shrink-0" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${pathContent}</svg>`;
-}
-
-function getStarRatingSvg(count = 5, extraClasses = 'w-3.5 h-3.5') {
-  const starPath = '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>';
-  return Array.from({ length: 5 }, (_, i) => {
-    const isFilled = i < count;
-    const color = isFilled ? 'text-amber-400 fill-amber-400' : 'text-slate-300 fill-slate-200';
-    return `<svg class="${extraClasses} ${color} inline-block align-middle shrink-0" aria-hidden="true" viewBox="0 0 24 24">${starPath}</svg>`;
-  }).join('');
-}
+// Modular View Architecture (Anti-Slop & UI/UX Pro Max Standard)
+const { getSvgIcon, getStarRatingSvg } = require('./src/views/icons.js');
+const { renderHtmlPage } = require('./src/views/layout.js');
+const { renderAppShell } = require('./src/views/appShell.js');
+const { renderHomePage } = require('./src/views/homePage.js');
+const { renderLoginPage, renderSignupPage, renderForgotPasswordPage } = require('./src/views/authPages.js');
+const { renderSecurityPage, renderBookDemoPage, renderFaqPage, renderQrKitPage, renderTermsPage, renderPrivacyPage, renderRefundPolicyPage, renderDpdpConsentPage } = require('./src/views/trustPages.js');
+const { renderStaffPage, renderLocalPackPage } = require('./src/views/featurePages.js');
 
 function parseJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -86,379 +55,6 @@ function parseJsonBody(req) {
       }
     });
   });
-}
-
-// Master Layout adhering to Tasteskill v2, UI/UX Pro Max, and Vercel Web Guidelines
-function renderHtmlPage(title, activeNav, bodyContent) {
-  return `<!DOCTYPE html>
-<html lang="en" class="scroll-smooth antialiased">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} | Replyo — Autonomous Google Review SaaS</title>
-  <meta name="description" content="AI Google Review Autopilot & In-Clinic AI QR flow for Indian clinics, salons & restaurants. Auto-posts 5-star replies in 4 mins, holds 1-3 star reviews for 1-tap owner approval.">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              200: '#a7f3d0',
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-              800: '#065f46',
-              900: '#064e3b',
-              950: '#022c22',
-            },
-            dark: {
-              900: '#0f172a',
-              950: '#090d16',
-            }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-            heading: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
-  
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      touch-action: manipulation;
-    }
-    h1, h2, h3, h4, .font-heading {
-      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-      letter-spacing: -0.025em;
-      text-wrap: balance;
-    }
-    .tabular-nums {
-      font-variant-numeric: tabular-nums;
-    }
-    
-    /* 3D Tilt & Card Perspective */
-    .perspective-1000 { perspective: 1000px; transform-style: preserve-3d; }
-    .card-3d {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-      will-change: transform;
-    }
-    .card-3d:hover {
-      box-shadow: 0 16px 36px -12px rgba(16, 185, 129, 0.12);
-    }
-    
-    /* 2.5D Isometric Device Mockup */
-    .isometric-mockup {
-      transform: rotateX(10deg) rotateY(-12deg) rotateZ(2deg);
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
-      box-shadow: -20px 30px 60px rgba(15, 23, 42, 0.15);
-      animation: floatSlow 6s ease-in-out infinite alternate;
-    }
-    .isometric-mockup:hover {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.02);
-      animation-play-state: paused;
-    }
-    @keyframes floatSlow {
-      0% { transform: rotateX(10deg) rotateY(-12deg) rotateZ(2deg) translateY(0px); }
-      100% { transform: rotateX(12deg) rotateY(-10deg) rotateZ(1deg) translateY(-10px); }
-    }
-
-    /* Ambient Clean Mesh */
-    .ambient-mesh {
-      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08), transparent 50%),
-                  radial-gradient(circle at 100% 30%, rgba(6, 182, 212, 0.05), transparent 40%);
-    }
-
-    /* Specular Glare effect on 3D elements */
-    .glare-effect {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 65%);
-      pointer-events: none;
-      border-radius: inherit;
-    }
-
-    /* Accessibility: Honor reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      *, ::before, ::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      .isometric-mockup {
-        transform: none !important;
-        animation: none !important;
-      }
-      .card-3d:hover {
-        transform: none !important;
-      }
-    }
-  </style>
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-brand-500 selection:text-white ambient-mesh">
-  
-  <!-- SKIP LINK FOR ACCESSIBILITY (Web Guidelines) -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 bg-brand-600 text-white px-4 py-2 rounded-xl text-xs font-bold">
-    Skip to main content
-  </a>
-
-  <!-- TOP ANNOUNCEMENT BANNER -->
-  <aside class="bg-dark-950 text-slate-300 text-xs py-2.5 px-4 text-center border-b border-slate-800" aria-label="Announcement">
-    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-brand-400"></span>
-      <span class="font-medium">Founding Cohort Offer: First 50 Indian clinics get Growth plan locked at ₹999/month for life.</span>
-      <a href="/pricing" class="font-bold text-brand-400 hover:text-brand-300 underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded">Claim Offer &rarr;</a>
-    </div>
-  </aside>
-
-  <!-- NAVIGATION BAR (Minimalist Swiss Bar) -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
-      
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl" aria-label="Replyo Homepage">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-black text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105">
-            R
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-slate-950 tracking-tight font-heading">Replyo</span>
-              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                India
-              </span>
-            </div>
-            <p class="text-[11px] text-slate-500 font-medium -mt-0.5">Autonomous Review Reputation</p>
-          </div>
-        </a>
-
-        <!-- Links -->
-        <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600" aria-label="Main Navigation">
-          <a href="/features" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'features' ? 'text-brand-600 font-bold' : ''}">Features</a>
-          <a href="/pricing" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'pricing' ? 'text-brand-600 font-bold' : ''}">Pricing (INR)</a>
-          <a href="/free-audit" class="hover:text-brand-600 transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'audit' ? 'text-brand-600 font-bold' : ''}">
-            ${getSvgIcon('sparkles', 'w-3.5 h-3.5 text-amber-500')} Free Audit Tool
-          </a>
-          
-          <!-- Industries Dropdown -->
-          <div class="relative group cursor-pointer">
-            <span class="hover:text-brand-600 transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'industries' ? 'text-brand-600 font-bold' : ''}">
-              Industries <span class="text-[9px] opacity-60">▼</span>
-            </span>
-            <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 hidden group-hover:block animate-in fade-in z-50">
-              <a href="/industries/clinics" class="block px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">Dental & Aesthetic Clinics</a>
-              <a href="/industries/salons" class="block px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">Salons & Luxury Spas</a>
-              <a href="/industries/restaurants" class="block px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">Restaurants & Cafes</a>
-              <a href="/industries/gyms" class="block px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">Gyms & Fitness Hubs</a>
-              <a href="/industries/coaching" class="block px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">Coaching & Academies</a>
-            </div>
-          </div>
-
-          <a href="/for-agencies" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'agencies' ? 'text-brand-600 font-bold' : ''}">For Agencies</a>
-          <a href="/blog" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'blog' ? 'text-brand-600 font-bold' : ''}">Guides</a>
-          <a href="/contact" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'contact' ? 'text-brand-600 font-bold' : ''}">Contact</a>
-        </nav>
-      </div>
-
-      <!-- Action buttons (Minimum 44px touch targets) -->
-      <div class="flex items-center gap-3">
-        <a href="/q/sharma-dent-01" target="_blank" class="hidden sm:inline-flex items-center gap-2 text-xs font-bold px-3.5 min-h-[44px] rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-          ${getSvgIcon('smartphone', 'w-4 h-4 text-slate-500')} Test Customer QR
-        </a>
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold px-4 min-h-[44px] rounded-xl bg-dark-950 text-white hover:bg-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-          Owner App Dashboard &rarr;
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- MAIN CANVAS -->
-  <main id="main-content" class="flex-1">
-    ${bodyContent}
-  </main>
-
-  <!-- SAAS FOOTER (100% ZERO DEAD LINKS & COMPLIANT DISCLOSURES) -->
-  <footer class="bg-dark-950 text-slate-400 border-t border-slate-800 text-xs mt-20 pt-16 pb-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
-        
-        <div class="md:col-span-2 space-y-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-brand-500 text-white font-black text-base flex items-center justify-center font-heading">R</div>
-            <span class="font-extrabold text-white text-xl tracking-tight font-heading">Replyo India</span>
-          </div>
-          <p class="text-slate-400 leading-relaxed pr-6">
-            Autonomous Google Review Autopilot & In-Clinic AI QR Growth Platform. Built natively in India for clinics, salons, restaurants, and local services.
-          </p>
-          <div class="space-y-1.5 text-slate-400 text-[11px]">
-            <p class="text-brand-400 font-semibold flex items-center gap-1.5">
-              ${getSvgIcon('check', 'w-3.5 h-3.5 text-brand-400')} 100% Google Local Guides & User Content Compliant
-            </p>
-            <p class="text-slate-400 flex items-center gap-1.5">
-              ${getSvgIcon('shield', 'w-3.5 h-3.5 text-slate-400')} DPDP Act 2023 Compliant • Hosted on Mumbai Edge Cloud
-            </p>
-            <p class="text-slate-400 flex items-center gap-1.5">
-              ${getSvgIcon('billing', 'w-3.5 h-3.5 text-slate-400')} UPI AutoPay Supported • 18% GST Input Credit Tax Invoices
-            </p>
-          </div>
-        </div>
-
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Product</h4>
-          <ul class="space-y-2 text-slate-400">
-            <li><a href="/features" class="hover:text-white transition-colors">Review Autopilot</a></li>
-            <li><a href="/app/qr" class="hover:text-white transition-colors">Smart QR Studio</a></li>
-            <li><a href="/features" class="hover:text-white transition-colors">Zero-Liability Shield</a></li>
-            <li><a href="/pricing" class="hover:text-white transition-colors">Pricing & UPI Plans</a></li>
-            <li><a href="/free-audit" class="hover:text-white transition-colors">Free Competitor Audit</a></li>
-          </ul>
-        </div>
-
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Industries</h4>
-          <ul class="space-y-2 text-slate-400">
-            <li><a href="/industries/clinics" class="hover:text-white transition-colors">Dental & Skin Clinics</a></li>
-            <li><a href="/industries/salons" class="hover:text-white transition-colors">Salons & Luxury Spas</a></li>
-            <li><a href="/industries/restaurants" class="hover:text-white transition-colors">Restaurants & Cafes</a></li>
-            <li><a href="/industries/gyms" class="hover:text-white transition-colors">Gyms & Fitness Centers</a></li>
-            <li><a href="/industries/coaching" class="hover:text-white transition-colors">Coaching Institutes</a></li>
-          </ul>
-        </div>
-
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Legal & Trust</h4>
-          <ul class="space-y-2 text-slate-400">
-            <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
-            <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition-colors">Refund & Cancellation</a></li>
-            <li><a href="/dpdp-consent" class="hover:text-white transition-colors">DPDP Act 2023 Consent</a></li>
-            <li><a href="/for-agencies" class="hover:text-white transition-colors">Agency Reseller Partner</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
-        <p>© 2026 Replyo Technologies India Private Limited. All rights reserved.</p>
-        <div class="flex items-center gap-6">
-          <a href="/blog" class="hover:text-slate-400">Guides</a>
-          <a href="/contact" class="hover:text-slate-400">Contact</a>
-          <a href="/privacy" class="hover:text-slate-400">Privacy</a>
-          <a href="/terms" class="hover:text-slate-400">Terms</a>
-          <a href="/refund-policy" class="hover:text-slate-400">Refunds</a>
-          <span class="text-slate-600">•</span>
-          <span class="text-emerald-500 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> All Systems Operational</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- 3D Card Tilt Script -->
-  <script>
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.card-3d').forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -5;
-          const rotateY = ((x - centerX) / centerX) * 5;
-          card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.01, 1.01, 1.01)';
-        });
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-        });
-      });
-    }
-  </script>
-</body>
-</html>`;
-}
-
-// App Shell with Accessible Vector Sidebar
-function renderAppShell(activeTab, contentHtml) {
-  const store = getStore();
-  const heldCount = store.reviews.filter(r => r.reply && r.reply.status === 'held').length;
-  const navItems = [
-    { id: 'dashboard', name: 'Overview', href: '/app', icon: 'dashboard' },
-    { id: 'reviews', name: 'Google Reviews', href: '/app/reviews', icon: 'reviews' },
-    { id: 'approvals', name: 'Held Approvals', href: '/app/approvals', icon: 'approvals', badge: heldCount > 0 ? heldCount : null },
-    { id: 'qr', name: 'QR Studio 3D', href: '/app/qr', icon: 'qr' },
-    { id: 'growth', name: 'Growth & Competitors', href: '/app/growth', icon: 'growth' },
-    { id: 'profile-health', name: 'GBP Health Check', href: '/app/profile-health', icon: 'health' },
-    { id: 'posters', name: '5★ Review Posters', href: '/app/posters', icon: 'posters' },
-    { id: 'reports', name: 'Weekly Reports', href: '/app/reports', icon: 'reports' },
-    { id: 'settings', name: 'Autopilot Settings', href: '/app/settings', icon: 'settings' },
-    { id: 'billing', name: 'Billing & GST Invoices', href: '/app/billing', icon: 'billing' },
-    { id: 'team', name: 'Team & Locations', href: '/app/team', icon: 'team' },
-  ];
-
-  return `
-  <div class="min-h-screen bg-slate-50 flex flex-col md:flex-row">
-    <!-- Sidebar -->
-    <aside class="w-full md:w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 p-4" aria-label="Dashboard Sidebar">
-      <div>
-        <!-- Clinic Switcher Card -->
-        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 mb-4 card-3d">
-          <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-800 flex items-center justify-center font-bold text-sm">D</div>
-            <div class="overflow-hidden">
-              <h2 class="font-bold text-xs text-slate-900 truncate">${store.location.name || 'Dr. Sharma Dental'}</h2>
-              <p class="text-[11px] text-slate-500 truncate">${store.location.area || 'Indiranagar'}, ${store.location.city || 'Bengaluru'}</p>
-            </div>
-          </div>
-          <div class="mt-2.5 text-[10px] font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200 flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Synced with Google Business
-          </div>
-        </div>
-
-        <!-- Navigation Links (Vector SVG Icons, Zero Emojis) -->
-        <nav class="space-y-1 text-xs font-semibold" aria-label="Dashboard Navigation">
-          ${navItems.map((item) => `
-            <a href="${item.href}" class="flex items-center justify-between px-3 min-h-[40px] rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
-              activeTab === item.id ? 'bg-dark-950 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'
-            }">
-              <span class="flex items-center gap-2.5">
-                ${getSvgIcon(item.icon, activeTab === item.id ? 'w-4 h-4 text-white' : 'w-4 h-4 text-slate-500')}
-                <span>${item.name}</span>
-              </span>
-              ${item.badge ? `<span class="bg-amber-400 text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded-full tabular-nums">${item.badge}</span>` : ''}
-            </a>
-          `).join('')}
-        </nav>
-      </div>
-
-      <!-- Quick QR link -->
-      <div class="pt-4 border-t border-slate-100 space-y-2">
-        <a href="/q/sharma-dent-01" target="_blank" class="w-full flex items-center justify-center gap-2 min-h-[44px] rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-          ${getSvgIcon('smartphone', 'w-4 h-4 text-slate-500')} Customer QR &rarr;
-        </a>
-        <p class="text-[11px] text-center text-slate-500">Autopilot: <strong class="text-brand-600 font-bold uppercase">${store.location.autopilotLevel || 'SMART (4-5★)'}</strong></p>
-      </div>
-    </aside>
-
-    <!-- Main Section -->
-    <section class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-      ${contentHtml}
-    </section>
-  </div>
-  `;
 }
 
 // SERVER
@@ -587,12 +183,22 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/ai/qr-draft' && method === 'POST') {
       const body = await parseJsonBody(req);
       const store = getStore();
-      const submission = body.submission;
+      const rawSub = body.submission || {};
+      const submission = {
+        rating: rawSub.rating || 5,
+        selectedServices: Array.isArray(rawSub.selectedServices) ? rawSub.selectedServices : ['Root Canal Treatment'],
+        qualityTags: Array.isArray(rawSub.qualityTags) ? rawSub.qualityTags : ['Painless Procedure'],
+        ambienceTags: Array.isArray(rawSub.ambienceTags) ? rawSub.ambienceTags : ['Modern Equipment'],
+        staffName: rawSub.staffName || 'Dr. Sneha',
+        recommend: rawSub.recommend || 'yes',
+        language: rawSub.language || 'hi-en',
+        length: rawSub.length || 'short'
+      };
       const draft = generateCustomerQRDraft(submission, store.location.name);
       return sendJson(200, {
         success: true,
         draftText: draft,
-        languageUsed: submission.language || 'en',
+        languageUsed: submission.language,
         disclaimer: 'Draft generated strictly from chosen customer selections.'
       });
     }
@@ -615,328 +221,216 @@ const server = http.createServer(async (req, res) => {
       return sendJson(200, { success: true, message: 'Thank you for reaching out! A Replyo specialist will call you within 2 business hours.' });
     }
 
+    if (pathname === '/api/auth/login' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const store = getStore();
+      return sendJson(200, { success: true, redirect: '/app', user: store.user });
+    }
+
+    if (pathname === '/api/auth/signup' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const store = getStore();
+      if (body.clinicName) store.location.name = body.clinicName;
+      if (body.city) store.location.city = body.city;
+      saveStore(store);
+      return sendJson(200, { success: true, redirect: '/app' });
+    }
+
+    if (pathname === '/api/auth/forgot-password' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      return sendJson(200, { success: true, message: 'OTP instructions dispatched to registered WhatsApp and email.' });
+    }
+
+    if (pathname === '/api/book-demo' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const store = getStore();
+      if (!store.demoBookings) store.demoBookings = [];
+      store.demoBookings.push({ ...body, bookedAt: new Date().toISOString() });
+      saveStore(store);
+      return sendJson(200, { success: true, message: 'Executive demo confirmed!' });
+    }
+
+    if (pathname === '/api/simulate-review' && method === 'POST') {
+      const store = getStore();
+      const samples = [
+        { reviewerName: 'Vikram Sengupta', rating: 5, text: 'Had a severe toothache on Sunday morning. Dr. Sharma did a painless root canal and Dr. Sneha was so gentle. The Indiranagar clinic is sparkling clean and modern!' },
+        { reviewerName: 'Meera Krishnan', rating: 5, text: 'Best dental clinic in Bangalore for teeth aligners! The staff and Nurse Preeti explained everything with so much patience.' },
+        { reviewerName: 'Rajesh Gokhale', rating: 1, text: 'Waited 35 mins despite booking a 4 PM slot on 100ft road. Receptionist Kavita did not inform us about the delay.' },
+        { reviewerName: 'Deepa Hegde', rating: 5, text: 'Bohot acha treatment tha! Dr. Sharma ne dar bilkul nikal diya. Clinic ka ambience 5 star jaisa hai.' }
+      ];
+      const pick = samples[Math.floor(Math.random() * samples.length)];
+      const newReview = {
+        id: 'rev-' + Date.now(),
+        locationId: store.location.id || 'loc-01',
+        googleReviewId: 'gbp_sim_' + Math.random().toString(36).substring(7),
+        reviewerName: pick.reviewerName,
+        rating: pick.rating,
+        text: pick.text,
+        isStarOnly: false,
+        detectedLanguage: 'en',
+        detectedTone: pick.rating >= 4 ? 'positive' : 'negative',
+        createdAt: 'Just now',
+        reply: null
+      };
+
+      const aiResult = generateReviewReply({
+        review: newReview,
+        settings: store.location
+      });
+
+      newReview.detectedLanguage = aiResult.detectedLanguage;
+      newReview.detectedTone = aiResult.detectedTone;
+
+      const isNegative = newReview.rating <= 3;
+      const status = isNegative ? 'held' : 'posted';
+      const token = isNegative ? 'appr-' + Math.random().toString(36).substring(4) : undefined;
+
+      newReview.reply = {
+        id: 'rep-' + Date.now(),
+        reviewId: newReview.id,
+        draftText: aiResult.text,
+        finalText: status === 'posted' ? aiResult.text : undefined,
+        status: status,
+        model: 'gemini-1.5-flash',
+        validatorPassed: true,
+        isAutoPosted: status === 'posted',
+        approvalToken: token,
+        postedAt: status === 'posted' ? 'Just now' : undefined
+      };
+
+      store.reviews.unshift(newReview);
+      if (!store.notifications) store.notifications = [];
+      store.notifications.unshift({
+        id: 'notif-' + Date.now(),
+        title: isNegative ? 'Negative Review Held' : 'New 5★ Review Processed',
+        message: pick.reviewerName + ' left a ' + pick.rating + '★ review on Google Maps.',
+        time: 'Just now',
+        unread: true
+      });
+      saveStore(store);
+      return sendJson(200, { success: true, review: newReview });
+    }
+
+    if (pathname === '/api/staff' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const store = getStore();
+      if (!store.staff) store.staff = [];
+      const newStaff = {
+        id: 'st_' + (store.staff.length + 1),
+        name: body.name || 'Team Member',
+        role: body.role || 'Clinic Staff',
+        reviewsCount: 0,
+        avgRating: 5.0,
+        compliments: 'Punctual & attentive care',
+        tipsEarned: '₹0'
+      };
+      store.staff.push(newStaff);
+      saveStore(store);
+      return sendJson(200, { success: true, staff: newStaff });
+    }
+
+    if (pathname === '/api/notifications/read-all' && method === 'POST') {
+      const store = getStore();
+      (store.notifications || []).forEach(n => n.unread = false);
+      saveStore(store);
+      return sendJson(200, { success: true });
+    }
+
+    if (pathname === '/api/branch/switch' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const store = getStore();
+      const branch = (store.branches || []).find(b => b.id === body.branchId);
+      if (branch) {
+        store.location.name = branch.name;
+        store.location.area = branch.area;
+        store.location.city = branch.city;
+        saveStore(store);
+      }
+      return sendJson(200, { success: true, location: store.location });
+    }
+
+    if (pathname === '/api/reviews/bulk-approve' && method === 'POST') {
+      const store = getStore();
+      let count = 0;
+      store.reviews.forEach(r => {
+        if (r.reply && r.reply.status === 'held') {
+          r.reply.status = 'posted';
+          r.reply.finalText = r.reply.draftText;
+          r.reply.postedAt = 'Just now';
+          count++;
+        }
+      });
+      saveStore(store);
+      return sendJson(200, { success: true, count });
+    }
+
     // ----------------------------------------------------
-    // 1. WORLD-CLASS MINIMALIST HOMEPAGE (Anti-Slop, Tasteskill v2 Standard)
+    // 1. WORLD-CLASS MINIMALIST HOMEPAGE (Anti-Slop, 3D Canvas, Tasteskill v2 Standard)
     // ----------------------------------------------------
     if (pathname === '/') {
-      const html = renderHtmlPage('Autonomous Google Review SaaS', 'home', `
-        <!-- HERO SECTION (No Eyebrows, Clear 2-Line Headline, Balanced Measure) -->
-        <section class="relative overflow-hidden pt-12 md:pt-20 pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 bg-white">
-          <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <!-- Left: High Conviction Hero Copy -->
-            <div class="lg:col-span-7 space-y-6 text-left">
-              <h1 class="text-4xl sm:text-6xl font-black text-slate-950 tracking-tight leading-[1.08] font-heading">
-                Turn Google reviews into local patient growth. In Hindi, Hinglish, and English.
-              </h1>
+      const store = getStore();
+      const html = renderHtmlPage('Autonomous Google Review Management & AI QR Growth SaaS', 'home', renderHomePage(store));
+      return sendHtml(200, html);
+    }
 
-              <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-xl">
-                Never let a review sit unanswered. <strong class="text-slate-900 font-semibold">4–5 star reviews</strong> get warm, SEO-optimized replies posted automatically in 4 minutes. <strong class="text-slate-900 font-semibold">1–3 star complaints</strong> are safely held for 1-tap owner de-escalation with zero liability admission.
-              </p>
+    // ----------------------------------------------------
+    // AUTHENTICATION & ONBOARDING SUITE (/login, /signup, /forgot-password)
+    // ----------------------------------------------------
+    if (pathname === '/login') {
+      const html = renderHtmlPage('Sign In', 'login', renderLoginPage(parsedUrl.query));
+      return sendHtml(200, html);
+    }
 
-              <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
-                <a href="/app" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 min-h-[48px] rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                  Open Owner Dashboard &rarr;
-                </a>
-                <a href="/q/sharma-dent-01" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 min-h-[48px] rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-300 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                  ${getSvgIcon('smartphone', 'w-4 h-4 text-slate-500')} Test Customer QR Flow
-                </a>
-              </div>
+    if (pathname === '/signup') {
+      const html = renderHtmlPage('Start 14-Day Free Pilot', 'signup', renderSignupPage());
+      return sendHtml(200, html);
+    }
 
-              <div class="flex items-center gap-6 text-xs text-slate-500 font-medium pt-2">
-                <span class="flex items-center gap-1.5 text-slate-700 font-semibold">
-                  ${getSvgIcon('check', 'w-4 h-4 text-emerald-600')} 100% Google Policy Compliant
-                </span>
-                <span>•</span>
-                <span>UPI AutoPay Ready</span>
-                <span>•</span>
-                <span class="tabular-nums">From ₹749/month</span>
-              </div>
-            </div>
+    if (pathname === '/forgot-password') {
+      const html = renderHtmlPage('Reset Password', 'login', renderForgotPasswordPage());
+      return sendHtml(200, html);
+    }
 
-            <!-- Right: 2.5D Isometric Device Frame Mockup -->
-            <div class="lg:col-span-5 perspective-1000 flex justify-center">
-              <div class="isometric-mockup w-full max-w-sm bg-dark-950 p-4 rounded-[40px] border-4 border-slate-800 shadow-2xl relative">
-                <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto mb-3" aria-hidden="true"></div>
-                <div class="bg-white rounded-[32px] p-5 space-y-4 overflow-hidden border border-slate-100">
-                  <div class="flex items-center justify-between text-xs">
-                    <span class="font-bold text-slate-900 font-heading">Dr. Sharma Dental Clinic</span>
-                    <span class="text-[11px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded-full tabular-nums">4.8 ★</span>
-                  </div>
-                  <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1 text-xs">
-                    <div class="flex items-center justify-between">
-                      <span class="font-bold text-slate-900">Rohit K.</span>
-                      <div class="flex gap-0.5">${getStarRatingSvg(5, 'w-3 h-3')}</div>
-                    </div>
-                    <p class="text-[11px] text-slate-600">“Painless root canal! Staff bohot cooperative hai.”</p>
-                  </div>
-                  <div class="p-3.5 bg-brand-50 rounded-2xl border border-brand-200 text-xs space-y-1">
-                    <span class="text-[10px] uppercase font-bold text-brand-800">Autopilot Response (2m):</span>
-                    <p class="text-[11px] text-slate-800 leading-snug">“Thank you Rohit ji! We work hard to remain the best dental clinic in Indiranagar!”</p>
-                  </div>
-                  <div class="p-3 bg-dark-950 rounded-xl text-white text-center text-xs font-bold">
-                    Autonomous Local SEO Autopilot Active
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+    // ----------------------------------------------------
+    // TRUST, SECURITY & ENTERPRISE SCHEDULER
+    // ----------------------------------------------------
+    if (pathname === '/security' || pathname === '/compliance') {
+      const html = renderHtmlPage('Clinical Privacy & Security Whitepaper', 'security', renderSecurityPage());
+      return sendHtml(200, html);
+    }
 
-        <!-- LIVE INTERACTIVE ENGINE SANDBOX (The One Genuine Live Thing, Tasteskill v2) -->
-        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden card-3d">
-            <div class="bg-dark-950 text-white px-6 py-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800">
-              <div>
-                <h2 class="font-bold text-sm text-white flex items-center gap-2 font-heading">
-                  ${getSvgIcon('sparkles', 'w-4 h-4 text-brand-400')}
-                  Interactive Review Pipeline Sandbox
-                </h2>
-                <p class="text-[11px] text-slate-400">Test how Replyo detects dialect, mirrors tone, and weaves local SEO keywords</p>
-              </div>
-              <div class="flex flex-wrap gap-1.5 text-xs">
-                <button type="button" onclick="setSample('hinglish')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Hinglish 5★</button>
-                <button type="button" onclick="setSample('hindi')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Hindi 5★</button>
-                <button type="button" onclick="setSample('negative')" class="px-3 py-1.5 rounded-lg bg-amber-950/70 hover:bg-amber-900 text-amber-300 border border-amber-800 font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Negative 1★ (Held)</button>
-              </div>
-            </div>
+    if (pathname === '/book-demo') {
+      const html = renderHtmlPage('Schedule Executive Demo', 'demo', renderBookDemoPage());
+      return sendHtml(200, html);
+    }
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
-              <div class="p-6 sm:p-8 space-y-4 bg-slate-50/50">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="font-bold uppercase tracking-wider text-slate-500">Incoming Review Event</span>
-                  <span class="text-slate-400">Google Business Webhook</span>
-                </div>
-                <div>
-                  <label for="demoName" class="block text-xs font-semibold text-slate-700 mb-1">Reviewer Name</label>
-                  <input id="demoName" type="text" value="Rohit Kulkarni" class="w-full text-xs p-3 rounded-xl border border-slate-300 font-bold bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Star Rating</label>
-                  <div class="flex items-center gap-2 cursor-pointer" role="radiogroup" aria-label="Star Rating Selector">
-                    <button type="button" onclick="setStars(1)" class="text-amber-400 text-xl focus-visible:outline-none p-1" aria-label="1 star">★</button>
-                    <button type="button" onclick="setStars(2)" class="text-amber-400 text-xl focus-visible:outline-none p-1" aria-label="2 stars">★</button>
-                    <button type="button" onclick="setStars(3)" class="text-amber-400 text-xl focus-visible:outline-none p-1" aria-label="3 stars">★</button>
-                    <button type="button" onclick="setStars(4)" class="text-amber-400 text-xl focus-visible:outline-none p-1" aria-label="4 stars">★</button>
-                    <button type="button" onclick="setStars(5)" class="text-amber-400 text-xl focus-visible:outline-none p-1" aria-label="5 stars">★</button>
-                    <span id="starDisplay" class="text-xs font-bold text-slate-700 ml-2 tabular-nums">5 Stars</span>
-                  </div>
-                </div>
-                <div>
-                  <label for="demoText" class="block text-xs font-semibold text-slate-700 mb-1">Review Comment</label>
-                  <textarea id="demoText" rows="4" class="w-full text-xs p-3 rounded-xl border border-slate-300 bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Dr. Sharma ke clinic me root canal karwaya. Bohot hi painless procedure tha aur staff bohot cooperative hai. Ekdum clean clinic!</textarea>
-                </div>
-                <button type="button" onclick="runPipeline()" class="w-full min-h-[44px] rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                  Process through Replyo Engine &rarr;
-                </button>
-              </div>
+    if (pathname === '/faq') {
+      const html = renderHtmlPage('Frequently Asked Questions', 'faq', renderFaqPage());
+      return sendHtml(200, html);
+    }
 
-              <div class="p-6 sm:p-8 bg-white flex flex-col justify-between space-y-4">
-                <div class="space-y-4">
-                  <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pipeline Decision</span>
-                    <span id="demoDecision" class="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
-                      AUTOPILOT: AUTO-POSTED
-                    </span>
-                  </div>
-                  <div class="flex flex-wrap gap-2 text-[11px]">
-                    <span id="demoLang" class="font-bold bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200">LANG: HINGLISH</span>
-                    <span class="font-bold bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg border border-blue-200">SEO INJECTED</span>
-                    <span class="font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg border border-emerald-200">SAFETY: PASSED</span>
-                  </div>
-                  <div class="p-4.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <span class="text-xs font-bold text-slate-700 block">Proposed Official Reply:</span>
-                    <p id="demoOutput" class="text-xs text-slate-800 leading-relaxed font-normal" aria-live="polite">
-                      Thank you so much Rohit ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Our team works hard every day to remain the best dental clinic in Indiranagar. Looking forward to serving you again at Dr. Sharma Dental & Implant Clinic!
-                    </p>
-                  </div>
-                </div>
+    if (pathname === '/qr-kit') {
+      const html = renderHtmlPage('Countertop QR Display Hardware', 'qr-kit', renderQrKitPage());
+      return sendHtml(200, html);
+    }
 
-                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span>Engine: Gemini 1.5 Flash</span>
-                  <a href="/app" class="font-bold text-brand-600 hover:underline">Open Live Dashboard &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+    if (pathname === '/terms') {
+      const html = renderHtmlPage('Terms of Service', 'legal', renderTermsPage());
+      return sendHtml(200, html);
+    }
 
-        <!-- ROI & TIME SAVED CALCULATOR (Accessible Slider, Tabular Numerals) -->
-        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div class="bg-dark-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl space-y-8">
-            <div class="text-center space-y-2 max-w-xl mx-auto">
-              <h2 class="text-3xl font-black font-heading text-white">Interactive Time & Value Calculator</h2>
-              <p class="text-slate-400 text-xs">Estimate the hours and agency fees Replyo saves your business each month</p>
-            </div>
+    if (pathname === '/privacy') {
+      const html = renderHtmlPage('Privacy Policy (DPDP Act 2023)', 'legal', renderPrivacyPage());
+      return sendHtml(200, html);
+    }
 
-            <div class="max-w-xl mx-auto space-y-6">
-              <div>
-                <div class="flex justify-between text-xs font-bold mb-2">
-                  <label for="reviewSlider">Reviews received per month:</label>
-                  <span id="sliderVal" class="text-brand-400 font-heading text-base tabular-nums">50 reviews</span>
-                </div>
-                <input id="reviewSlider" type="range" min="10" max="250" value="50" oninput="calcRoi(this.value)" class="w-full accent-brand-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded">
-              </div>
+    if (pathname === '/refund-policy') {
+      const html = renderHtmlPage('Refund & Cancellation Policy', 'legal', renderRefundPolicyPage());
+      return sendHtml(200, html);
+    }
 
-              <div class="grid grid-cols-2 gap-4 text-center">
-                <div class="p-5 bg-slate-900 rounded-2xl border border-slate-800">
-                  <span class="text-slate-400 text-xs">Hours Saved Monthly</span>
-                  <p id="hoursSaved" class="text-3xl font-black text-white font-heading mt-1 tabular-nums">12.5 hrs</p>
-                  <p class="text-[11px] text-slate-500 mt-0.5">Based on 15 mins/review drafting</p>
-                </div>
-                <div class="p-5 bg-slate-900 rounded-2xl border border-slate-800">
-                  <span class="text-slate-400 text-xs">Agency Cost Equivalent</span>
-                  <p id="moneySaved" class="text-3xl font-black text-brand-400 font-heading mt-1 tabular-nums">₹8,750</p>
-                  <p class="text-[11px] text-slate-500 mt-0.5">Vs hiring social media agency</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- PRICING SECTION (Clean Swiss Cards, Tabular Figures) -->
-        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-10">
-          <div class="text-center space-y-3">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-heading">
-              Transparent Pricing. Pay in INR.
-            </h2>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">
-              Month-to-month flexibility. Pay with UPI AutoPay or corporate card. 18% GST tax invoices for full input credit.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            ${PLANS.slice(0, 3).map((plan) => `
-              <div class="p-7 rounded-3xl bg-white border ${plan.isPopular ? 'border-2 border-brand-500 shadow-lg relative' : 'border-slate-200 shadow-sm'} flex flex-col justify-between card-3d">
-                <div class="space-y-4">
-                  <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-xl text-slate-900 font-heading">${plan.name}</h3>
-                    ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 bg-brand-600 text-white rounded-full">Most Popular</span>' : ''}
-                  </div>
-                  <div>
-                    <span class="text-4xl font-black text-slate-900 font-heading tabular-nums">₹${plan.monthlyPrice}</span>
-                    <span class="text-xs text-slate-500"> / month</span>
-                  </div>
-                  <ul class="space-y-2.5 text-xs text-slate-600 pt-3 border-t border-slate-100" aria-label="${plan.name} features">
-                    ${plan.features.map((f) => `<li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>${f}</span></li>`).join('')}
-                  </ul>
-                </div>
-                <a href="/pricing" class="mt-6 block w-full py-3 text-center rounded-xl ${plan.isPopular ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' : 'bg-slate-900 hover:bg-slate-800 text-white'} text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                  Get Started with ${plan.name} &rarr;
-                </a>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-
-        <!-- ACCESSIBLE FAQ ACCORDION -->
-        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8" aria-label="Frequently Asked Questions">
-          <div class="text-center space-y-2">
-            <h2 class="text-3xl font-black text-slate-900 font-heading">Frequently Asked Questions</h2>
-            <p class="text-xs text-slate-500">Clear answers to questions local business owners ask before turning on Replyo</p>
-          </div>
-
-          <div class="space-y-3">
-            <details class="bg-white rounded-2xl border border-slate-200 p-5 cursor-pointer group focus-within:ring-2 focus-within:ring-brand-500">
-              <summary class="font-bold text-sm text-slate-900 list-none flex justify-between items-center focus:outline-none">
-                <span>Will Google penalize our profile for using automated replies?</span>
-                <span class="text-brand-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p class="mt-3 text-xs text-slate-600 leading-relaxed">
-                No. Google’s official Business Profile guidelines actively encourage businesses to reply to every customer review. Replyo adheres 100% to Google policies by generating authentic, contextual responses tailored to the reviewer’s exact dialect and experience, avoiding spam patterns.
-              </p>
-            </details>
-
-            <details class="bg-white rounded-2xl border border-slate-200 p-5 cursor-pointer group focus-within:ring-2 focus-within:ring-brand-500">
-              <summary class="font-bold text-sm text-slate-900 list-none flex justify-between items-center focus:outline-none">
-                <span>What happens when a customer leaves a 1-star negative review?</span>
-                <span class="text-brand-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p class="mt-3 text-xs text-slate-600 leading-relaxed">
-                Negative reviews (1 to 3 stars) are never auto-posted. They are safely quarantined in your Held Approvals Queue. An instant SMS and email alert with an expiring 1-tap approval link is delivered to the owner. The proposed reply admits zero legal liability and invites the customer to call the clinic manager directly offline.
-              </p>
-            </details>
-
-            <details class="bg-white rounded-2xl border border-slate-200 p-5 cursor-pointer group focus-within:ring-2 focus-within:ring-brand-500">
-              <summary class="font-bold text-sm text-slate-900 list-none flex justify-between items-center focus:outline-none">
-                <span>How does the Ask-for-Review QR flow work for walk-in patients?</span>
-                <span class="text-brand-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p class="mt-3 text-xs text-slate-600 leading-relaxed">
-                You display our printed counter card or table tent at reception. The customer scans it with any smartphone camera (zero app download, zero login). They tap 3 quick choices (services, staff, ambience) &rarr; an authentic draft is generated in 2 seconds &rarr; text is automatically copied to their clipboard and the Google Maps review screen opens directly.
-              </p>
-            </details>
-
-            <details class="bg-white rounded-2xl border border-slate-200 p-5 cursor-pointer group focus-within:ring-2 focus-within:ring-brand-500">
-              <summary class="font-bold text-sm text-slate-900 list-none flex justify-between items-center focus:outline-none">
-                <span>Do you support UPI AutoPay and GST tax invoices?</span>
-                <span class="text-brand-600 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <p class="mt-3 text-xs text-slate-600 leading-relaxed">
-                Yes! Replyo is built natively for India. You can subscribe seamlessly using Google Pay, PhonePe, Paytm, or BHIM UPI AutoPay with zero credit card hassles. Automated 18% GST tax invoices with your clinic GSTIN are generated every month for full input tax credit.
-              </p>
-            </details>
-          </div>
-        </section>
-
-        <!-- SCRIPT FOR SANDBOX & ROI -->
-        <script>
-          function calcRoi(val) {
-            document.getElementById('sliderVal').innerText = val + ' reviews';
-            const hours = (val * 15 / 60).toFixed(1);
-            document.getElementById('hoursSaved').innerText = hours + ' hrs';
-            const money = Math.round(val * 175);
-            document.getElementById('moneySaved').innerText = '₹' + money.toLocaleString('en-IN');
-          }
-          let demoRating = 5;
-          function setStars(n) {
-            demoRating = n;
-            document.getElementById('starDisplay').innerText = n + ' Stars';
-          }
-          function setSample(type) {
-            if (type === 'hinglish') {
-              demoRating = 5;
-              document.getElementById('demoName').value = 'Rohit Kulkarni';
-              document.getElementById('demoText').value = 'Dr. Sharma ke clinic me root canal karwaya. Bohot hi painless procedure tha aur staff bohot cooperative hai. Ekdum clean clinic!';
-              document.getElementById('starDisplay').innerText = '5 Stars';
-            } else if (type === 'hindi') {
-              demoRating = 5;
-              document.getElementById('demoName').value = 'मनोज कुमार';
-              document.getElementById('demoText').value = 'डॉक्टर शर्मा जी बहुत ही अनुभवी हैं। दांत में बहुत दर्द था लेकिन इलाज के बाद तुरंत राहत मिल गई। बहुत बढ़िया अस्पताल।';
-              document.getElementById('starDisplay').innerText = '5 Stars';
-            } else if (type === 'negative') {
-              demoRating = 1;
-              document.getElementById('demoName').value = 'Priya Narang';
-              document.getElementById('demoText').value = 'Waited 45 mins past appointment time. Receptionist was completely dismissive and the doctor rushed through consultation.';
-              document.getElementById('starDisplay').innerText = '1 Star';
-            }
-            runPipeline();
-          }
-          async function runPipeline() {
-            const name = document.getElementById('demoName').value;
-            const text = document.getElementById('demoText').value;
-            const res = await fetch('/api/reviews', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ reviewerName: name, rating: demoRating, text })
-            });
-            const data = await res.json();
-            const rev = data.review;
-            document.getElementById('demoOutput').innerText = rev.reply.draftText;
-            document.getElementById('demoLang').innerText = 'LANG: ' + rev.detectedLanguage.toUpperCase();
-            if (rev.rating <= 3) {
-              document.getElementById('demoDecision').className = 'text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300';
-              document.getElementById('demoDecision').innerText = 'AUTOPILOT: HELD FOR 1-TAP APPROVAL';
-            } else {
-              document.getElementById('demoDecision').className = 'text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300';
-              document.getElementById('demoDecision').innerText = 'AUTOPILOT: AUTO-POSTED TO GOOGLE';
-            }
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              confetti({ particleCount: 40, spread: 45, origin: { y: 0.6 } });
-            }
-          }
-        </script>
-      `);
+    if (pathname === '/dpdp-consent') {
+      const html = renderHtmlPage('DPDP Act 2023 Consent Framework', 'legal', renderDpdpConsentPage());
       return sendHtml(200, html);
     }
 
@@ -1449,7 +943,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('Dashboard', 'app', renderAppShell('dashboard', content)));
+      return sendHtml(200, renderHtmlPage('Dashboard', 'app', renderAppShell('dashboard', content, store)));
     }
 
     if (pathname === '/app/reviews') {
@@ -1521,7 +1015,7 @@ const server = http.createServer(async (req, res) => {
           }
         </script>
       `;
-      return sendHtml(200, renderHtmlPage('Reviews', 'app', renderAppShell('reviews', content)));
+      return sendHtml(200, renderHtmlPage('Reviews', 'app', renderAppShell('reviews', content, store)));
     }
 
     if (pathname === '/app/approvals') {
@@ -1585,7 +1079,7 @@ const server = http.createServer(async (req, res) => {
           }
         </script>
       `;
-      return sendHtml(200, renderHtmlPage('Approvals', 'app', renderAppShell('approvals', content)));
+      return sendHtml(200, renderHtmlPage('Approvals', 'app', renderAppShell('approvals', content, store)));
     }
 
     // ----------------------------------------------------
@@ -1652,7 +1146,7 @@ const server = http.createServer(async (req, res) => {
           });
         </script>
       `;
-      return sendHtml(200, renderHtmlPage('QR Studio', 'app', renderAppShell('qr', content)));
+      return sendHtml(200, renderHtmlPage('QR Studio', 'app', renderAppShell('qr', content, store)));
     }
 
     if (pathname === '/app/growth') {
@@ -1694,7 +1188,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('Growth', 'app', renderAppShell('growth', content)));
+      return sendHtml(200, renderHtmlPage('Growth', 'app', renderAppShell('growth', content, store)));
     }
 
     // ----------------------------------------------------
@@ -1739,7 +1233,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('GBP Health Check', 'app', renderAppShell('profile-health', content)));
+      return sendHtml(200, renderHtmlPage('GBP Health Check', 'app', renderAppShell('profile-health', content, store)));
     }
 
     // ----------------------------------------------------
@@ -1801,7 +1295,7 @@ const server = http.createServer(async (req, res) => {
           }
         </script>
       `;
-      return sendHtml(200, renderHtmlPage('Poster Studio', 'app', renderAppShell('posters', content)));
+      return sendHtml(200, renderHtmlPage('Poster Studio', 'app', renderAppShell('posters', content, store)));
     }
 
     // ----------------------------------------------------
@@ -1858,7 +1352,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('Weekly Reports', 'app', renderAppShell('reports', content)));
+      return sendHtml(200, renderHtmlPage('Weekly Reports', 'app', renderAppShell('reports', content, store)));
     }
 
     // ----------------------------------------------------
@@ -1912,13 +1406,14 @@ const server = http.createServer(async (req, res) => {
           }
         </script>
       `;
-      return sendHtml(200, renderHtmlPage('Settings', 'app', renderAppShell('settings', content)));
+      return sendHtml(200, renderHtmlPage('Settings', 'app', renderAppShell('settings', content, store)));
     }
 
     // ----------------------------------------------------
     // BILLING & GST (/app/billing)
     // ----------------------------------------------------
     if (pathname === '/app/billing') {
+      const store = getStore();
       const content = `
         <div class="space-y-6 max-w-4xl mx-auto">
           <div>
@@ -1944,12 +1439,22 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('Billing', 'app', renderAppShell('billing', content)));
+      return sendHtml(200, renderHtmlPage('Billing', 'app', renderAppShell('billing', content, store)));
     }
 
     // ----------------------------------------------------
     // TEAM & MULTI-LOCATION (/app/team)
     // ----------------------------------------------------
+    if (pathname === '/app/staff') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('Staff Leaderboard & Incentives', 'app', renderAppShell('staff', renderStaffPage(store), store)));
+    }
+
+    if (pathname === '/app/local-pack') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('Google Local 3-Pack Simulator', 'app', renderAppShell('local-pack', renderLocalPackPage(store), store)));
+    }
+
     if (pathname === '/app/team') {
       const store = getStore();
       const content = `
@@ -1971,7 +1476,7 @@ const server = http.createServer(async (req, res) => {
           </div>
         </div>
       `;
-      return sendHtml(200, renderHtmlPage('Team & Locations', 'app', renderAppShell('team', content)));
+      return sendHtml(200, renderHtmlPage('Team & Locations', 'app', renderAppShell('team', content, store)));
     }
 
     // ----------------------------------------------------

@@ -1,7 +1,7 @@
 {
   "location": {
     "id": "loc-01",
-    "name": "Dr. Sharma Dental & Implant Clinic",
+    "name": "Smile Studio",
     "category": "Dental Clinic",
     "city": "Bengaluru",
     "area": "Indiranagar",
@@ -34,9 +34,80 @@
     "autoKeywordWeaving": true,
     "smsAlertsEnabled": true,
     "emailAlertsEnabled": true,
-    "pushAlertsEnabled": true
+    "pushAlertsEnabled": true,
+    "replyDelayMinutes": 5,
+    "tonePreference": "warm"
   },
   "reviews": [
+    {
+      "id": "rev-1792753627342",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_sim_fk6w9i",
+      "reviewerName": "Vikram Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sharma did a painless root canal and Dr. Sneha was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792753627347",
+        "reviewId": "rev-1792753627342",
+        "draftText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Smile Studio is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Smile Studio is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792753487108",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_sim_kee4q",
+      "reviewerName": "Vikram Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sharma did a painless root canal and Dr. Sneha was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792753487114",
+        "reviewId": "rev-1792753487108",
+        "draftText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Smile Studio is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Smile Studio is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792753317213",
+      "locationId": "loc-01",
+      "googleReviewId": "gbp_sim_vahtwk",
+      "reviewerName": "Vikram Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sharma did a painless root canal and Dr. Sneha was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792753317218",
+        "reviewId": "rev-1792753317213",
+        "draftText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikram Sengupta for taking the time to share your review! The entire team at Dr. Sharma Dental & Implant Clinic is delighted to hear about your great experience. Our team works hard every day to remain the best dental clinic in Indiranagar. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
     {
       "id": "rev-1792746685531",
       "locationId": "loc-01",
@@ -75,11 +146,13 @@
         "id": "rep-1792737826644",
         "reviewId": "rev-1792737826641",
         "draftText": "Dear Rahul Deshmukh, thank you for your feedback. Providing a high standard of care and comfort at Dr. Sharma Dental & Implant Clinic is our top priority. We would appreciate the opportunity to speak with you directly. Please reach out to our manager at +91 98450 12345.",
-        "status": "held",
+        "status": "posted",
         "model": "gemini-1.5-flash",
         "validatorPassed": true,
         "isAutoPosted": false,
-        "approvalToken": "appr-7c7ma0bq"
+        "approvalToken": "appr-7c7ma0bq",
+        "finalText": "Dear Rahul Deshmukh, thank you for your feedback. Providing a high standard of care and comfort at Dr. Sharma Dental & Implant Clinic is our top priority. We would appreciate the opportunity to speak with you directly. Please reach out to our manager at +91 98450 12345.",
+        "postedAt": "Just now"
       }
     },
     {
@@ -219,7 +292,7 @@
         "id": "rep-05",
         "reviewId": "rev-05",
         "draftText": "Dear Vikram Sundaram, thank you for your feedback regarding your visit. We maintain transparent billing standards and would like to review your invoice details personally. Please connect with our clinic manager at +91 98450 12345 so we can assist you promptly.",
-        "status": "held",
+        "status": "posted",
         "model": "gemini-1.5-flash",
         "validatorPassed": true,
         "isAutoPosted": false,
@@ -229,7 +302,9 @@
           "Safety Check: Zero admission of legal negligence",
           "Safety Check: No refund promised",
           "Routes patient to offline phone"
-        ]
+        ],
+        "finalText": "Dear Vikram Sundaram, thank you for your feedback regarding your visit. We maintain transparent billing standards and would like to review your invoice details personally. Please connect with our clinic manager at +91 98450 12345 so we can assist you promptly.",
+        "postedAt": "Just now"
       }
     }
   ],
@@ -304,6 +379,181 @@
       "unansweredReviews": 55,
       "responseRate": 54.1,
       "averageResponseTime": "Rarely replies"
+    }
+  ],
+  "branches": [
+    {
+      "id": "branch-01",
+      "name": "Indiranagar Main Clinic",
+      "area": "12th Main Road, Indiranagar",
+      "city": "Bengaluru",
+      "isPrimary": true,
+      "rating": 4.8,
+      "reviewsCount": 482
+    },
+    {
+      "id": "branch-02",
+      "name": "Koramangala 4th Block",
+      "area": "80 Feet Road, Koramangala",
+      "city": "Bengaluru",
+      "isPrimary": false,
+      "rating": 4.7,
+      "reviewsCount": 214
+    },
+    {
+      "id": "branch-03",
+      "name": "Whitefield Branch",
+      "area": "ITPL Main Road, Whitefield",
+      "city": "Bengaluru",
+      "isPrimary": false,
+      "rating": 4.9,
+      "reviewsCount": 168
+    }
+  ],
+  "staff": [
+    {
+      "id": "staff-01",
+      "name": "Dr. Sneha Kulkarni",
+      "role": "Endodontist & Root Canal Specialist",
+      "reviewsCount": 44,
+      "avgRating": 4.9,
+      "qrScans": 64
+    },
+    {
+      "id": "staff-02",
+      "name": "Dr. Ananya Sharma",
+      "role": "Chief Implantologist & Clinic Director",
+      "reviewsCount": 62,
+      "avgRating": 4.9,
+      "qrScans": 112
+    },
+    {
+      "id": "staff-03",
+      "name": "Nurse Preeti Verma",
+      "role": "Senior Clinical Assistant",
+      "reviewsCount": 28,
+      "avgRating": 4.8,
+      "qrScans": 35
+    },
+    {
+      "id": "staff-04",
+      "name": "Kavita Menon",
+      "role": "Patient Relations & Frontdesk",
+      "reviewsCount": 36,
+      "avgRating": 4.8,
+      "qrScans": 184
+    },
+    {
+      "id": "st_5",
+      "name": "Dr. Amit Verma",
+      "role": "Prosthodontist",
+      "reviewsCount": 0,
+      "avgRating": 5,
+      "compliments": "Punctual & attentive care",
+      "tipsEarned": "₹0"
+    },
+    {
+      "id": "st_6",
+      "name": "Dr. Tarun Verma",
+      "role": "Orthodontist",
+      "reviewsCount": 0,
+      "avgRating": 5,
+      "compliments": "Punctual & attentive care",
+      "tipsEarned": "₹0"
+    },
+    {
+      "id": "st_7",
+      "name": "Dr. Tarun Verma",
+      "role": "Orthodontist",
+      "reviewsCount": 0,
+      "avgRating": 5,
+      "compliments": "Punctual & attentive care",
+      "tipsEarned": "₹0"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1792753627347",
+      "title": "New 5★ Review Processed",
+      "message": "Vikram Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792753487114",
+      "title": "New 5★ Review Processed",
+      "message": "Vikram Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792753317218",
+      "title": "New 5★ Review Processed",
+      "message": "Vikram Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-01",
+      "type": "held",
+      "title": "Negative Review Held",
+      "message": "Rahul Deshmukh (1★) held for 1-tap owner approval",
+      "time": "10m ago",
+      "unread": false,
+      "link": "/app/approvals"
+    },
+    {
+      "id": "notif-02",
+      "type": "review",
+      "title": "New 5★ Review Auto-Posted",
+      "message": "Amit Saxena left a 5★ review in English. Auto-replied in 2 mins.",
+      "time": "25m ago",
+      "unread": false,
+      "link": "/app/reviews"
+    },
+    {
+      "id": "notif-03",
+      "type": "growth",
+      "title": "Rating Milestone Reached",
+      "message": "Indiranagar branch reached 4.8★ with 482 total reviews",
+      "time": "2h ago",
+      "unread": false,
+      "link": "/app/growth"
+    }
+  ],
+  "user": {
+    "name": "Dr. Ananya Sharma",
+    "email": "ananya@sharmadental.in",
+    "role": "Clinic Owner & Director",
+    "plan": "Growth Plan (₹1,349/mo)",
+    "gstin": "29AABCS1429B1Z5",
+    "activeBranchId": "branch-01"
+  },
+  "demoBookings": [
+    {
+      "name": "Dr. Vikram Rao",
+      "email": "dr@rao.in",
+      "phone": "9876543210",
+      "branches": "2-5",
+      "bookedAt": "2026-10-23T11:01:57.229Z"
+    },
+    {
+      "name": "Dr. Rao",
+      "email": "dr@rao.in",
+      "phone": "9876543210",
+      "branches": "2-5",
+      "date": "2026-10-26",
+      "time": "10:30 AM",
+      "bookedAt": "2026-10-23T11:04:47.094Z"
+    },
+    {
+      "name": "Dr. Rao",
+      "email": "dr@rao.in",
+      "phone": "9876543210",
+      "branches": "2-5",
+      "date": "2026-10-26",
+      "time": "10:30 AM",
+      "bookedAt": "2026-10-23T11:07:07.333Z"
     }
   ]
 }
