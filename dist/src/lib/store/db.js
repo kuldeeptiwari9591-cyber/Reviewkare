@@ -1,4 +1,13 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.COMPETITORS = exports.INITIAL_LOCATION = exports.PLANS = void 0;
 exports.getAllReviews = getAllReviews;
@@ -125,7 +134,7 @@ exports.INITIAL_LOCATION = {
     emailAlertsEnabled: true,
     pushAlertsEnabled: true,
 };
-let reviewsStore = [
+var reviewsStore = [
     {
         id: 'rev-01',
         locationId: 'loc-01',
@@ -250,7 +259,7 @@ let reviewsStore = [
         },
     },
 ];
-let qrCodesStore = [
+var qrCodesStore = [
     {
         id: 'qr-01',
         locationId: 'loc-01',
@@ -325,16 +334,16 @@ exports.COMPETITORS = [
 ];
 // Helper functions for state mutations
 function getAllReviews() {
-    return [...reviewsStore];
+    return __spreadArray([], reviewsStore, true);
 }
 function getHeldReviews() {
-    return reviewsStore.filter((r) => r.reply?.status === 'held');
+    return reviewsStore.filter(function (r) { var _a; return ((_a = r.reply) === null || _a === void 0 ? void 0 : _a.status) === 'held'; });
 }
 function getReviewById(id) {
-    return reviewsStore.find((r) => r.id === id);
+    return reviewsStore.find(function (r) { return r.id === id; });
 }
 function approveReviewReply(reviewId, customText) {
-    const review = reviewsStore.find((r) => r.id === reviewId);
+    var review = reviewsStore.find(function (r) { return r.id === reviewId; });
     if (!review || !review.reply)
         return undefined;
     review.reply.status = 'posted';
@@ -344,7 +353,7 @@ function approveReviewReply(reviewId, customText) {
     return review;
 }
 function approveByToken(token) {
-    const review = reviewsStore.find((r) => r.reply?.approvalToken === token);
+    var review = reviewsStore.find(function (r) { var _a; return ((_a = r.reply) === null || _a === void 0 ? void 0 : _a.approvalToken) === token; });
     if (!review || !review.reply) {
         return { success: false };
     }
@@ -352,10 +361,10 @@ function approveByToken(token) {
     review.reply.finalText = review.reply.draftText;
     review.reply.postedAt = 'Just now';
     review.reply.approvedBy = 'Owner (via 1-Tap SMS Link)';
-    return { success: true, review };
+    return { success: true, review: review };
 }
 function updateReviewReplyDraft(reviewId, newDraftText) {
-    const review = reviewsStore.find((r) => r.id === reviewId);
+    var review = reviewsStore.find(function (r) { return r.id === reviewId; });
     if (!review || !review.reply)
         return undefined;
     if (!review.reply.previousVersions) {
@@ -366,19 +375,19 @@ function updateReviewReplyDraft(reviewId, newDraftText) {
     return review;
 }
 function getQRCodes() {
-    return [...qrCodesStore];
+    return __spreadArray([], qrCodesStore, true);
 }
 function getQRCodeByCode(shortCode) {
-    return qrCodesStore.find((q) => q.shortCode === shortCode);
+    return qrCodesStore.find(function (q) { return q.shortCode === shortCode; });
 }
 function recordScan(shortCode) {
-    const qr = qrCodesStore.find((q) => q.shortCode === shortCode);
+    var qr = qrCodesStore.find(function (q) { return q.shortCode === shortCode; });
     if (qr) {
         qr.scansCount += 1;
     }
 }
 function recordDraftGenerated(shortCode) {
-    const qr = qrCodesStore.find((q) => q.shortCode === shortCode);
+    var qr = qrCodesStore.find(function (q) { return q.shortCode === shortCode; });
     if (qr) {
         qr.draftsGeneratedCount += 1;
     }

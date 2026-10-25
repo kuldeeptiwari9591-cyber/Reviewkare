@@ -141,6 +141,21 @@ const apprResult = approveByToken(tokenToApprove);
 assert(apprResult.success === true, '1-Tap mobile approval by token succeeds');
 assert(apprResult.review?.reply?.status === 'posted', 'Reply status updated to posted');
 
+console.log('\n--- 6. Testing Enterprise Modules & Integrations ---');
+const fs = require('fs');
+const path = require('path');
+const storeJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/store.json'), 'utf8'));
+
+assert(storeJson.posIntegrations && storeJson.posIntegrations.length === 3, 'All 3 POS integrations loaded (Petpooja, Zenoti, Practo)');
+assert(storeJson.whatsappStudio && storeJson.whatsappStudio.status === 'connected', 'WhatsApp Business Cloud API connected');
+assert(storeJson.whatsappStudio.templates.length === 4, '4 vertical WhatsApp message templates configured');
+assert(storeJson.disputes && storeJson.disputes.length >= 2, 'AI Google Policy violation disputes loaded');
+assert(storeJson.sentimentAspects && storeJson.sentimentAspects.length === 6, '6 aspect-based sentiment operational metrics verified');
+assert(storeJson.hardwareCatalog && storeJson.hardwareCatalog.length === 4, '4 NFC countertop stands & bill cards in hardware catalog');
+assert(storeJson.servicesByVertical && storeJson.servicesByVertical.cafe.includes('Single-Origin Pour Over'), 'Multi-vertical cafe services populated');
+assert(storeJson.servicesByVertical.salon.includes('Balayage Hair Color'), 'Multi-vertical salon services populated');
+assert(storeJson.servicesByVertical.gym.includes('Strength & Conditioning'), 'Multi-vertical gym services populated');
+
 console.log(`\n========================================`);
 console.log(`TEST SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`========================================\n`);

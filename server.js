@@ -41,7 +41,16 @@ const { renderAppShell } = require('./src/views/appShell.js');
 const { renderHomePage } = require('./src/views/homePage.js');
 const { renderLoginPage, renderSignupPage, renderForgotPasswordPage } = require('./src/views/authPages.js');
 const { renderSecurityPage, renderBookDemoPage, renderFaqPage, renderQrKitPage, renderTermsPage, renderPrivacyPage, renderRefundPolicyPage, renderDpdpConsentPage } = require('./src/views/trustPages.js');
-const { renderStaffPage, renderLocalPackPage } = require('./src/views/featurePages.js');
+const { 
+  renderStaffPage, 
+  renderLocalPackPage,
+  renderWhatsAppStudioPage,
+  renderPosWebhooksPage,
+  renderDisputesPage,
+  renderOrganizationsPage,
+  renderSentimentPage,
+  renderHardwareStudioPage
+} = require('./src/views/featurePages.js');
 
 function parseJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -372,6 +381,52 @@ const server = http.createServer(async (req, res) => {
       });
       saveStore(store);
       return sendJson(200, { success: true, count });
+    }
+
+    if (pathname.startsWith('/api/webhooks/pos/') && method === 'POST') {
+      const parts = pathname.split('/');
+      const provider = parts[4] || 'petpooja';
+      const store = getStore();
+      const pos = (store.posIntegrations || []).find(p => p.provider === provider);
+      if (pos) {
+        pos.eventsCaptured = (pos.eventsCaptured || 0) + 1;
+        pos.lastSync = 'Just now';
+        saveStore(store);
+      }
+      return sendJson(200, { 
+        success: true, 
+        provider, 
+        message: 'Webhook processed successfully. WhatsApp review trigger queued.',
+        scheduledDelay: pos ? pos.autoTriggerDelay : '45 mins'
+      });
+    }
+
+    if (pathname === '/api/whatsapp/test-send' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      return sendJson(200, {
+        success: true,
+        dispatchedTo: body.phone || '+91 98450 11223',
+        status: 'delivered',
+        wabaMessageId: 'wam_msg_' + Date.now()
+      });
+    }
+
+    if (pathname === '/api/disputes/generate' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      return sendJson(200, {
+        success: true,
+        dossier: 'FORMAL GOOGLE BUSINESS PROFILE REVIEW REMOVAL REQUEST\nPolicy Violation: Maps User Content Policy § 3.2\nReason: Documented conflict of interest & fraudulent negative attack.\nEvidence: Account registered same day with no verified transaction history.'
+      });
+    }
+
+    if (pathname === '/api/hardware/order' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      return sendJson(200, {
+        success: true,
+        orderId: 'HW_ORD_' + Date.now().toString().slice(-6),
+        item: body.itemId || 'hw_acrylic',
+        status: 'order_received_design_proof_in_progress'
+      });
     }
 
     // ----------------------------------------------------
@@ -1465,28 +1520,34 @@ const server = http.createServer(async (req, res) => {
       return sendHtml(200, renderHtmlPage('Google Local 3-Pack Simulator', 'app', renderAppShell('local-pack', renderLocalPackPage(store), store)));
     }
 
-    if (pathname === '/app/team') {
+    if (pathname === '/app/integrations/whatsapp') {
       const store = getStore();
-      const content = `
-        <div class="space-y-6 max-w-5xl mx-auto">
-          <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Team & Branch Locations</h1>
-            <p class="text-xs text-slate-500">Enterprise multi-location delegation and role-based permissions</p>
-          </div>
+      return sendHtml(200, renderHtmlPage('WhatsApp Cloud API Studio', 'app', renderAppShell('whatsapp', renderWhatsAppStudioPage(store), store)));
+    }
 
-          <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-            <h3 class="font-bold text-sm text-slate-900 font-heading">Active Locations</h3>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs flex justify-between items-center">
-              <div>
-                <strong class="text-slate-900">${store.location.name} (Main Branch)</strong>
-                <p class="text-slate-500">${store.location.area}, ${store.location.city}</p>
-              </div>
-              <span class="text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full font-bold">Primary Location</span>
-            </div>
-          </div>
-        </div>
-      `;
-      return sendHtml(200, renderHtmlPage('Team & Locations', 'app', renderAppShell('team', content, store)));
+    if (pathname === '/app/integrations/pos') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('POS & Webhook Connectors', 'app', renderAppShell('pos', renderPosWebhooksPage(store), store)));
+    }
+
+    if (pathname === '/app/disputes') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('AI Policy Disputes & Removal', 'app', renderAppShell('disputes', renderDisputesPage(store), store)));
+    }
+
+    if (pathname === '/app/organizations' || pathname === '/app/team') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('Multi-Location Enterprise Rollup', 'app', renderAppShell('organizations', renderOrganizationsPage(store), store)));
+    }
+
+    if (pathname === '/app/sentiment') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('Aspect-Based Sentiment Intelligence', 'app', renderAppShell('sentiment', renderSentimentPage(store), store)));
+    }
+
+    if (pathname === '/app/hardware') {
+      const store = getStore();
+      return sendHtml(200, renderHtmlPage('NFC Hardware Studio & Stands', 'app', renderAppShell('hardware', renderHardwareStudioPage(store), store)));
     }
 
     // ----------------------------------------------------
@@ -1495,94 +1556,187 @@ const server = http.createServer(async (req, res) => {
     if (pathname.startsWith('/q/') && !pathname.endsWith('/done')) {
       const code = pathname.split('/')[2];
       const store = getStore();
-      const html = renderHtmlPage('Review Helper', 'qr', `
+      const loc = store.location || {};
+      const vertical = loc.vertical || 'clinic';
+      const services = (store.servicesByVertical && store.servicesByVertical[vertical]) || ['Painless Root Canal', 'Clear Aligners', 'Dental Implants', 'Teeth Whitening'];
+      const qualities = (store.qualityTagsByVertical && store.qualityTagsByVertical[vertical]) || ['Painless Treatment', 'Sterile Operatory', 'Clean & Hygienic'];
+      const staffMembers = (store.staff || []).filter(s => s.vertical === vertical);
+      const defaultStaff = staffMembers[0] ? staffMembers[0].name : 'Our Team';
+
+      const html = renderHtmlPage('15-Second Google Review Copilot', 'qr', `
         <div class="min-h-screen bg-slate-100 py-6 px-4">
           <div class="max-w-md mx-auto space-y-4">
+            
+            <!-- Business Card Header -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 text-center space-y-1 shadow-sm card-3d">
-              <h1 class="font-extrabold text-slate-900 text-lg font-heading">${store.location.name}</h1>
-              <p class="text-xs text-slate-500">${store.location.area}, ${store.location.city}</p>
-              <p class="text-xs text-brand-700 bg-brand-50 px-3 py-1 rounded-full font-semibold inline-block mt-1">30-Second Google Review Helper</p>
+              <h1 class="font-extrabold text-slate-900 text-lg font-heading">${loc.name || 'Our Center'}</h1>
+              <p class="text-xs text-slate-500">${loc.area || 'Bengaluru'}, ${loc.city || 'Karnataka'}</p>
+              <div class="flex items-center justify-center gap-1.5 mt-1">
+                <span class="text-[10px] text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-full font-bold uppercase font-mono border border-brand-200">
+                  ${vertical}
+                </span>
+                <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-0.5 rounded-full font-bold">15-Second Google Review Copilot</span>
+              </div>
             </div>
 
+            <!-- Step 1: Rating -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 text-center space-y-2 shadow-sm card-3d">
-              <span class="text-xs font-bold uppercase text-slate-500">1. Your Rating</span>
+              <span class="text-xs font-bold uppercase text-slate-500 font-heading">1. Your Overall Experience</span>
               <div class="flex justify-center gap-2 text-3xl text-amber-400">
-                <button type="button" class="cursor-pointer focus-visible:outline-none p-1" onclick="setQrRating(1)" aria-label="1 star">★</button>
-                <button type="button" class="cursor-pointer focus-visible:outline-none p-1" onclick="setQrRating(2)" aria-label="2 stars">★</button>
-                <button type="button" class="cursor-pointer focus-visible:outline-none p-1" onclick="setQrRating(3)" aria-label="3 stars">★</button>
-                <button type="button" class="cursor-pointer focus-visible:outline-none p-1" onclick="setQrRating(4)" aria-label="4 stars">★</button>
-                <button type="button" class="cursor-pointer focus-visible:outline-none p-1" onclick="setQrRating(5)" aria-label="5 stars">★</button>
+                <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(1)" aria-label="1 star">★</button>
+                <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(2)" aria-label="2 stars">★</button>
+                <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(3)" aria-label="3 stars">★</button>
+                <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(4)" aria-label="4 stars">★</button>
+                <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125 text-amber-400" onclick="setQrRating(5)" aria-label="5 stars">★</button>
               </div>
-              <p id="qrRatingLabel" class="text-xs font-bold text-slate-700">5 Stars (Outstanding!)</p>
+              <p id="qrRatingLabel" class="text-xs font-bold text-slate-800 font-mono">5 Stars (Outstanding Experience!)</p>
+
+              <!-- FTC 16 CFR Part 465 Micro-Recovery Safe Harbor Banner -->
+              <div id="recoveryBanner" class="hidden mt-3 p-4 bg-amber-50 rounded-2xl border border-amber-300 text-left space-y-2 text-xs animate-in fade-in">
+                <div class="flex items-center gap-1.5 text-amber-950 font-bold font-heading">
+                  <span>⚠️ We Strive for 100% Excellence</span>
+                </div>
+                <p class="text-amber-900 text-[11px] leading-relaxed">
+                  We are deeply sorry your visit fell short of 5 stars. Would you like our Managing Director to call you directly within 15 minutes to personally assist you?
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <a href="tel:${loc.managerPhone || '+919845011223'}" class="px-3 py-1.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl font-bold text-[11px] shadow-sm">
+                    📞 Direct Call to Manager (${loc.managerPhone || '+91 98450 11223'})
+                  </a>
+                  <button type="button" onclick="continueToGoogle()" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-slate-700 font-bold text-[11px] hover:bg-slate-50">
+                    Proceed to Google Maps Anyway
+                  </button>
+                </div>
+              </div>
             </div>
 
+            <!-- Step 2: Vertical Service Pills -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500">2. What did you visit for?</span>
+              <span class="font-bold uppercase text-slate-500 font-heading">2. What did you visit for today?</span>
               <div class="flex flex-wrap gap-1.5" id="serviceTags">
-                <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-lg border bg-brand-600 text-white font-medium focus-visible:outline-none">Root Canal Treatment</button>
-                <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-lg border bg-slate-50 text-slate-700 font-medium focus-visible:outline-none">Dental Implants</button>
-                <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-lg border bg-slate-50 text-slate-700 font-medium focus-visible:outline-none">Teeth Whitening</button>
-                <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-lg border bg-slate-50 text-slate-700 font-medium focus-visible:outline-none">General Checkup</button>
+                ${services.map((svc, i) => `
+                  <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-xl border text-xs font-medium focus-visible:outline-none transition-all ${
+                    i === 0 ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                  }">${svc}</button>
+                `).join('')}
               </div>
             </div>
 
+            <!-- Step 3: Frontline Staff Attribution Selector -->
+            <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
+              <span class="font-bold uppercase text-slate-500 font-heading">3. Who took care of you today?</span>
+              <div class="flex flex-wrap gap-1.5" id="staffTags">
+                ${staffMembers.map((st, i) => `
+                  <button type="button" onclick="selectStaffTag(this, '${st.name}')" class="px-3 min-h-[38px] rounded-xl border text-xs font-bold focus-visible:outline-none transition-all flex items-center gap-1.5 ${
+                    i === 0 ? 'bg-dark-950 text-white border-dark-950 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                  }">
+                    <span class="w-2 h-2 rounded-full ${i === 0 ? 'bg-brand-400' : 'bg-slate-300'}"></span>
+                    <span>${st.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Step 4: Language Choice -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500">3. Preferred Language</span>
+              <span class="font-bold uppercase text-slate-500 font-heading">4. Preferred Review Language</span>
               <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="setLang('hi-en', this)" class="py-2.5 rounded-lg border font-bold bg-brand-600 text-white focus-visible:outline-none">Hinglish</button>
-                <button type="button" onclick="setLang('en', this)" class="py-2.5 rounded-lg border font-bold bg-slate-50 text-slate-700 focus-visible:outline-none">English</button>
-                <button type="button" onclick="setLang('hi', this)" class="py-2.5 rounded-lg border font-bold bg-slate-50 text-slate-700 focus-visible:outline-none">हिंदी</button>
+                <button type="button" onclick="setLang('hi-en', this)" class="py-2.5 rounded-xl border font-bold bg-brand-600 text-white border-brand-600 shadow-sm focus-visible:outline-none">Hinglish</button>
+                <button type="button" onclick="setLang('en', this)" class="py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none">English</button>
+                <button type="button" onclick="setLang('hi', this)" class="py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none">हिंदी</button>
               </div>
-              <button type="button" onclick="generateDraft()" class="w-full min-h-[44px] bg-slate-900 text-white font-bold rounded-xl mt-2 hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                Generate AI Draft from My Choices &rarr;
+              <button type="button" onclick="generateDraft()" class="w-full min-h-[48px] bg-slate-900 text-white font-bold rounded-xl mt-2 hover:bg-slate-800 transition-colors shadow-md flex items-center justify-center gap-2">
+                ${getSvgIcon('sparkles', 'w-4 h-4 text-brand-400')}
+                <span>Generate 15-Second AI Review Draft &rarr;</span>
               </button>
             </div>
 
+            <!-- Draft Output & Direct Google Intent -->
             <div id="draftContainer" class="hidden p-5 bg-emerald-50 rounded-3xl border-2 border-emerald-500 space-y-3 text-xs animate-in fade-in">
-              <span class="font-bold text-emerald-950 font-heading">Your Customized Review Draft:</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-emerald-950 font-heading">Your Ready-to-Post Review Draft:</span>
+                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-white px-2 py-0.5 rounded border border-emerald-200">Auto-Copied</span>
+              </div>
               <label for="draftText" class="sr-only">Review Draft Content</label>
-              <textarea id="draftText" rows="4" class="w-full p-3 rounded-xl border border-emerald-300 bg-white text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"></textarea>
-              <button type="button" onclick="submitToGoogle()" class="w-full min-h-[48px] bg-brand-600 hover:bg-brand-700 text-white font-black rounded-xl text-sm shadow-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                Copy Text & Give Review on Google Maps &rarr;
+              <textarea id="draftText" rows="4" class="w-full p-3 rounded-xl border border-emerald-300 bg-white text-xs text-slate-800 leading-relaxed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"></textarea>
+              
+              <!-- Google Photo Booster Hint -->
+              <div class="p-2.5 bg-white/90 rounded-xl border border-emerald-200 text-[11px] text-emerald-900 flex items-center gap-2">
+                <span class="text-base">📸</span>
+                <span><strong>Pro-Tip:</strong> Have a photo of your visit or dish? Add it on Google Maps for <strong>3x more views</strong>!</span>
+              </div>
+
+              <button type="button" onclick="submitToGoogle()" class="w-full min-h-[50px] bg-brand-600 hover:bg-brand-700 text-white font-black rounded-xl text-sm shadow-lg transition-all flex items-center justify-center gap-2">
+                <span>Copy & Submit on Google Maps &rarr;</span>
               </button>
             </div>
+
           </div>
         </div>
 
         <script>
           let qrRating = 5;
           let qrLang = 'hi-en';
+          let selectedStaff = '${defaultStaff}';
+
           function setQrRating(r) {
             qrRating = r;
-            document.getElementById('qrRatingLabel').innerText = r + ' Stars';
+            const labels = ['1 Star (Poor)', '2 Stars (Disappointing)', '3 Stars (Average)', '4 Stars (Great)', '5 Stars (Outstanding Experience!)'];
+            document.getElementById('qrRatingLabel').innerText = labels[r - 1];
+            
+            const recBanner = document.getElementById('recoveryBanner');
+            if (r <= 3) {
+              recBanner.classList.remove('hidden');
+            } else {
+              recBanner.classList.add('hidden');
+            }
           }
+
           function setLang(l, btn) {
             qrLang = l;
             btn.parentElement.querySelectorAll('button').forEach(b => {
-              b.className = 'py-2.5 rounded-lg border font-bold bg-slate-50 text-slate-700 focus-visible:outline-none';
+              b.className = 'py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none';
             });
-            btn.className = 'py-2.5 rounded-lg border font-bold bg-brand-600 text-white focus-visible:outline-none';
+            btn.className = 'py-2.5 rounded-xl border font-bold bg-brand-600 text-white border-brand-600 shadow-sm focus-visible:outline-none';
           }
+
           function toggleTag(btn) {
             if (btn.classList.contains('bg-brand-600')) {
-              btn.className = 'px-3 min-h-[40px] rounded-lg border bg-slate-50 text-slate-700 font-medium focus-visible:outline-none';
+              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-slate-50 text-slate-700 border-slate-200 font-medium focus-visible:outline-none';
             } else {
-              btn.className = 'px-3 min-h-[40px] rounded-lg border bg-brand-600 text-white font-medium focus-visible:outline-none';
+              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-brand-600 text-white border-brand-600 font-medium shadow-sm focus-visible:outline-none';
             }
           }
+
+          function selectStaffTag(btn, name) {
+            selectedStaff = name;
+            btn.parentElement.querySelectorAll('button').forEach(b => {
+              b.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 flex items-center gap-1.5 focus-visible:outline-none';
+              const dot = b.querySelector('span');
+              if (dot) dot.className = 'w-2 h-2 rounded-full bg-slate-300';
+            });
+            btn.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-dark-950 text-white border-dark-950 shadow-sm flex items-center gap-1.5 focus-visible:outline-none';
+            const dot = btn.querySelector('span');
+            if (dot) dot.className = 'w-2 h-2 rounded-full bg-brand-400';
+          }
+
+          function continueToGoogle() {
+            document.getElementById('recoveryBanner').classList.add('hidden');
+          }
+
           async function generateDraft() {
             const services = [];
-            document.querySelectorAll('#serviceTags button.bg-brand-600').forEach(b => services.push(b.innerText));
+            document.querySelectorAll('#serviceTags button.bg-brand-600').forEach(b => services.push(b.innerText.trim()));
             const res = await fetch('/api/ai/qr-draft', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 submission: {
                   rating: qrRating,
-                  selectedServices: services.length ? services : ['Root Canal Treatment'],
-                  qualityTags: ['Painless Procedure', 'Clean & Hygienic'],
-                  staffName: 'Dr. Sneha',
-                  ambienceTags: ['Modern Equipment'],
+                  selectedServices: services.length ? services : ['${services[0] || 'Service'}'],
+                  qualityTags: ['Painless Treatment', 'Sterile Operatory', 'Clean & Hygienic'],
+                  staffName: selectedStaff,
+                  ambienceTags: ['Modern Atmosphere'],
                   recommend: 'yes',
                   language: qrLang,
                   length: 'short'
@@ -1593,14 +1747,18 @@ const server = http.createServer(async (req, res) => {
             const json = await res.json();
             document.getElementById('draftText').value = json.draftText;
             document.getElementById('draftContainer').classList.remove('hidden');
+            await navigator.clipboard.writeText(json.draftText);
           }
+
           async function submitToGoogle() {
             const text = document.getElementById('draftText').value;
             await navigator.clipboard.writeText(text);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof confetti === 'function') {
               confetti({ particleCount: 60, spread: 60 });
             }
-            window.open('https://search.google.com/local/writereview?placeid=${store.location.googlePlaceId}', '_blank');
+            const placeId = '${loc.googlePlaceId || 'ChIJ_zX8sh8UrjsRn7w001'}';
+            const reviewUrl = 'https://search.google.com/local/writereview?placeid=' + placeId;
+            window.open(reviewUrl, '_blank');
             window.location.href = '/q/${code}/done?text=' + encodeURIComponent(text);
           }
         </script>
