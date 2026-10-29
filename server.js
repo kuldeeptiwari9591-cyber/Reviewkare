@@ -190,6 +190,7 @@ function parseJsonBody(req) {
   return new Promise((resolve, reject) => {
     let body = '';
     const MAX_SIZE = 1024 * 1024; // 1MB payload protection
+    req.on('error', (err) => reject(err));
     req.on('data', (chunk) => {
       body += chunk;
       if (body.length > MAX_SIZE) {
@@ -345,17 +346,22 @@ const server = http.createServer(async (req, res) => {
       const body = await parseJsonBody(req);
       const store = getStore();
       const rawSub = body.submission || {};
+      const code = body.shortCode || '';
+      const qrConfig = (store.qrcodes || []).find(q => q.code === code);
+      const matchedBusiness = qrConfig ? (store.businesses || []).find(b => b.vertical === qrConfig.vertical) : null;
+      const businessName = matchedBusiness?.name || rawSub.businessName || store.location.name || 'Our Center';
+
       const submission = {
-        rating: rawSub.rating || 5,
-        selectedServices: Array.isArray(rawSub.selectedServices) ? rawSub.selectedServices : ['Root Canal Treatment'],
-        qualityTags: Array.isArray(rawSub.qualityTags) ? rawSub.qualityTags : ['Painless Procedure'],
-        ambienceTags: Array.isArray(rawSub.ambienceTags) ? rawSub.ambienceTags : ['Modern Equipment'],
-        staffName: rawSub.staffName || 'Dr. Sneha',
-        recommend: rawSub.recommend || 'yes',
+        rating: Math.min(5, Math.max(1, Number(rawSub.rating) || 5)),
+        selectedServices: Array.isArray(rawSub.selectedServices) ? rawSub.selectedServices.map(escapeHtml) : ['Service'],
+        qualityTags: Array.isArray(rawSub.qualityTags) ? rawSub.qualityTags.map(escapeHtml) : ['Great Experience'],
+        ambienceTags: Array.isArray(rawSub.ambienceTags) ? rawSub.ambienceTags.map(escapeHtml) : ['Clean & Welcoming'],
+        staffName: escapeHtml(rawSub.staffName || 'Our Team'),
+        recommend: rawSub.recommend === 'no' ? 'no' : 'yes',
         language: rawSub.language || 'hi-en',
         length: rawSub.length || 'short'
       };
-      const draft = generateCustomerQRDraft(submission, store.location.name);
+      const draft = generateCustomerQRDraft(submission, businessName);
       return sendJson(200, {
         success: true,
         draftText: draft,
@@ -1832,8 +1838,10 @@ const server = http.createServer(async (req, res) => {
     if (pathname.startsWith('/q/') && !pathname.endsWith('/done')) {
       const code = pathname.split('/')[2];
       const store = getStore();
-      const loc = store.location || {};
-      const vertical = loc.vertical || 'clinic';
+      const qrConfig = (store.qrcodes || []).find(q => q.code === code);
+      const matchedBusiness = qrConfig ? (store.businesses || []).find(b => b.vertical === qrConfig.vertical) : null;
+      const loc = matchedBusiness || store.location || {};
+      const vertical = qrConfig?.vertical || loc.vertical || 'clinic';
       const services = (store.servicesByVertical && store.servicesByVertical[vertical]) || ['Painless Root Canal', 'Clear Aligners', 'Dental Implants', 'Teeth Whitening'];
       const qualities = (store.qualityTagsByVertical && store.qualityTagsByVertical[vertical]) || ['Painless Treatment', 'Sterile Operatory', 'Clean & Hygienic'];
       const staffMembers = (store.staff || []).filter(s => s.vertical === vertical);

@@ -199,6 +199,52 @@
   ],
   "reviews": [
     {
+      "id": "rev-1793291751969",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_z832oqr",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291751972",
+        "reviewId": "rev-1793291751969",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291751789",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_4nv75g",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291751796",
+        "reviewId": "rev-1793291751789",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
       "id": "rev-1793291193269",
       "locationId": "b_cafe",
       "googleReviewId": "gbp_mm5owq",
@@ -593,6 +639,13 @@
   ],
   "notifications": [
     {
+      "id": "notif-1793291751796",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
       "id": "notif-1793291193143",
       "title": "New 5★ Review Processed",
       "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
@@ -751,7 +804,7 @@
       "outletId": "PP-IND-8041",
       "outletName": "The Roastery Artisan Cafe (12th Main)",
       "webhookUrl": "/api/webhooks/pos/petpooja",
-      "eventsCaptured": 423,
+      "eventsCaptured": 424,
       "lastSync": "Just now",
       "autoTriggerDelay": "45 mins post-bill"
     },
@@ -762,7 +815,7 @@
       "outletId": "ZEN-LAVELLE-02",
       "outletName": "Bounce Hair Studio & Luxury Spa",
       "webhookUrl": "/api/webhooks/pos/zenoti",
-      "eventsCaptured": 236,
+      "eventsCaptured": 237,
       "lastSync": "Just now",
       "autoTriggerDelay": "Next morning 10:00 AM"
     },
@@ -773,7 +826,7 @@
       "outletId": "PRAC-100FT-901",
       "outletName": "Dr. Sharma Dental & Implant Clinic",
       "webhookUrl": "/api/webhooks/pos/practo",
-      "eventsCaptured": 200,
+      "eventsCaptured": 201,
       "lastSync": "Just now",
       "autoTriggerDelay": "2 hours post-treatment"
     }
