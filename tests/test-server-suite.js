@@ -97,7 +97,26 @@ setTimeout(async () => {
     failed++;
   }
 
-  // 3b. Authenticating via POST /api/auth/login
+  // 3b-1. Invalid password rejection test
+  try {
+    const badLoginRes = await fetch(`http://localhost:${PORT}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'dr.sharma@sharmadental.in', password: 'WrongPassword999' })
+    });
+    if (badLoginRes.status === 401) {
+      console.log('  ✓ Invalid password rejected with HTTP 401 Unauthorized');
+      passed++;
+    } else {
+      console.error(`  ✗ Expected 401 on bad password, got ${badLoginRes.status}`);
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ Bad login test error:', e.message);
+    failed++;
+  }
+
+  // 3b-2. Authenticating via POST /api/auth/login
   try {
     const loginRes = await fetch(`http://localhost:${PORT}/api/auth/login`, {
       method: 'POST',
@@ -218,6 +237,28 @@ setTimeout(async () => {
       console.error(`  ✗ POST ERROR on ${p.url}:`, e.message);
       failed++;
     }
+  }
+
+  // 7. Testing XSS Input Sanitization
+  console.log('\n--- 7. Testing Stored XSS Protection ---');
+  try {
+    const xssPayload = { reviewerName: '<script>alert("hacked")</script>', text: '<img src=x onerror=alert(1)>', rating: 5 };
+    const xssRes = await fetch(`http://localhost:${PORT}/api/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(xssPayload)
+    });
+    const xssData = await xssRes.json();
+    if (xssData.review && !xssData.review.reviewerName.includes('<script>') && xssData.review.reviewerName.includes('&lt;script&gt;')) {
+      console.log('  ✓ Stored XSS payload safely escaped to &lt;script&gt;');
+      passed++;
+    } else {
+      console.error('  ✗ XSS payload was NOT escaped:', xssData.review);
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ XSS test error:', e.message);
+    failed++;
   }
 
   console.log('\n======================================================');

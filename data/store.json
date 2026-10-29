@@ -199,6 +199,52 @@
   ],
   "reviews": [
     {
+      "id": "rev-1793291193269",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_mm5owq",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291193271",
+        "reviewId": "rev-1793291193269",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291193137",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_pnubnc",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291193143",
+        "reviewId": "rev-1793291193137",
+        "draftText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
       "id": "rev-1793288392873",
       "locationId": "b_cafe",
       "googleReviewId": "gbp_sim_ssj1hc",
@@ -547,6 +593,13 @@
   ],
   "notifications": [
     {
+      "id": "notif-1793291193143",
+      "title": "New 5★ Review Processed",
+      "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
       "id": "notif-1793288392881",
       "title": "New 5★ Review Processed",
       "message": "Ananya Roy left a 5★ review on Google Maps.",
@@ -611,7 +664,9 @@
     "role": "Chief Implantologist & Group Director",
     "email": "dr.sharma@sharmadental.in",
     "plan": "Enterprise Multi-Location",
-    "gstin": "29AABCU9603R1ZM"
+    "gstin": "29AABCU9603R1ZM",
+    "passwordHash": "a1628e78f5cc3594809243109d88092f6688a91abe7c48bc6d314288eaebc5ce165dcf3e68e0aae0c69386734eaa84586b5d8ebc8e0be1d9ebb97242f503febb",
+    "passwordSalt": "033ebf7850ce938dd59dbb7e84e1c85e"
   },
   "demoBookings": [
     {
@@ -696,7 +751,7 @@
       "outletId": "PP-IND-8041",
       "outletName": "The Roastery Artisan Cafe (12th Main)",
       "webhookUrl": "/api/webhooks/pos/petpooja",
-      "eventsCaptured": 422,
+      "eventsCaptured": 423,
       "lastSync": "Just now",
       "autoTriggerDelay": "45 mins post-bill"
     },
@@ -707,7 +762,7 @@
       "outletId": "ZEN-LAVELLE-02",
       "outletName": "Bounce Hair Studio & Luxury Spa",
       "webhookUrl": "/api/webhooks/pos/zenoti",
-      "eventsCaptured": 235,
+      "eventsCaptured": 236,
       "lastSync": "Just now",
       "autoTriggerDelay": "Next morning 10:00 AM"
     },
@@ -718,7 +773,7 @@
       "outletId": "PRAC-100FT-901",
       "outletName": "Dr. Sharma Dental & Implant Clinic",
       "webhookUrl": "/api/webhooks/pos/practo",
-      "eventsCaptured": 199,
+      "eventsCaptured": 200,
       "lastSync": "Just now",
       "autoTriggerDelay": "2 hours post-treatment"
     }
@@ -875,5 +930,6 @@
       "material": "Waterproof matte PVC cards engineered for cafe & restaurant check folders",
       "leadTime": "2 business days"
     }
-  ]
+  ],
+  "sessions": {}
 }

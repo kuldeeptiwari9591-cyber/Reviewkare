@@ -23,13 +23,42 @@ function getStore() {
   }
 }
 
-// Helper to save store
+// Helper to save store with atomic rename (crash-safe)
 function saveStore(data) {
   storeCache = data;
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+    const tmp = DATA_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+    fs.renameSync(tmp, DATA_FILE);
   } catch (e) {
     console.error('Error saving store:', e);
+  }
+}
+
+// Native HTML Entity Escaper (XSS Protection)
+function escapeHtml(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Native Cryptographic Password Hashing (Zero Dependencies)
+function hashPassword(password, salt = crypto.randomBytes(16).toString('hex')) {
+  const hash = crypto.scryptSync(password, salt, 64).toString('hex');
+  return { hash, salt };
+}
+
+function verifyPassword(password, hash, salt) {
+  if (!password || !hash || !salt) return false;
+  try {
+    const testHash = crypto.scryptSync(password, salt, 64).toString('hex');
+    return crypto.timingSafeEqual(Buffer.from(testHash, 'hex'), Buffer.from(hash, 'hex'));
+  } catch (e) {
+    return false;
   }
 }
 
@@ -43,9 +72,6 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
-
-// In-Memory Active Session Store (Token -> Session)
-const activeSessions = new Map();
 
 // Helper: Parse HTTP Request Cookies
 function parseCookies(req) {
@@ -62,7 +88,7 @@ function parseCookies(req) {
   return list;
 }
 
-// Helper: Create Secure Session
+// Helper: Create Secure Session (Persisted to Store so reboots keep logins)
 function createSession(userData = {}) {
   const token = 'sess_' + crypto.randomBytes(24).toString('hex');
   const session = {
@@ -73,24 +99,34 @@ function createSession(userData = {}) {
     createdAt: Date.now(),
     expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days TTL
   };
-  activeSessions.set(token, session);
+  const store = getStore();
+  if (!store.sessions) store.sessions = {};
+  store.sessions[token] = session;
+  saveStore(store);
   return token;
 }
 
 // Helper: Destroy Session
 function destroySession(token) {
-  if (token) activeSessions.delete(token);
+  if (!token) return;
+  const store = getStore();
+  if (store.sessions && store.sessions[token]) {
+    delete store.sessions[token];
+    saveStore(store);
+  }
 }
 
-// Helper: Get Session from Request
+// Helper: Get Session from Request (Checks Persistent Store)
 function getSessionFromReq(req) {
   const cookies = parseCookies(req);
   const token = cookies.replyo_session;
   if (!token) return null;
-  const session = activeSessions.get(token);
+  const store = getStore();
+  const session = store.sessions?.[token];
   if (!session) return null;
   if (session.expiresAt && session.expiresAt < Date.now()) {
-    activeSessions.delete(token);
+    delete store.sessions[token];
+    saveStore(store);
     return null;
   }
   return session;
@@ -214,9 +250,9 @@ const server = http.createServer(async (req, res) => {
         id: 'rev-' + Date.now(),
         locationId: store.location.id || 'loc-01',
         googleReviewId: 'gbp_' + Math.random().toString(36).substring(7),
-        reviewerName: body.reviewerName || 'Valued Patient',
-        rating: body.rating || 5,
-        text: body.text || '',
+        reviewerName: escapeHtml(body.reviewerName || 'Valued Patient'),
+        rating: Math.min(5, Math.max(1, Number(body.rating) || 5)),
+        text: escapeHtml(body.text || ''),
         isStarOnly: !body.text || body.text.trim() === '',
         detectedLanguage: 'en',
         detectedTone: 'positive',
@@ -346,7 +382,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(200, { success: true, message: 'Thank you for reaching out! A Replyo specialist will call you within 2 business hours.' });
     }
 
-    // AUTH: Login with Rate Limiting & Session Cookie
+    // AUTH: Login with Rate Limiting, Session Cookie & Password Validation
     if (pathname === '/api/auth/login' && method === 'POST') {
       const rl = checkRateLimit(clientIp + ':auth', 15, 60000);
       if (!rl.allowed) {
@@ -355,9 +391,28 @@ const server = http.createServer(async (req, res) => {
 
       const body = await parseJsonBody(req);
       const store = getStore();
+
+      // Seed default clinic password hash if not yet initialized
+      if (!store.user.passwordHash) {
+        const seeded = hashPassword('ClinicalDemo@2026');
+        store.user.passwordHash = seeded.hash;
+        store.user.passwordSalt = seeded.salt;
+        saveStore(store);
+      }
+
+      // Check credentials (supports demo email or registered email with timing-safe password compare)
+      const inputEmail = (body.email || '').toLowerCase().trim();
+      const storedEmail = (store.user?.email || '').toLowerCase().trim();
+      const isDemo = inputEmail === 'dr.sharma@sharmadental.in' && body.password === 'ClinicalDemo@2026';
+      const isStoredUser = inputEmail === storedEmail && verifyPassword(body.password, store.user?.passwordHash, store.user?.passwordSalt);
+
+      if (!isDemo && !isStoredUser) {
+        return sendJson(401, { success: false, error: 'Invalid clinic email or password. Use demo credentials or sign up.' });
+      }
+
       const token = createSession({
         userId: 'usr_sharma_01',
-        email: body.email || store.user?.email,
+        email: store.user?.email,
         name: store.user?.name || 'Dr. Ananya Sharma',
         role: store.user?.role || 'Executive Group Director'
       });
@@ -381,9 +436,14 @@ const server = http.createServer(async (req, res) => {
 
       const body = await parseJsonBody(req);
       const store = getStore();
-      if (body.clinicName) store.location.name = body.clinicName;
-      if (body.city) store.location.city = body.city;
-      if (body.email) store.user.email = body.email;
+      if (body.clinicName) store.location.name = escapeHtml(body.clinicName);
+      if (body.city) store.location.city = escapeHtml(body.city);
+      if (body.email) store.user.email = body.email.toLowerCase().trim();
+      if (body.password) {
+        const hp = hashPassword(body.password);
+        store.user.passwordHash = hp.hash;
+        store.user.passwordSalt = hp.salt;
+      }
       saveStore(store);
 
       const token = createSession({
