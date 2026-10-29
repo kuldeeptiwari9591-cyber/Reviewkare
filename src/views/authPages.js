@@ -5,6 +5,9 @@ function renderLoginPage(query = {}) {
   const isDemo = query.demo === 'true';
   const emailVal = isDemo ? 'dr.sharma@sharmadental.in' : '';
   const pwdVal = isDemo ? 'ClinicalDemo@2026' : '';
+  const isLoggedOut = query.logged_out === '1' || query.logged_out === 'true';
+  const isAuthRequired = query.auth_required === '1' || query.auth_required === 'true';
+  const redirectTarget = query.redirect || '/app';
 
   return `
   <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
@@ -25,6 +28,22 @@ function renderLoginPage(query = {}) {
           Manage Google Business reviews, frontline staff attribution & in-store QR flows across your locations.
         </p>
       </div>
+
+      ${isLoggedOut ? `
+      <!-- Secure Logout Success Banner -->
+      <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-2.5 text-xs font-semibold shadow-xs animate-in fade-in" role="status">
+        ${getSvgIcon('check', 'w-4 h-4 text-emerald-600 shrink-0')}
+        <span>You have been safely signed out. Your clinic session and cookies were cleared.</span>
+      </div>
+      ` : ''}
+
+      ${isAuthRequired ? `
+      <!-- Authentication Required Notice -->
+      <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center gap-2.5 text-xs font-semibold shadow-xs animate-in fade-in" role="alert">
+        ${getSvgIcon('lock', 'w-4 h-4 text-amber-600 shrink-0')}
+        <span>Authentication required. Please sign in or use the 1-Click Demo account below to access the workspace.</span>
+      </div>
+      ` : ''}
 
       <!-- Quick 1-Click Multi-Vertical Demo Account Card -->
       <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-indigo-50/60 border border-brand-200 shadow-sm">
@@ -168,14 +187,14 @@ function renderLoginPage(query = {}) {
         const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password: pwd })
+          body: JSON.stringify({ email, password: pwd, redirect: '${redirectTarget}' })
         });
         const data = await res.json();
         
         if (data.success) {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 block';
-          alert.innerText = 'Login successful! Redirecting to Indiranagar clinic dashboard…';
-          setTimeout(() => { window.location.href = data.redirect || '/app'; }, 600);
+          alert.innerText = 'Login successful! Redirecting to clinic dashboard…';
+          setTimeout(() => { window.location.href = data.redirect || '${redirectTarget}'; }, 500);
         } else {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
           alert.innerText = data.error || 'Invalid clinic credentials. Try the 1-Click Demo button above.';

@@ -199,6 +199,74 @@
   ],
   "reviews": [
     {
+      "id": "rev-1793288392873",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_ssj1hc",
+      "reviewerName": "Ananya Roy",
+      "rating": 5,
+      "text": "Best pour-over coffee in Indiranagar! Barista Shreyas recommended the light-roast Ethiopian beans and explained the flavor notes so well. Fresh sourdough croissants!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793288392881",
+        "reviewId": "rev-1793288392873",
+        "draftText": "Thank you so much Ananya Roy for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Ananya Roy for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792939014545",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_txwk6c",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792939014551",
+        "reviewId": "rev-1792939014545",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792935630837",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_s0ysoj",
+      "reviewerName": "Rajesh Gokhale",
+      "rating": 1,
+      "text": "Waited 35 mins despite booking a 4 PM slot on 100ft road. Receptionist did not inform us about the delay.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "frustrated",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792935630842",
+        "reviewId": "rev-1792935630837",
+        "draftText": "Dear Rajesh Gokhale, thank you for your feedback. Providing a high standard of care and comfort at The Roastery Artisan Cafe & Sourdough Bakery is our top priority. We would appreciate the opportunity to speak with you directly. Please reach out to our manager at +91 98452 33441.",
+        "status": "held",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": "appr-lmiahbxde"
+      }
+    },
+    {
       "id": "rev-1792895812855",
       "locationId": "b_cafe",
       "googleReviewId": "gbp_sim_k55a7k",
@@ -479,6 +547,27 @@
   ],
   "notifications": [
     {
+      "id": "notif-1793288392881",
+      "title": "New 5★ Review Processed",
+      "message": "Ananya Roy left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792939014551",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792935630842",
+      "title": "Negative Review Held",
+      "message": "Rajesh Gokhale left a 1★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
       "id": "notif-1792895812860",
       "title": "New 5★ Review Processed",
       "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
@@ -607,7 +696,7 @@
       "outletId": "PP-IND-8041",
       "outletName": "The Roastery Artisan Cafe (12th Main)",
       "webhookUrl": "/api/webhooks/pos/petpooja",
-      "eventsCaptured": 419,
+      "eventsCaptured": 422,
       "lastSync": "Just now",
       "autoTriggerDelay": "45 mins post-bill"
     },
@@ -618,7 +707,7 @@
       "outletId": "ZEN-LAVELLE-02",
       "outletName": "Bounce Hair Studio & Luxury Spa",
       "webhookUrl": "/api/webhooks/pos/zenoti",
-      "eventsCaptured": 232,
+      "eventsCaptured": 235,
       "lastSync": "Just now",
       "autoTriggerDelay": "Next morning 10:00 AM"
     },
@@ -629,7 +718,7 @@
       "outletId": "PRAC-100FT-901",
       "outletName": "Dr. Sharma Dental & Implant Clinic",
       "webhookUrl": "/api/webhooks/pos/practo",
-      "eventsCaptured": 196,
+      "eventsCaptured": 199,
       "lastSync": "Just now",
       "autoTriggerDelay": "2 hours post-treatment"
     }

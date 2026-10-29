@@ -1,13 +1,22 @@
 const http = require('http');
 
-const PORT = 3001;
+const PORT = 3002;
 process.env.PORT = PORT;
 
 // Start server
 require('../server.js');
 
 setTimeout(async () => {
-  const routes = [
+  let passed = 0;
+  let failed = 0;
+
+  console.log('\n======================================================');
+  console.log('🚀 REPLYO SAAS PRE-LAUNCH PRODUCTION CHECKOUT SUITE');
+  console.log('======================================================\n');
+
+  // 1. PUBLIC ROUTES VERIFICATION
+  console.log('--- 1. Testing Public & Trust Routes ---');
+  const publicRoutes = [
     '/',
     '/login',
     '/signup',
@@ -27,6 +36,92 @@ setTimeout(async () => {
     '/for-agencies',
     '/blog',
     '/contact',
+    '/q/sharma-dent-01',
+    '/q/sharma-dent-01/done',
+    '/a/sharma-appr-priya-01'
+  ];
+
+  for (const r of publicRoutes) {
+    try {
+      const res = await fetch(`http://localhost:${PORT}${r}`);
+      if (res.status === 200) {
+        console.log(`  ✓ 200 OK: ${r}`);
+        passed++;
+      } else {
+        console.error(`  ✗ FAIL ${res.status}: ${r}`);
+        failed++;
+      }
+    } catch (e) {
+      console.error(`  ✗ ERROR on ${r}:`, e.message);
+      failed++;
+    }
+  }
+
+  // 2. SECURITY HEADERS VERIFICATION
+  console.log('\n--- 2. Testing HTTP Security Headers ---');
+  try {
+    const secRes = await fetch(`http://localhost:${PORT}/security`);
+    const xcto = secRes.headers.get('x-content-type-options');
+    const xfo = secRes.headers.get('x-frame-options');
+    const xxp = secRes.headers.get('x-xss-protection');
+    const ref = secRes.headers.get('referrer-policy');
+
+    if (xcto === 'nosniff' && xfo === 'SAMEORIGIN' && xxp === '1; mode=block' && ref === 'strict-origin-when-cross-origin') {
+      console.log('  ✓ Security Headers Verified: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy');
+      passed++;
+    } else {
+      console.error('  ✗ Missing security headers:', { xcto, xfo, xxp, ref });
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ Security headers test error:', e.message);
+    failed++;
+  }
+
+  // 3. AUTHENTICATION & LOGIN/LOGOUT SESSION LIFECYCLE
+  console.log('\n--- 3. Testing Authentication & Session Lifecycle ---');
+  let sessionCookie = '';
+
+  // 3a. Unauthenticated access to /app must redirect to /login
+  try {
+    const unauthRes = await fetch(`http://localhost:${PORT}/app`, { redirect: 'manual' });
+    if (unauthRes.status === 302 && unauthRes.headers.get('location')?.includes('/login?auth_required=1')) {
+      console.log('  ✓ Unauthenticated /app access properly redirected (302) to /login?auth_required=1');
+      passed++;
+    } else {
+      console.error(`  ✗ Unauthenticated /app expected 302 redirect, got status ${unauthRes.status}`);
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ Unauth redirect error:', e.message);
+    failed++;
+  }
+
+  // 3b. Authenticating via POST /api/auth/login
+  try {
+    const loginRes = await fetch(`http://localhost:${PORT}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'dr.sharma@sharmadental.in', password: 'ClinicalDemo@2026' })
+    });
+    const setCookieHeader = loginRes.headers.get('set-cookie');
+    const loginData = await loginRes.json();
+
+    if (loginRes.status === 200 && loginData.success && setCookieHeader?.includes('replyo_session=')) {
+      sessionCookie = setCookieHeader.split(';')[0];
+      console.log(`  ✓ POST /api/auth/login successful — issued session cookie: ${sessionCookie.substring(0, 25)}...`);
+      passed++;
+    } else {
+      console.error('  ✗ Login failed or missing session cookie:', loginData);
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ Login request error:', e.message);
+    failed++;
+  }
+
+  // 3c. Authenticated access to /app and protected modules
+  const appModules = [
     '/app',
     '/app/reviews',
     '/app/approvals',
@@ -45,39 +140,52 @@ setTimeout(async () => {
     '/app/disputes',
     '/app/organizations',
     '/app/sentiment',
-    '/app/hardware',
-    '/q/sharma-dent-01',
-    '/q/sharma-dent-01/done',
-    '/a/sharma-appr-priya-01'
+    '/app/hardware'
   ];
 
-  let getPassed = 0;
-  let getFailed = 0;
-
-  console.log('\n--- Testing All 41 GET Routes ---');
-  for (const r of routes) {
+  console.log('\n--- 4. Testing Authenticated Dashboard Modules ---');
+  for (const m of appModules) {
     try {
-      const res = await fetch(`http://localhost:${PORT}${r}`);
+      const res = await fetch(`http://localhost:${PORT}${m}`, {
+        headers: { 'Cookie': sessionCookie }
+      });
       if (res.status === 200) {
-        console.log(`  ✓ 200 OK: ${r}`);
-        getPassed++;
+        console.log(`  ✓ Authenticated 200 OK: ${m}`);
+        passed++;
       } else {
-        console.error(`  ✗ FAIL ${res.status}: ${r}`);
-        getFailed++;
+        console.error(`  ✗ Authenticated FAIL ${res.status}: ${m}`);
+        failed++;
       }
     } catch (e) {
-      console.error(`  ✗ ERROR on ${r}:`, e.message);
-      getFailed++;
+      console.error(`  ✗ Error accessing ${m}:`, e.message);
+      failed++;
     }
   }
 
-  console.log(`\nGET Routes Summary: ${getPassed} Passed, ${getFailed} Failed`);
+  // 3d. Logout via /logout (GET redirect)
+  console.log('\n--- 5. Testing Logout & Cookie Clearance ---');
+  try {
+    const logoutRes = await fetch(`http://localhost:${PORT}/logout`, {
+      headers: { 'Cookie': sessionCookie },
+      redirect: 'manual'
+    });
+    const clearedCookie = logoutRes.headers.get('set-cookie');
+    const redirectLoc = logoutRes.headers.get('location');
 
-  // Testing POST APIs
-  console.log('\n--- Testing POST APIs ---');
-  let postPassed = 0;
-  let postFailed = 0;
+    if (logoutRes.status === 302 && redirectLoc?.includes('/login?logged_out=1') && clearedCookie?.includes('Max-Age=0')) {
+      console.log('  ✓ GET /logout successfully cleared session cookie and redirected (302) to /login?logged_out=1');
+      passed++;
+    } else {
+      console.error('  ✗ Logout failed:', { status: logoutRes.status, redirectLoc, clearedCookie });
+      failed++;
+    }
+  } catch (e) {
+    console.error('  ✗ Logout request error:', e.message);
+    failed++;
+  }
 
+  // 4. POST APIS VERIFICATION
+  console.log('\n--- 6. Testing Production REST APIs ---');
   const postEndpoints = [
     { url: '/api/branch/switch', body: { branchId: 'b_cafe' } },
     { url: '/api/simulate-review', body: {} },
@@ -95,27 +203,29 @@ setTimeout(async () => {
     try {
       const res = await fetch(`http://localhost:${PORT}${p.url}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Cookie': sessionCookie },
         body: JSON.stringify(p.body)
       });
       const data = await res.json();
       if (res.status === 200 && data.success) {
         console.log(`  ✓ POST 200 OK: ${p.url}`);
-        postPassed++;
+        passed++;
       } else {
         console.error(`  ✗ POST FAIL: ${p.url}`, data);
-        postFailed++;
+        failed++;
       }
     } catch (e) {
       console.error(`  ✗ POST ERROR on ${p.url}:`, e.message);
-      postFailed++;
+      failed++;
     }
   }
 
-  console.log(`\nPOST API Summary: ${postPassed} Passed, ${postFailed} Failed`);
+  console.log('\n======================================================');
+  console.log(`SUMMARY: ${passed} Tests Passed, ${failed} Failed`);
+  console.log('======================================================\n');
 
-  if (getFailed === 0 && postFailed === 0) {
-    console.log('\n🎉 ALL 51 ENDPOINT TESTS PASSED WITH 100% SUCCESS!');
+  if (failed === 0) {
+    console.log('🎉 100% PRE-LAUNCH CHECKOUT SUCCEEDED! SYSTEM READY FOR PRODUCTION LAUNCH!');
     process.exit(0);
   } else {
     process.exit(1);

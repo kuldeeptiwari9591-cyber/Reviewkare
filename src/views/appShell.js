@@ -178,7 +178,7 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
                 <a href="/app/team" class="block px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-medium">Manage Branches</a>
                 <a href="/app/billing" class="block px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-medium">GST Invoices</a>
                 <a href="/security" class="block px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-medium">Security & Compliance</a>
-                <a href="/login" class="block px-3 py-2 rounded-xl hover:bg-rose-50 text-rose-600 font-bold">Sign Out</a>
+                <a href="/logout" class="block px-3 py-2 rounded-xl hover:bg-rose-50 text-rose-600 font-bold flex items-center justify-between"><span>Sign Out</span><span class="text-[10px] text-rose-400 font-normal">Secure</span></a>
               </div>
             </div>
           </div>
