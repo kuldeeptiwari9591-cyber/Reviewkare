@@ -51,6 +51,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   </script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   ${isHomepage ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>' : ''}
   
   <style>

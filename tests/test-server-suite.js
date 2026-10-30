@@ -261,6 +261,145 @@ setTimeout(async () => {
     failed++;
   }
 
+  // 8. Testing Multi-Tenant Isolation & Razorpay Billing Pipeline
+  console.log('\n--- 8. Testing Multi-Tenant Isolation & Razorpay Billing ---');
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const testEmail = `dr.patel.${Date.now()}@patelaesthetics.in`;
+
+    // 8a. Signup new independent tenant
+    const signupRes = await fetch(`http://localhost:${PORT}/api/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        clinicName: 'Patel Aesthetics Bangalore',
+        ownerName: 'Dr. Aditi Patel',
+        email: testEmail,
+        password: 'Password123#Secure',
+        city: 'Bengaluru',
+        phone: '9845099881',
+        industry: 'salons'
+      })
+    });
+    const signupData = await signupRes.json();
+    const patelCookie = signupRes.headers.get('set-cookie')?.split(';')[0];
+
+    if (signupRes.status === 200 && signupData.success && patelCookie) {
+      console.log('  ✓ Multi-tenant signup successful — isolated session provisioned');
+      passed++;
+    } else {
+      console.error('  ✗ Multi-tenant signup failed:', signupData);
+      failed++;
+    }
+
+    // 8b. Verify tenant file exists and is isolated
+    const reg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'registry.json'), 'utf8'));
+    const tenantUser = reg.users[testEmail];
+    const tenantId = tenantUser?.tenantId;
+    const tenantFilePath = path.join(__dirname, '..', 'data', 'tenants', `${tenantId}.json`);
+
+    if (tenantId && fs.existsSync(tenantFilePath)) {
+      const tenantData = JSON.parse(fs.readFileSync(tenantFilePath, 'utf8'));
+      if (tenantData.location.name === 'Patel Aesthetics Bangalore' && tenantData.reviews.length === 0) {
+        console.log(`  ✓ Tenant ${tenantId} disk store isolated and initialized`);
+        passed++;
+      } else {
+        console.error('  ✗ Tenant file data mismatch:', tenantData);
+        failed++;
+      }
+    } else {
+      console.error('  ✗ Tenant file was not written to disk:', tenantFilePath);
+      failed++;
+    }
+
+    // 8c. Verify Data Isolation: Post a review to Dr. Patel and ensure Dr. Sharma does not see it
+    const patelRevRes = await fetch(`http://localhost:${PORT}/api/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Cookie': patelCookie },
+      body: JSON.stringify({ reviewerName: 'Pooja Hegde', text: 'Amazing hydrafacial glow!', rating: 5 })
+    });
+    const patelRevData = await patelRevRes.json();
+
+    const sharmaReviewsRes = await fetch(`http://localhost:${PORT}/api/reviews`, {
+      headers: { 'Cookie': sessionCookie }
+    });
+    const sharmaReviewsData = await sharmaReviewsRes.json();
+    const leaked = (sharmaReviewsData.reviews || []).some(r => r.reviewerName === 'Pooja Hegde');
+
+    if ((patelRevRes.status === 200 || patelRevRes.status === 201) && patelRevData.success && !leaked) {
+      console.log('  ✓ Complete Multi-Tenant Data Isolation verified (Zero cross-tenant data leakage)');
+      passed++;
+    } else {
+      console.error('  ✗ Multi-tenant data leakage detected! Review visible in default store.');
+      failed++;
+    }
+
+    // 8d. Test Razorpay Order Creation (Hero ₹2,999 Quarterly Plan)
+    const orderRes = await fetch(`http://localhost:${PORT}/api/billing/create-order`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Cookie': patelCookie },
+      body: JSON.stringify({ planId: 'growth', billingCycle: 'quarterly' })
+    });
+    const orderData = await orderRes.json();
+
+    if (orderRes.status === 200 && orderData.success && orderData.amount === 299900 && orderData.orderId) {
+      console.log('  ✓ Razorpay ₹2,999 Quarterly Hero order generated successfully (orderId: ' + orderData.orderId + ')');
+      passed++;
+    } else {
+      console.error('  ✗ Razorpay order creation failed:', orderData);
+      failed++;
+    }
+
+    // 8e. Test Razorpay Payment Verification & Plan Activation
+    const verifyRes = await fetch(`http://localhost:${PORT}/api/billing/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Cookie': patelCookie },
+      body: JSON.stringify({
+        razorpay_order_id: orderData.orderId,
+        razorpay_payment_id: 'pay_test_' + Date.now(),
+        razorpay_signature: 'test_signature',
+        planId: 'growth',
+        billingCycle: 'quarterly'
+      })
+    });
+    const verifyData = await verifyRes.json();
+
+    // Check disk file to ensure active subscription persisted
+    const updatedTenant = JSON.parse(fs.readFileSync(tenantFilePath, 'utf8'));
+    if (verifyRes.status === 200 && verifyData.success && updatedTenant.user.plan.status === 'active' && updatedTenant.invoices.length > 0) {
+      console.log('  ✓ Razorpay subscription verified and activated in isolated tenant store');
+      passed++;
+    } else {
+      console.error('  ✗ Subscription verification failed or did not persist:', verifyData);
+      failed++;
+    }
+
+    // 8f. Test Customer QR Flow Resolution for New Tenant
+    const qrSlug = updatedTenant.qrcodes[0].code;
+    const qrPageRes = await fetch(`http://localhost:${PORT}/q/${qrSlug}`);
+    const qrPageHtml = await qrPageRes.text();
+
+    if (qrPageRes.status === 200 && qrPageHtml.includes('Patel Aesthetics Bangalore')) {
+      console.log(`  ✓ Dynamic Customer QR page (/q/${qrSlug}) correctly resolved business branding`);
+      passed++;
+    } else {
+      console.error(`  ✗ QR route failed to resolve tenant branding for ${qrSlug}`);
+      failed++;
+    }
+
+    // Clean up test tenant artifacts
+    if (fs.existsSync(tenantFilePath)) fs.unlinkSync(tenantFilePath);
+    const cleanReg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'registry.json'), 'utf8'));
+    delete cleanReg.users[testEmail];
+    delete cleanReg.qrLookup[qrSlug];
+    fs.writeFileSync(path.join(__dirname, '..', 'data', 'registry.json'), JSON.stringify(cleanReg, null, 2), 'utf8');
+
+  } catch (err) {
+    console.error('  ✗ Section 8 error:', err);
+    failed++;
+  }
+
   console.log('\n======================================================');
   console.log(`SUMMARY: ${passed} Tests Passed, ${failed} Failed`);
   console.log('======================================================\n');

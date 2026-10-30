@@ -1,0 +1,32 @@
+{
+  "users": {
+    "dr.sharma@sharmadental.in": {
+      "tenantId": "default",
+      "email": "dr.sharma@sharmadental.in",
+      "name": "Dr. Ananya Sharma",
+      "passwordHash": "a1628e78f5cc3594809243109d88092f6688a91abe7c48bc6d314288eaebc5ce165dcf3e68e0aae0c69386734eaa84586b5d8ebc8e0be1d9ebb97242f503febb",
+      "passwordSalt": "033ebf7850ce938dd59dbb7e84e1c85e"
+    }
+  },
+  "sessions": {
+    "sess_a4939210c861afa36e1acfc1865a4e6e2fa2b50a07c0e55d": {
+      "userId": "usr_1793352790581",
+      "tenantId": "t_1793352790579",
+      "email": "dr.patel.1793352790573@patelaesthetics.in",
+      "name": "Dr. Aditi Patel",
+      "role": "Owner / Clinic Director",
+      "createdAt": 1793352790712,
+      "expiresAt": 1793957590712
+    }
+  },
+  "qrLookup": {
+    "sharma-dent-01": "default",
+    "roastery-main-01": "default",
+    "bounce-lavelle-01": "default",
+    "ironvault-korm-01": "default"
+  },
+  "config": {
+    "razorpayKeyId": "",
+    "razorpayKeySecret": ""
+  }
+}

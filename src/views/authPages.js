@@ -11,21 +11,21 @@ function renderLoginPage(query = {}) {
 
   return `
   <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-    <div class="max-w-md w-full space-y-8">
+    <div class="max-w-md w-full space-y-6">
       
       <!-- Brand Header -->
       <div class="text-center">
-        <a href="/" class="inline-flex items-center gap-2.5 mb-6 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl">
-          <div class="w-10 h-10 rounded-xl bg-dark-950 flex items-center justify-center text-brand-400 font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+        <a href="/" class="inline-flex items-center gap-2.5 mb-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform font-heading">
             R
           </div>
           <span class="font-heading font-black text-2xl tracking-tight text-slate-900">Replyo</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          Sign in to Replyo Enterprise OS
+          Sign in to Replyo Enterprise
         </h1>
-        <p class="mt-2 text-xs text-slate-500 font-medium">
-          Manage Google Business reviews, frontline staff attribution & in-store QR flows across your locations.
+        <p class="mt-1.5 text-xs text-slate-500 font-medium">
+          Autonomous Google Review Autopilot & In-Store Smart QR Operating System
         </p>
       </div>
 
@@ -41,35 +41,16 @@ function renderLoginPage(query = {}) {
       <!-- Authentication Required Notice -->
       <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center gap-2.5 text-xs font-semibold shadow-xs animate-in fade-in" role="alert">
         ${getSvgIcon('lock', 'w-4 h-4 text-amber-600 shrink-0')}
-        <span>Authentication required. Please sign in or use the 1-Click Demo account below to access the workspace.</span>
+        <span>Please sign in with your business email to access your Replyo workspace.</span>
       </div>
       ` : ''}
 
-      <!-- Quick 1-Click Multi-Vertical Demo Account Card -->
-      <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-indigo-50/60 border border-brand-200 shadow-sm">
-        <div class="flex items-start justify-between gap-3">
-          <div class="space-y-1">
-            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-brand-600 text-white text-[10px] font-bold tracking-wide uppercase font-mono">
-              ${getSvgIcon('sparkles', 'w-3 h-3')} 1-Click Multi-Vertical Demo
-            </div>
-            <h2 class="text-xs font-bold text-slate-900">Dr. Sharma Dental, The Roastery Cafe, Bounce Salon & IronVault Gym</h2>
-            <p class="text-[11px] text-slate-600 leading-relaxed">
-              Explore the live executive dashboard with 4 multi-vertical businesses, real-world reviews, and frontline staff leaderboards.
-            </p>
-          </div>
-        </div>
-        <button type="button" onclick="fillDemoAndLogin()" class="mt-3 w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-          <span>Enter Live Workspace (Instant 1-Click)</span>
-          ${getSvgIcon('arrowRight', 'w-4 h-4')}
-        </button>
-      </div>
-
-      <!-- Standard Login Form -->
+      <!-- Clean Standard Login Form -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d">
         <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
           <div>
             <label for="emailInput" class="block text-xs font-bold text-slate-700 mb-1.5">
-              Registered Clinic Email
+              Registered Business Email
             </label>
             <div class="relative">
               <input 
@@ -77,7 +58,7 @@ function renderLoginPage(query = {}) {
                 type="email" 
                 required 
                 value="${emailVal}"
-                placeholder="doctor@clinic.in"
+                placeholder="owner@yourbusiness.in"
                 autocomplete="email"
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white placeholder-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all"
               />
@@ -117,7 +98,7 @@ function renderLoginPage(query = {}) {
           <div class="flex items-center justify-between pt-1">
             <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-600">
               <input type="checkbox" id="rememberMe" checked class="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
-              <span>Remember this reception terminal</span>
+              <span>Remember this terminal</span>
             </label>
           </div>
 
@@ -126,20 +107,16 @@ function renderLoginPage(query = {}) {
           <button 
             type="submit" 
             id="loginSubmitBtn"
-            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-dark-950 hover:bg-brand-600 text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
           >
             <span>Sign In to Dashboard</span>
             ${getSvgIcon('arrowRight', 'w-4 h-4')}
           </button>
         </form>
 
-        <div class="mt-6 pt-6 border-t border-slate-100 text-center">
-          <p class="text-xs text-slate-500 font-medium">
-            New clinic or multi-chain group?
-            <a href="/signup" class="font-bold text-brand-600 hover:text-brand-700 hover:underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded">
-              Start 14-day free trial &rarr;
-            </a>
-          </p>
+        <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+          <span>New business or clinic? <a href="/signup" class="font-bold text-brand-600 hover:underline">Start 14-day free pilot &rarr;</a></span>
+          <button type="button" onclick="fillDemoAndLogin()" class="text-[11px] text-slate-400 hover:text-slate-700 underline focus-visible:outline-none">Test Demo Login</button>
         </div>
       </div>
 
@@ -262,10 +239,25 @@ function renderSignupPage() {
                 id="clinicName" 
                 type="text" 
                 required 
-                placeholder="Dr. Sharma Dental, Roastery Cafe, or Bounce Salon" 
+                placeholder="Apex Dental, Roastery Cafe, or Bounce Salon" 
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
               />
             </div>
+            <div>
+              <label for="ownerName" class="block text-xs font-bold text-slate-700 mb-1">
+                Owner / Director Full Name
+              </label>
+              <input 
+                id="ownerName" 
+                type="text" 
+                required 
+                placeholder="Dr. Rajesh Sharma" 
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="industrySelect" class="block text-xs font-bold text-slate-700 mb-1">
                 Industry Specialty
@@ -274,18 +266,14 @@ function renderSignupPage() {
                 id="industrySelect" 
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none bg-white"
               >
-                <option value="dental">Dental & Implant Clinic</option>
-                <option value="derma">Dermatology, Trichology & Aesthetics</option>
-                <option value="cafe">Specialty Cafe, Bakery & Bistro</option>
-                <option value="restaurant">Fine Dining, Bar & Restobar</option>
-                <option value="salon">Hair Studio & Luxury Spa</option>
-                <option value="gym">Gym, CrossFit & Athletic Club</option>
+                <option value="clinic">Healthcare, Dental & Clinic</option>
+                <option value="cafe">Cafe, Bakery & Bistro</option>
+                <option value="restaurant">Restaurant, Dining & Bar</option>
+                <option value="salon">Salon, Spa & Aesthetics</option>
+                <option value="gym">Gym, Fitness & Athletic Club</option>
                 <option value="coaching">Coaching & Academic Institute</option>
               </select>
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="citySelect" class="block text-xs font-bold text-slate-700 mb-1">
                 City / Metro Region
@@ -303,9 +291,12 @@ function renderSignupPage() {
                 <option value="Other">Other Indian City</option>
               </select>
             </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="ownerPhone" class="block text-xs font-bold text-slate-700 mb-1">
-                WhatsApp Number (for 1-tap alerts)
+                WhatsApp Phone Number
               </label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">+91</span>
@@ -319,24 +310,23 @@ function renderSignupPage() {
                 />
               </div>
             </div>
-          </div>
-
-          <div>
-            <label for="signupEmail" class="block text-xs font-bold text-slate-700 mb-1">
-              Official Email
-            </label>
-            <input 
-              id="signupEmail" 
-              type="email" 
-              required 
-              placeholder="contact@apexdental.in" 
-              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
-            />
+            <div>
+              <label for="signupEmail" class="block text-xs font-bold text-slate-700 mb-1">
+                Official Business Email
+              </label>
+              <input 
+                id="signupEmail" 
+                type="email" 
+                required 
+                placeholder="contact@yourbusiness.in" 
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              />
+            </div>
           </div>
 
           <div>
             <label for="signupPwd" class="block text-xs font-bold text-slate-700 mb-1">
-              Create Password
+              Create Secure Password
             </label>
             <input 
               id="signupPwd" 
@@ -392,10 +382,12 @@ function renderSignupPage() {
 
       const payload = {
         clinicName: document.getElementById('clinicName').value,
+        ownerName: document.getElementById('ownerName').value,
         industry: document.getElementById('industrySelect').value,
         city: document.getElementById('citySelect').value,
         phone: document.getElementById('ownerPhone').value,
         email: document.getElementById('signupEmail').value,
+        password: document.getElementById('signupPwd').value
       };
 
       try {

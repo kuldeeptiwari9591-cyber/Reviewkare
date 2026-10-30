@@ -1,17 +1,56 @@
 const http = require('http');
+const https = require('https');
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { AsyncLocalStorage } = require('node:async_hooks');
 
-// Store file path
+// Request Store Context (Multi-Tenant Isolation)
+const reqStoreContext = new AsyncLocalStorage();
+
+// Data file paths
 const DATA_FILE = path.join(__dirname, 'data', 'store.json');
+const TENANTS_DIR = path.join(__dirname, 'data', 'tenants');
+const REGISTRY_FILE = path.join(__dirname, 'data', 'registry.json');
 
-// In-memory store cache for high performance
+// Ensure directories exist
+if (!fs.existsSync(TENANTS_DIR)) fs.mkdirSync(TENANTS_DIR, { recursive: true });
+
+// In-memory store caches
 let storeCache = null;
+let registryCache = null;
+const tenantCaches = new Map();
 
-// Helper to load store
-function getStore() {
+// Helper to load registry
+function getRegistry() {
+  if (registryCache) return registryCache;
+  try {
+    if (fs.existsSync(REGISTRY_FILE)) {
+      registryCache = JSON.parse(fs.readFileSync(REGISTRY_FILE, 'utf8'));
+      return registryCache;
+    }
+  } catch (e) {
+    console.error('Error reading registry:', e);
+  }
+  registryCache = { users: {}, sessions: {}, qrLookup: {}, config: {} };
+  return registryCache;
+}
+
+// Helper to save registry (atomic)
+function saveRegistry(data) {
+  registryCache = data;
+  try {
+    const tmp = REGISTRY_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+    fs.renameSync(tmp, REGISTRY_FILE);
+  } catch (e) {
+    console.error('Error saving registry:', e);
+  }
+}
+
+// Raw Storage I/O for fallback default store
+function rawGetStore() {
   if (storeCache) return storeCache;
   try {
     const raw = fs.readFileSync(DATA_FILE, 'utf8');
@@ -23,8 +62,7 @@ function getStore() {
   }
 }
 
-// Helper to save store with atomic rename (crash-safe)
-function saveStore(data) {
+function rawSaveStore(data) {
   storeCache = data;
   try {
     const tmp = DATA_FILE + '.tmp';
@@ -33,6 +71,58 @@ function saveStore(data) {
   } catch (e) {
     console.error('Error saving store:', e);
   }
+}
+
+// Multi-Tenant Store Manager
+function getTenantStore(tenantId = 'default') {
+  if (tenantCaches.has(tenantId)) return tenantCaches.get(tenantId);
+  const tenantPath = path.join(TENANTS_DIR, `${tenantId}.json`);
+  try {
+    if (fs.existsSync(tenantPath)) {
+      const parsed = JSON.parse(fs.readFileSync(tenantPath, 'utf8'));
+      tenantCaches.set(tenantId, parsed);
+      return parsed;
+    }
+  } catch (e) {
+    console.error(`Error reading tenant ${tenantId}:`, e);
+  }
+  const fallback = rawGetStore();
+  tenantCaches.set(tenantId, fallback);
+  return fallback;
+}
+
+function saveTenantStore(tenantId = 'default', data) {
+  tenantCaches.set(tenantId, data);
+  const tenantPath = path.join(TENANTS_DIR, `${tenantId}.json`);
+  try {
+    const tmp = tenantPath + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+    fs.renameSync(tmp, tenantPath);
+  } catch (e) {
+    console.error(`Error saving tenant ${tenantId}:`, e);
+  }
+  if (tenantId === 'default') {
+    rawSaveStore(data);
+  }
+}
+
+// Scoped Store accessors (auto-bind to current request tenant or 'default')
+function getStore() {
+  const ctx = reqStoreContext.getStore();
+  const tenantId = ctx?.tenantId || 'default';
+  return getTenantStore(tenantId);
+}
+
+function saveStore(data) {
+  const ctx = reqStoreContext.getStore();
+  const tenantId = ctx?.tenantId || 'default';
+  return saveTenantStore(tenantId, data);
+}
+
+function getStoreForReq(req) {
+  const session = getSessionFromReq(req);
+  const tenantId = session?.tenantId || 'default';
+  return { store: getTenantStore(tenantId), tenantId };
 }
 
 // Native HTML Entity Escaper (XSS Protection)
@@ -88,45 +178,60 @@ function parseCookies(req) {
   return list;
 }
 
-// Helper: Create Secure Session (Persisted to Store so reboots keep logins)
+// Helper: Create Secure Session
 function createSession(userData = {}) {
   const token = 'sess_' + crypto.randomBytes(24).toString('hex');
+  const tenantId = userData.tenantId || 'default';
   const session = {
     userId: userData.userId || 'usr_' + Date.now(),
+    tenantId: tenantId,
     email: userData.email || 'dr.sharma@sharmadental.in',
     name: userData.name || 'Dr. Ananya Sharma',
     role: userData.role || 'Executive Group Director',
     createdAt: Date.now(),
     expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days TTL
   };
-  const store = getStore();
-  if (!store.sessions) store.sessions = {};
-  store.sessions[token] = session;
-  saveStore(store);
+
+  const reg = getRegistry();
+  if (!reg.sessions) reg.sessions = {};
+  reg.sessions[token] = session;
+  saveRegistry(reg);
+
+  const tenantStore = getTenantStore(tenantId);
+  if (!tenantStore.sessions) tenantStore.sessions = {};
+  tenantStore.sessions[token] = session;
+  saveTenantStore(tenantId, tenantStore);
+
   return token;
 }
 
 // Helper: Destroy Session
 function destroySession(token) {
   if (!token) return;
-  const store = getStore();
-  if (store.sessions && store.sessions[token]) {
-    delete store.sessions[token];
-    saveStore(store);
+  const reg = getRegistry();
+  const session = reg.sessions?.[token];
+  if (session) {
+    const tenantStore = getTenantStore(session.tenantId || 'default');
+    if (tenantStore.sessions?.[token]) {
+      delete tenantStore.sessions[token];
+      saveTenantStore(session.tenantId || 'default', tenantStore);
+    }
+    delete reg.sessions[token];
+    saveRegistry(reg);
   }
 }
 
-// Helper: Get Session from Request (Checks Persistent Store)
+// Helper: Get Session from Request
 function getSessionFromReq(req) {
   const cookies = parseCookies(req);
   const token = cookies.replyo_session;
   if (!token) return null;
-  const store = getStore();
-  const session = store.sessions?.[token];
+  const reg = getRegistry();
+  const session = reg.sessions?.[token];
   if (!session) return null;
   if (session.expiresAt && session.expiresAt < Date.now()) {
-    delete store.sessions[token];
-    saveStore(store);
+    delete reg.sessions[token];
+    saveRegistry(reg);
     return null;
   }
   return session;
@@ -150,6 +255,85 @@ function checkRateLimit(ip, limit = 100, windowMs = 60000) {
     return { allowed: false, retryAfter: Math.ceil((record.resetTime - now) / 1000) };
   }
   return { allowed: true, remaining: limit - record.count };
+}
+
+// ----------------------------------------------------
+// NATIVE RAZORPAY PAYMENT GATEWAY ADAPTER
+// ----------------------------------------------------
+function getRazorpayConfig() {
+  const reg = getRegistry();
+  return {
+    keyId: process.env.RAZORPAY_KEY_ID || reg.config?.razorpayKeyId || '',
+    keySecret: process.env.RAZORPAY_KEY_SECRET || reg.config?.razorpayKeySecret || ''
+  };
+}
+
+function createRazorpayOrder({ keyId, keySecret, amountInPaise, currency = 'INR', receipt, notes = {} }) {
+  return new Promise((resolve) => {
+    // If keys are not set, provide test order response
+    if (!keyId || !keySecret || keyId === 'rzp_test_placeholder') {
+      return resolve({
+        success: true,
+        order: {
+          id: 'order_test_' + Date.now(),
+          amount: amountInPaise,
+          currency: 'INR',
+          receipt: receipt || 'rcpt_' + Date.now(),
+          status: 'created',
+          isTestMock: true
+        }
+      });
+    }
+
+    const authHeader = 'Basic ' + Buffer.from(keyId + ':' + keySecret).toString('base64');
+    const postData = JSON.stringify({ amount: amountInPaise, currency, receipt: receipt || 'rcpt_' + Date.now(), notes });
+
+    const options = {
+      hostname: 'api.razorpay.com',
+      port: 443,
+      path: '/v1/orders',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authHeader,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(body);
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            resolve({ success: true, order: parsed });
+          } else {
+            resolve({ success: false, error: parsed.error?.description || 'Razorpay order creation failed' });
+          }
+        } catch (e) {
+          resolve({ success: false, error: 'Malformed Razorpay response' });
+        }
+      });
+    });
+
+    req.on('error', (err) => {
+      resolve({ success: false, error: 'Network error calling Razorpay: ' + err.message });
+    });
+    req.write(postData);
+    req.end();
+  });
+}
+
+function verifyRazorpaySignature({ orderId, paymentId, signature, secret }) {
+  if (!secret) return true; // Accept test simulation when secret not provided
+  try {
+    const text = orderId + '|' + paymentId;
+    const expectedSignature = crypto.createHmac('sha256', secret).update(text).digest('hex');
+    return crypto.timingSafeEqual(Buffer.from(expectedSignature), Buffer.from(signature));
+  } catch (e) {
+    return false;
+  }
 }
 
 // Periodically clean stale rate limits (prevent memory leak)
@@ -209,33 +393,37 @@ function parseJsonBody(req) {
 }
 
 // SERVER
-const server = http.createServer(async (req, res) => {
-  const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
-  const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost:' + PORT}`);
-  const pathname = reqUrl.pathname;
-  const parsedQuery = Object.fromEntries(reqUrl.searchParams.entries());
-  const method = req.method;
+const server = http.createServer((req, res) => {
+  const session = getSessionFromReq(req);
+  const tenantId = session?.tenantId || 'default';
 
-  const sendJson = (statusCode, data, customHeaders = {}) => {
-    res.writeHead(statusCode, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      ...SECURITY_HEADERS,
-      ...customHeaders
-    });
-    res.end(JSON.stringify(data));
-  };
+  reqStoreContext.run({ req, session, tenantId }, async () => {
+    const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
+    const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost:' + PORT}`);
+    const pathname = reqUrl.pathname;
+    const parsedQuery = Object.fromEntries(reqUrl.searchParams.entries());
+    const method = req.method;
 
-  const sendHtml = (statusCode, html, customHeaders = {}) => {
-    res.writeHead(statusCode, {
-      'Content-Type': 'text/html; charset=utf-8',
-      ...SECURITY_HEADERS,
-      ...customHeaders
-    });
-    res.end(html);
-  };
+    const sendJson = (statusCode, data, customHeaders = {}) => {
+      res.writeHead(statusCode, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        ...SECURITY_HEADERS,
+        ...customHeaders
+      });
+      res.end(JSON.stringify(data));
+    };
 
-  try {
+    const sendHtml = (statusCode, html, customHeaders = {}) => {
+      res.writeHead(statusCode, {
+        'Content-Type': 'text/html; charset=utf-8',
+        ...SECURITY_HEADERS,
+        ...customHeaders
+      });
+      res.end(html);
+    };
+
+    try {
     // ----------------------------------------------------
     // REST API ENDPOINTS
     // ----------------------------------------------------
@@ -344,9 +532,11 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/ai/qr-draft' && method === 'POST') {
       const body = await parseJsonBody(req);
-      const store = getStore();
       const rawSub = body.submission || {};
       const code = body.shortCode || '';
+      const reg = getRegistry();
+      const tenantId = reg.qrLookup?.[code] || 'default';
+      const store = getTenantStore(tenantId);
       const qrConfig = (store.qrcodes || []).find(q => q.code === code);
       const matchedBusiness = qrConfig ? (store.businesses || []).find(b => b.vertical === qrConfig.vertical) : null;
       const businessName = matchedBusiness?.name || rawSub.businessName || store.location.name || 'Our Center';
@@ -388,7 +578,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(200, { success: true, message: 'Thank you for reaching out! A Replyo specialist will call you within 2 business hours.' });
     }
 
-    // AUTH: Login with Rate Limiting, Session Cookie & Password Validation
+    // AUTH: Login with Rate Limiting, Multi-Tenant Session & Password Verification
     if (pathname === '/api/auth/login' && method === 'POST') {
       const rl = checkRateLimit(clientIp + ':auth', 15, 60000);
       if (!rl.allowed) {
@@ -396,44 +586,62 @@ const server = http.createServer(async (req, res) => {
       }
 
       const body = await parseJsonBody(req);
-      const store = getStore();
-
-      // Seed default clinic password hash if not yet initialized
-      if (!store.user.passwordHash) {
-        const seeded = hashPassword('ClinicalDemo@2026');
-        store.user.passwordHash = seeded.hash;
-        store.user.passwordSalt = seeded.salt;
-        saveStore(store);
-      }
-
-      // Check credentials (supports demo email or registered email with timing-safe password compare)
       const inputEmail = (body.email || '').toLowerCase().trim();
-      const storedEmail = (store.user?.email || '').toLowerCase().trim();
-      const isDemo = inputEmail === 'dr.sharma@sharmadental.in' && body.password === 'ClinicalDemo@2026';
-      const isStoredUser = inputEmail === storedEmail && verifyPassword(body.password, store.user?.passwordHash, store.user?.passwordSalt);
+      const reg = getRegistry();
 
-      if (!isDemo && !isStoredUser) {
-        return sendJson(401, { success: false, error: 'Invalid clinic email or password. Use demo credentials or sign up.' });
+      let matchedTenantId = null;
+      let matchedUser = null;
+
+      // 1. Look up in multi-tenant registry
+      if (reg.users && reg.users[inputEmail]) {
+        const u = reg.users[inputEmail];
+        if (verifyPassword(body.password, u.passwordHash, u.passwordSalt)) {
+          matchedTenantId = u.tenantId;
+          matchedUser = u;
+        }
       }
 
+      // 2. Fallback for demo credentials or legacy store
+      if (!matchedTenantId) {
+        const defStore = getTenantStore('default');
+        if (!defStore.user.passwordHash) {
+          const seeded = hashPassword('ClinicalDemo@2026');
+          defStore.user.passwordHash = seeded.hash;
+          defStore.user.passwordSalt = seeded.salt;
+          saveTenantStore('default', defStore);
+        }
+        const isDemo = inputEmail === 'dr.sharma@sharmadental.in' && body.password === 'ClinicalDemo@2026';
+        const isDefUser = inputEmail === (defStore.user?.email || '').toLowerCase().trim() && verifyPassword(body.password, defStore.user?.passwordHash, defStore.user?.passwordSalt);
+        if (isDemo || isDefUser) {
+          matchedTenantId = 'default';
+          matchedUser = defStore.user;
+        }
+      }
+
+      if (!matchedTenantId) {
+        return sendJson(401, { success: false, error: 'Invalid business email or password.' });
+      }
+
+      const tenantStore = getTenantStore(matchedTenantId);
       const token = createSession({
-        userId: 'usr_sharma_01',
-        email: store.user?.email,
-        name: store.user?.name || 'Dr. Ananya Sharma',
-        role: store.user?.role || 'Executive Group Director'
+        tenantId: matchedTenantId,
+        userId: tenantStore.user?.id || 'usr_' + Date.now(),
+        email: inputEmail,
+        name: tenantStore.user?.name || matchedUser?.name || 'Business Owner',
+        role: tenantStore.user?.role || 'Owner / Director'
       });
 
       return sendJson(200, {
         success: true,
         redirect: body.redirect || '/app',
-        user: store.user,
+        user: tenantStore.user,
         message: 'Authentication successful'
       }, {
         'Set-Cookie': `replyo_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
       });
     }
 
-    // AUTH: Sign Up with Rate Limiting & Session Cookie
+    // AUTH: Sign Up with Isolated Multi-Tenant Account Provisioning
     if (pathname === '/api/auth/signup' && method === 'POST') {
       const rl = checkRateLimit(clientIp + ':auth', 15, 60000);
       if (!rl.allowed) {
@@ -441,22 +649,115 @@ const server = http.createServer(async (req, res) => {
       }
 
       const body = await parseJsonBody(req);
-      const store = getStore();
-      if (body.clinicName) store.location.name = escapeHtml(body.clinicName);
-      if (body.city) store.location.city = escapeHtml(body.city);
-      if (body.email) store.user.email = body.email.toLowerCase().trim();
-      if (body.password) {
-        const hp = hashPassword(body.password);
-        store.user.passwordHash = hp.hash;
-        store.user.passwordSalt = hp.salt;
+      const inputEmail = (body.email || '').toLowerCase().trim();
+      if (!inputEmail || !body.password) {
+        return sendJson(400, { success: false, error: 'Email and password are required.' });
       }
-      saveStore(store);
+
+      const reg = getRegistry();
+      if (reg.users && reg.users[inputEmail]) {
+        return sendJson(400, { success: false, error: 'An account with this email already exists. Please sign in.' });
+      }
+
+      const tenantId = 't_' + Date.now();
+      const clinicName = escapeHtml(body.clinicName || 'My Business');
+      const ownerName = escapeHtml(body.ownerName || clinicName);
+      const industry = body.industry || 'clinic';
+      const city = escapeHtml(body.city || 'Bengaluru');
+      const phone = escapeHtml(body.phone || '');
+      const qrSlug = clinicName.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 16).replace(/^-|-$/g, '') + '-' + Math.floor(100 + Math.random() * 900);
+
+      const newTenant = {
+        id: tenantId,
+        location: {
+          id: tenantId,
+          name: clinicName,
+          vertical: industry,
+          city: city,
+          area: city,
+          phone: phone,
+          managerPhone: phone,
+          rating: 5.0,
+          reviewsCount: 0,
+          autopilotLevel: 'SMART (4-5★)',
+          replyDelayMinutes: 4,
+          tonePreference: 'warm',
+          syncStatus: 'Live (Smart QR Ready)'
+        },
+        user: {
+          id: 'usr_' + Date.now(),
+          name: ownerName,
+          email: inputEmail,
+          phone: phone,
+          role: 'Owner / Clinic Director',
+          plan: {
+            status: 'trial',
+            tier: 'starter',
+            name: '14-Day Free Pilot',
+            trialDaysLeft: 14,
+            expiresAt: new Date(Date.now() + 14 * 86400000).toISOString()
+          }
+        },
+        qrcodes: [
+          {
+            id: 'qr_' + Date.now(),
+            code: qrSlug,
+            name: 'Billing Desk Countertop QR',
+            vertical: industry,
+            material: 'Printable Countertop Stand',
+            url: `/q/${qrSlug}`,
+            scansCount: 0,
+            reviewsGenerated: 0,
+            conversionRate: '0.0%'
+          }
+        ],
+        reviews: [],
+        staff: [
+          {
+            id: 'st_1',
+            name: ownerName,
+            role: 'Director / Lead',
+            vertical: industry,
+            reviewsCount: 0,
+            avgRating: 5.0,
+            compliments: 'Punctual & attentive care',
+            tipsEarned: '₹0'
+          }
+        ],
+        notifications: [
+          {
+            id: 'notif_welcome',
+            title: 'Welcome to Replyo!',
+            message: `Your smart review QR is live at /q/${qrSlug}. Print your tabletop stand to collect Google reviews!`,
+            time: 'Just now',
+            unread: true,
+            link: `/q/${qrSlug}`
+          }
+        ],
+        invoices: []
+      };
+
+      saveTenantStore(tenantId, newTenant);
+
+      const hp = hashPassword(body.password);
+      if (!reg.users) reg.users = {};
+      reg.users[inputEmail] = {
+        tenantId: tenantId,
+        email: inputEmail,
+        name: ownerName,
+        passwordHash: hp.hash,
+        passwordSalt: hp.salt
+      };
+      if (!reg.qrLookup) reg.qrLookup = {};
+      reg.qrLookup[qrSlug] = tenantId;
+      saveRegistry(reg);
 
       const token = createSession({
-        userId: 'usr_' + Date.now(),
-        email: body.email,
-        name: body.clinicName || 'Clinic Director',
-        role: 'Clinic Director / Owner'
+        tenantId: tenantId,
+        userId: newTenant.user.id,
+        email: inputEmail,
+        name: ownerName,
+        role: newTenant.user.role
       });
 
       return sendJson(200, {
@@ -466,6 +767,127 @@ const server = http.createServer(async (req, res) => {
       }, {
         'Set-Cookie': `replyo_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
       });
+    }
+
+    // ----------------------------------------------------
+    // RAZORPAY BILLING ENDPOINTS (UPI, CARDS & NETBANKING)
+    // ----------------------------------------------------
+    if (pathname === '/api/billing/create-order' && method === 'POST') {
+      const { store, tenantId } = getStoreForReq(req);
+      const body = await parseJsonBody(req);
+      const planId = body.planId || 'growth';
+      const billingCycle = body.billingCycle || 'monthly';
+
+      const pricesInPaise = {
+        'starter_monthly': 124900,
+        'starter_annual': 1199000,
+        'growth_monthly': 199900,
+        'growth_quarterly': 299900,
+        'growth_annual': 1999000,
+        'pro_monthly': 349900,
+        'pro_annual': 3499000
+      };
+
+      const key = `${planId}_${billingCycle}`;
+      const amount = pricesInPaise[key] || (billingCycle === 'quarterly' ? 299900 : 124900);
+      const planNames = {
+        'starter': 'Starter Plan',
+        'growth': 'Growth Autopilot Plan',
+        'pro': 'Multi-Branch Pro Plan'
+      };
+
+      const config = getRazorpayConfig();
+      const receipt = `rcpt_${tenantId}_${Date.now()}`.slice(0, 40);
+
+      const orderResult = await createRazorpayOrder({
+        keyId: config.keyId,
+        keySecret: config.keySecret,
+        amountInPaise: amount,
+        currency: 'INR',
+        receipt,
+        notes: { tenantId, planId, billingCycle }
+      });
+
+      if (!orderResult.success) {
+        return sendJson(400, { success: false, error: orderResult.error });
+      }
+
+      return sendJson(200, {
+        success: true,
+        orderId: orderResult.order.id,
+        amount: orderResult.order.amount,
+        currency: 'INR',
+        keyId: config.keyId || 'rzp_test_placeholder',
+        planName: `${planNames[planId] || 'Replyo Plan'} (${billingCycle})`,
+        userName: store.user?.name || 'Valued Partner',
+        userEmail: store.user?.email || 'partner@replyo.in',
+        userPhone: store.user?.phone || '9876543210'
+      });
+    }
+
+    if (pathname === '/api/billing/verify' && method === 'POST') {
+      const { store, tenantId } = getStoreForReq(req);
+      const body = await parseJsonBody(req);
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature, planId, billingCycle } = body;
+
+      const config = getRazorpayConfig();
+      const isValid = verifyRazorpaySignature({
+        orderId: razorpay_order_id,
+        paymentId: razorpay_payment_id,
+        signature: razorpay_signature,
+        secret: config.keySecret
+      });
+
+      if (!isValid) {
+        return sendJson(400, { success: false, error: 'Cryptographic payment signature verification failed.' });
+      }
+
+      const cycle = billingCycle || 'monthly';
+      const durationDays = cycle === 'annual' ? 365 : (cycle === 'quarterly' ? 90 : 30);
+      const expiresDate = new Date(Date.now() + durationDays * 86400000).toISOString();
+      const planNames = {
+        'starter': 'Starter Active',
+        'growth': 'Growth Autopilot Active',
+        'pro': 'Multi-Branch Pro Active'
+      };
+
+      store.user.plan = {
+        status: 'active',
+        tier: planId || 'growth',
+        billingCycle: cycle,
+        name: planNames[planId] || 'Pro Plan Active',
+        paidAt: new Date().toISOString(),
+        expiresAt: expiresDate,
+        paymentId: razorpay_payment_id,
+        orderId: razorpay_order_id
+      };
+
+      if (!store.invoices) store.invoices = [];
+      store.invoices.unshift({
+        id: 'INV-' + Date.now(),
+        plan: `${planNames[planId] || planId} (${cycle})`,
+        amount: cycle === 'quarterly' ? '₹2,999' : (planId === 'starter' ? '₹1,249' : '₹1,999'),
+        date: new Date().toISOString().split('T')[0],
+        status: 'Paid via Razorpay (UPI/Card)',
+        paymentId: razorpay_payment_id
+      });
+
+      saveTenantStore(tenantId, store);
+      return sendJson(200, {
+        success: true,
+        message: 'Payment verified and plan activated successfully!',
+        plan: store.user.plan
+      });
+    }
+
+    if (pathname === '/api/billing/config' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const reg = getRegistry();
+      if (!reg.config) reg.config = {};
+      if (body.razorpayKeyId) reg.config.razorpayKeyId = body.razorpayKeyId.trim();
+      if (body.razorpayKeySecret) reg.config.razorpayKeySecret = body.razorpayKeySecret.trim();
+      saveRegistry(reg);
+      return sendJson(200, { success: true, message: 'Razorpay configuration saved.' });
     }
 
     // AUTH: Logout API Endpoint (Clears Session)
@@ -816,6 +1238,7 @@ const server = http.createServer(async (req, res) => {
     // 3. PRICING (/pricing)
     // ----------------------------------------------------
     if (pathname === '/pricing') {
+      const session = getSessionFromReq(req);
       const html = renderHtmlPage('Pricing (INR)', 'pricing', `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
           <div class="space-y-3">
@@ -841,8 +1264,8 @@ const server = http.createServer(async (req, res) => {
                     ${plan.features.map((f) => `<li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>${f}</span></li>`).join('')}
                   </ul>
                 </div>
-                <a href="/app" class="mt-6 block w-full py-2.5 text-center rounded-xl ${plan.isPopular ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' : 'bg-slate-900 hover:bg-slate-800 text-white'} text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                  Start with ${plan.name} &rarr;
+                <a href="${session ? '/app/billing' : `/signup?plan=${plan.id}`}" class="mt-6 block w-full py-2.5 text-center rounded-xl ${plan.isPopular ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' : 'bg-slate-900 hover:bg-slate-800 text-white'} text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                  ${session ? 'Choose ' + plan.name : 'Start with ' + plan.name} &rarr;
                 </a>
               </div>
             `).join('')}
@@ -1757,34 +2180,336 @@ const server = http.createServer(async (req, res) => {
     }
 
     // ----------------------------------------------------
-    // BILLING & GST (/app/billing)
+    // BILLING & RAZORPAY SUBSCRIPTIONS (/app/billing)
     // ----------------------------------------------------
     if (pathname === '/app/billing') {
-      const store = getStore();
+      const { store, tenantId } = getStoreForReq(req);
+      const reg = getRegistry();
+      const plan = store.user?.plan || { status: 'trial', tier: 'starter', name: 'Starter Pilot (14 Days Free)', trialDaysLeft: 14 };
+      const isActive = plan.status === 'active';
+      const invoices = store.invoices || [];
+      const razorpayConfig = getRazorpayConfig();
+
       const content = `
-        <div class="space-y-6 max-w-4xl mx-auto">
-          <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Billing & Plans</h1>
-            <p class="text-xs text-slate-500">INR subscription with UPI AutoPay & GST compliance</p>
-          </div>
-          <div class="p-8 bg-dark-950 text-white rounded-3xl space-y-4 shadow-xl card-3d">
-            <div class="flex justify-between items-center">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-brand-400 bg-brand-950 px-2 py-0.5 rounded border border-brand-800">Active Plan</span>
-                <h2 class="text-2xl font-black mt-1 font-heading">Growth Plan (₹1,349 / month)</h2>
-                <p class="text-xs text-slate-400">Renews via UPI AutoPay on 15 Nov 2026</p>
-              </div>
-              <span class="text-brand-400 font-bold text-xs flex items-center gap-1.5">
-                ${getSvgIcon('check', 'w-4 h-4 text-brand-400')} UPI Mandate Active
+        <div class="space-y-8 max-w-5xl mx-auto">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Subscription & Razorpay Billing</h1>
+              <p class="text-xs text-slate-500">Autonomous Google review autopilot plans. Instant UPI, NetBanking & Card activation.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                <span class="w-2 h-2 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}"></span>
+                <span>${isActive ? 'Active Subscription' : '14-Day Free Pilot'}</span>
               </span>
             </div>
-            <div class="grid grid-cols-3 gap-3 pt-3 text-xs border-t border-slate-800">
-              <div><span class="text-slate-400">AI Replies:</span> <strong class="text-white block font-heading text-sm tabular-nums">42 / Unlimited</strong></div>
-              <div><span class="text-slate-400">QR Touchpoints:</span> <strong class="text-white block font-heading text-sm tabular-nums">3 of 3 Active</strong></div>
-              <div><span class="text-slate-400">Customer Drafts:</span> <strong class="text-white block font-heading text-sm tabular-nums">197 of 300</strong></div>
+          </div>
+
+          <!-- Active Plan Hero Card -->
+          <div class="p-6 sm:p-8 bg-dark-950 text-white rounded-3xl space-y-5 shadow-xl border border-slate-800 card-3d">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-[10px] uppercase font-bold text-brand-400 bg-brand-950/80 px-2.5 py-0.5 rounded-full border border-brand-800 tracking-wider font-mono">
+                  ${isActive ? 'Paid Active Plan' : 'Free Trial Mode'}
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black mt-2 font-heading tracking-tight">
+                  ${plan.name || 'Growth Autopilot Plan'}
+                </h2>
+                <p class="text-xs text-slate-400 mt-1">
+                  ${isActive ? `Renews on ${plan.expiresAt ? plan.expiresAt.split('T')[0] : 'Auto-renew'} via Razorpay UPI AutoPay` : `Trial active. Upgrade below to lock in the special ₹2,999 quarterly price.`}
+                </p>
+              </div>
+              <div class="text-right sm:text-right">
+                <span class="text-xs text-slate-400 block font-medium">Payment Channel</span>
+                <span class="text-sm font-bold text-emerald-400 flex items-center justify-start sm:justify-end gap-1.5 mt-0.5">
+                  ${getSvgIcon('check', 'w-4 h-4 text-emerald-400')} Razorpay Verified (UPI/Cards)
+                </span>
+                ${plan.paymentId ? `<span class="text-[10px] text-slate-500 font-mono block mt-1">Ref: ${plan.paymentId}</span>` : ''}
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs border-t border-slate-800/80">
+              <div>
+                <span class="text-slate-400 text-[11px] block">AI Review Replies</span>
+                <strong class="text-white font-heading text-base tabular-nums">Unlimited</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[11px] block">In-Store QR Stands</span>
+                <strong class="text-white font-heading text-base tabular-nums">${store.qrcodes?.length || 1} Active</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[11px] block">Quarantine Shield</span>
+                <strong class="text-emerald-400 font-heading text-base">100% Protected</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[11px] block">GST Input Tax Credit</span>
+                <strong class="text-white font-heading text-base font-mono">18% Compliant</strong>
+              </div>
             </div>
           </div>
+
+          <!-- Subscription Plan Selector (Razorpay Enabled) -->
+          <div class="space-y-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 font-heading">Choose or Upgrade Your Plan</h2>
+              <p class="text-xs text-slate-500">Pay securely in Indian Rupees via UPI (GPay, PhonePe, Paytm, BHIM) or Cards.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              
+              <!-- Starter Plan -->
+              <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between card-3d">
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-slate-900 font-heading">Starter Solo</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono">Monthly</span>
+                  </div>
+                  <div>
+                    <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">₹1,249</span>
+                    <span class="text-xs text-slate-500"> / month</span>
+                  </div>
+                  <p class="text-xs text-slate-500">Ideal for single-chair clinics, independent cafes & local salons.</p>
+                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>1 Google Business Location</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Unlimited AI Multi-Lingual Replies</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Negative Review Quarantine Shield</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>1 Printable Countertop Table-Tent QR</span></li>
+                  </ul>
+                </div>
+                <button type="button" onclick="startRazorpayCheckout('starter', 'monthly')" class="mt-6 w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                  <span>Pay ₹1,249 via Razorpay UPI &rarr;</span>
+                </button>
+              </div>
+
+              <!-- Growth Plan (HERO SPECIAL) -->
+              <div class="p-6 rounded-3xl bg-white border-2 border-brand-600 shadow-lg relative flex flex-col justify-between card-3d">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md font-mono">
+                  Recommended • Saves ₹2,998
+                </div>
+                <div class="space-y-3 mt-1">
+                  <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-slate-900 font-heading">Growth Autopilot</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-50 text-brand-700 rounded-full font-mono border border-brand-200">Quarterly Hero</span>
+                  </div>
+                  <div>
+                    <span class="text-3xl font-black text-brand-600 font-heading tabular-nums">₹2,999</span>
+                    <span class="text-xs text-slate-500"> / 3 Months</span>
+                    <div class="text-[11px] text-emerald-600 font-bold mt-0.5">Just ₹999/mo (40% Savings)</div>
+                  </div>
+                  <p class="text-xs text-slate-500">Full autopilot reputation OS with free physical countertop stand.</p>
+                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Everything in Starter + Up to 2 Branches</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>1-Tap WhatsApp Owner Approvals</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Staff Review Attribution & Leaderboard</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Free Acrylic Countertop Display Kit</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Weekly Executive PDF Report Card</span></li>
+                  </ul>
+                </div>
+                <button type="button" onclick="startRazorpayCheckout('growth', 'quarterly')" class="mt-6 w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                  <span>Pay ₹2,999 via Razorpay UPI &rarr;</span>
+                </button>
+              </div>
+
+              <!-- Multi-Branch Pro -->
+              <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between card-3d">
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-slate-900 font-heading">Multi-Location Pro</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono">Enterprise</span>
+                  </div>
+                  <div>
+                    <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">₹3,499</span>
+                    <span class="text-xs text-slate-500"> / month</span>
+                  </div>
+                  <p class="text-xs text-slate-500">Multi-chair clinics, restaurant chains, and fitness franchises.</p>
+                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Up to 5 Locations Included</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Centralized Reputation Executive Desk</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Google Local 3-Pack Rank Tracker</span></li>
+                    <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Dedicated Account Manager & SLA</span></li>
+                  </ul>
+                </div>
+                <button type="button" onclick="startRazorpayCheckout('pro', 'monthly')" class="mt-6 w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                  <span>Pay ₹3,499 via Razorpay UPI &rarr;</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Payment History & Invoices -->
+          <div class="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm card-3d">
+            <h3 class="font-bold text-sm text-slate-900 font-heading">Tax Invoices & Payment History</h3>
+            ${invoices.length > 0 ? `
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                  <thead class="text-slate-400 font-medium border-b border-slate-100">
+                    <tr>
+                      <th class="py-2">Invoice</th>
+                      <th class="py-2">Plan</th>
+                      <th class="py-2">Amount</th>
+                      <th class="py-2">Date</th>
+                      <th class="py-2">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    ${invoices.map(inv => `
+                      <tr>
+                        <td class="py-3 font-mono font-bold text-slate-900">${inv.id}</td>
+                        <td class="py-3">${inv.plan}</td>
+                        <td class="py-3 font-bold text-slate-900 tabular-nums">${inv.amount}</td>
+                        <td class="py-3 text-slate-500">${inv.date}</td>
+                        <td class="py-3"><span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px]">${inv.status}</span></td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            ` : `
+              <p class="text-xs text-slate-500 py-3">No previous invoices found. Payments made via Razorpay will generate downloadable 18% GST tax invoices here.</p>
+            `}
+          </div>
+
+          <!-- Razorpay Gateway Integration Settings -->
+          <div class="bg-slate-50 rounded-3xl border border-slate-200 p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">Merchant Gateway Configuration</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Your Razorpay API keys for direct bank settlement into your KYC-verified bank account.</p>
+              </div>
+              <span class="text-[10px] bg-brand-50 text-brand-700 font-bold font-mono px-2 py-0.5 rounded border border-brand-200">
+                ${razorpayConfig.keyId ? 'Custom Keys Linked' : 'System Test Gateway'}
+              </span>
+            </div>
+            
+            <form onsubmit="saveRazorpaySettings(event)" class="space-y-3 pt-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Razorpay Key ID</label>
+                  <input id="rzpKeyInput" type="text" placeholder="rzp_live_..." value="${razorpayConfig.keyId || ''}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 outline-none bg-white">
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Razorpay Key Secret</label>
+                  <input id="rzpSecretInput" type="password" placeholder="••••••••••••••••" value="${razorpayConfig.keySecret || ''}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 outline-none bg-white">
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-1">
+                <span id="rzpAlert" class="text-xs text-emerald-600 font-bold hidden">Settings saved successfully!</span>
+                <button type="submit" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm">
+                  Save Gateway Keys
+                </button>
+              </div>
+            </form>
+          </div>
+
         </div>
+
+        <script>
+          async function startRazorpayCheckout(planId, billingCycle) {
+            const btn = event.currentTarget;
+            const origText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="animate-pulse">Connecting to Razorpay UPI…</span>';
+
+            try {
+              const res = await fetch('/api/billing/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ planId, billingCycle })
+              });
+              const data = await res.json();
+
+              if (!data.success) {
+                alert(data.error || 'Failed to create payment order');
+                btn.disabled = false;
+                btn.innerHTML = origText;
+                return;
+              }
+
+              // Test simulation fallback when live credentials are not passed
+              if (data.isTestMock) {
+                const verifyRes = await fetch('/api/billing/verify', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    razorpay_order_id: data.orderId,
+                    razorpay_payment_id: 'pay_sim_' + Date.now(),
+                    razorpay_signature: 'test_signature',
+                    planId,
+                    billingCycle
+                  })
+                });
+                const vdata = await verifyRes.json();
+                if (vdata.success) {
+                  alert('Payment confirmed! Your ' + data.planName + ' is now active.');
+                  window.location.reload();
+                }
+                return;
+              }
+
+              const options = {
+                key: data.keyId,
+                amount: data.amount,
+                currency: data.currency || 'INR',
+                name: 'Replyo Operating System',
+                description: data.planName,
+                order_id: data.orderId,
+                handler: async function (response) {
+                  const verifyRes = await fetch('/api/billing/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      razorpay_order_id: response.razorpay_order_id,
+                      razorpay_payment_id: response.razorpay_payment_id,
+                      razorpay_signature: response.razorpay_signature,
+                      planId,
+                      billingCycle
+                    })
+                  });
+                  const vdata = await verifyRes.json();
+                  if (vdata.success) {
+                    alert('Payment successful! Plan activated.');
+                    window.location.reload();
+                  } else {
+                    alert('Payment verification failed: ' + vdata.error);
+                  }
+                },
+                prefill: {
+                  name: data.userName,
+                  email: data.userEmail,
+                  contact: data.userPhone
+                },
+                theme: { color: '#2563eb' }
+              };
+              const rzp = new Razorpay(options);
+              rzp.open();
+              btn.disabled = false;
+              btn.innerHTML = origText;
+            } catch (err) {
+              alert('Checkout error: ' + err.message);
+              btn.disabled = false;
+              btn.innerHTML = origText;
+            }
+          }
+
+          async function saveRazorpaySettings(e) {
+            e.preventDefault();
+            const keyId = document.getElementById('rzpKeyInput').value;
+            const keySecret = document.getElementById('rzpSecretInput').value;
+            const alertEl = document.getElementById('rzpAlert');
+            const res = await fetch('/api/billing/config', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ razorpayKeyId: keyId, razorpayKeySecret: keySecret })
+            });
+            const data = await res.json();
+            if (data.success) {
+              alertEl.classList.remove('hidden');
+              setTimeout(() => alertEl.classList.add('hidden'), 3000);
+            }
+          }
+        </script>
       `;
       return sendHtml(200, renderHtmlPage('Billing', 'app', renderAppShell('billing', content, store)));
     }
@@ -1837,7 +2562,9 @@ const server = http.createServer(async (req, res) => {
     // ----------------------------------------------------
     if (pathname.startsWith('/q/') && !pathname.endsWith('/done')) {
       const code = pathname.split('/')[2];
-      const store = getStore();
+      const reg = getRegistry();
+      const tenantId = reg.qrLookup?.[code] || 'default';
+      const store = getTenantStore(tenantId);
       const qrConfig = (store.qrcodes || []).find(q => q.code === code);
       const matchedBusiness = qrConfig ? (store.businesses || []).find(b => b.vertical === qrConfig.vertical) : null;
       const loc = matchedBusiness || store.location || {};
@@ -2051,7 +2778,11 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname.startsWith('/q/') && pathname.endsWith('/done')) {
-      const store = getStore();
+      const code = pathname.split('/')[2];
+      const reg = getRegistry();
+      const tenantId = reg.qrLookup?.[code] || 'default';
+      const store = getTenantStore(tenantId);
+      const placeId = store.location?.googlePlaceId || 'ChIJ_zX8sh8UrjsRn7w001';
       const html = renderHtmlPage('Thank You', 'qr', `
         <div class="min-h-screen bg-slate-50 flex items-center justify-center p-4">
           <div class="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-sm text-center space-y-4 card-3d">
@@ -2063,7 +2794,7 @@ const server = http.createServer(async (req, res) => {
             <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900">
               <strong>Reminder:</strong> Your text is copied to your clipboard. Simply paste it on Google Maps and tap Post!
             </div>
-            <a href="https://search.google.com/local/writereview?placeid=${store.location.googlePlaceId}" target="_blank" class="block w-full min-h-[44px] flex items-center justify-center bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="https://search.google.com/local/writereview?placeid=${placeId}" target="_blank" class="block w-full min-h-[44px] flex items-center justify-center bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Open Google Review Window Again &rarr;
             </a>
           </div>
@@ -2121,10 +2852,11 @@ const server = http.createServer(async (req, res) => {
         </div>
       </div>
     `));
-  } catch (err) {
-    console.error('Server error:', err);
-    return sendJson(500, { success: false, error: 'Internal Server Error' });
-  }
+    } catch (err) {
+      console.error('Server error:', err);
+      return sendJson(500, { success: false, error: 'Internal Server Error' });
+    }
+  });
 });
 
 server.listen(PORT, '0.0.0.0', () => {

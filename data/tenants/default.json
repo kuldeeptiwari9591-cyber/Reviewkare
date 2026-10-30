@@ -1,0 +1,1240 @@
+{
+  "activeBusinessId": "b_cafe",
+  "location": {
+    "id": "b_cafe",
+    "name": "The Roastery Artisan Cafe & Sourdough Bakery",
+    "vertical": "cafe",
+    "category": "Dental & Aesthetic Clinic",
+    "area": "12th Main Road, Indiranagar",
+    "city": "Bengaluru",
+    "rating": 4.8,
+    "reviewsCount": 312,
+    "phone": "+91 80 4112 9088",
+    "managerPhone": "+91 98452 33441",
+    "googlePlaceId": "ChIJ_zX8sh8UrjsRn7w001",
+    "autopilotLevel": "FULL AUTOPILOT (4-5★)",
+    "replyDelayMinutes": 4,
+    "tonePreference": "warm",
+    "defaultKeywords": "best specialty coffee Indiranagar, artisanal sourdough, pour-over Bangalore",
+    "syncStatus": "Connected via Official Google Business Profile API (2026 OAuth)",
+    "monthlyInTakeRate": "22.4%"
+  },
+  "businesses": [
+    {
+      "id": "b_clinic",
+      "name": "Dr. Sharma Dental & Implant Clinic",
+      "vertical": "clinic",
+      "category": "Healthcare & Dental",
+      "area": "100ft Road, Indiranagar",
+      "city": "Bengaluru",
+      "rating": 4.9,
+      "reviewsCount": 143,
+      "phone": "+91 80 4920 1888",
+      "managerPhone": "+91 98450 11223",
+      "googlePlaceId": "ChIJ_zX8sh8UrjsRn7w001",
+      "touchpoint": "Reception Acrylic Stand & Operatory Tray NFC",
+      "topKeywords": "painless root canal, clear aligners Indiranagar, dental implants"
+    },
+    {
+      "id": "b_cafe",
+      "name": "The Roastery Artisan Cafe & Sourdough Bakery",
+      "vertical": "cafe",
+      "category": "Specialty Dining & Bakery",
+      "area": "12th Main Road, Indiranagar",
+      "city": "Bengaluru",
+      "rating": 4.8,
+      "reviewsCount": 312,
+      "phone": "+91 80 4112 9088",
+      "managerPhone": "+91 98452 33441",
+      "googlePlaceId": "ChIJ_roastery_blr_02",
+      "touchpoint": "Bill Folder NFC Card & Tabletop QR Stand",
+      "topKeywords": "best specialty coffee Indiranagar, artisanal sourdough, pour-over Bangalore"
+    },
+    {
+      "id": "b_salon",
+      "name": "Bounce Hair Studio & Luxury Spa",
+      "vertical": "salon",
+      "category": "Hair Studios & Luxury Aesthetics",
+      "area": "Lavelle Road, Shanthala Nagar",
+      "city": "Bengaluru",
+      "rating": 4.9,
+      "reviewsCount": 228,
+      "phone": "+91 80 2211 4455",
+      "managerPhone": "+91 98860 77889",
+      "googlePlaceId": "ChIJ_bounce_blr_03",
+      "touchpoint": "Styling Mirror QR & Billing Desk NFC Tap",
+      "topKeywords": "balayage hair colour Bangalore, keratin treatment, luxury spa Lavelle road"
+    },
+    {
+      "id": "b_gym",
+      "name": "IronVault Strength & Conditioning Club",
+      "vertical": "gym",
+      "category": "Gyms & Athletic Performance",
+      "area": "Koramangala 4th Block",
+      "city": "Bengaluru",
+      "rating": 4.8,
+      "reviewsCount": 184,
+      "phone": "+91 80 4333 7799",
+      "managerPhone": "+91 99001 22334",
+      "googlePlaceId": "ChIJ_ironvault_blr_04",
+      "touchpoint": "Turnstile Check-in QR & Water Station NFC Tap",
+      "topKeywords": "strength training Koramangala, powerlifting gym Bangalore, Olympic lifting coach"
+    }
+  ],
+  "branches": [
+    {
+      "id": "b_clinic",
+      "name": "Dr. Sharma Dental (Indiranagar)",
+      "vertical": "clinic",
+      "area": "100ft Road, Indiranagar",
+      "city": "Bengaluru",
+      "rating": 4.9,
+      "isPrimary": true
+    },
+    {
+      "id": "b_cafe",
+      "name": "The Roastery Cafe (12th Main)",
+      "vertical": "cafe",
+      "area": "12th Main, Indiranagar",
+      "city": "Bengaluru",
+      "rating": 4.8
+    },
+    {
+      "id": "b_salon",
+      "name": "Bounce Hair Studio (Lavelle Rd)",
+      "vertical": "salon",
+      "area": "Lavelle Road",
+      "city": "Bengaluru",
+      "rating": 4.9
+    },
+    {
+      "id": "b_gym",
+      "name": "IronVault Strength (Koramangala)",
+      "vertical": "gym",
+      "area": "4th Block Koramangala",
+      "city": "Bengaluru",
+      "rating": 4.8
+    }
+  ],
+  "staff": [
+    {
+      "id": "st_clinic_1",
+      "name": "Dr. Sneha Kulkarni",
+      "role": "Senior Endodontist (Root Canal Specialist)",
+      "vertical": "clinic",
+      "reviewsCount": 42,
+      "avgRating": 4.9,
+      "compliments": "Painless rotary root canal, explains every step with extreme care",
+      "tipsEarned": "₹4,800"
+    },
+    {
+      "id": "st_clinic_2",
+      "name": "Dr. Ananya Sharma",
+      "role": "Chief Implantologist & Clinic Director",
+      "vertical": "clinic",
+      "reviewsCount": 58,
+      "avgRating": 5,
+      "compliments": "Flawless dental implant placement, zero postoperative swelling",
+      "tipsEarned": "₹6,500"
+    },
+    {
+      "id": "st_clinic_3",
+      "name": "Nurse Preeti Verma",
+      "role": "Surgical Assistant & Infection Control Lead",
+      "vertical": "clinic",
+      "reviewsCount": 31,
+      "avgRating": 4.9,
+      "compliments": "Warm reassuring smile, impeccably sterile surgical setup",
+      "tipsEarned": "₹3,400"
+    },
+    {
+      "id": "st_cafe_1",
+      "name": "Shreyas Nair",
+      "role": "Head Barista & Roaster",
+      "vertical": "cafe",
+      "reviewsCount": 64,
+      "avgRating": 4.9,
+      "compliments": "Knowledge of single origin pour-overs and signature iced tonic",
+      "tipsEarned": "₹5,200"
+    },
+    {
+      "id": "st_cafe_2",
+      "name": "Chef Aditi Joshi",
+      "role": "Head Baker & Sourdough Specialist",
+      "vertical": "cafe",
+      "reviewsCount": 49,
+      "avgRating": 4.8,
+      "compliments": "Crisp flaky almond croissants, natural sourdough texture",
+      "tipsEarned": "₹4,100"
+    },
+    {
+      "id": "st_salon_1",
+      "name": "Farhan Akhtar",
+      "role": "Master Hair Artist & Color Specialist",
+      "vertical": "salon",
+      "reviewsCount": 53,
+      "avgRating": 5,
+      "compliments": "Seamless ash blonde balayage, personalized hair texture consult",
+      "tipsEarned": "₹7,200"
+    },
+    {
+      "id": "st_gym_1",
+      "name": "Coach Aryan Rathore",
+      "role": "Head Strength & Conditioning Coach",
+      "vertical": "gym",
+      "reviewsCount": 46,
+      "avgRating": 4.9,
+      "compliments": "Strict squat & deadlift cues, progressive overload tracking",
+      "tipsEarned": "₹4,600"
+    },
+    {
+      "id": "st_8",
+      "name": "Aditi Joshi",
+      "role": "Head Baker",
+      "reviewsCount": 0,
+      "avgRating": 5,
+      "compliments": "Punctual & attentive care",
+      "tipsEarned": "₹0"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1793352790553",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_jd9pue",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793352790555",
+        "reviewId": "rev-1793352790553",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793352790370",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_8ol4qq",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793352790375",
+        "reviewId": "rev-1793352790370",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793352668595",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_evjf4k",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793352668598",
+        "reviewId": "rev-1793352668595",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793352668427",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_14z88s",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793352668431",
+        "reviewId": "rev-1793352668427",
+        "draftText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793351692551",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_weivob",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793351692557",
+        "reviewId": "rev-1793351692551",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793351692247",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_yppo0b",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793351692254",
+        "reviewId": "rev-1793351692247",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793351643854",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_c58cs4",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793351643858",
+        "reviewId": "rev-1793351643854",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793351643533",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_klodmz",
+      "reviewerName": "Deepa Hegde",
+      "rating": 5,
+      "text": "Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai.",
+      "isStarOnly": false,
+      "detectedLanguage": "hi-en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793351643542",
+        "reviewId": "rev-1793351643533",
+        "draftText": "Thank you so much Deepa Hegde ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Looking forward to serving you again at The Roastery Artisan Cafe & Sourdough Bakery!",
+        "finalText": "Thank you so much Deepa Hegde ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Looking forward to serving you again at The Roastery Artisan Cafe & Sourdough Bakery!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793351589542",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_3lxmit",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793351589567",
+        "reviewId": "rev-1793351589542",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291751969",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_z832oqr",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291751972",
+        "reviewId": "rev-1793291751969",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291751789",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_4nv75g",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291751796",
+        "reviewId": "rev-1793291751789",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291193269",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_mm5owq",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291193271",
+        "reviewId": "rev-1793291193269",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793291193137",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_pnubnc",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793291193143",
+        "reviewId": "rev-1793291193137",
+        "draftText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793288392873",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_ssj1hc",
+      "reviewerName": "Ananya Roy",
+      "rating": 5,
+      "text": "Best pour-over coffee in Indiranagar! Barista Shreyas recommended the light-roast Ethiopian beans and explained the flavor notes so well. Fresh sourdough croissants!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793288392881",
+        "reviewId": "rev-1793288392873",
+        "draftText": "Thank you so much Ananya Roy for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Ananya Roy for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792939014545",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_txwk6c",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792939014551",
+        "reviewId": "rev-1792939014545",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792935630837",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_s0ysoj",
+      "reviewerName": "Rajesh Gokhale",
+      "rating": 1,
+      "text": "Waited 35 mins despite booking a 4 PM slot on 100ft road. Receptionist did not inform us about the delay.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "frustrated",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792935630842",
+        "reviewId": "rev-1792935630837",
+        "draftText": "Dear Rajesh Gokhale, thank you for your feedback. Providing a high standard of care and comfort at The Roastery Artisan Cafe & Sourdough Bakery is our top priority. We would appreciate the opportunity to speak with you directly. Please reach out to our manager at +91 98452 33441.",
+        "status": "held",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": "appr-lmiahbxde"
+      }
+    },
+    {
+      "id": "rev-1792895812855",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_k55a7k",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792895812860",
+        "reviewId": "rev-1792895812855",
+        "draftText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Vikramaditya Sengupta for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1792769276847",
+      "locationId": "b_clinic",
+      "googleReviewId": "gbp_sim_f927zg",
+      "reviewerName": "Deepa Hegde",
+      "rating": 5,
+      "text": "Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai.",
+      "isStarOnly": false,
+      "detectedLanguage": "hi-en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1792769276852",
+        "reviewId": "rev-1792769276847",
+        "draftText": "Thank you so much Deepa Hegde ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Looking forward to serving you again at Smile Studio!",
+        "finalText": "Thank you so much Deepa Hegde ji for this wonderful review! Aapka visit hamare liye bohot special tha aur pure staff ko aapka feedback padhkar bohot khushi hui. Looking forward to serving you again at Smile Studio!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-101",
+      "locationId": "b_clinic",
+      "googleReviewId": "gbp_ind_001",
+      "reviewerName": "Vikramaditya Sengupta",
+      "rating": 5,
+      "text": "Had a severe molar pain on Sunday morning. Dr. Sneha Kulkarni did a painless root canal with computerized anesthesia. The Indiranagar clinic is sparkling clean and modern. Truly the best dental clinic experience in Bangalore!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "12 minutes ago",
+      "reply": {
+        "id": "rep-101",
+        "reviewId": "rev-101",
+        "draftText": "Thank you so much, Vikramaditya ji, for sharing your experience with Dr. Sharma Dental & Implant Clinic. We are delighted that Dr. Sneha Kulkarni could relieve your discomfort with our painless root canal protocol. Ensuring our Indiranagar operatory meets international sterilization standards is our highest commitment. We appreciate your recommendation!",
+        "finalText": "Thank you so much, Vikramaditya ji, for sharing your experience with Dr. Sharma Dental & Implant Clinic. We are delighted that Dr. Sneha Kulkarni could relieve your discomfort with our painless root canal protocol. Ensuring our Indiranagar operatory meets international sterilization standards is our highest commitment. We appreciate your recommendation!",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "8 minutes ago"
+      }
+    },
+    {
+      "id": "rev-102",
+      "locationId": "b_clinic",
+      "googleReviewId": "gbp_ind_002",
+      "reviewerName": "Meera Krishnan",
+      "rating": 5,
+      "text": "Dr. Ananya Sharma explained the full dental implant process with 3D scans before starting. Nurse Preeti was so attentive throughout. No pain during or after the procedure. Transparent billing without surprise costs.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "1 hour ago",
+      "reply": {
+        "id": "rep-102",
+        "reviewId": "rev-102",
+        "draftText": "Dear Meera, thank you for your wonderful review! Dr. Ananya Sharma and Nurse Preeti were glad to make your dental implant journey transparent and completely comfortable. Transparent clinical communication and patient safety are our core pillars at Indiranagar 100ft Road.",
+        "finalText": "Dear Meera, thank you for your wonderful review! Dr. Ananya Sharma and Nurse Preeti were glad to make your dental implant journey transparent and completely comfortable. Transparent clinical communication and patient safety are our core pillars at Indiranagar 100ft Road.",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "56 minutes ago"
+      }
+    },
+    {
+      "id": "rev-103",
+      "locationId": "b_clinic",
+      "googleReviewId": "gbp_ind_003",
+      "reviewerName": "Deepa Hegde",
+      "rating": 5,
+      "text": "Bohot hi smooth treatment tha! Dr. Sharma ne darr bilkul nikal diya. Clinic ka ambience 5 star jaisa clean hai aur staff bohot respectful hai.",
+      "isStarOnly": false,
+      "detectedLanguage": "hi-en",
+      "detectedTone": "positive",
+      "createdAt": "3 hours ago",
+      "reply": {
+        "id": "rep-103",
+        "reviewId": "rev-103",
+        "draftText": "Namaste Deepa ji! Aapka itna pyara feedback padhkar Dr. Sharma aur poori clinic team ko bohot khushi hui. Hamara prayas rehta hai ki har patient ka dental treatment bilkul painless aur comfortable ho. Indiranagar clinic aane ke liye bohot shukriya!",
+        "finalText": "Namaste Deepa ji! Aapka itna pyara feedback padhkar Dr. Sharma aur poori clinic team ko bohot khushi hui. Hamara prayas rehta hai ki har patient ka dental treatment bilkul painless aur comfortable ho. Indiranagar clinic aane ke liye bohot shukriya!",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "2 hours 56 mins ago"
+      }
+    },
+    {
+      "id": "rev-104",
+      "locationId": "b_clinic",
+      "googleReviewId": "gbp_ind_004",
+      "reviewerName": "Rajesh Gokhale",
+      "rating": 1,
+      "text": "Waited 35 mins past appointment time despite booking well in advance. The front desk did not provide any updates while we sat in the lobby.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "negative",
+      "createdAt": "4 hours ago",
+      "reply": {
+        "id": "rep-104",
+        "reviewId": "rev-104",
+        "draftText": "Dear Rajesh Gokhale, thank you for sharing your feedback. We sincerely value patient punctuality and time management. We would like to investigate this appointment delay and ensure our lobby protocols are tightened. Please contact our clinic operations manager directly at +91 98450 11223 so we can assist you personally.",
+        "status": "posted",
+        "model": "quarantine-safety-shield",
+        "validatorPassed": true,
+        "isAutoPosted": false,
+        "approvalToken": "appr_gokhale_9921",
+        "quarantineReason": "1-Star wait-time feedback held for 1-tap clinic owner WhatsApp review. Zero legal liability admitted.",
+        "finalText": "Dear Rajesh Gokhale, thank you for sharing your feedback. We sincerely value patient punctuality and time management. We would like to investigate this appointment delay and ensure our lobby protocols are tightened. Please contact our clinic operations manager directly at +91 98450 11223 so we can assist you personally.",
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-105",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_cafe_001",
+      "reviewerName": "Ananya Roy",
+      "rating": 5,
+      "text": "Best pour-over coffee in Indiranagar! Barista Shreyas recommended the light-roast washed Ethiopian beans and explained the flavor notes beautifully. The almond croissant was freshly baked and crisp.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "5 hours ago",
+      "reply": {
+        "id": "rep-105",
+        "reviewId": "rev-105",
+        "draftText": "Thank you Ananya! Shreyas and our roastery crew are thrilled you enjoyed the Ethiopian pour-over and Chef Aditi’s freshly baked almond croissants. We roast our specialty beans right here on 12th Main Indiranagar. See you for your next brew!",
+        "finalText": "Thank you Ananya! Shreyas and our roastery crew are thrilled you enjoyed the Ethiopian pour-over and Chef Aditi’s freshly baked almond croissants. We roast our specialty beans right here on 12th Main Indiranagar. See you for your next brew!",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "4 hours 56 mins ago"
+      }
+    },
+    {
+      "id": "rev-106",
+      "locationId": "b_salon",
+      "googleReviewId": "gbp_salon_001",
+      "reviewerName": "Tanvi Kapur",
+      "rating": 5,
+      "text": "Got a balayage done by Master Stylist Farhan. He understood exactly what tone would complement my skin tone without damaging my hair. The scalp massage during the wash was heavenly!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Yesterday",
+      "reply": {
+        "id": "rep-106",
+        "reviewId": "rev-106",
+        "draftText": "Dear Tanvi, thank you for your sparkling review! Farhan and the Bounce Lavelle Road styling team are delighted that your bespoke balayage turned out so radiant. We look forward to pampering you on your next visit!",
+        "finalText": "Dear Tanvi, thank you for your sparkling review! Farhan and the Bounce Lavelle Road styling team are delighted that your bespoke balayage turned out so radiant. We look forward to pampering you on your next visit!",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Yesterday"
+      }
+    },
+    {
+      "id": "rev-107",
+      "locationId": "b_gym",
+      "googleReviewId": "gbp_gym_001",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault has completely transformed my lifting technique. Coach Aryan spotted my form on deadlifts and corrected my hip hinge in 2 minutes. Equipment is competition standard Eleiko, and showers are spotless.",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "2 days ago",
+      "reply": {
+        "id": "rep-107",
+        "reviewId": "rev-107",
+        "draftText": "Massive props Rohan! Coach Aryan and our training staff take huge pride in safe lifting mechanics and maintaining elite Eleiko bars for Koramangala lifters. Keep hitting those PRs!",
+        "finalText": "Massive props Rohan! Coach Aryan and our training staff take huge pride in safe lifting mechanics and maintaining elite Eleiko bars for Koramangala lifters. Keep hitting those PRs!",
+        "status": "posted",
+        "model": "neural-mirror-v2",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "2 days ago"
+      }
+    }
+  ],
+  "qrcodes": [
+    {
+      "id": "qr_clinic_01",
+      "code": "sharma-dent-01",
+      "name": "Operatory Reception Stand",
+      "vertical": "clinic",
+      "material": "Frosted Cast Acrylic",
+      "url": "https://replyo.in/q/sharma-dent-01",
+      "scansCount": 384,
+      "reviewsGenerated": 86,
+      "conversionRate": "22.4%"
+    },
+    {
+      "id": "qr_cafe_01",
+      "code": "roastery-main-01",
+      "name": "Bill Folder NFC Card",
+      "vertical": "cafe",
+      "material": "Brushed Champagne Gold",
+      "url": "https://replyo.in/q/roastery-main-01",
+      "scansCount": 612,
+      "reviewsGenerated": 142,
+      "conversionRate": "23.2%"
+    },
+    {
+      "id": "qr_salon_01",
+      "code": "bounce-lavelle-01",
+      "name": "Styling Mirror Stand",
+      "vertical": "salon",
+      "material": "Matte Walnut Wood",
+      "url": "https://replyo.in/q/bounce-lavelle-01",
+      "scansCount": 420,
+      "reviewsGenerated": 98,
+      "conversionRate": "23.3%"
+    },
+    {
+      "id": "qr_gym_01",
+      "code": "ironvault-korm-01",
+      "name": "Turnstile Check-In Stand",
+      "vertical": "gym",
+      "material": "Ceramic Black Obsidian",
+      "url": "https://replyo.in/q/ironvault-korm-01",
+      "scansCount": 310,
+      "reviewsGenerated": 71,
+      "conversionRate": "22.9%"
+    }
+  ],
+  "competitors": [
+    {
+      "name": "Apollo Dental Indiranagar",
+      "rating": 4.4,
+      "reviewsCount": 89,
+      "responseVelocity": "4.2 days",
+      "rank": "#2 in 3-Pack"
+    },
+    {
+      "name": "Clove Dental Indiranagar",
+      "rating": 4.3,
+      "reviewsCount": 112,
+      "responseVelocity": "8.5 days",
+      "rank": "#3 in 3-Pack"
+    },
+    {
+      "name": "Toothsi Aligners Indiranagar",
+      "rating": 4.5,
+      "reviewsCount": 78,
+      "responseVelocity": "3.1 days",
+      "rank": "#4 (Outside 3-Pack)"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1793352790375",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793352668431",
+      "title": "New 5★ Review Processed",
+      "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793351692254",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793351643542",
+      "title": "New 5★ Review Processed",
+      "message": "Deepa Hegde left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793351589568",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793291751796",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793291193143",
+      "title": "New 5★ Review Processed",
+      "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793288392881",
+      "title": "New 5★ Review Processed",
+      "message": "Ananya Roy left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792939014551",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792935630842",
+      "title": "Negative Review Held",
+      "message": "Rajesh Gokhale left a 1★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792895812860",
+      "title": "New 5★ Review Processed",
+      "message": "Vikramaditya Sengupta left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1792769276852",
+      "title": "New 5★ Review Processed",
+      "message": "Deepa Hegde left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1",
+      "title": "Negative Review Quarantined",
+      "message": "Rajesh Gokhale (1★) held for 1-tap owner approval. De-escalation draft ready with zero liability.",
+      "time": "4h ago",
+      "unread": false,
+      "link": "/app/approvals"
+    },
+    {
+      "id": "notif-2",
+      "title": "Staff Attribution Earned",
+      "message": "Dr. Sneha Kulkarni mentioned in 5★ review by Vikramaditya Sengupta. Added ₹200 incentive.",
+      "time": "12m ago",
+      "unread": false,
+      "link": "/app/staff"
+    },
+    {
+      "id": "notif-3",
+      "title": "Google 3-Pack #1 Maintained",
+      "message": "Indiranagar Local Pack position #1 confirmed across 4,200 local dental searches.",
+      "time": "1d ago",
+      "unread": false,
+      "link": "/app/local-pack"
+    }
+  ],
+  "user": {
+    "name": "Dr. Ananya Sharma",
+    "role": "Chief Implantologist & Group Director",
+    "email": "dr.sharma@sharmadental.in",
+    "plan": "Enterprise Multi-Location",
+    "gstin": "29AABCU9603R1ZM",
+    "passwordHash": "a1628e78f5cc3594809243109d88092f6688a91abe7c48bc6d314288eaebc5ce165dcf3e68e0aae0c69386734eaa84586b5d8ebc8e0be1d9ebb97242f503febb",
+    "passwordSalt": "033ebf7850ce938dd59dbb7e84e1c85e"
+  },
+  "demoBookings": [
+    {
+      "name": "Dr. Rao",
+      "email": "dr@rao.in",
+      "phone": "9876543210",
+      "branches": "2-5",
+      "date": "2026-10-26",
+      "time": "10:30 AM",
+      "bookedAt": "2026-10-23T15:27:56.838Z"
+    }
+  ],
+  "servicesByVertical": {
+    "clinic": [
+      "Painless Root Canal",
+      "Clear Aligners",
+      "Dental Implants",
+      "Teeth Whitening",
+      "Laser Gum Care",
+      "General Dental Checkup"
+    ],
+    "cafe": [
+      "Single-Origin Pour Over",
+      "Flaky Almond Croissant",
+      "Natural Sourdough Bread",
+      "Cold Brew Tonic",
+      "Avocado Sourdough Toast",
+      "Matcha Latte"
+    ],
+    "salon": [
+      "Balayage Hair Color",
+      "Keratin Smoothing Therapy",
+      "Precision Scalp Fade",
+      "Hydra Facial Glow",
+      "Olaplex Hair Spa",
+      "Bridal Styling"
+    ],
+    "gym": [
+      "Strength & Conditioning",
+      "Olympic Weightlifting",
+      "Powerlifting Squat & Bench",
+      "CrossFit MetCon HIIT",
+      "Personal Coaching",
+      "Mobility & Recovery"
+    ]
+  },
+  "qualityTagsByVertical": {
+    "clinic": [
+      "Painless Treatment",
+      "Sterile Operatory",
+      "Explained Every Step",
+      "Zero Wait Time",
+      "Gentle Doctors"
+    ],
+    "cafe": [
+      "Rich Roasting Notes",
+      "Flaky Warm Pastries",
+      "Quiet Aesthetic Vibe",
+      "Blazing Fast Wi-Fi",
+      "Attentive Baristas"
+    ],
+    "salon": [
+      "Exact Color Match",
+      "Silky Smooth Finish",
+      "Relaxing Scalp Massage",
+      "Luxury Product Scent",
+      "Expert Consultation"
+    ],
+    "gym": [
+      "Strict Form Cues",
+      "Immaculate Heavy Barbells",
+      "Supportive High-Energy Tribe",
+      "Progressive Overload",
+      "Clean Locker Rooms"
+    ]
+  },
+  "posIntegrations": [
+    {
+      "provider": "petpooja",
+      "name": "Petpooja POS for Restaurants",
+      "status": "connected",
+      "outletId": "PP-IND-8041",
+      "outletName": "The Roastery Artisan Cafe (12th Main)",
+      "webhookUrl": "/api/webhooks/pos/petpooja",
+      "eventsCaptured": 429,
+      "lastSync": "Just now",
+      "autoTriggerDelay": "45 mins post-bill"
+    },
+    {
+      "provider": "zenoti",
+      "name": "Zenoti Salon & Medspa Software",
+      "status": "connected",
+      "outletId": "ZEN-LAVELLE-02",
+      "outletName": "Bounce Hair Studio & Luxury Spa",
+      "webhookUrl": "/api/webhooks/pos/zenoti",
+      "eventsCaptured": 241,
+      "lastSync": "Just now",
+      "autoTriggerDelay": "Next morning 10:00 AM"
+    },
+    {
+      "provider": "practo",
+      "name": "Practo Ray Practice Management",
+      "status": "connected",
+      "outletId": "PRAC-100FT-901",
+      "outletName": "Dr. Sharma Dental & Implant Clinic",
+      "webhookUrl": "/api/webhooks/pos/practo",
+      "eventsCaptured": 205,
+      "lastSync": "Just now",
+      "autoTriggerDelay": "2 hours post-treatment"
+    }
+  ],
+  "whatsappStudio": {
+    "status": "connected",
+    "wabaId": "WABA_992014881023",
+    "phoneNumber": "+91 80 4112 9088",
+    "verifiedName": "Replyo Official Cloud Verified",
+    "metaCompliance": "Meta Graph API v21.0 Live",
+    "templates": [
+      {
+        "id": "tpl_clinic_2h",
+        "vertical": "clinic",
+        "name": "clinic_post_consult_v2",
+        "header": "Dr. Sharma Dental & Implant Clinic",
+        "bodyText": "Hi {{1}}, hope your tooth is feeling much better after today's {{2}} with {{3}}! If you have 20 seconds, could you share a quick review on Google Maps to help others in {{4}} find quality dental care?",
+        "buttonText": "⭐ 20-Second Review Copilot",
+        "delay": "120 mins",
+        "openRate": "96.4%",
+        "clickRate": "44.2%"
+      },
+      {
+        "id": "tpl_cafe_45m",
+        "vertical": "cafe",
+        "name": "cafe_bill_settled_v1",
+        "header": "The Roastery Artisan Cafe",
+        "bodyText": "Hi {{1}}, thank you for spending your day with us at The Roastery! How was the {{2}} served by {{3}} today? Tap below to leave a 15-second Google review and support our barista team!",
+        "buttonText": "☕ Rate The Roastery on Maps",
+        "delay": "45 mins",
+        "openRate": "98.1%",
+        "clickRate": "52.8%"
+      },
+      {
+        "id": "tpl_salon_nextday",
+        "vertical": "salon",
+        "name": "salon_followup_glow",
+        "header": "Bounce Hair Studio & Spa",
+        "bodyText": "Hi {{1}}, hope you are loving your new {{2}} by {{3}}! If you love the result, tap below to share your experience on Google Maps.",
+        "buttonText": "✨ Share Your Style Review",
+        "delay": "Next morning",
+        "openRate": "95.0%",
+        "clickRate": "39.1%"
+      },
+      {
+        "id": "tpl_gym_milestone",
+        "vertical": "gym",
+        "name": "gym_workout_milestone",
+        "header": "IronVault Strength & Conditioning",
+        "bodyText": "Huge session today {{1}}! That {{2}} session with Coach {{3}} was intense. Mind giving a shoutout to the IronVault tribe on Google Maps?",
+        "buttonText": "💪 Rate IronVault on Google",
+        "delay": "30 mins",
+        "openRate": "94.8%",
+        "clickRate": "48.5%"
+      }
+    ]
+  },
+  "disputes": [
+    {
+      "id": "disp_01",
+      "businessId": "b_clinic",
+      "reviewerName": "Anand S. (New Profile, 1 review)",
+      "rating": 1,
+      "reviewText": "Worst clinic in Indiranagar. Scammers charging 10x market rate. Go to my dental clinic down the road instead.",
+      "violationType": "Conflict of Interest & Competitor Smear Attack",
+      "googlePolicySection": "Maps User Content Policy § 3.2 - Fake Engagement & Deceptive Content",
+      "status": "ready_to_file",
+      "evidenceScore": "98% Policy Breach Probability",
+      "dossier": "Account created same day with 0 prior local reviews. Explicit promotional solicitation for competing clinic violates FTC 16 CFR Part 465 and Google Maps Conflict of Interest Policy."
+    },
+    {
+      "id": "disp_02",
+      "businessId": "b_cafe",
+      "reviewerName": "Ex-Server Vikram",
+      "rating": 1,
+      "reviewText": "Management is terrible, rude owners, do not eat here.",
+      "violationType": "Former Employee Retaliation",
+      "googlePolicySection": "Google GBP Policy § 1.4 - Conflict of Interest (Current/Former Employees)",
+      "status": "ready_to_file",
+      "evidenceScore": "94% Policy Breach Probability",
+      "dossier": "Reviewer identified as former employee terminated on 12th Oct 2026. Reviews by current or former employees are strictly prohibited under Google Conflict of Interest guidelines."
+    }
+  ],
+  "sentimentAspects": [
+    {
+      "aspect": "Staff Courtesy & Care",
+      "score": 98,
+      "mentions": 184,
+      "trend": "+12%",
+      "status": "exceptional"
+    },
+    {
+      "aspect": "Service & Clinical Outcome",
+      "score": 96,
+      "mentions": 142,
+      "trend": "+8%",
+      "status": "exceptional"
+    },
+    {
+      "aspect": "Hygiene & Sterilization",
+      "score": 97,
+      "mentions": 126,
+      "trend": "+5%",
+      "status": "exceptional"
+    },
+    {
+      "aspect": "Ambience & Atmosphere",
+      "score": 92,
+      "mentions": 94,
+      "trend": "+4%",
+      "status": "healthy"
+    },
+    {
+      "aspect": "Wait Times & Punctuality",
+      "score": 86,
+      "mentions": 68,
+      "trend": "-2%",
+      "status": "attention_needed"
+    },
+    {
+      "aspect": "Billing Transparency",
+      "score": 91,
+      "mentions": 53,
+      "trend": "+3%",
+      "status": "healthy"
+    }
+  ],
+  "hardwareCatalog": [
+    {
+      "id": "hw_acrylic",
+      "name": "Minimalist Countertop Acrylic Stand",
+      "price": "₹1,499",
+      "material": "Laser-etched high-gloss acrylic with embedded NTAG213 NFC chip",
+      "leadTime": "2-3 business days"
+    },
+    {
+      "id": "hw_gold",
+      "name": "Brushed Gold Brass Executive Stand",
+      "price": "₹2,499",
+      "material": "Solid anodized brushed gold metal with dual-frequency NFC + UV QR",
+      "leadTime": "3-4 business days"
+    },
+    {
+      "id": "hw_walnut",
+      "name": "Artisanal American Walnut Stand",
+      "price": "₹1,999",
+      "material": "Hand-finished organic walnut wood with concealed high-range NFC antenna",
+      "leadTime": "3-4 business days"
+    },
+    {
+      "id": "hw_billcard",
+      "name": "Leatherette Bill-Folder Tap Cards (Pack of 10)",
+      "price": "₹2,999",
+      "material": "Waterproof matte PVC cards engineered for cafe & restaurant check folders",
+      "leadTime": "2 business days"
+    }
+  ],
+  "sessions": {
+    "sess_a748fa986c2190eda65c31bec640ae98be02e0243cae69e2": {
+      "userId": "usr_1793351567597",
+      "tenantId": "default",
+      "email": "dr.sharma@sharmadental.in",
+      "name": "Dr. Ananya Sharma",
+      "role": "Chief Implantologist & Group Director",
+      "createdAt": 1793351567599,
+      "expiresAt": 1793956367600
+    }
+  }
+}
