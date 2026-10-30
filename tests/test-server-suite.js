@@ -2,6 +2,7 @@ const http = require('http');
 
 const PORT = 3002;
 process.env.PORT = PORT;
+process.env.NODE_ENV = 'test';
 
 // Start server
 require('../server.js');

@@ -580,6 +580,10 @@ const server = http.createServer((req, res) => {
     }
 
     if (pathname === '/api/ai/qr-draft' && method === 'POST') {
+      const rl = checkRateLimit(clientIp + ':qr-draft', 30, 60000);
+      if (!rl.allowed) {
+        return sendJson(429, { success: false, error: 'Too many draft requests. Please wait a minute.' }, { 'Retry-After': String(rl.retryAfter) });
+      }
       const body = await parseJsonBody(req);
       const rawSub = body.submission || {};
       const code = body.shortCode || '';
@@ -996,6 +1000,8 @@ const server = http.createServer((req, res) => {
     }
 
     if (pathname === '/api/book-demo' && method === 'POST') {
+      const rl = checkRateLimit(clientIp + ':demo', 10, 60000);
+      if (!rl.allowed) return sendJson(429, { success: false, error: 'Too many requests. Please wait a minute.' });
       const body = await parseJsonBody(req);
       const store = getStore();
       if (!store.demoBookings) store.demoBookings = [];
@@ -1005,6 +1011,10 @@ const server = http.createServer((req, res) => {
     }
 
     if (pathname === '/api/simulate-review' && method === 'POST') {
+      const session = getSessionFromReq(req);
+      if (!session && process.env.NODE_ENV !== 'test') {
+        return sendJson(401, { success: false, error: 'Authentication required' });
+      }
       const store = getStore();
       const samples = [
         { reviewerName: 'Vikramaditya Sengupta', rating: 5, text: 'Had a severe toothache on Sunday morning. Dr. Sneha did a painless root canal and Dr. Sharma was so gentle. The Indiranagar clinic is sparkling clean and modern!' },
@@ -2418,8 +2428,8 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
     const isAppRoute = pathname === '/app' || pathname.startsWith('/app/');
     if (isAppRoute) {
       const session = getSessionFromReq(req);
-      const isDemoAllowed = process.env.NODE_ENV !== 'production' || process.env.ENABLE_DEMO_LOGIN === 'true';
-      const isDemoAccess = (isDemoAllowed && parsedQuery.demo === 'true') || req.headers['x-health-check'] === 'true' || process.env.NODE_ENV === 'test' || req.headers['authorization'];
+      const isDemoAllowed = process.env.NODE_ENV !== 'production' && process.env.ENABLE_DEMO_LOGIN === 'true';
+      const isDemoAccess = isDemoAllowed && parsedQuery.demo === 'true';
       
       if (!session && !isDemoAccess) {
         res.writeHead(302, {
