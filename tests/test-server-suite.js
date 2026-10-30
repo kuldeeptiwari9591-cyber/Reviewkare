@@ -34,6 +34,10 @@ setTimeout(async () => {
     '/pricing',
     '/free-audit',
     '/for-agencies',
+    '/vs/birdeye',
+    '/integrations/petpooja',
+    '/tools/google-review-link-generator',
+    '/offline',
     '/blog',
     '/contact',
     '/q/sharma-dent-01',
@@ -551,6 +555,28 @@ setTimeout(async () => {
       passed++;
     } else {
       console.error(`  ✗ Nonexistent page expected 404, received status ${notFoundRes.status}`);
+      failed++;
+    }
+
+    // 9j. Test System Health & Supabase/Razorpay Configuration Probe
+    const healthRes = await fetch(`http://localhost:${PORT}/api/health`);
+    const healthData = await healthRes.json();
+    if (healthRes.status === 200 && healthData.status === 'healthy') {
+      console.log('  ✓ 200 OK: /api/health probe verified with uptime & service status');
+      passed++;
+    } else {
+      console.error('  ✗ /api/health probe failed:', healthData);
+      failed++;
+    }
+
+    // 9k. Test Competitor Comparison & Tool Page Rendering
+    const vsRes = await fetch(`http://localhost:${PORT}/vs/birdeye`);
+    const vsHtml = await vsRes.text();
+    if (vsRes.status === 200 && vsHtml.includes('Replyo vs Birdeye') && vsHtml.includes('85%')) {
+      console.log('  ✓ 200 OK: /vs/birdeye verified with comparison matrix & pricing breakdown');
+      passed++;
+    } else {
+      console.error('  ✗ /vs/birdeye rendering failed');
       failed++;
     }
 

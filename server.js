@@ -326,13 +326,49 @@ function createRazorpayOrder({ keyId, keySecret, amountInPaise, currency = 'INR'
 }
 
 function verifyRazorpaySignature({ orderId, paymentId, signature, secret }) {
-  if (!secret) return true; // Accept test simulation when secret not provided
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('CRITICAL: Payment verification rejected. RAZORPAY_KEY_SECRET is missing in production environment.');
+      return false; // Strict verification: never bypass in production
+    }
+    return true; // Accept test simulation only in non-production
+  }
   try {
     const text = orderId + '|' + paymentId;
     const expectedSignature = crypto.createHmac('sha256', secret).update(text).digest('hex');
     return crypto.timingSafeEqual(Buffer.from(expectedSignature), Buffer.from(signature));
   } catch (e) {
     return false;
+  }
+}
+
+// Native Supabase Integration (Zero-dependency REST / PostgREST)
+const SUPABASE_URL = process.env.SUPABASE_URL || '';
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || '';
+
+async function supabaseQuery(endpoint, options = {}) {
+  if (!SUPABASE_URL || !SUPABASE_KEY) return null;
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+    const res = await fetch(url, {
+      method: options.method || 'GET',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': options.prefer || 'return=representation',
+        ...options.headers
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined
+    });
+    if (!res.ok) {
+      console.error(`Supabase error on ${endpoint}:`, res.status, await res.text());
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.error('Supabase query failed:', err.message);
+    return null;
   }
 }
 
@@ -427,6 +463,18 @@ const server = http.createServer((req, res) => {
     // ----------------------------------------------------
     // REST API ENDPOINTS
     // ----------------------------------------------------
+    if ((pathname === '/api/health' || pathname === '/api/system/status') && method === 'GET') {
+      const rzpConfig = getRazorpayConfig();
+      return sendJson(200, {
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development',
+        uptimeSeconds: Math.floor(process.uptime()),
+        supabaseConfigured: Boolean(SUPABASE_URL && SUPABASE_KEY),
+        razorpayConfigured: Boolean(rzpConfig.keyId && rzpConfig.keySecret)
+      });
+    }
+
     if (pathname === '/api/reviews' && method === 'GET') {
       const store = getStore();
       return sendJson(200, { success: true, reviews: store.reviews });
@@ -1875,6 +1923,214 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
     }
 
     // ----------------------------------------------------
+    // COMPETITOR COMPARISON (/vs/birdeye & /vs/:slug)
+    // ----------------------------------------------------
+    if (pathname.startsWith('/vs/')) {
+      const comp = pathname.split('/')[2] || 'birdeye';
+      const html = renderHtmlPage(
+        'Replyo vs Birdeye: The Local Reputation OS Built for India',
+        'vs',
+        `
+        <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          <div class="text-center space-y-4 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+              Head-to-Head Architectural Comparison
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+              Replyo vs Birdeye: Why Indian Businesses Save 85% Annually
+            </h1>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Birdeye is built for enterprise US corporations billing in USD. Replyo is natively engineered for clinics, salons, and cafes in India—with transparent INR billing, WhatsApp owner approvals, and Hinglish dialect mirroring.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm card-3d">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-heading">
+                  <tr>
+                    <th class="p-4 sm:p-5 font-bold">Feature / Capability</th>
+                    <th class="p-4 sm:p-5 font-bold text-brand-600 bg-brand-50/50">Replyo (India Native)</th>
+                    <th class="p-4 sm:p-5 font-bold text-slate-500">Birdeye (US Enterprise)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Pricing & Billing Currency</td>
+                    <td class="p-4 sm:p-5 font-bold text-brand-700 bg-brand-50/30">₹999 / mo (₹2,999/quarter Hero Plan)</td>
+                    <td class="p-4 sm:p-5 text-slate-500">$299 - $399 / mo (~₹25,000 - ₹33,000/mo)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Payment Modes & Taxes</td>
+                    <td class="p-4 sm:p-5 font-bold text-emerald-700 bg-brand-50/30">UPI AutoPay, NetBanking + 18% GST Invoice</td>
+                    <td class="p-4 sm:p-5 text-slate-500">International Credit Card + FX charges</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Linguistic Dialect Mirroring</td>
+                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">Devanagari Hindi, Colloquial Hinglish, English, Tamil, Telugu, Kannada</td>
+                    <td class="p-4 sm:p-5 text-slate-500">Rigid US / UK English Templates</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Negative Review De-escalation</td>
+                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">1-Tap Owner WhatsApp Approval & Direct Call fallback</td>
+                    <td class="p-4 sm:p-5 text-slate-500">Email blast ticketing queue</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">In-Store Customer QR Flow</td>
+                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">Zero App Download, <85KB, 30-Second Tap Flow</td>
+                    <td class="p-4 sm:p-5 text-slate-500">DLT SMS links (frequently blocked by TRAI)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Data Sovereignty</td>
+                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">AWS Mumbai (ap-south-1) • DPDP Act 2023</td>
+                    <td class="p-4 sm:p-5 text-slate-500">US Central Cloud data residency</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span class="text-xs text-slate-600">Ready to save 85% on your reputation stack?</span>
+              <a href="/signup" class="px-6 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors">
+                Start 14-Day Free Pilot &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      `,
+        {
+          canonical: '/vs/birdeye',
+          description: 'Compare Replyo vs Birdeye. Why Indian clinics, salons and restaurants choose Replyo for transparent INR pricing, UPI AutoPay, WhatsApp approvals, and Hinglish dialect mirroring.',
+          keywords: 'Replyo vs Birdeye, Birdeye alternative India, reputation management software price India, Birdeye pricing INR',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Compare', url: '/features' }, { name: 'Replyo vs Birdeye', url: '/vs/birdeye' }]
+        }
+      );
+      return sendHtml(200, html);
+    }
+
+    // ----------------------------------------------------
+    // POS INTEGRATIONS (/integrations/:slug)
+    // ----------------------------------------------------
+    if (pathname.startsWith('/integrations/')) {
+      const slug = pathname.split('/')[2] || 'petpooja';
+      const html = renderHtmlPage(
+        'Petpooja POS + Replyo: Automatic Google Reviews for Restaurants',
+        'integrations',
+        `
+        <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          <div class="text-center space-y-4 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold font-mono">
+              Certified POS Webhook Connector
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+              Petpooja POS + Replyo Review Autopilot
+            </h1>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Automatically trigger feedback requests when diners pay their food bill on Petpooja POS. Collect authentic 5-star Google Maps reviews while the dining experience is fresh.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
+              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 01</span>
+              <h2 class="font-bold text-base text-slate-900 font-heading">Bill Print / Settle</h2>
+              <p class="text-slate-500 leading-relaxed">Cashier settles the dining table on Petpooja POS. Webhook instantly fires to Replyo with zero delay.</p>
+            </div>
+            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
+              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 02</span>
+              <h2 class="font-bold text-base text-slate-900 font-heading">Smart 30-Min Delay</h2>
+              <p class="text-slate-500 leading-relaxed">Replyo holds the review invitation until diners finish dessert, preventing intrusive interruptions.</p>
+            </div>
+            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
+              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 03</span>
+              <h2 class="font-bold text-base text-slate-900 font-heading">1-Tap Google Review</h2>
+              <p class="text-slate-500 leading-relaxed">Diner selects favorite dishes and posts an authentic Hinglish or English review on Google Maps.</p>
+            </div>
+          </div>
+
+          <div class="p-8 bg-brand-50/60 rounded-3xl border border-brand-200 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="space-y-1 text-center sm:text-left">
+              <h3 class="font-bold text-base text-brand-950 font-heading">Ready to connect your Petpooja outlet?</h3>
+              <p class="text-xs text-brand-800">Setup takes under 5 minutes with our native webhook URL. Zero code required.</p>
+            </div>
+            <a href="/signup" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all whitespace-nowrap">
+              Connect Petpooja &rarr;
+            </a>
+          </div>
+        </div>
+      `,
+        {
+          canonical: '/integrations/petpooja',
+          description: 'Automate Google review collection from Petpooja POS billing. Native webhook connector for Indian cafes, restaurants and bakeries.',
+          keywords: 'Petpooja Google reviews, restaurant review automation, Petpooja POS integration, cafe Google maps ratings',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Integrations', url: '/features' }, { name: 'Petpooja POS', url: '/integrations/petpooja' }]
+        }
+      );
+      return sendHtml(200, html);
+    }
+
+    // ----------------------------------------------------
+    // FREE TOOL (/tools/google-review-link-generator)
+    // ----------------------------------------------------
+    if (pathname === '/tools/google-review-link-generator' || pathname === '/tools') {
+      const html = renderHtmlPage(
+        'Free Google Review Link & Digital QR Code Generator',
+        'tools',
+        `
+        <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <div class="text-center space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold font-mono">
+              100% Free Lead Magnet Tool
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+              Google Review Link & Digital QR Generator
+            </h1>
+            <p class="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto">
+              Generate a direct 1-tap review URL and digital QR code for your clinic, salon, or restaurant in 5 seconds.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 card-3d">
+            <div>
+              <label for="bizSearch" class="block text-xs font-semibold text-slate-700 mb-1">Business Name or Place ID</label>
+              <input id="bizSearch" type="text" placeholder="e.g. Dr. Sharma Dental Indiranagar" class="w-full text-xs p-3 rounded-xl border border-slate-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            </div>
+            <button type="button" onclick="generateLink()" class="w-full min-h-[44px] rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              Generate Instant Review Link & QR &rarr;
+            </button>
+
+            <div id="resultBox" class="hidden pt-4 border-t border-slate-100 space-y-4">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                <span class="text-[10px] font-mono text-slate-500 uppercase font-bold">Your Official 1-Tap Review URL</span>
+                <p id="generatedUrl" class="font-mono text-xs text-brand-700 break-all select-all font-bold"></p>
+              </div>
+              <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 space-y-2">
+                <p><strong>Want to automate this?</strong> Replyo turns this link into an interactive 30-second Hinglish builder that automatically weeds out 1-star complaints before they hit Google Maps.</p>
+                <a href="/signup" class="inline-block font-bold text-brand-700 hover:underline">Start 14-Day Free Pilot &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          function generateLink() {
+            const input = document.getElementById('bizSearch').value || 'Dr Sharma Dental Indiranagar';
+            const slug = encodeURIComponent(input.trim());
+            const url = 'https://search.google.com/local/writereview?placeid=' + slug;
+            document.getElementById('generatedUrl').innerText = url;
+            document.getElementById('resultBox').classList.remove('hidden');
+          }
+        </script>
+      `,
+        {
+          canonical: '/tools/google-review-link-generator',
+          description: 'Free Google review link and QR code generator for Indian local businesses. Create your official 1-tap review prompt instantly.',
+          keywords: 'free Google review link generator, create Google review QR code, Google maps review short url, review generator India',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/google-review-link-generator' }]
+        }
+      );
+      return sendHtml(200, html);
+    }
+
+    // ----------------------------------------------------
     // 7. BLOG & GUIDES (/blog & /blog/:slug)
     // ----------------------------------------------------
     if (pathname === '/blog') {
@@ -2130,7 +2386,8 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
     const isAppRoute = pathname === '/app' || pathname.startsWith('/app/');
     if (isAppRoute) {
       const session = getSessionFromReq(req);
-      const isDemoAccess = parsedQuery.demo === 'true' || req.headers['x-health-check'] === 'true' || process.env.NODE_ENV === 'test' || req.headers['authorization'];
+      const isDemoAllowed = process.env.NODE_ENV !== 'production' || process.env.ENABLE_DEMO_LOGIN === 'true';
+      const isDemoAccess = (isDemoAllowed && parsedQuery.demo === 'true') || req.headers['x-health-check'] === 'true' || process.env.NODE_ENV === 'test' || req.headers['authorization'];
       
       if (!session && !isDemoAccess) {
         res.writeHead(302, {
@@ -3368,15 +3625,81 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
       return sendHtml(200, html);
     }
 
-    return sendHtml(404, renderHtmlPage('404 Not Found', '', `
-      <div class="min-h-[60vh] flex items-center justify-center p-8 text-center space-y-4">
-        <div>
-          <h1 class="text-4xl font-black text-slate-900 font-heading">404 — Page Not Found</h1>
-          <p class="text-slate-500 text-xs mt-2">The page you requested does not exist.</p>
-          <a href="/" class="inline-block mt-4 px-6 min-h-[44px] flex items-center justify-center bg-brand-600 text-white font-bold text-xs rounded-xl hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Return to Homepage &rarr;</a>
+    // ----------------------------------------------------
+    // OFFLINE FALLBACK PAGE (/offline)
+    // ----------------------------------------------------
+    if (pathname === '/offline') {
+      const html = renderHtmlPage(
+        'No Internet Connection — Offline Fallback',
+        '',
+        `
+        <div class="min-h-[70vh] flex items-center justify-center p-6 text-center">
+          <div class="max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xl">
+              ⚡
+            </div>
+            <h1 class="text-2xl font-black text-slate-900 font-heading">You Are Offline</h1>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              We couldn't connect to Replyo servers. Please check your mobile data or Wi-Fi connection. Any pending review approval links will automatically resume once reconnected.
+            </p>
+            <div class="pt-2">
+              <button onclick="window.location.reload()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors">
+                Retry Connection &rarr;
+              </button>
+            </div>
+            <div id="onlineBadge" class="hidden text-[11px] font-bold text-emerald-700 font-mono">
+              ✓ Connection Restored! Reloading...
+            </div>
+          </div>
+        </div>
+        <script>
+          window.addEventListener('online', () => {
+            document.getElementById('onlineBadge').classList.remove('hidden');
+            setTimeout(() => window.location.reload(), 1000);
+          });
+        </script>
+        `,
+        {
+          canonical: '/offline',
+          description: 'Offline fallback page for Replyo. Check your internet connection.',
+          robots: 'noindex, nofollow'
+        }
+      );
+      return sendHtml(200, html);
+    }
+
+    // ----------------------------------------------------
+    // 404 NOT FOUND HANDLER (Real HTTP 404 Status)
+    // ----------------------------------------------------
+    return sendHtml(404, renderHtmlPage('404 — Page Not Found', '', `
+      <div class="min-h-[70vh] flex items-center justify-center p-6 text-center">
+        <div class="max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
+          <div class="text-4xl font-black text-brand-600 font-heading tabular-nums">404</div>
+          <h1 class="text-2xl font-bold text-slate-900 font-heading">Page Not Found</h1>
+          <p class="text-slate-500 text-xs leading-relaxed">
+            The link you followed may be broken or the page may have been removed. Explore our core resources below:
+          </p>
+          <div class="pt-2 grid grid-cols-2 gap-2 text-xs">
+            <a href="/" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+              Homepage &rarr;
+            </a>
+            <a href="/free-audit" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+              Free Audit &rarr;
+            </a>
+            <a href="/features" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+              Features &rarr;
+            </a>
+            <a href="/pricing" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+              Pricing INR &rarr;
+            </a>
+          </div>
         </div>
       </div>
-    `));
+    `, {
+      canonical: pathname,
+      description: 'Page not found - Replyo Operating System',
+      robots: 'noindex, follow'
+    }));
     } catch (err) {
       console.error('Server error:', err);
       return sendJson(500, { success: false, error: 'Internal Server Error' });
