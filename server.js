@@ -385,6 +385,7 @@ const { generateReviewReply, detectLanguageAndScript } = require('./dist/src/lib
 const { generateCustomerQRDraft } = require('./dist/src/lib/ai/qr-draft-engine.js');
 const { validateReplyContent } = require('./dist/src/lib/ai/safety-validator.js');
 const { PLANS } = require('./dist/src/lib/store/db.js');
+const { getVerticalConfig, generateVerticalReviewDraft, VERTICAL_PROFILES } = require('./src/lib/verticals.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -599,7 +600,11 @@ const server = http.createServer((req, res) => {
         language: rawSub.language || 'hi-en',
         length: rawSub.length || 'short'
       };
-      const draft = generateCustomerQRDraft(submission, businessName);
+      const vertical = rawSub.vertical || qrConfig?.vertical || store.location?.vertical || 'clinic';
+      let draft = generateVerticalReviewDraft(vertical, submission, businessName);
+      if (!draft) {
+        draft = generateCustomerQRDraft(submission, businessName);
+      }
       return sendJson(200, {
         success: true,
         draftText: draft,
@@ -711,16 +716,27 @@ const server = http.createServer((req, res) => {
       const clinicName = escapeHtml(body.clinicName || 'My Business');
       const ownerName = escapeHtml(body.ownerName || clinicName);
       const industry = body.industry || 'clinic';
+      const vConfig = getVerticalConfig(industry);
       const city = escapeHtml(body.city || 'Bengaluru');
       const phone = escapeHtml(body.phone || '');
       const qrSlug = clinicName.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 16).replace(/^-|-$/g, '') + '-' + Math.floor(100 + Math.random() * 900);
+
+      const parsedServices = Array.isArray(body.specialtyServices) && body.specialtyServices.length > 0
+        ? body.specialtyServices.map(escapeHtml)
+        : (typeof body.specialtyServices === 'string' && body.specialtyServices.trim()
+           ? body.specialtyServices.split(',').map(s => escapeHtml(s.trim())).filter(Boolean)
+           : vConfig.onboarding.defaultServices);
+      const defaultServices = parsedServices.length > 0 ? parsedServices : vConfig.onboarding.defaultServices;
+      const defaultQualities = vConfig.onboarding.defaultQualities;
 
       const newTenant = {
         id: tenantId,
         location: {
           id: tenantId,
           name: clinicName,
-          vertical: industry,
+          vertical: vConfig.id,
+          flowType: vConfig.flowType,
+          questionCount: vConfig.questionCount,
           city: city,
           area: city,
           phone: phone,
@@ -732,12 +748,18 @@ const server = http.createServer((req, res) => {
           tonePreference: 'warm',
           syncStatus: 'Live (Smart QR Ready)'
         },
+        servicesByVertical: {
+          [vConfig.id]: defaultServices
+        },
+        qualityTagsByVertical: {
+          [vConfig.id]: defaultQualities
+        },
         user: {
           id: 'usr_' + Date.now(),
           name: ownerName,
           email: inputEmail,
           phone: phone,
-          role: 'Owner / Clinic Director',
+          role: vConfig.onboarding.ownerNameLabel || 'Owner / Director',
           plan: {
             status: 'trial',
             tier: 'starter',
@@ -750,9 +772,9 @@ const server = http.createServer((req, res) => {
           {
             id: 'qr_' + Date.now(),
             code: qrSlug,
-            name: 'Billing Desk Countertop QR',
-            vertical: industry,
-            material: 'Printable Countertop Stand',
+            name: `${vConfig.shortName} Digital QR`,
+            vertical: vConfig.id,
+            material: 'Online Digital QR',
             url: `/q/${qrSlug}`,
             scansCount: 0,
             reviewsGenerated: 0,
@@ -764,19 +786,29 @@ const server = http.createServer((req, res) => {
           {
             id: 'st_1',
             name: ownerName,
-            role: 'Director / Lead',
-            vertical: industry,
+            role: vConfig.onboarding.staffRole || 'Director / Lead',
+            vertical: vConfig.id,
             reviewsCount: 0,
             avgRating: 5.0,
             compliments: 'Punctual & attentive care',
             tipsEarned: '₹0'
-          }
+          },
+          ...vConfig.onboarding.defaultStaff.filter(name => !name.includes(ownerName)).map((name, idx) => ({
+            id: `st_${idx + 2}`,
+            name: name,
+            role: vConfig.onboarding.staffRole || 'Staff',
+            vertical: vConfig.id,
+            reviewsCount: 0,
+            avgRating: 5.0,
+            compliments: 'Courteous & skilled',
+            tipsEarned: '₹0'
+          }))
         ],
         notifications: [
           {
             id: 'notif_welcome',
             title: 'Welcome to Replyo!',
-            message: `Your smart review QR is live at /q/${qrSlug}. Print your tabletop stand to collect Google reviews!`,
+            message: `Your smart review QR is live at /q/${qrSlug}. Display your digital QR code to collect Google reviews!`,
             time: 'Just now',
             unread: true,
             link: `/q/${qrSlug}`
@@ -3351,12 +3383,16 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
       const matchedBusiness = qrConfig ? (store.businesses || []).find(b => b.vertical === qrConfig.vertical) : null;
       const loc = matchedBusiness || store.location || {};
       const vertical = qrConfig?.vertical || loc.vertical || 'clinic';
-      const services = (store.servicesByVertical && store.servicesByVertical[vertical]) || ['Painless Root Canal', 'Clear Aligners', 'Dental Implants', 'Teeth Whitening'];
-      const qualities = (store.qualityTagsByVertical && store.qualityTagsByVertical[vertical]) || ['Painless Treatment', 'Sterile Operatory', 'Clean & Hygienic'];
-      const staffMembers = (store.staff || []).filter(s => s.vertical === vertical);
-      const defaultStaff = staffMembers[0] ? staffMembers[0].name : 'Our Team';
+      const vConfig = getVerticalConfig(vertical);
+      const services = (store.servicesByVertical && (store.servicesByVertical[vConfig.id] || store.servicesByVertical[vertical])) || vConfig.onboarding.defaultServices;
+      const qualities = (store.qualityTagsByVertical && (store.qualityTagsByVertical[vConfig.id] || store.qualityTagsByVertical[vertical])) || vConfig.onboarding.defaultQualities;
+      let staffMembers = (store.staff || []).filter(s => !s.vertical || s.vertical === vConfig.id || s.vertical === vertical);
+      if (staffMembers.length === 0 && vConfig.onboarding.defaultStaff) {
+        staffMembers = vConfig.onboarding.defaultStaff.map((name, i) => ({ id: `st_def_${i}`, name }));
+      }
+      const defaultStaff = staffMembers[0] ? staffMembers[0].name : (vConfig.onboarding.defaultStaff[0] || 'Our Team');
 
-      const html = renderHtmlPage('15-Second Google Review Copilot', 'qr', `
+      const html = renderHtmlPage(`${vConfig.shortName} Review Copilot`, 'qr', `
         <div class="min-h-screen bg-slate-100 py-6 px-4">
           <div class="max-w-md mx-auto space-y-4">
             
@@ -3366,15 +3402,17 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
               <p class="text-xs text-slate-500">${loc.area || 'Bengaluru'}, ${loc.city || 'Karnataka'}</p>
               <div class="flex items-center justify-center gap-1.5 mt-1">
                 <span class="text-[10px] text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-full font-bold uppercase font-mono border border-brand-200">
-                  ${vertical}
+                  ${vConfig.shortName}
                 </span>
-                <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-0.5 rounded-full font-bold">15-Second Google Review Copilot</span>
+                <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-0.5 rounded-full font-bold">
+                  ${vConfig.flowType === 'micro' ? 'Micro-Flow (<15s) Review Copilot' : (vConfig.flowType === 'trust' ? 'Deep Trust Review Copilot' : '15-Second Review Copilot')}
+                </span>
               </div>
             </div>
 
             <!-- Step 1: Rating -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 text-center space-y-2 shadow-sm card-3d">
-              <span class="text-xs font-bold uppercase text-slate-500 font-heading">1. Your Overall Experience</span>
+              <span class="text-xs font-bold uppercase text-slate-500 font-heading">1. ${vConfig.qrFlow.step1Title}</span>
               <div class="flex justify-center gap-2 text-3xl text-amber-400">
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(1)" aria-label="1 star">★</button>
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(2)" aria-label="2 stars">★</button>
@@ -3390,11 +3428,11 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
                   <span>⚠️ We Strive for 100% Excellence</span>
                 </div>
                 <p class="text-amber-900 text-[11px] leading-relaxed">
-                  We are deeply sorry your visit fell short of 5 stars. Would you like our Managing Director to call you directly within 15 minutes to personally assist you?
+                  ${vConfig.qrFlow.recoveryMessage}
                 </p>
                 <div class="flex flex-wrap gap-2 pt-1">
-                  <a href="tel:${loc.managerPhone || '+919845011223'}" class="px-3 py-1.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl font-bold text-[11px] shadow-sm">
-                    📞 Direct Call to Manager (${loc.managerPhone || '+91 98450 11223'})
+                  <a href="tel:${loc.managerPhone || loc.phone || '+919845011223'}" class="px-3 py-1.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl font-bold text-[11px] shadow-sm">
+                    📞 Direct Call to Manager (${loc.managerPhone || loc.phone || '+91 98450 11223'})
                   </a>
                   <button type="button" onclick="continueToGoogle()" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-slate-700 font-bold text-[11px] hover:bg-slate-50">
                     Proceed to Google Maps Anyway
@@ -3403,9 +3441,9 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
               </div>
             </div>
 
-            <!-- Step 2: Vertical Service Pills -->
+            <!-- Step 2: Vertical Service / Menu / Item Pills -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500 font-heading">2. What did you visit for today?</span>
+              <span class="font-bold uppercase text-slate-500 font-heading">2. ${vConfig.qrFlow.step2Title}</span>
               <div class="flex flex-wrap gap-1.5" id="serviceTags">
                 ${services.map((svc, i) => `
                   <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-xl border text-xs font-medium focus-visible:outline-none transition-all ${
@@ -3415,24 +3453,40 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
               </div>
             </div>
 
-            <!-- Step 3: Frontline Staff Attribution Selector -->
-            <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500 font-heading">3. Who took care of you today?</span>
-              <div class="flex flex-wrap gap-1.5" id="staffTags">
-                ${staffMembers.map((st, i) => `
-                  <button type="button" onclick="selectStaffTag(this, '${st.name}')" class="px-3 min-h-[38px] rounded-xl border text-xs font-bold focus-visible:outline-none transition-all flex items-center gap-1.5 ${
-                    i === 0 ? 'bg-dark-950 text-white border-dark-950 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }">
-                    <span class="w-2 h-2 rounded-full ${i === 0 ? 'bg-brand-400' : 'bg-slate-300'}"></span>
-                    <span>${st.name}</span>
-                  </button>
-                `).join('')}
+            ${vConfig.qrFlow.showQuality ? `
+              <!-- Step 3 (Deep Trust Flow): Clinical / Teaching Quality Tags -->
+              <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
+                <span class="font-bold uppercase text-slate-500 font-heading">3. ${vConfig.qrFlow.step3Title}</span>
+                <div class="flex flex-wrap gap-1.5" id="qualityTags">
+                  ${qualities.map((q, i) => `
+                    <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-xl border text-xs font-medium focus-visible:outline-none transition-all ${
+                      i === 0 ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    }">${q}</button>
+                  `).join('')}
+                </div>
               </div>
-            </div>
+            ` : ''}
 
-            <!-- Step 4: Language Choice -->
+            ${vConfig.qrFlow.showStaff ? `
+              <!-- Step 3 or 4: Frontline Staff Attribution Selector -->
+              <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
+                <span class="font-bold uppercase text-slate-500 font-heading">${vConfig.qrFlow.showQuality ? '4' : '3'}. ${vConfig.qrFlow.step4Title || vConfig.qrFlow.step3Title}</span>
+                <div class="flex flex-wrap gap-1.5" id="staffTags">
+                  ${staffMembers.map((st, i) => `
+                    <button type="button" onclick="selectStaffTag(this, '${st.name}')" class="px-3 min-h-[38px] rounded-xl border text-xs font-bold focus-visible:outline-none transition-all flex items-center gap-1.5 ${
+                      i === 0 ? 'bg-dark-950 text-white border-dark-950 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    }">
+                      <span class="w-2 h-2 rounded-full ${i === 0 ? 'bg-brand-400' : 'bg-slate-300'}"></span>
+                      <span>${st.name}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Step ${vConfig.questionCount + 1}: Language Choice & AI Generator -->
             <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500 font-heading">4. Preferred Review Language</span>
+              <span class="font-bold uppercase text-slate-500 font-heading">${vConfig.questionCount + 1}. Preferred Review Language</span>
               <div class="grid grid-cols-3 gap-2">
                 <button type="button" onclick="setLang('hi-en', this)" class="py-2.5 rounded-xl border font-bold bg-brand-600 text-white border-brand-600 shadow-sm focus-visible:outline-none">Hinglish</button>
                 <button type="button" onclick="setLang('en', this)" class="py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none">English</button>
@@ -3440,7 +3494,7 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
               </div>
               <button type="button" onclick="generateDraft()" class="w-full min-h-[48px] bg-slate-900 text-white font-bold rounded-xl mt-2 hover:bg-slate-800 transition-colors shadow-md flex items-center justify-center gap-2">
                 ${getSvgIcon('sparkles', 'w-4 h-4 text-brand-400')}
-                <span>Generate 15-Second AI Review Draft &rarr;</span>
+                <span>Generate ${vConfig.flowType === 'micro' ? '10-Second' : '15-Second'} AI Review Draft &rarr;</span>
               </button>
             </div>
 
@@ -3520,6 +3574,9 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
           async function generateDraft() {
             const services = [];
             document.querySelectorAll('#serviceTags button.bg-brand-600').forEach(b => services.push(b.innerText.trim()));
+            const qualities = [];
+            document.querySelectorAll('#qualityTags button.bg-brand-600').forEach(b => qualities.push(b.innerText.trim()));
+            
             const res = await fetch('/api/ai/qr-draft', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -3527,12 +3584,13 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
                 submission: {
                   rating: qrRating,
                   selectedServices: services.length ? services : ['${services[0] || 'Service'}'],
-                  qualityTags: ['Painless Treatment', 'Sterile Operatory', 'Clean & Hygienic'],
-                  staffName: selectedStaff,
+                  qualityTags: qualities.length ? qualities : ${JSON.stringify(qualities.slice(0, 2))},
+                  staffName: ${vConfig.qrFlow.showStaff ? 'selectedStaff' : "''"},
                   ambienceTags: ['Modern Atmosphere'],
                   recommend: 'yes',
                   language: qrLang,
-                  length: 'short'
+                  length: 'short',
+                  vertical: '${vConfig.id}'
                 },
                 shortCode: '${code}'
               })
@@ -3572,7 +3630,7 @@ Full technical context and documentation available at: https://replyo.in/llms-fu
               ${getSvgIcon('check', 'w-6 h-6')}
             </div>
             <h1 class="text-2xl font-black text-slate-900 font-heading">Thank You for Supporting Us!</h1>
-            <p class="text-xs text-slate-600">Your review helps genuine local patients discover quality healthcare.</p>
+            <p class="text-xs text-slate-600">Your review helps genuine local customers discover ${escapeHtml(store.location?.name || 'our business')}.</p>
             <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900">
               <strong>Reminder:</strong> Your text is copied to your clipboard. Simply paste it on Google Maps and tap Post!
             </div>

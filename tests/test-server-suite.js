@@ -580,6 +580,172 @@ setTimeout(async () => {
       failed++;
     }
 
+    // ----------------------------------------------------
+    // 10. Testing Multi-Vertical Adaptive Onboarding & Calibrated Digital QR Flows
+    // ----------------------------------------------------
+    console.log('\n--- 10. Testing Multi-Vertical Adaptive Onboarding & Calibrated Digital QR Flows ---');
+
+    // 10a. Test Cafe Micro-Flow Signup (<15s, 2 questions, Digital QR only)
+    const cafeEmail = `roastery_${Date.now()}@theartisan.in`;
+    const cafeSignupRes = await fetch(`http://localhost:${PORT}/api/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        clinicName: 'The Roastery Artisan Cafe',
+        ownerName: 'Shreyas Rao',
+        email: cafeEmail,
+        password: 'Password123#Cafe',
+        city: 'Bengaluru',
+        phone: '9845011222',
+        industry: 'cafe',
+        specialtyServices: 'Ethiopian Pour Over, Sourdough Croissant, Flat White'
+      })
+    });
+    const cafeSignupData = await cafeSignupRes.json();
+    const cafeReg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'registry.json'), 'utf8'));
+    const cafeTenantId = cafeReg.users[cafeEmail]?.tenantId;
+    const cafeTenantPath = path.join(__dirname, '..', 'data', 'tenants', `${cafeTenantId}.json`);
+    const cafeTenant = JSON.parse(fs.readFileSync(cafeTenantPath, 'utf8'));
+
+    if (
+      cafeSignupRes.status === 200 &&
+      cafeTenant.location.flowType === 'micro' &&
+      cafeTenant.location.questionCount === 2 &&
+      cafeTenant.qrcodes[0].material === 'Online Digital QR' &&
+      cafeTenant.servicesByVertical.cafe.includes('Ethiopian Pour Over')
+    ) {
+      console.log('  ✓ Multi-vertical onboarding: Cafe micro-flow tenant provisioned (2 questions, online digital QR)');
+      passed++;
+    } else {
+      console.error('  ✗ Cafe onboarding verification failed:', cafeTenant);
+      failed++;
+    }
+
+    // 10b. Test Cafe QR Page Structure (Micro-flow skips staff selector)
+    const cafeQrSlug = cafeTenant.qrcodes[0].code;
+    const cafeQrRes = await fetch(`http://localhost:${PORT}/q/${cafeQrSlug}`);
+    const cafeQrHtml = await cafeQrRes.text();
+    if (
+      cafeQrRes.status === 200 &&
+      cafeQrHtml.includes('Micro-Flow (<15s) Review Copilot') &&
+      cafeQrHtml.includes('What did you enjoy most?') &&
+      !cafeQrHtml.includes('id="staffTags"') &&
+      cafeQrHtml.includes('3. Preferred Review Language')
+    ) {
+      console.log('  ✓ Customer QR flow: Cafe micro-flow verified (Skips staff, combines item+vibe into <15s completion)');
+      passed++;
+    } else {
+      console.error('  ✗ Cafe QR page structure mismatch');
+      failed++;
+    }
+
+    // 10c. Test Coaching Deep Trust Signup (4 questions, academic faculty attribution)
+    const coachEmail = `apex_iit_${Date.now()}@apexacademy.in`;
+    const coachSignupRes = await fetch(`http://localhost:${PORT}/api/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        clinicName: 'Apex IIT-JEE & NEET Academy',
+        ownerName: 'Prof. Alok Verma',
+        email: coachEmail,
+        password: 'Password123#Coach',
+        city: 'Kota',
+        phone: '9811233445',
+        industry: 'coaching',
+        specialtyServices: 'IIT-JEE Advanced Physics, NEET Top Batch, Foundation Math'
+      })
+    });
+    const coachReg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'registry.json'), 'utf8'));
+    const coachTenantId = coachReg.users[coachEmail]?.tenantId;
+    const coachTenantPath = path.join(__dirname, '..', 'data', 'tenants', `${coachTenantId}.json`);
+    const coachTenant = JSON.parse(fs.readFileSync(coachTenantPath, 'utf8'));
+
+    if (
+      coachSignupRes.status === 200 &&
+      coachTenant.location.flowType === 'trust' &&
+      coachTenant.location.questionCount === 4 &&
+      coachTenant.servicesByVertical.coaching.includes('IIT-JEE Advanced Physics')
+    ) {
+      console.log('  ✓ Multi-vertical onboarding: Coaching academy trust-flow tenant provisioned (4 questions, faculty roles)');
+      passed++;
+    } else {
+      console.error('  ✗ Coaching academy onboarding verification failed:', coachTenant);
+      failed++;
+    }
+
+    // 10d. Test Coaching QR Page Structure (Trust-flow includes quality & faculty step)
+    const coachQrSlug = coachTenant.qrcodes[0].code;
+    const coachQrRes = await fetch(`http://localhost:${PORT}/q/${coachQrSlug}`);
+    const coachQrHtml = await coachQrRes.text();
+    if (
+      coachQrRes.status === 200 &&
+      coachQrHtml.includes('Deep Trust Review Copilot') &&
+      coachQrHtml.includes('id="qualityTags"') &&
+      coachQrHtml.includes('id="staffTags"') &&
+      coachQrHtml.includes('5. Preferred Review Language')
+    ) {
+      console.log('  ✓ Customer QR flow: Coaching trust-flow verified (4-step depth: course, teaching quality, mentor attribution)');
+      passed++;
+    } else {
+      console.error('  ✗ Coaching QR page structure mismatch');
+      failed++;
+    }
+
+    // 10e. Test Calibrated Review Draft Generation Across Distinct Verticals
+    const cafeDraftRes = await fetch(`http://localhost:${PORT}/api/ai/qr-draft`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        submission: {
+          rating: 5,
+          selectedServices: ['Ethiopian Pour Over'],
+          language: 'hi-en',
+          vertical: 'cafe'
+        },
+        shortCode: cafeQrSlug
+      })
+    });
+    const cafeDraftJson = await cafeDraftRes.json();
+
+    const coachDraftRes = await fetch(`http://localhost:${PORT}/api/ai/qr-draft`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        submission: {
+          rating: 5,
+          selectedServices: ['IIT-JEE Advanced Physics'],
+          staffName: 'Prof. Alok Verma',
+          language: 'hi-en',
+          vertical: 'coaching'
+        },
+        shortCode: coachQrSlug
+      })
+    });
+    const coachDraftJson = await coachDraftRes.json();
+
+    if (
+      cafeDraftJson.success &&
+      cafeDraftJson.draftText.includes('Loved the vibe') &&
+      coachDraftJson.success &&
+      coachDraftJson.draftText.includes('Concept clarity') &&
+      coachDraftJson.draftText.includes('Prof. Alok Verma')
+    ) {
+      console.log('  ✓ AI Review Draft Engine: Calibrated vertical generation verified (Cafe high-energy vs Coaching academic rigor)');
+      passed++;
+    } else {
+      console.error('  ✗ Calibrated draft generation mismatch:', { cafeDraftJson, coachDraftJson });
+      failed++;
+    }
+
+    // Clean up vertical test tenants
+    if (fs.existsSync(cafeTenantPath)) fs.unlinkSync(cafeTenantPath);
+    if (fs.existsSync(coachTenantPath)) fs.unlinkSync(coachTenantPath);
+    delete cafeReg.users[cafeEmail];
+    delete cafeReg.qrLookup[cafeQrSlug];
+    delete coachReg.users[coachEmail];
+    delete coachReg.qrLookup[coachQrSlug];
+    fs.writeFileSync(path.join(__dirname, '..', 'data', 'registry.json'), JSON.stringify(cafeReg, null, 2), 'utf8');
+
   } catch (err) {
     console.error('  ✗ Section 8 error:', err);
     failed++;

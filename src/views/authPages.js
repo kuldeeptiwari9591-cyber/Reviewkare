@@ -1,5 +1,6 @@
 // Authentication Views adhering to Swiss Minimalist Design & Web Guidelines Standard
 const { getSvgIcon } = require('./icons.js');
+const { VERTICAL_PROFILES } = require('../lib/verticals.js');
 
 function renderLoginPage(query = {}) {
   const isDemo = query.demo === 'true';
@@ -203,10 +204,10 @@ function renderSignupPage() {
           <span class="font-heading font-black text-2xl tracking-tight text-slate-900">Replyo</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          Start Your 14-Day Free Clinic Trial
+          Start Your 14-Day Free Pilot
         </h1>
         <p class="mt-2 text-xs text-slate-500 font-medium">
-          Automate 5-star Google replies in 4 minutes. No credit card required. Instant UPI activation.
+          Calibrated onboarding for 8 Indian business verticals. Autonomous 4-minute replies & digital QR flow.
         </p>
       </div>
 
@@ -215,12 +216,12 @@ function renderSignupPage() {
         <div class="flex items-center justify-between pb-4 border-b border-slate-100">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-brand-600 text-white font-bold text-xs flex items-center justify-center">1</span>
-            <span class="text-xs font-bold text-slate-900">Clinic Profile</span>
+            <span class="text-xs font-bold text-slate-900">Business Profile</span>
           </div>
           <div class="h-0.5 w-12 bg-slate-200"></div>
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">2</span>
-            <span class="text-xs font-bold text-slate-500">Google Link</span>
+            <span class="text-xs font-bold text-slate-500">QR Calibration</span>
           </div>
           <div class="h-0.5 w-12 bg-slate-200"></div>
           <div class="flex items-center gap-2">
@@ -230,50 +231,80 @@ function renderSignupPage() {
         </div>
 
         <form id="signupForm" onsubmit="handleSignupSubmit(event)" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <!-- Step 1: Industry Specialty Selection -->
+          <div>
+            <label for="industrySelect" class="block text-xs font-bold text-slate-700 mb-1">
+              Select Your Business Vertical
+            </label>
+            <select 
+              id="industrySelect" 
+              onchange="onVerticalChange(this.value)"
+              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border-2 border-brand-500 text-xs font-bold text-slate-900 focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 outline-none bg-brand-50/20"
+            >
+              <option value="clinic">Healthcare & Dental Clinics (4-Step Deep Clinical Trust Flow)</option>
+              <option value="cafe">Specialty Cafes & Bakeries (2-Step Micro-Flow, &lt;15s Speed)</option>
+              <option value="restaurant">Restaurants & Dining Lounges (3-Step Table & Bill Flow)</option>
+              <option value="salon">Hair Salons & Spas (3-Step Stylist Attribution Flow)</option>
+              <option value="gym">Gyms & Fitness Hubs (3-Step Coach & Facility Flow)</option>
+              <option value="coaching">Coaching & Academic Academies (4-Step Student & Parent Flow)</option>
+              <option value="auto">Automotive Service & Detailing (3-Step Estimate Trust Flow)</option>
+              <option value="hospitality">Hotels, Boutique Stays & Resorts (3-Step Guest Flow)</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Calibration Badge -->
+          <div id="verticalCalibrationBadge" class="p-3 bg-brand-50/70 rounded-2xl border border-brand-200 flex items-start gap-2.5 text-xs text-brand-900">
+            <span class="text-base" id="vIcon">🛡️</span>
             <div>
-              <label for="clinicName" class="block text-xs font-bold text-slate-700 mb-1">
-                Business / Clinic / Brand Name
-              </label>
-              <input 
-                id="clinicName" 
-                type="text" 
-                required 
-                placeholder="Apex Dental, Roastery Cafe, or Bounce Salon" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
-              />
-            </div>
-            <div>
-              <label for="ownerName" class="block text-xs font-bold text-slate-700 mb-1">
-                Owner / Director Full Name
-              </label>
-              <input 
-                id="ownerName" 
-                type="text" 
-                required 
-                placeholder="Dr. Rajesh Sharma" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
-              />
+              <span class="font-bold block" id="vBadgeTitle">Deep Trust Clinical Flow (4 Questions)</span>
+              <span class="text-[11px] text-brand-800" id="vBadgeDesc">Strict adherence to NMC 2023 Ethics. Captures treatment procedure, hygiene sterility, and attending doctor attribution.</span>
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="industrySelect" class="block text-xs font-bold text-slate-700 mb-1">
-                Industry Specialty
+              <label for="clinicName" id="businessNameLabel" class="block text-xs font-bold text-slate-700 mb-1">
+                Clinic / Hospital / Practice Name
               </label>
-              <select 
-                id="industrySelect" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none bg-white"
-              >
-                <option value="clinic">Healthcare, Dental & Clinic</option>
-                <option value="cafe">Cafe, Bakery & Bistro</option>
-                <option value="restaurant">Restaurant, Dining & Bar</option>
-                <option value="salon">Salon, Spa & Aesthetics</option>
-                <option value="gym">Gym, Fitness & Athletic Club</option>
-                <option value="coaching">Coaching & Academic Institute</option>
-              </select>
+              <input 
+                id="clinicName" 
+                type="text" 
+                required 
+                placeholder="e.g. Apex Dental & Implant Clinic" 
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              />
             </div>
+            <div>
+              <label for="ownerName" id="ownerNameLabel" class="block text-xs font-bold text-slate-700 mb-1">
+                Lead Doctor / Practice Director
+              </label>
+              <input 
+                id="ownerName" 
+                type="text" 
+                required 
+                placeholder="e.g. Dr. Ananya Sharma, MDS" 
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              />
+            </div>
+          </div>
+
+          <!-- Dynamic Field: Specialty Treatments or Signature Bestsellers -->
+          <div>
+            <label for="specialtyServices" id="customFieldLabel" class="block text-xs font-bold text-slate-700 mb-1">
+              Primary Treatments or Hero Services (Comma Separated)
+            </label>
+            <input 
+              id="specialtyServices" 
+              type="text" 
+              value="Painless Root Canal, Clear Aligners, Laser Whitening, Implants"
+              placeholder="e.g. Root Canal, Clear Aligners, Dental Implants" 
+              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none font-mono"
+            />
+            <span class="text-[10px] text-slate-400 mt-1 block">These pills will appear on your customer’s phone when scanning your digital QR.</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="citySelect" class="block text-xs font-bold text-slate-700 mb-1">
                 City / Metro Region
@@ -291,12 +322,9 @@ function renderSignupPage() {
                 <option value="Other">Other Indian City</option>
               </select>
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="ownerPhone" class="block text-xs font-bold text-slate-700 mb-1">
-                WhatsApp Phone Number
+                Manager WhatsApp for 1-Tap Approvals
               </label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">+91</span>
@@ -310,6 +338,9 @@ function renderSignupPage() {
                 />
               </div>
             </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="signupEmail" class="block text-xs font-bold text-slate-700 mb-1">
                 Official Business Email
@@ -318,33 +349,36 @@ function renderSignupPage() {
                 id="signupEmail" 
                 type="email" 
                 required 
-                placeholder="contact@yourbusiness.in" 
+                placeholder="owner@yourbusiness.in" 
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              />
+            </div>
+            <div>
+              <label for="signupPwd" class="block text-xs font-bold text-slate-700 mb-1">
+                Create Secure Password
+              </label>
+              <input 
+                id="signupPwd" 
+                type="password" 
+                required 
+                minlength="8"
+                placeholder="Minimum 8 characters" 
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
               />
             </div>
           </div>
 
-          <div>
-            <label for="signupPwd" class="block text-xs font-bold text-slate-700 mb-1">
-              Create Secure Password
-            </label>
-            <input 
-              id="signupPwd" 
-              type="password" 
-              required 
-              minlength="8"
-              placeholder="Minimum 8 characters" 
-              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
-            />
-          </div>
-
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600 space-y-1">
-            <div class="font-bold text-slate-900">Included in your 14-day free pilot:</div>
-            <ul class="space-y-0.5">
-              <li>• Unlimited AI review replies with dialect detection</li>
-              <li>• In-clinic 30-sec QR generator with printable poster</li>
-              <li>• 1-Tap WhatsApp owner approval for 1–3★ complaints</li>
-              <li>• Zero setup fee • Cancel anytime in 1 click</li>
+          <!-- Real-Time Customer QR Flow Preview Box -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-900 font-heading">Online QR Review Process Preview:</span>
+              <span id="previewStepCount" class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 font-bold">4 Questions</span>
+            </div>
+            <ul id="previewQuestionsList" class="space-y-1 text-slate-600 text-[11px]">
+              <li>• 1. Overall Patient Experience Rating (1-5★)</li>
+              <li>• 2. Procedure / Treatment Received</li>
+              <li>• 3. Clinical Care & Hygiene Sterility</li>
+              <li>• 4. Attending Doctor Attribution & Dialect Choice</li>
             </ul>
           </div>
 
@@ -373,17 +407,52 @@ function renderSignupPage() {
   </main>
 
   <script>
+    const VERTICAL_DATA = ${JSON.stringify(VERTICAL_PROFILES)};
+
+    function onVerticalChange(val) {
+      const v = VERTICAL_DATA[val] || VERTICAL_DATA['clinic'];
+      
+      // Update badge
+      document.getElementById('vIcon').innerText = val === 'cafe' ? '☕' : (val === 'restaurant' ? '🍽️' : (val === 'salon' ? '💇‍♀️' : (val === 'gym' ? '🏋️' : (val === 'coaching' ? '📚' : (val === 'auto' ? '🔧' : (val === 'hospitality' ? '🏨' : '🛡️'))))));
+      document.getElementById('vBadgeTitle').innerText = v.badge;
+      document.getElementById('vBadgeDesc').innerText = v.description;
+
+      // Update labels & placeholders
+      document.getElementById('businessNameLabel').innerText = v.onboarding.businessNameLabel;
+      document.getElementById('clinicName').placeholder = v.onboarding.businessNamePlaceholder;
+      document.getElementById('ownerNameLabel').innerText = v.onboarding.ownerNameLabel;
+      document.getElementById('ownerName').placeholder = v.onboarding.ownerNamePlaceholder;
+
+      document.getElementById('customFieldLabel').innerText = v.onboarding.customField1Label;
+      document.getElementById('specialtyServices').placeholder = v.onboarding.customField1Placeholder;
+      document.getElementById('specialtyServices').value = v.onboarding.defaultServices.slice(0, 4).join(', ');
+
+      // Update QR preview
+      document.getElementById('previewStepCount').innerText = v.questionCount + ' Questions (' + v.flowType.toUpperCase() + ')';
+      
+      let qList = '<li>• 1. ' + v.qrFlow.step1Title + ' (1-5★)</li>';
+      qList += '<li>• 2. ' + v.qrFlow.step2Title + '</li>';
+      if (v.qrFlow.step3Title) {
+        qList += '<li>• 3. ' + v.qrFlow.step3Title + '</li>';
+      }
+      if (v.qrFlow.step4Title) {
+        qList += '<li>• 4. ' + v.qrFlow.step4Title + '</li>';
+      }
+      document.getElementById('previewQuestionsList').innerHTML = qList;
+    }
+
     async function handleSignupSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('signupSubmitBtn');
       const alert = document.getElementById('signupAlert');
       btn.disabled = true;
-      btn.innerText = 'Creating clinic account & linking Google Sandbox…';
+      btn.innerText = 'Initializing vertical workspace & calibrated QR flow…';
 
       const payload = {
         clinicName: document.getElementById('clinicName').value,
         ownerName: document.getElementById('ownerName').value,
         industry: document.getElementById('industrySelect').value,
+        specialtyServices: document.getElementById('specialtyServices').value,
         city: document.getElementById('citySelect').value,
         phone: document.getElementById('ownerPhone').value,
         email: document.getElementById('signupEmail').value,
@@ -399,7 +468,7 @@ function renderSignupPage() {
         const data = await res.json();
         if (data.success) {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 block';
-          alert.innerText = 'Account successfully initialized! Directing to clinic dashboard…';
+          alert.innerText = 'Account initialized! Redirecting to calibrated dashboard…';
           setTimeout(() => { window.location.href = '/app'; }, 800);
         } else {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
