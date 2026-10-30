@@ -1,6 +1,41 @@
 // Master Swiss Minimalist Multi-Vertical Homepage with 3D Visuals & Feature-First Depth
 const { getSvgIcon, getStarRatingSvg } = require('./icons.js');
 
+const HOME_FAQS = [
+  {
+    q: "How does Replyo automate Google review replies without violating Google policies?",
+    a: "Replyo operates exclusively through official Google Business Profile OAuth 2.0 APIs. Instead of instantaneous automated replies that leave a bot footprint, Replyo incorporates a humanized 3-to-5 minute response jitter. Every reply is uniquely generated with dialect mirroring and localized service keywords rather than robotic canned templates, in full compliance with Google's developer terms."
+  },
+  {
+    q: "What is the Negative Review Quarantine Shield and how does it prevent legal liability?",
+    a: "When a customer posts a 1-to-3 star review, Replyo instantly halts automated publishing and routes the incident to the Negative Quarantine Shield. The AI generates a de-escalating draft that admits zero medical or legal liability, conveys empathy, and provides a direct telephone contact for the managing director or clinic head. The reply is dispatched to the owner's WhatsApp and email for 1-tap approval before anything goes live."
+  },
+  {
+    q: "How does the in-store 30-second AI QR review builder work without requiring patient login?",
+    a: "Customers scan an NFC or QR stand placed at your checkout counter or treatment tray. The web app loads in under 0.8 seconds (under 85KB) with zero app download, zero password prompt, and zero phone number collection. The customer taps their services, selects their attendant or doctor, and picks their preferred language. The AI generates an authentic first-person review and copies it to their clipboard while opening the official Google review dialogue in 1 tap."
+  },
+  {
+    q: "Does Replyo support regional Indian languages like Hindi, Hinglish, Tamil, Telugu, and Kannada?",
+    a: "Yes. Replyo is natively engineered for the Indian linguistic landscape. It detects and responds in Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone."
+  },
+  {
+    q: "How does Replyo boost Google Local 3-Pack rankings on Google Maps?",
+    a: "Google's local ranking algorithm prioritizes three core factors: Relevance, Distance, and Prominence. By maintaining a 99%+ response rate in under 4 minutes and naturally weaving local search keywords (e.g., 'painless root canal in Indiranagar Bangalore') into official replies, Replyo signals high prominence and relevance to the Google Maps search algorithm."
+  },
+  {
+    q: "Can healthcare clinics and doctors safely use Replyo under NMC guidelines and DPDP Act 2023?",
+    a: "Yes. Replyo enforces a strict Zero-PHI (Protected Health Information) medical guarantee in adherence to National Medical Commission (NMC) ethics regulations and India's Digital Personal Data Protection Act 2023. Review responses never mention patient diagnoses, prescription details, or medical records, and all data is hosted within AWS Asia Pacific (Mumbai) data centers."
+  },
+  {
+    q: "How does Frontline Staff Attribution and the tipping/incentive leaderboard operate?",
+    a: "When customers scan your in-store QR stand, they can select the staff member who attended to them (e.g. Dr. Sneha, Barista Shreyas, Stylist Farhan). When a 5-star review mentioning their service is posted, Replyo credits an attribution bonus into your internal staff performance ledger, motivating frontline teams to deliver exceptional guest hospitality."
+  },
+  {
+    q: "What are the subscription pricing plans and is there a free trial?",
+    a: "Replyo offers transparent Indian Rupee (INR) pricing with zero foreign exchange fees: Starter Solo at ₹1,249/month, Growth Autopilot at ₹2,999/quarter (₹999/mo Hero Offer), and Multi-Branch Pro at ₹3,499/month. All plans include a 14-day free pilot with instant UPI activation and downloadable 18% GST tax invoices."
+  }
+];
+
 function renderHomePage(store) {
   return `
   <!-- Ambient 3D Interactive Particle Background Canvas -->
@@ -403,6 +438,106 @@ function renderHomePage(store) {
     </div>
   </section>
 
+  <!-- AEO & GEO KNOWLEDGE ENGINE: ENTITY DEFINITION & SPECIFICATIONS -->
+  <section class="py-16 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold uppercase tracking-wider font-mono">
+          System Definition & Entity Specifications
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
+          What is Replyo? The Autonomous Google Review & In-Store QR Operating System
+        </h2>
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+          <strong>Replyo</strong> is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. Replyo integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack ranking prominence, and quarantine negative feedback for 1-tap manager resolution.
+        </p>
+      </div>
+
+      <!-- Verified Architectural Pillars -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 card-3d">
+          <div class="text-[11px] font-bold text-brand-700 uppercase font-mono">4-Minute Autopilot Velocity</div>
+          <h3 class="text-base font-bold text-slate-900 font-heading">Humanized Algorithmic Jitter</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Eliminates synthetic bot footprints by introducing a 3–5 minute humanized response interval with dialect mirroring in Devanagari Hindi, colloquial Hinglish, and English.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 card-3d">
+          <div class="text-[11px] font-bold text-brand-700 uppercase font-mono">Zero Review Gating</div>
+          <h3 class="text-base font-bold text-slate-900 font-heading">100% Google & FTC Adherent</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Adheres strictly to FTC 16 CFR Part 465 and Google anti-incentivization policies. Every customer is guided directly to Google Maps without filtering or gating.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 card-3d">
+          <div class="text-[11px] font-bold text-brand-700 uppercase font-mono">Zero-Liability Quarantine</div>
+          <h3 class="text-base font-bold text-slate-900 font-heading">1-Tap WhatsApp Approval</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            1–3★ complaints are isolated instantly. The engine generates a de-escalating draft with zero medical or legal fault admitted and routes direct manager telephone lines.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 card-3d">
+          <div class="text-[11px] font-bold text-brand-700 uppercase font-mono">Data Sovereignty</div>
+          <h3 class="text-base font-bold text-slate-900 font-heading">AWS Mumbai & DPDP 2023</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Strict adherence to India's Digital Personal Data Protection Act 2023 and NMC Medical Ethics. Hosted on AWS Mumbai (ap-south-1) with zero cross-border PHI transmission.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ SECTION: ANSWER ENGINE OPTIMIZATION (AEO & GOOGLE FEATURED SNIPPETS) -->
+  <section class="py-20 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-slate-800 text-xs font-bold uppercase tracking-wider font-mono">
+          Authoritative Knowledge Base
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
+          Frequently Asked Questions About Google Review Automation
+        </h2>
+        <p class="text-slate-600 text-sm">
+          Technical, legal, and operational answers for business owners, clinic directors, and marketing leaders across India.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        ${HOME_FAQS.map((faq, idx) => `
+          <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm card-3d space-y-2">
+            <h3 class="text-base font-bold text-slate-900 font-heading flex items-start gap-3">
+              <span class="text-brand-600 font-black tabular-nums">0${idx + 1}.</span>
+              <span>${faq.q}</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 pl-8 leading-relaxed font-normal">
+              ${faq.a}
+            </p>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center space-y-3 shadow-sm">
+        <h3 class="font-bold text-base text-slate-900 font-heading">Ready to see Replyo active in your business?</h3>
+        <p class="text-xs text-slate-500 max-w-lg mx-auto">Start with a 14-day free pilot. Instant UPI setup, zero setup fee, and cancel anytime in one click.</p>
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+          <a href="/signup" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">
+            Start 14-Day Free Pilot &rarr;
+          </a>
+          <a href="/pricing" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-all">
+            View INR Subscription Plans
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- CLIENT-SIDE SCRIPTS FOR MULTI-VERTICAL & 3D INTERACTION -->
   <script>
     // 1. Multi-Vertical Data Map
@@ -644,4 +779,4 @@ function renderHomePage(store) {
   `;
 }
 
-module.exports = { renderHomePage };
+module.exports = { renderHomePage, HOME_FAQS };

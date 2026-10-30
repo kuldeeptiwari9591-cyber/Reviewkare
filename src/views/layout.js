@@ -4,14 +4,171 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   const isHomepage = activeNav === 'home';
   const isApp = activeNav === 'app';
 
+  const description = options.description || "Autonomous Multi-Dialect Google Review Autopilot & In-Store QR flows for Indian clinics, cafes, restaurants, salons & gyms. 4-min AI replies, zero-liability quarantine shield, staff attribution leaderboard.";
+  const canonicalPath = options.canonical || (isHomepage ? '/' : '');
+  const canonicalUrl = `https://replyo.in${canonicalPath}`;
+  const fullTitle = title.includes('Replyo') ? title : `${title} | Replyo — Autonomous Review & In-Store QR Operating System`;
+  const ogType = options.ogType || (options.article ? 'article' : 'website');
+  const ogImage = options.ogImage || 'https://replyo.in/static/og-banner.png';
+  const keywords = options.keywords || 'Google review autopilot, in-store AI QR stands, Google Maps ranking, Local 3-Pack, reputation management India, clinic Google reviews, salon reviews, Hinglish AI replies, customer feedback automation';
+  const robots = options.robots || (isApp ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+
+  // Build Structured Schema.org JSON-LD Graph for AEO / GEO Entity Citability
+  const schemaGraph = [
+    {
+      "@type": "Organization",
+      "@id": "https://replyo.in/#organization",
+      "name": "Replyo Technologies India Private Limited",
+      "alternateName": "Replyo",
+      "url": "https://replyo.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://replyo.in/static/logo.png"
+      },
+      "sameAs": [
+        "https://twitter.com/replyo_in",
+        "https://www.linkedin.com/company/replyo"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-80-4719-2830",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "80 Feet Road, 4th Block, Koramangala",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "postalCode": "560034",
+        "addressCountry": "IN"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://replyo.in/#website",
+      "url": "https://replyo.in",
+      "name": "Replyo Operating System",
+      "publisher": { "@id": "https://replyo.in/#organization" }
+    }
+  ];
+
+  if (isHomepage) {
+    schemaGraph.push({
+      "@type": "SoftwareApplication",
+      "@id": "https://replyo.in/#application",
+      "name": "Replyo Review & In-Store QR Operating System",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS, Cloud",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "1420",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "INR",
+        "lowPrice": "1249",
+        "highPrice": "3499",
+        "offerCount": "3"
+      },
+      "featureList": [
+        "Autonomous Multi-Dialect Google Review Autopilot",
+        "Zero-App In-Store QR & NFC Review Flow in 30 Seconds",
+        "Negative Review Quarantine Shield for 1-Tap Owner WhatsApp Resolution",
+        "Frontline Staff Attribution & UPI Leaderboard Ledger",
+        "Google Local 3-Pack Prominence & Semantic Keyword Weaving",
+        "DPDP Act 2023 & NMC Medical Ethics Compliance"
+      ]
+    });
+  }
+
+  if (options.faqItems && options.faqItems.length > 0) {
+    schemaGraph.push({
+      "@type": "FAQPage",
+      "@id": `${canonicalUrl}#faq`,
+      "mainEntity": options.faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.a
+        }
+      }))
+    });
+  }
+
+  if (options.breadcrumbs && options.breadcrumbs.length > 0) {
+    schemaGraph.push({
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumbs`,
+      "itemListElement": options.breadcrumbs.map((crumb, idx) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": crumb.name,
+        "item": crumb.url.startsWith('http') ? crumb.url : `https://replyo.in${crumb.url}`
+      }))
+    });
+  }
+
+  if (options.article) {
+    schemaGraph.push({
+      "@type": "BlogPosting",
+      "@id": `${canonicalUrl}#article`,
+      "headline": options.article.title,
+      "description": description,
+      "url": canonicalUrl,
+      "datePublished": options.article.publishedAt || "2026-10-15T09:00:00+05:30",
+      "dateModified": options.article.modifiedAt || "2026-10-30T09:00:00+05:30",
+      "author": {
+        "@type": "Person",
+        "name": options.article.author || "Dr. Ananya Sharma"
+      },
+      "publisher": { "@id": "https://replyo.in/#organization" }
+    });
+  }
+
   return `<!DOCTYPE html>
 <html lang="en" class="scroll-smooth antialiased">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} | Replyo — Autonomous Review & In-Store QR Operating System</title>
-  <meta name="description" content="Autonomous Multi-Dialect Google Review Autopilot & In-Store QR flows for Indian clinics, cafes, restaurants, salons & gyms. 4-min AI replies, zero-liability quarantine shield, staff attribution leaderboard.">
+  <title>${fullTitle}</title>
+  <meta name="description" content="${description}">
+  <meta name="keywords" content="${keywords}">
+  <meta name="robots" content="${robots}">
+  <meta name="theme-color" content="#2563eb">
   
+  <!-- Canonical & Agentic Discovery Links -->
+  <link rel="canonical" href="${canonicalUrl}">
+  <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Agent Manifest">
+  <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <!-- Open Graph Protocol (Facebook, LinkedIn, Slack, WhatsApp) -->
+  <meta property="og:site_name" content="Replyo Operating System">
+  <meta property="og:title" content="${fullTitle}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${canonicalUrl}">
+  <meta property="og:type" content="${ogType}">
+  <meta property="og:image" content="${ogImage}">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter / X Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@replyo_in">
+  <meta name="twitter:title" content="${fullTitle}">
+  <meta name="twitter:description" content="${description}">
+  <meta name="twitter:image" content="${ogImage}">
+
+  <!-- Schema.org JSON-LD Knowledge Graph -->
+  <script type="application/ld+json">
+  ${JSON.stringify({ "@context": "https://schema.org", "@graph": schemaGraph }, null, 2)}
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">

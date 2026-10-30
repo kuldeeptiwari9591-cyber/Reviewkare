@@ -259,33 +259,35 @@ function renderBookDemoPage() {
   `;
 }
 
+const FAQ_ITEMS = [
+  {
+    q: "Does auto-replying violate Google Business Profile policies?",
+    a: "No. Google encourages businesses to reply promptly to all reviews. Replyo uses official Google Business Profile APIs, introduces a human-like 4-minute jitter, and customizes every reply with local SEO keywords rather than canned repetition."
+  },
+  {
+    q: "What happens when an unhappy patient leaves a 1-star or 2-star review?",
+    a: "Replyo activates the Negative Quarantine Shield. The AI generates a de-escalating, zero-liability draft (never admitting fault) and immediately notifies the clinic owner via WhatsApp with a 1-tap approval link. Nothing is posted until you tap approve."
+  },
+  {
+    q: "How does the in-clinic AI QR flow work without patient login?",
+    a: "Patients scan the acrylic QR stand on your reception desk. The page loads in <0.8 seconds (under 100KB) with zero app download or login. Patients tap services received, doctor name, and ambience. The AI writes a genuine first-person review and copies it to their clipboard, opening Google Maps review prompt in 1 tap."
+  },
+  {
+    q: "Is Replyo compliant with India's DPDP Act 2023 and NMC guidelines?",
+    a: "Yes. Replyo never stores Protected Health Information (PHI). We never reference private clinical procedures, diagnostic findings, or patient records in review responses. All databases are hosted inside AWS Mumbai (ap-south-1)."
+  },
+  {
+    q: "Can Replyo handle Hindi, Hinglish, and regional languages?",
+    a: "Yes! Our language engine detects Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), Tamil, Telugu, Kannada, and English, mirroring the exact dialect naturally."
+  },
+  {
+    q: "Can I manage multiple clinic branches from one dashboard?",
+    a: "Yes. Replyo supports multi-tenant branch architectures. You can switch between Indiranagar, Koramangala, and Whitefield in 1 click, track staff leaderboards across locations, and get consolidated GST billing."
+  }
+];
+
 function renderFaqPage() {
-  const faqs = [
-    {
-      q: "Does auto-replying violate Google Business Profile policies?",
-      a: "No. Google encourages businesses to reply promptly to all reviews. Replyo uses official Google Business Profile APIs, introduces a human-like 4-minute jitter, and customizes every reply with local SEO keywords rather than canned repetition."
-    },
-    {
-      q: "What happens when an unhappy patient leaves a 1-star or 2-star review?",
-      a: "Replyo activates the Negative Quarantine Shield. The AI generates a de-escalating, zero-liability draft (never admitting fault) and immediately notifies the clinic owner via WhatsApp with a 1-tap approval link. Nothing is posted until you tap approve."
-    },
-    {
-      q: "How does the in-clinic AI QR flow work without patient login?",
-      a: "Patients scan the acrylic QR stand on your reception desk. The page loads in <0.8 seconds (under 100KB) with zero app download or login. Patients tap services received, doctor name, and ambience. The AI writes a genuine first-person review and copies it to their clipboard, opening Google Maps review prompt in 1 tap."
-    },
-    {
-      q: "Is Replyo compliant with India's DPDP Act 2023 and NMC guidelines?",
-      a: "Yes. Replyo never stores Protected Health Information (PHI). We never reference private clinical procedures, diagnostic findings, or patient records in review responses. All databases are hosted inside AWS Mumbai (ap-south-1)."
-    },
-    {
-      q: "Can Replyo handle Hindi, Hinglish, and regional languages?",
-      a: "Yes! Our language engine detects Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), Tamil, Telugu, Kannada, and English, mirroring the exact dialect naturally."
-    },
-    {
-      q: "Can I manage multiple clinic branches from one dashboard?",
-      a: "Yes. Replyo supports multi-tenant branch architectures. You can switch between Indiranagar, Koramangala, and Whitefield in 1 click, track staff leaderboards across locations, and get consolidated GST billing."
-    }
-  ];
+  const faqs = FAQ_ITEMS;
 
   return `
   <main class="py-12 sm:py-16 bg-slate-50">
@@ -485,6 +487,7 @@ function renderDpdpConsentPage() {
 }
 
 module.exports = {
+  FAQ_ITEMS,
   renderSecurityPage,
   renderBookDemoPage,
   renderFaqPage,

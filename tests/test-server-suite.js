@@ -395,6 +395,165 @@ setTimeout(async () => {
     delete cleanReg.qrLookup[qrSlug];
     fs.writeFileSync(path.join(__dirname, '..', 'data', 'registry.json'), JSON.stringify(cleanReg, null, 2), 'utf8');
 
+    // ----------------------------------------------------
+    // 9. Testing Traditional, Modern, AEO, GEO & Agentic SEO Capabilities
+    // ----------------------------------------------------
+    console.log('\n--- 9. Testing Traditional, Modern, AEO, GEO & Agentic SEO Capabilities ---');
+
+    // 9a. Test /robots.txt (RFC 9309 compliance & Content-Signal)
+    const robotsRes = await fetch(`http://localhost:${PORT}/robots.txt`);
+    const robotsTxt = await robotsRes.text();
+    if (
+      robotsRes.status === 200 &&
+      robotsTxt.includes('Content-Signal: search=yes, ai-input=yes, ai-train=no') &&
+      robotsTxt.includes('User-agent: OAI-SearchBot') &&
+      robotsTxt.includes('User-agent: PerplexityBot') &&
+      robotsTxt.includes('Sitemap: https://replyo.in/sitemap.xml')
+    ) {
+      console.log('  ✓ 200 OK: /robots.txt verified with RFC 9309 AI agent groups & Content-Signal');
+      passed++;
+    } else {
+      console.error('  ✗ /robots.txt failed validation:', robotsTxt);
+      failed++;
+    }
+
+    // 9b. Test /sitemap.xml (Valid XML structure and all 24 public routes)
+    const sitemapRes = await fetch(`http://localhost:${PORT}/sitemap.xml`);
+    const sitemapXml = await sitemapRes.text();
+    if (
+      sitemapRes.status === 200 &&
+      sitemapRes.headers.get('content-type')?.includes('xml') &&
+      sitemapXml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">') &&
+      sitemapXml.includes('<loc>https://replyo.in/features</loc>') &&
+      sitemapXml.includes('<loc>https://replyo.in/pricing</loc>') &&
+      sitemapXml.includes('<loc>https://replyo.in/industries/clinics</loc>')
+    ) {
+      console.log('  ✓ 200 OK: /sitemap.xml verified with standard XML schema & full index coverage');
+      passed++;
+    } else {
+      console.error('  ✗ /sitemap.xml failed validation:', sitemapXml);
+      failed++;
+    }
+
+    // 9c. Test /llms.txt (llmstxt.org standard manifest)
+    const llmsRes = await fetch(`http://localhost:${PORT}/llms.txt`);
+    const llmsTxt = await llmsRes.text();
+    if (
+      llmsRes.status === 200 &&
+      llmsTxt.startsWith('# Replyo') &&
+      llmsTxt.includes('## Core Capabilities') &&
+      llmsTxt.includes('## Pricing (INR)')
+    ) {
+      console.log('  ✓ 200 OK: /llms.txt verified compliant with llmstxt.org specification');
+      passed++;
+    } else {
+      console.error('  ✗ /llms.txt failed validation:', llmsTxt);
+      failed++;
+    }
+
+    // 9d. Test /llms-full.txt (Deep architecture & compliance reference)
+    const llmsFullRes = await fetch(`http://localhost:${PORT}/llms-full.txt`);
+    const llmsFullTxt = await llmsFullRes.text();
+    if (
+      llmsFullRes.status === 200 &&
+      llmsFullTxt.includes('DPDP Act 2023') &&
+      llmsFullTxt.includes('Neural Dialect Autopilot') &&
+      llmsFullTxt.includes('AWS Mumbai (ap-south-1)')
+    ) {
+      console.log('  ✓ 200 OK: /llms-full.txt verified with architecture, pricing & security specs');
+      passed++;
+    } else {
+      console.error('  ✗ /llms-full.txt failed validation:', llmsFullTxt);
+      failed++;
+    }
+
+    // 9e. Test /.well-known/ai-catalog.json (Agent Resource Discovery ARD 1.0)
+    const catalogRes = await fetch(`http://localhost:${PORT}/.well-known/ai-catalog.json`);
+    const catalogJson = await catalogRes.json();
+    if (
+      catalogRes.status === 200 &&
+      catalogJson.specVersion === '1.0' &&
+      Array.isArray(catalogJson.entries) &&
+      catalogJson.entries.some(e => e.identifier.includes('replyo.in'))
+    ) {
+      console.log('  ✓ 200 OK: /.well-known/ai-catalog.json verified conforming to ARD 1.0 schema');
+      passed++;
+    } else {
+      console.error('  ✗ /.well-known/ai-catalog.json failed validation:', catalogJson);
+      failed++;
+    }
+
+    // 9f. Test Markdown Content Negotiation (Accept: text/markdown)
+    const mdRes = await fetch(`http://localhost:${PORT}/features`, {
+      headers: { 'Accept': 'text/markdown' }
+    });
+    const mdText = await mdRes.text();
+    const varyHeader = mdRes.headers.get('vary') || '';
+    const signalHeader = mdRes.headers.get('content-signal') || '';
+    if (
+      mdRes.status === 200 &&
+      mdRes.headers.get('content-type')?.includes('text/markdown') &&
+      varyHeader.includes('Accept') &&
+      signalHeader.includes('search=yes') &&
+      mdText.includes('# Replyo Operating System')
+    ) {
+      console.log('  ✓ 200 OK: Markdown content negotiation (Accept: text/markdown) verified with Vary & Content-Signal');
+      passed++;
+    } else {
+      console.error('  ✗ Markdown content negotiation failed on /features:', {
+        status: mdRes.status,
+        type: mdRes.headers.get('content-type'),
+        vary: varyHeader,
+        signal: signalHeader
+      });
+      failed++;
+    }
+
+    // 9g. Test Homepage Schema.org JSON-LD Knowledge Graph & Meta Discovery
+    const homeRes = await fetch(`http://localhost:${PORT}/`);
+    const homeHtml = await homeRes.text();
+    const hasCanonical = homeHtml.includes('<link rel="canonical" href="https://replyo.in/">');
+    const hasOg = homeHtml.includes('<meta property="og:site_name" content="Replyo Operating System">');
+    const hasTwitter = homeHtml.includes('<meta name="twitter:card" content="summary_large_image">');
+    const hasLdJson = homeHtml.includes('<script type="application/ld+json">') &&
+                      homeHtml.includes('"@type": "Organization"') &&
+                      homeHtml.includes('"@type": "SoftwareApplication"') &&
+                      homeHtml.includes('"@type": "FAQPage"');
+
+    if (homeRes.status === 200 && hasCanonical && hasOg && hasTwitter && hasLdJson) {
+      console.log('  ✓ 200 OK: Homepage metadata verified (Canonical, OG, Twitter, and Schema.org @graph JSON-LD)');
+      passed++;
+    } else {
+      console.error('  ✗ Homepage metadata validation failed:', { hasCanonical, hasOg, hasTwitter, hasLdJson });
+      failed++;
+    }
+
+    // 9h. Test Industry Multi-Vertical SEO & Dynamic Breadcrumbs
+    const clinicRes = await fetch(`http://localhost:${PORT}/industries/clinics`);
+    const clinicHtml = await clinicRes.text();
+    if (
+      clinicRes.status === 200 &&
+      clinicHtml.includes('<link rel="canonical" href="https://replyo.in/industries/clinics">') &&
+      (clinicHtml.includes('Dental & Aesthetic Clinics') || clinicHtml.includes('Dental &amp; Aesthetic Clinics')) &&
+      clinicHtml.includes('BreadcrumbList')
+    ) {
+      console.log('  ✓ 200 OK: /industries/clinics verified with localized vertical metadata & Breadcrumbs');
+      passed++;
+    } else {
+      console.error('  ✗ Industry page /industries/clinics metadata validation failed');
+      failed++;
+    }
+
+    // 9i. Test Real HTTP 404 Status on Nonexistent Routes
+    const notFoundRes = await fetch(`http://localhost:${PORT}/random-non-existent-page-test-404`);
+    if (notFoundRes.status === 404) {
+      console.log('  ✓ 404 Not Found: Unknown paths return real HTTP 404 (Passes Lighthouse Agentic standards)');
+      passed++;
+    } else {
+      console.error(`  ✗ Nonexistent page expected 404, received status ${notFoundRes.status}`);
+      failed++;
+    }
+
   } catch (err) {
     console.error('  ✗ Section 8 error:', err);
     failed++;

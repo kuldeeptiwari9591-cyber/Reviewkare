@@ -356,9 +356,9 @@ const PORT = process.env.PORT || 3000;
 const { getSvgIcon, getStarRatingSvg } = require('./src/views/icons.js');
 const { renderHtmlPage } = require('./src/views/layout.js');
 const { renderAppShell } = require('./src/views/appShell.js');
-const { renderHomePage } = require('./src/views/homePage.js');
+const { renderHomePage, HOME_FAQS } = require('./src/views/homePage.js');
 const { renderLoginPage, renderSignupPage, renderForgotPasswordPage } = require('./src/views/authPages.js');
-const { renderSecurityPage, renderBookDemoPage, renderFaqPage, renderQrKitPage, renderTermsPage, renderPrivacyPage, renderRefundPolicyPage, renderDpdpConsentPage } = require('./src/views/trustPages.js');
+const { FAQ_ITEMS, renderSecurityPage, renderBookDemoPage, renderFaqPage, renderQrKitPage, renderTermsPage, renderPrivacyPage, renderRefundPolicyPage, renderDpdpConsentPage } = require('./src/views/trustPages.js');
 const { 
   renderStaffPage, 
   renderLocalPackPage,
@@ -1095,11 +1095,256 @@ const server = http.createServer((req, res) => {
     }
 
     // ----------------------------------------------------
+    // AGENTIC DISCOVERY & MODERN SEO ENDPOINTS (llms.txt, sitemap.xml, robots.txt, ai-catalog)
+    // ----------------------------------------------------
+    if (pathname === '/robots.txt') {
+      const robotsTxt = `# Replyo RFC 9309 Compliant Agent Access Policy & Content Signals
+# Canonical: https://replyo.in/robots.txt
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+Disallow: /app/
+Disallow: /api/
+Disallow: /a/
+
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+
+Sitemap: https://replyo.in/sitemap.xml
+Agentmap: https://replyo.in/.well-known/ai-catalog.json
+`;
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Vary': 'Accept',
+        ...SECURITY_HEADERS
+      });
+      return res.end(robotsTxt);
+    }
+
+    if (pathname === '/sitemap.xml') {
+      const today = new Date().toISOString().split('T')[0];
+      const urls = [
+        { loc: 'https://replyo.in/', priority: '1.0', changefreq: 'daily' },
+        { loc: 'https://replyo.in/features', priority: '0.9', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/pricing', priority: '0.9', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/free-audit', priority: '0.9', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/faq', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/security', priority: '0.8', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/compliance', priority: '0.8', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/qr-kit', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/for-agencies', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/industries/clinics', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/industries/restaurants', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/industries/salons', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/industries/gyms', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/industries/coaching', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/blog', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://replyo.in/blog/dr-sharma-case-study', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/blog/responding-to-negative-reviews', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/blog/google-local-pack-seo-2026', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/contact', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/terms', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/privacy', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/refund-policy', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/dpdp-consent', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://replyo.in/book-demo', priority: '0.7', changefreq: 'weekly' }
+      ];
+
+      const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+      res.writeHead(200, {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Vary': 'Accept',
+        ...SECURITY_HEADERS
+      });
+      return res.end(sitemapXml);
+    }
+
+    if (pathname === '/llms.txt') {
+      const llmsTxt = `# Replyo — Autonomous Google Review & In-Store QR Operating System
+
+> Replyo is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. Replyo integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack prominence, and quarantine negative feedback for 1-tap manager resolution.
+
+Replyo operates strictly via official Google Business Profile OAuth 2.0 APIs with 100% data sovereignty hosted inside AWS Asia Pacific (Mumbai) in full adherence to India's DPDP Act 2023 and NMC Medical Ethics guidelines.
+
+## Core Capabilities
+
+- [Features Architecture](https://replyo.in/features): Deep breakdown of dialect mirroring (Hindi, Hinglish, English), 4-minute response jitter, and local SEO keyword weaving.
+- [In-Store AI QR Studio](https://replyo.in/qr-kit): Medical-grade acrylic countertop stands, table tents, and zero-app 30-second customer review builder.
+- [Free Local 3-Pack Audit Tool](https://replyo.in/free-audit): Real-time reputation gap scanner for local businesses and competitor comparison.
+- [Frequently Asked Questions](https://replyo.in/faq): Authoritative answers on Google algorithm compliance, DPDP Act 2023, and response safety.
+- [Clinical Privacy & Security Whitepaper](https://replyo.in/security): Technical controls, Zero-PHI guarantee, TLS 1.3 encryption, and AWS Mumbai data residency.
+
+## Pricing (INR)
+
+- [Transparent Indian Rupee Plans](https://replyo.in/pricing): Month-to-month and quarterly subscriptions (Starter Solo ₹1,249/mo, Growth Autopilot ₹2,999/quarter Hero Offer, Multi-Branch Pro ₹3,499/mo). Includes 14-day free pilot and 18% GST tax invoices.
+
+## Multi-Vertical Solutions
+
+- [Healthcare & Dental Clinics](https://replyo.in/industries/clinics): Painless root canal and aesthetic treatment review automation with NMC ethics compliance.
+- [Cafes, Dining & Bakeries](https://replyo.in/industries/restaurants): Specialty coffee and artisan bakery review capture with bill-folder NFC tags.
+- [Salons & Luxury Spas](https://replyo.in/industries/salons): Balayage and styling review attribution with stylist tipping incentives.
+- [Gyms & Athletic Centers](https://replyo.in/industries/gyms): Strength training and trainer review attribution with turnstile NFC check-ins.
+- [Coaching & Academies](https://replyo.in/industries/coaching): Student testimonial and course reputation automation.
+
+## Playbooks & Case Studies
+
+- [Dr. Sharma Clinic Case Study](https://replyo.in/blog/dr-sharma-case-study): How an Indiranagar practice gained +128 reviews and moved from 4.4 to 4.8 stars in 60 days.
+- [Zero-Liability De-escalation Guide](https://replyo.in/blog/responding-to-negative-reviews): Templates for responding to 1-star negative reviews without admitting legal fault.
+- [Google Local 3-Pack SEO 2026](https://replyo.in/blog/google-local-pack-seo-2026): Algorithmic breakdown of response velocity and keyword weaving for high-intent walk-ins.
+
+## Optional & Agency Partner Network
+
+- [Agency Partner Network](https://replyo.in/for-agencies): White-label client PDF reporting desk with 30% recurring margin share.
+- [Legal Terms & Compliance](https://replyo.in/terms): Official terms of service, DPDP consent, and refund policies.
+`;
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Vary': 'Accept',
+        ...SECURITY_HEADERS
+      });
+      return res.end(llmsTxt);
+    }
+
+    if (pathname === '/llms-full.txt') {
+      const llmsFullTxt = `# Replyo Operating System — Full Architecture & Operational Reference
+Version: 2.4 (October 2026)
+Publisher: Replyo Technologies India Private Limited (Koramangala, Bengaluru, Karnataka, India)
+Canonical URL: https://replyo.in
+Compliance: India DPDP Act 2023, National Medical Commission (NMC) 2023, Google API Terms
+
+## 1. Executive Summary & Problem Space
+High-touch local businesses in India—especially dental clinics, aesthetic dermatology practices, specialty roasteries, luxury salons, and boutique gyms—rely on Google Maps Local 3-Pack rankings for 70%+ of organic footfall. However, business owners face three operational bottlenecks:
+1. Review Asymmetry: Delighted patients rarely leave reviews because standard Google Maps review flows require typing long paragraphs on small phone keyboards. Only upset patients seek out profiles to complain.
+2. Dialect Disconnect: Indian customers write reviews in colloquial Hinglish, Devanagari Hindi, and English. Traditional generic SaaS tools reply with rigid robotic English templates, hurting customer rapport.
+3. Negative Review Liability: Upset patients leaving 1-star reviews are often met with public apologies that inadvertently admit medical or service fault, exposing clinics to consumer complaints and legal liability.
+
+## 2. Replyo Core Architecture
+Replyo provides an end-to-end autonomous operating system:
+- In-Store AI QR Flow (/q/:slug): Lightweight (<85KB) web app loaded via NFC tap or tabletop acrylic stand. Zero login, zero app download, zero PHI collection. Patients tap choices; AI synthesizes a first-person authentic review and copies it to clipboard while opening Google Maps.
+- Neural Dialect Autopilot: Mirrors reviewer dialect (Hinglish, Hindi, English) in under 4 minutes with a humanized response jitter, embedding local search keywords (e.g., "painless root canal in Indiranagar").
+- Negative Review Quarantine Shield: 1-3 star reviews are automatically quarantined. The engine drafts an empathetic, zero-liability resolution and notifies the owner via WhatsApp for 1-tap approval.
+- Frontline Staff Attribution: Reviews mention attending doctors, baristas, or stylists by name, crediting an internal staff performance bonus ledger.
+
+## 3. Subscription Pricing (INR)
+- Starter Solo: ₹1,249/month (1 Google Business Location, Unlimited AI replies, 1 Countertop Stand)
+- Growth Autopilot (Hero Offer): ₹2,999/quarter (₹999/mo equivalent, up to 2 branches, 1-Tap WhatsApp owner approvals, Staff Attribution Leaderboard, Free Acrylic Display Stand)
+- Multi-Branch Pro: ₹3,499/month (Up to 5 locations, Centralized executive desk, Dedicated account manager)
+All plans include 14-day free pilot, UPI AutoPay, and 18% GST tax invoices.
+
+## 4. Technical Security & Data Residency
+- Hosting: AWS Mumbai (ap-south-1) with complete data residency in India.
+- Zero-PHI Medical Guarantee: No medical records, prescriptions, or patient diagnoses are ever processed or stored.
+- Encryption: TLS 1.3 in transit and AES-256 at rest with AWS KMS key management.
+- Authentication: Scrypt hashing with unique cryptographic salts, HTTP-only SameSite cookies, rate limiting, and complete multi-tenant file isolation.
+`;
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Vary': 'Accept',
+        ...SECURITY_HEADERS
+      });
+      return res.end(llmsFullTxt);
+    }
+
+    if (pathname === '/.well-known/ai-catalog.json') {
+      const catalog = {
+        "specVersion": "1.0",
+        "entries": [
+          {
+            "identifier": "urn:air:replyo.in:reputation-os",
+            "displayName": "Replyo Autonomous Review & Reputation Engine",
+            "type": "text/markdown",
+            "url": "https://replyo.in/llms-full.txt",
+            "representativeQueries": [
+              "How does Replyo automate Google review replies?",
+              "What is the pricing for Replyo in Indian Rupees?",
+              "Is Replyo compliant with DPDP Act 2023 and Google API policies?"
+            ]
+          },
+          {
+            "identifier": "urn:air:replyo.in:local-audit",
+            "displayName": "Replyo Google Local 3-Pack Audit Tool",
+            "type": "text/html",
+            "url": "https://replyo.in/free-audit",
+            "representativeQueries": [
+              "Audit Google Maps ranking for local clinic or salon",
+              "Check unanswered review count and rating gap"
+            ]
+          },
+          {
+            "identifier": "urn:air:replyo.in:llms-manifest",
+            "displayName": "Replyo LLM Agent Manifest",
+            "type": "text/markdown",
+            "url": "https://replyo.in/llms.txt",
+            "representativeQueries": [
+              "Summary of Replyo capabilities and endpoints",
+              "Replyo site map for autonomous AI agents"
+            ]
+          }
+        ]
+      };
+      res.writeHead(200, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Vary': 'Accept',
+        ...SECURITY_HEADERS
+      });
+      return res.end(JSON.stringify(catalog, null, 2));
+    }
+
+    // Markdown Content Negotiation for AI Agents (Accept: text/markdown)
+    if (req.headers.accept && req.headers.accept.includes('text/markdown') && !pathname.startsWith('/api/') && !pathname.startsWith('/app/')) {
+      const publicPaths = ['/', '/features', '/pricing', '/faq', '/security', '/compliance', '/qr-kit', '/for-agencies', '/free-audit', '/contact'];
+      if (publicPaths.includes(pathname) || pathname.startsWith('/industries/') || pathname.startsWith('/blog')) {
+        const md = `# Replyo Operating System — ${pathname === '/' ? 'Home' : pathname}
+Canonical URL: https://replyo.in${pathname}
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
+Replyo is the Autonomous Google Review & In-Store AI QR Operating System for high-touch Indian businesses (clinics, salons, cafes, gyms).
+Full technical context and documentation available at: https://replyo.in/llms-full.txt
+`;
+        res.writeHead(200, {
+          'Content-Type': 'text/markdown; charset=utf-8',
+          'Vary': 'Accept',
+          'Content-Signal': 'search=yes, ai-input=yes, ai-train=no',
+          ...SECURITY_HEADERS
+        });
+        return res.end(md);
+      }
+    }
+
+    // ----------------------------------------------------
     // 1. WORLD-CLASS MINIMALIST HOMEPAGE (Anti-Slop, 3D Canvas, Tasteskill v2 Standard)
     // ----------------------------------------------------
     if (pathname === '/') {
       const store = getStore();
-      const html = renderHtmlPage('Autonomous Google Review Management & AI QR Growth SaaS', 'home', renderHomePage(store));
+      const html = renderHtmlPage(
+        'Replyo — Autonomous Google Review Autopilot & In-Store AI QR Operating System',
+        'home',
+        renderHomePage(store),
+        {
+          canonical: '/',
+          description: 'Autonomous Google review autopilot & in-store AI QR stands for Indian clinics, cafes, salons & gyms. 4-min multi-dialect replies, zero-liability quarantine, staff attribution leaderboard.',
+          keywords: 'Google review autopilot, in-store AI QR stands, Google Maps ranking, Local 3-Pack, reputation management India, clinic Google reviews, salon reviews, Hinglish AI replies, customer feedback automation',
+          faqItems: HOME_FAQS
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1138,42 +1383,119 @@ const server = http.createServer((req, res) => {
     // TRUST, SECURITY & ENTERPRISE SCHEDULER
     // ----------------------------------------------------
     if (pathname === '/security' || pathname === '/compliance') {
-      const html = renderHtmlPage('Clinical Privacy & Security Whitepaper', 'security', renderSecurityPage());
+      const html = renderHtmlPage(
+        'Clinical Privacy & Security Whitepaper',
+        'security',
+        renderSecurityPage(),
+        {
+          canonical: '/security',
+          description: 'Replyo clinical privacy and institutional security whitepaper. Strict compliance with India DPDP Act 2023, NMC Medical Ethics, Zero-PHI guarantee, TLS 1.3, and AWS Mumbai data residency.',
+          keywords: 'DPDP Act 2023 compliance, NMC medical ethics review software, healthcare data residency India, Zero PHI guarantee, clinical data security',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Security & Trust', url: '/security' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/book-demo') {
-      const html = renderHtmlPage('Schedule Executive Demo', 'demo', renderBookDemoPage());
+      const html = renderHtmlPage(
+        'Schedule Executive Demo & Solution Walkthrough',
+        'demo',
+        renderBookDemoPage(),
+        {
+          canonical: '/book-demo',
+          description: 'Schedule a 1-on-1 live walkthrough of Replyo with our senior solutions architect. Learn how in-store AI QR stands and autonomous review replies scale your local business.',
+          keywords: 'schedule demo, Google review software demo, clinic reputation walkthrough, local business SaaS consultation',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Book Demo', url: '/book-demo' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/faq') {
-      const html = renderHtmlPage('Frequently Asked Questions', 'faq', renderFaqPage());
+      const html = renderHtmlPage(
+        'Frequently Asked Questions & Policy Compliance',
+        'faq',
+        renderFaqPage(),
+        {
+          canonical: '/faq',
+          description: 'Frequently asked questions about Replyo: Google algorithm compliance, DPDP Act 2023, zero review gating, multi-dialect support (Hindi, Hinglish, English), and multi-branch management.',
+          keywords: 'Google review automation FAQ, Google review policy compliance, DPDP Act 2023 review SaaS, medical ethics Google reviews, multi-branch reputation questions',
+          faqItems: FAQ_ITEMS,
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/qr-kit') {
-      const html = renderHtmlPage('Countertop QR Display Hardware', 'qr-kit', renderQrKitPage());
+      const html = renderHtmlPage(
+        'Countertop QR Display Hardware & NFC Stands',
+        'qr-kit',
+        renderQrKitPage(),
+        {
+          canonical: '/qr-kit',
+          description: 'Medical-grade countertop QR and NFC display stands for clinic receptions, styling mirrors, and cafe counters. Scratch-resistant, alcohol-wipe safe, and embedded with ultra-fast NFC chips.',
+          keywords: 'countertop QR stand, NFC review card, clinic reception QR display, Google review stand India, acrylic table tent, contactless review stand',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'QR Hardware Kit', url: '/qr-kit' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/terms') {
-      const html = renderHtmlPage('Terms of Service', 'legal', renderTermsPage());
+      const html = renderHtmlPage(
+        'Terms of Service',
+        'legal',
+        renderTermsPage(),
+        {
+          canonical: '/terms',
+          description: 'Replyo Terms of Service. Governs subscription agreements, Google API usage policies, multi-tenant account governance, and fair use guidelines under Indian law.',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Terms of Service', url: '/terms' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/privacy') {
-      const html = renderHtmlPage('Privacy Policy (DPDP Act 2023)', 'legal', renderPrivacyPage());
+      const html = renderHtmlPage(
+        'Privacy Policy (DPDP Act 2023)',
+        'legal',
+        renderPrivacyPage(),
+        {
+          canonical: '/privacy',
+          description: 'Replyo Privacy Policy in compliance with India’s Digital Personal Data Protection Act 2023. Explains data minimization, Zero-PHI guarantee, and AWS Mumbai hosting.',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Privacy Policy', url: '/privacy' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/refund-policy') {
-      const html = renderHtmlPage('Refund & Cancellation Policy', 'legal', renderRefundPolicyPage());
+      const html = renderHtmlPage(
+        'Refund & Cancellation Policy',
+        'legal',
+        renderRefundPolicyPage(),
+        {
+          canonical: '/refund-policy',
+          description: 'Replyo subscription refund, cancellation, and billing policies. 14-day free pilot guarantee and transparent month-to-month cancellation with no hidden lock-ins.',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Refund Policy', url: '/refund-policy' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
     if (pathname === '/dpdp-consent') {
-      const html = renderHtmlPage('DPDP Act 2023 Consent Framework', 'legal', renderDpdpConsentPage());
+      const html = renderHtmlPage(
+        'DPDP Act 2023 Consent Framework',
+        'legal',
+        renderDpdpConsentPage(),
+        {
+          canonical: '/dpdp-consent',
+          description: 'Official consent notice and data principal rights under India’s Digital Personal Data Protection Act 2023 for Replyo reputation operating system users.',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'DPDP Consent', url: '/dpdp-consent' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1181,11 +1503,19 @@ const server = http.createServer((req, res) => {
     // 2. FEATURES (/features)
     // ----------------------------------------------------
     if (pathname === '/features') {
-      const html = renderHtmlPage('Features Architecture', 'features', `
+      const html = renderHtmlPage(
+        'Reputation Architecture & AI Review Capabilities',
+        'features',
+        `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-          <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <div class="text-center space-y-4 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+              Core Technical Architecture
+            </div>
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Reputation Architecture Engineered for India</h1>
-            <p class="text-slate-600 text-sm">Every capability is built specifically to address local business challenges across clinics, salons, and restaurants.</p>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Every capability is built specifically to address local business challenges across high-trust consumer enterprises in India—from dental operatory sterilization to restaurant bill folders.
+            </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1193,9 +1523,9 @@ const server = http.createServer((req, res) => {
               <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center">
                 ${getSvgIcon('globe', 'w-5 h-5 text-brand-600')}
               </div>
-              <h3 class="font-bold text-xl text-slate-900 font-heading">Multi-Lingual Dialect Mirroring</h3>
+              <h2 class="font-bold text-xl text-slate-900 font-heading">Multi-Lingual Dialect Mirroring</h2>
               <p class="text-xs text-slate-600 leading-relaxed">
-                Replyo naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone.
+                Replyo naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone in under 4 minutes.
               </p>
             </div>
 
@@ -1203,7 +1533,7 @@ const server = http.createServer((req, res) => {
               <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
                 ${getSvgIcon('shield', 'w-5 h-5 text-amber-600')}
               </div>
-              <h3 class="font-bold text-xl text-slate-900 font-heading">Zero-Liability Safety Shield</h3>
+              <h2 class="font-bold text-xl text-slate-900 font-heading">Zero-Liability Quarantine Safety Shield</h2>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Hardcoded safety validator blocks refund offers, admissions of medical fault, or staff blame. Quarantines 1–3 star complaints into a private queue with direct manager telephone fallback.
               </p>
@@ -1213,7 +1543,7 @@ const server = http.createServer((req, res) => {
               <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
                 ${getSvgIcon('qr', 'w-5 h-5 text-blue-600')}
               </div>
-              <h3 class="font-bold text-xl text-slate-900 font-heading">In-Clinic AI QR Studio</h3>
+              <h2 class="font-bold text-xl text-slate-900 font-heading">In-Clinic AI QR Studio</h2>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Download printable A6 counter cards, A4 table tents, and bill stickers. Customers scan, tap 3 choices, get an AI draft built strictly from their selections, and post on Google Maps in 30 seconds.
               </p>
@@ -1223,14 +1553,21 @@ const server = http.createServer((req, res) => {
               <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
                 ${getSvgIcon('mapPin', 'w-5 h-5 text-teal-600')}
               </div>
-              <h3 class="font-bold text-xl text-slate-900 font-heading">Local SEO Keyword Injection</h3>
+              <h2 class="font-bold text-xl text-slate-900 font-heading">Google Local 3-Pack Keyword Injection</h2>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Naturally weaves your neighborhood and service terms into positive replies (e.g., <em>“best dental clinic in Indiranagar”</em>), signaling search relevance directly to the Google Local 3-Pack algorithm.
               </p>
             </div>
           </div>
         </div>
-      `);
+      `,
+        {
+          canonical: '/features',
+          description: 'Explore Replyo reputation architecture: multi-dialect neural mirroring, zero-liability quarantine shield, frontline staff attribution, and Google Local 3-Pack rank booster.',
+          keywords: 'Google Business Profile AI, review automation features, dialect mirroring, negative review quarantine shield, Google Local 3-Pack SEO, local keyword injection',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Features', url: '/features' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1239,11 +1576,19 @@ const server = http.createServer((req, res) => {
     // ----------------------------------------------------
     if (pathname === '/pricing') {
       const session = getSessionFromReq(req);
-      const html = renderHtmlPage('Pricing (INR)', 'pricing', `
+      const html = renderHtmlPage(
+        'Transparent INR Plans & Razorpay Subscriptions',
+        'pricing',
+        `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
-          <div class="space-y-3">
+          <div class="space-y-4 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+              Transparent Indian Rupee Billing
+            </div>
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Transparent INR Plans. No Foreign Exchange Shock.</h1>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">Month-to-month flexibility. Pay with UPI AutoPay. Full GST invoices for input tax credit.</p>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Month-to-month flexibility. Pay securely with Razorpay UPI (GPay, PhonePe, Paytm, BHIM) or NetBanking. Full 18% GST tax invoices for input tax credit.
+            </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left items-stretch">
@@ -1251,7 +1596,7 @@ const server = http.createServer((req, res) => {
               <div class="p-6 rounded-3xl bg-white border ${plan.isPopular ? 'border-2 border-brand-500 shadow-lg relative' : 'border-slate-200 shadow-sm'} flex flex-col justify-between card-3d">
                 <div class="space-y-4">
                   <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-xl text-slate-900 font-heading">${plan.name}</h3>
+                    <h2 class="font-bold text-xl text-slate-900 font-heading">${plan.name}</h2>
                     ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 bg-brand-600 text-white rounded-full">Popular</span>' : ''}
                   </div>
                   <div>
@@ -1271,7 +1616,14 @@ const server = http.createServer((req, res) => {
             `).join('')}
           </div>
         </div>
-      `);
+      `,
+        {
+          canonical: '/pricing',
+          description: 'Transparent Indian Rupee (INR) pricing for Replyo Google Review Autopilot. Starter at ₹1,249/mo, Growth Hero at ₹2,999/quarter, and Pro at ₹3,499/mo. 18% GST input tax credit.',
+          keywords: 'SaaS review pricing INR, Google review software price India, clinic reputation management cost, UPI AutoPay subscription, GST invoice SaaS',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Pricing', url: '/pricing' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1279,7 +1631,10 @@ const server = http.createServer((req, res) => {
     // 4. FREE AUDIT TOOL (/free-audit)
     // ----------------------------------------------------
     if (pathname === '/free-audit') {
-      const html = renderHtmlPage('Free Google Reputation Audit', 'audit', `
+      const html = renderHtmlPage(
+        'Free Google Local 3-Pack Reputation Audit Tool',
+        'audit',
+        `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
           <div class="space-y-3">
             <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Audit Your Google Maps Review Gap</h1>
@@ -1342,29 +1697,138 @@ const server = http.createServer((req, res) => {
     // ----------------------------------------------------
     if (pathname.startsWith('/industries/')) {
       const ind = pathname.split('/')[2];
-      const titlesMap = {
-        clinics: 'Dental & Aesthetic Clinics',
-        salons: 'Hair Salons & Spas',
-        restaurants: 'Restaurants & Cafes',
-        gyms: 'Gyms & Fitness Hubs',
-        coaching: 'Coaching & Tuition Centers'
+      const industryConfigs = {
+        clinics: {
+          name: 'Dental & Aesthetic Clinics',
+          title: 'Google Review Autopilot for Dental & Aesthetic Clinics in India',
+          hero: 'Autonomous Reputation OS for Dental, Dermatology & Healthcare Clinics',
+          desc: 'Turn everyday patient checkups and dental treatments into authentic 5-star Google reviews in 30 seconds. Replyo automates clinical dialect replies with local search keywords, protects against medical malpractice liability with our quarantine shield, and strictly adheres to NMC ethics and the DPDP Act 2023.',
+          keywords: 'dental clinic Google reviews, aesthetic clinic reputation management, painless root canal reviews, doctor Google rating Bangalore, clinic review QR stand, NMC ethics medical reviews',
+          touchpoint: 'Billing Counter Acrylic Stand & Operatory Tray NFC Card',
+          exampleSvc: 'Painless Root Canal, Clear Aligners, Laser Hair Removal, Hydrafacial',
+          geoFocus: 'Indiranagar (Bengaluru), Bandra West (Mumbai), Greater Kailash (Delhi), Jubilee Hills (Hyderabad)'
+        },
+        salons: {
+          name: 'Hair Salons & Spas',
+          title: 'Google Review Autopilot & Stylist Attribution for Salons & Luxury Spas',
+          hero: 'Turn Styling Sessions & Hair Spa Days into Glowing Google Reviews',
+          desc: 'Empower your stylists and colorists with contactless mirror QR stands. Replyo mirrors beauty influencer phrasing, credits tips and bonuses directly into staff performance ledgers, and boosts your salon to the top of Google Local 3-Pack for high-intent walk-ins.',
+          keywords: 'salon Google reviews, spa reputation software, hair artist review attribution, balayage reviews Bangalore Mumbai, salon tipping QR, luxury spa ratings',
+          touchpoint: 'Styling Station Mirror QR Sticker & Reception NFC Tap Stand',
+          exampleSvc: 'Ash Blonde Balayage, Keratin Smoothing, Ayurvedic Head Massage, Gel Extensions',
+          geoFocus: 'Lavelle Road (Bengaluru), Khar (Mumbai), Defence Colony (Delhi), Koregaon Park (Pune)'
+        },
+        restaurants: {
+          name: 'Restaurants, Cafes & Bakeries',
+          title: 'Google Review Autopilot for Cafes, Dining & Bakeries in India',
+          hero: 'Collect 5-Star Foodie Feedback Directly at the Table or Bill Folder',
+          desc: 'Capture delighted diner reviews while the aftertaste of great food is fresh. Replyo puts a 30-second review builder inside the bill folder or table tent. It weaves local culinary keywords into automated owner replies and quarantines order complaints before they hit Google Maps.',
+          keywords: 'restaurant Google reviews, cafe bill folder QR, specialty coffee reviews Indiranagar Bandra, dining review autopilot, Zomato alternative reputation',
+          touchpoint: 'Bill Presenter Leather Folder NFC & Acrylic Table Tent QR',
+          exampleSvc: 'Specialty Pour-Over, Sourdough Croissants, Wood-Fired Neapolitan Pizza, Craft Cocktails',
+          geoFocus: '12th Main Indiranagar, Cyber Hub Gurugram, Powai (Mumbai), Jubilee Hills (Hyderabad)'
+        },
+        gyms: {
+          name: 'Gyms & Fitness Hubs',
+          title: 'Google Review Autopilot & Coach Attribution for Gyms & Fitness Centers',
+          hero: 'Turn Post-Workout Endorphins into High-Ranking Google Maps Reviews',
+          desc: 'Member check-ins and personal training sessions become automated reputation assets. Coach-attributed review links give trainers recognition, while automated keyword injection ensures your gym dominates neighborhood searches for strength training and CrossFit.',
+          keywords: 'gym Google reviews, fitness center reputation, personal trainer attribution reviews, strength club Google Maps ranking, CrossFit gym reviews India',
+          touchpoint: 'Turnstile Check-In Stand, Water Station QR & Locker Room Exit NFC',
+          exampleSvc: 'Deadlift Technique Coaching, HIIT Conditioning, Functional Strength, Clean Locker Rooms',
+          geoFocus: 'Koramangala 4th Block (Bengaluru), Andheri West (Mumbai), Saket (Delhi), Madhapur (Hyderabad)'
+        },
+        coaching: {
+          name: 'Coaching & Tuition Centers',
+          title: 'Student Testimonials & Google Review OS for Coaching & Academic Academies',
+          hero: 'Turn Student Rank Achievements into Verifiable Google Search Prominence',
+          desc: 'Help parents and aspiring students discover your academic results. Replyo enables student and parent review collection with zero friction, building organic trust for competitive exam prep and tuition batches.',
+          keywords: 'coaching center Google reviews, tuition academy reputation, student testimonials Google Maps, education institute ranking India',
+          touchpoint: 'Parent Counseling Desk Stand & Student Admit Card QR',
+          exampleSvc: 'JEE Advanced Foundation, NEET Biology Mentorship, Commerce Tuitions, Olympiad Prep',
+          geoFocus: 'Kota (Rajasthan), Kalu Sarai (Delhi), Malleshwaram (Bengaluru), Anna Nagar (Chennai)'
+        }
       };
-      const name = titlesMap[ind] || 'Local Businesses';
-      const html = renderHtmlPage(name, 'industries', `
-        <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-          <div class="text-center space-y-3">
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Google Review Autopilot for ${name}</h1>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">Protect your patient and guest reputation, weave local keywords, and collect 3x more genuine Google reviews.</p>
-          </div>
-          <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 text-xs leading-relaxed text-slate-700 card-3d">
-            <h3 class="text-base font-bold text-slate-900 font-heading">Why ${name} Choose Replyo</h3>
-            <p>Customers evaluate your business on Google Maps before booking an appointment or reserving a table. With Replyo, every positive review is answered in minutes with local keywords, and negative reviews are safely held with direct manager telephone contacts.</p>
-            <div class="pt-4 text-center">
-              <a href="/app" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Start 14-Day Free Trial &rarr;</a>
+
+      const config = industryConfigs[ind] || industryConfigs['clinics'];
+      const html = renderHtmlPage(
+        config.title,
+        'industries',
+        `
+        <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          
+          <!-- Hero Header -->
+          <div class="text-center space-y-4 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+              Tailored Vertical Architecture • ${config.name}
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading leading-tight" style="text-wrap: balance;">
+              ${config.hero}
+            </h1>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              ${config.desc}
+            </p>
+            <div class="pt-2 flex flex-wrap justify-center gap-3">
+              <a href="/signup" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all">
+                Start 14-Day Free Pilot for ${config.name} &rarr;
+              </a>
+              <a href="/free-audit" class="px-6 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-sm transition-all">
+                Scan Competitor Local 3-Pack Rank
+              </a>
             </div>
           </div>
+
+          <!-- Vertical Operational Blueprint Card -->
+          <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-8 card-3d">
+            <div class="border-b border-slate-100 pb-4">
+              <h2 class="text-xl font-bold text-slate-900 font-heading">In-Store Reputation Workflow for ${config.name}</h2>
+              <p class="text-xs text-slate-500 mt-1">Configured for seamless touchpoint collection with zero app download.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
+              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Physical Touchpoint</span>
+                <h3 class="font-bold text-sm text-slate-900 font-heading">Where Customers Tap</h3>
+                <p class="text-slate-600 leading-relaxed">${config.touchpoint}</p>
+              </div>
+
+              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Service Pills Injected</span>
+                <h3 class="font-bold text-sm text-slate-900 font-heading">1-Tap Customer Choices</h3>
+                <p class="text-slate-600 leading-relaxed">${config.exampleSvc}</p>
+              </div>
+
+              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Metro Hub Focus</span>
+                <h3 class="font-bold text-sm text-slate-900 font-heading">Local Search Prominence</h3>
+                <p class="text-slate-600 leading-relaxed">${config.geoFocus}</p>
+              </div>
+            </div>
+
+            <div class="p-6 bg-brand-50/60 rounded-2xl border border-brand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="space-y-1">
+                <h3 class="font-bold text-sm text-brand-950 font-heading">Need custom physical stands or POS integration?</h3>
+                <p class="text-xs text-brand-800">Replyo connects natively with Petpooja, Zenoti, Practo, and custom billing APIs.</p>
+              </div>
+              <a href="/book-demo" class="px-4 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all text-center">
+                Schedule Technical Consult &rarr;
+              </a>
+            </div>
+          </div>
+
         </div>
-      `);
+      `,
+        {
+          canonical: `/industries/${ind}`,
+          description: config.desc.slice(0, 160),
+          keywords: config.keywords,
+          breadcrumbs: [
+            { name: 'Home', url: '/' },
+            { name: 'Industries', url: '/features' },
+            { name: config.name, url: `/industries/${ind}` }
+          ]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1372,7 +1836,10 @@ const server = http.createServer((req, res) => {
     // 6. FOR AGENCIES (/for-agencies)
     // ----------------------------------------------------
     if (pathname === '/for-agencies') {
-      const html = renderHtmlPage('For Agencies & Resellers', 'agencies', `
+      const html = renderHtmlPage(
+        'Agency Partner Network & White-Label Reporting',
+        'agencies',
+        `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-3">
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Earn 30% Recurring Commission with Replyo</h1>
@@ -1380,15 +1847,15 @@ const server = http.createServer((req, res) => {
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
             <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h4 class="font-bold text-sm text-slate-900 font-heading">White-Label PDF Reports</h4>
+              <h2 class="font-bold text-sm text-slate-900 font-heading">White-Label PDF Reports</h2>
               <p class="text-slate-500">Send automated weekly reputation report cards branded with your marketing agency logo.</p>
             </div>
             <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h4 class="font-bold text-sm text-slate-900 font-heading">30% Lifetime Revenue Share</h4>
+              <h2 class="font-bold text-sm text-slate-900 font-heading">30% Lifetime Revenue Share</h2>
               <p class="text-slate-500">Earn 30% recurring monthly margin on every local clinic or salon you onboard.</p>
             </div>
             <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h4 class="font-bold text-sm text-slate-900 font-heading">Multi-Tenant Client Desk</h4>
+              <h2 class="font-bold text-sm text-slate-900 font-heading">Multi-Tenant Client Desk</h2>
               <p class="text-slate-500">Switch between 50+ client locations in one single unified dashboard.</p>
             </div>
           </div>
@@ -1396,7 +1863,14 @@ const server = http.createServer((req, res) => {
             <a href="/app" class="inline-block px-8 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-xs shadow-sm hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">Join Agency Partner Program &rarr;</a>
           </div>
         </div>
-      `);
+      `,
+        {
+          canonical: '/for-agencies',
+          description: 'Partner with Replyo to manage client Google Business Profiles at scale. White-label client PDF reports, multi-tenant dashboard, and 30% recurring monthly margin share.',
+          keywords: 'agency review software white-label, Google Business Profile reseller, local SEO agency partner program India, review management for agencies',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'For Agencies', url: '/for-agencies' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1404,7 +1878,10 @@ const server = http.createServer((req, res) => {
     // 7. BLOG & GUIDES (/blog & /blog/:slug)
     // ----------------------------------------------------
     if (pathname === '/blog') {
-      const html = renderHtmlPage('Reputation Guides & Case Studies', 'blog', `
+      const html = renderHtmlPage(
+        'Reputation Guides, Case Studies & Local SEO Playbooks',
+        'blog',
+        `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-3">
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Actionable Guides for Indian Business Owners</h1>
@@ -1414,27 +1891,34 @@ const server = http.createServer((req, res) => {
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a href="/blog/dr-sharma-case-study" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <span class="text-xs font-bold uppercase text-brand-600">Case Study</span>
-              <h3 class="font-bold text-base text-slate-900 font-heading">How Dr. Sharma Clinic Added 128 Google Reviews in 60 Days</h3>
+              <h2 class="font-bold text-base text-slate-900 font-heading">How Dr. Sharma Clinic Added 128 Google Reviews in 60 Days</h2>
               <p class="text-xs text-slate-500">Learn how an Indiranagar dental practice leveraged reception QR cards to skyrocket from 4.4 to 4.8 stars.</p>
               <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Case Study &rarr;</span>
             </a>
 
             <a href="/blog/responding-to-negative-reviews" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <span class="text-xs font-bold uppercase text-amber-600">Legal & De-escalation</span>
-              <h3 class="font-bold text-base text-slate-900 font-heading">Responding to 1-Star Medical Reviews Without Legal Liability</h3>
+              <h2 class="font-bold text-base text-slate-900 font-heading">Responding to 1-Star Medical Reviews Without Legal Liability</h2>
               <p class="text-xs text-slate-500">The exact templates Indian doctors and clinics use to de-escalate upset patients without admitting negligence.</p>
               <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
             </a>
 
             <a href="/blog/google-local-pack-seo-2026" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <span class="text-xs font-bold uppercase text-blue-600">Local SEO Playbook</span>
-              <h3 class="font-bold text-base text-slate-900 font-heading">How to Rank #1 in Google Local 3-Pack in Indian Metro Cities</h3>
+              <h2 class="font-bold text-base text-slate-900 font-heading">How to Rank #1 in Google Local 3-Pack in Indian Metro Cities</h2>
               <p class="text-xs text-slate-500">Why review response velocity and localized keyword weaving outrank paid Google Ads for high-intent walk-ins.</p>
               <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
             </a>
           </div>
         </div>
-      `);
+      `,
+        {
+          canonical: '/blog',
+          description: 'Reputation management case studies, de-escalation templates, and Google Local 3-Pack SEO strategies for Indian healthcare clinics, restaurants, and salons.',
+          keywords: 'local SEO blog India, Google review case studies, how to get Google reviews clinic, responding to negative medical reviews',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1446,10 +1930,10 @@ const server = http.createServer((req, res) => {
           tag: 'Case Study • Indiranagar, Bengaluru',
           content: `
             <p>Dr. Sharma Dental & Implant Clinic in Indiranagar was receiving over 300 patient visits each month, yet only 3 or 4 patients ever took the time to leave a Google review. Dissatisfied patients, however, were quick to vent online, causing their clinic rating to drop to 4.4 stars.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">The Solution: In-Clinic AI QR Flow</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Solution: In-Clinic AI QR Flow</h2>
             <p>Dr. Sharma installed an A6 acrylic counter card at the billing counter and two table tents in the waiting lounge. Instead of asking patients to write long paragraphs, the QR code launched Replyo's 30-second review builder.</p>
             <p>Patients simply tapped what they had done (e.g. “Root Canal”, “Teeth Whitening”), how comfortable they felt (“Painless Procedure”), and selected Hinglish. The AI synthesized an authentic review instantly, and with one tap, the text was copied to the patient's clipboard as Google Maps opened.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">The Results</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Results</h2>
             <ul class="list-disc pl-5 space-y-1">
               <li><strong>+128 authentic Google reviews</strong> collected in the first 60 days.</li>
               <li>Rating jumped from <strong>4.4 to 4.8 stars</strong>.</li>
@@ -1462,9 +1946,9 @@ const server = http.createServer((req, res) => {
           tag: 'De-escalation & Legal Guide',
           content: `
             <p>When an unhappy patient leaves a 1-star review on Google Maps, the clinic owner's natural impulse is either to write a defensive argument or to apologize profusely and offer a discount. Both approaches carry substantial legal and reputational hazards.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 1: Never Admit Medical Negligence Online</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 1: Never Admit Medical Negligence Online</h2>
             <p>A public apology stating “We are sorry our doctor made a mistake” can be used as evidence in consumer disputes or Medical Council inquiries. Replyo's hardcoded safety validator blocks fault admission automatically.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 2: Move the Discussion Offline Promptly</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 2: Move the Discussion Offline Promptly</h2>
             <p>Provide a direct telephone number to the clinic manager or administrator. This signals to prospective patients reading the review that your clinic takes patient feedback seriously and handles concerns professionally.</p>
           `
         },
@@ -1473,33 +1957,53 @@ const server = http.createServer((req, res) => {
           tag: 'Local SEO Strategy',
           content: `
             <p>Google's local search algorithm prioritizes three primary pillars: Relevance, Distance, and Prominence. In dense metropolitan markets like Bengaluru, Mumbai, and Delhi, distance is often neutralized because many competitors operate in the same neighborhood.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">Review Velocity and Owner Response Rate</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Review Velocity and Owner Response Rate</h2>
             <p>Businesses that respond to 95%+ of reviews within 24 hours receive a measurable prominence boost in local pack rankings. Replyo responds to 4-5 star reviews in under 4 minutes, ensuring your profile maintains the highest response velocity in your zip code.</p>
-            <h3 class="text-base font-bold text-slate-900 font-heading mt-4">Keyword Weaving in Official Responses</h3>
+            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Keyword Weaving in Official Responses</h2>
             <p>When an owner responds with natural phrases like <em>“Thank you for choosing Dr. Sharma for your painless root canal in Indiranagar”</em>, Google's semantic index connects your listing to those high-intent local search queries.</p>
           `
         }
       };
 
       const article = articles[slug] || articles['dr-sharma-case-study'];
-      const html = renderHtmlPage(article.title, 'blog', `
+      const html = renderHtmlPage(
+        article.title,
+        'blog',
+        `
         <div class="space-y-8 py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
           <a href="/blog" class="text-xs font-bold text-brand-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1">&larr; Back to all guides</a>
           <div class="border-b border-slate-200 pb-4 space-y-2">
             <span class="text-xs font-bold uppercase text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200">${article.tag}</span>
             <h1 class="text-3xl sm:text-4xl font-black text-slate-900 font-heading">${article.title}</h1>
-            <p class="text-xs text-slate-400">Published October 2026 • 5 min read</p>
+            <p class="text-xs text-slate-400">Published October 2026 • 5 min read • By Dr. Ananya Sharma</p>
           </div>
           <div class="bg-white p-8 rounded-3xl border border-slate-200 text-xs leading-relaxed text-slate-700 space-y-4">
             ${article.content}
             <div class="pt-6 border-t border-slate-100 text-center">
-              <a href="/app" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <a href="/signup" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 Automate Your Clinic's Reviews with Replyo &rarr;
               </a>
             </div>
           </div>
         </div>
-      `);
+      `,
+        {
+          canonical: `/blog/${slug}`,
+          description: `Read ${article.title}. Actionable reputation management insights for Indian local businesses.`,
+          keywords: 'reputation case study, clinic review guide, medical review response legal, local 3-pack rank guide',
+          article: {
+            title: article.title,
+            author: 'Dr. Ananya Sharma',
+            publishedAt: '2026-10-15T09:00:00+05:30',
+            modifiedAt: '2026-10-30T09:00:00+05:30'
+          },
+          breadcrumbs: [
+            { name: 'Home', url: '/' },
+            { name: 'Blog', url: '/blog' },
+            { name: article.title, url: `/blog/${slug}` }
+          ]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1507,7 +2011,10 @@ const server = http.createServer((req, res) => {
     // 8. CONTACT PAGE (/contact)
     // ----------------------------------------------------
     if (pathname === '/contact') {
-      const html = renderHtmlPage('Contact Us', 'contact', `
+      const html = renderHtmlPage(
+        'Contact Us & Bengaluru Headquarters',
+        'contact',
+        `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div class="text-center space-y-3">
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Talk to our Reputation Specialists</h1>
@@ -1516,7 +2023,7 @@ const server = http.createServer((req, res) => {
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 text-xs card-3d">
-              <h3 class="font-bold text-base text-slate-900 font-heading">Send us a message</h3>
+              <h2 class="font-bold text-base text-slate-900 font-heading">Send us a message</h2>
               <div>
                 <label for="contactName" class="block font-semibold text-slate-700 mb-1">Your Name</label>
                 <input id="contactName" type="text" placeholder="Dr. Rajesh Patel" class="w-full p-3 rounded-xl border border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
@@ -1537,7 +2044,7 @@ const server = http.createServer((req, res) => {
 
             <div class="p-8 bg-dark-950 text-white rounded-3xl space-y-6 flex flex-col justify-between card-3d">
               <div class="space-y-4">
-                <h3 class="font-bold text-lg font-heading">Headquarters & Support</h3>
+                <h2 class="font-bold text-lg font-heading">Headquarters & Support</h2>
                 <div class="text-xs space-y-2 text-slate-400">
                   <p><strong class="text-white">Bengaluru HQ:</strong> 80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
                   <p><strong class="text-white">Email:</strong> support@replyo.in</p>
@@ -1566,7 +2073,14 @@ const server = http.createServer((req, res) => {
             }
           }
         </script>
-      `);
+      `,
+        {
+          canonical: '/contact',
+          description: 'Contact Replyo Technologies India Private Limited. Customer support, business inquiries, and technical support in Koramangala, Bengaluru.',
+          keywords: 'contact Replyo, Replyo Bengaluru office, Google review customer care India, reputation support phone',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
+        }
+      );
       return sendHtml(200, html);
     }
 
@@ -1581,6 +2095,12 @@ const server = http.createServer((req, res) => {
         '/dpdp-consent': 'Digital Personal Data Protection (DPDP) Act 2023 Consent'
       };
       const title = titles[pathname];
+      const descriptions = {
+        '/privacy': 'Official Replyo Privacy Policy in accordance with India DPDP Act 2023. Zero-PHI guarantee and AWS Mumbai data residency.',
+        '/terms': 'Official Terms of Service governing Replyo Google Business Profile automation, APIs, and multi-tenant software usage.',
+        '/refund-policy': 'Transparent refund and cancellation policy for Replyo subscriptions. 14-day free pilot and hassle-free cancellation.',
+        '/dpdp-consent': 'Consent notice, data fiduciary obligations, and user rights under the Digital Personal Data Protection Act 2023.'
+      };
       const html = renderHtmlPage(title, '', `
         <div class="space-y-8 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div class="border-b border-slate-200 pb-4">
@@ -1595,7 +2115,12 @@ const server = http.createServer((req, res) => {
             <p><strong>5. Contact Information:</strong> For legal inquiries or DPDP data deletion requests, contact our compliance officer at <code class="text-brand-700 font-semibold">compliance@replyo.in</code>.</p>
           </div>
         </div>
-      `);
+      `, {
+        canonical: pathname,
+        description: descriptions[pathname] || `${title} - Replyo Technologies India Private Limited.`,
+        keywords: `${title}, Replyo legal policy, DPDP Act 2023 India, Google API review guidelines`,
+        breadcrumbs: [{ name: 'Home', url: '/' }, { name: title, url: pathname }]
+      });
       return sendHtml(200, html);
     }
 
