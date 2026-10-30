@@ -388,6 +388,7 @@ const { PLANS } = require('./dist/src/lib/store/db.js');
 const { getVerticalConfig, generateVerticalReviewDraft, VERTICAL_PROFILES } = require('./src/lib/verticals.js');
 
 const PORT = process.env.PORT || 3000;
+const BASE_URL = (process.env.BASE_URL || 'https://replyo.in').replace(/\/+$/, '');
 
 // Modular View Architecture (Anti-Slop & UI/UX Pro Max Standard)
 const { getSvgIcon, getStarRatingSvg } = require('./src/views/icons.js');
@@ -1189,7 +1190,7 @@ const server = http.createServer((req, res) => {
     // ----------------------------------------------------
     if (pathname === '/robots.txt') {
       const robotsTxt = `# Replyo RFC 9309 Compliant Agent Access Policy & Content Signals
-# Canonical: https://replyo.in/robots.txt
+# Canonical: ${BASE_URL}/robots.txt
 
 User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=no
@@ -1209,8 +1210,8 @@ User-agent: Applebot-Extended
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
-Sitemap: https://replyo.in/sitemap.xml
-Agentmap: https://replyo.in/.well-known/ai-catalog.json
+Sitemap: ${BASE_URL}/sitemap.xml
+Agentmap: ${BASE_URL}/.well-known/ai-catalog.json
 `;
       res.writeHead(200, {
         'Content-Type': 'text/plain; charset=utf-8',
@@ -1223,20 +1224,20 @@ Agentmap: https://replyo.in/.well-known/ai-catalog.json
     if (pathname === '/sitemap.xml') {
       const today = new Date().toISOString().split('T')[0];
       const urls = [
-        { loc: 'https://replyo.in/', priority: '1.0', changefreq: 'daily' },
-        { loc: 'https://replyo.in/features', priority: '0.9', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/pricing', priority: '0.9', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/free-audit', priority: '0.9', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/faq', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/security', priority: '0.8', changefreq: 'monthly' },
-        { loc: 'https://replyo.in/compliance', priority: '0.8', changefreq: 'monthly' },
-        { loc: 'https://replyo.in/qr-kit', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/for-agencies', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/industries/clinics', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/industries/restaurants', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/industries/salons', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/industries/gyms', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://replyo.in/industries/coaching', priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/`, priority: '1.0', changefreq: 'daily' },
+        { loc: `${BASE_URL}/features`, priority: '0.9', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/pricing`, priority: '0.9', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/free-audit`, priority: '0.9', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/faq`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/security`, priority: '0.8', changefreq: 'monthly' },
+        { loc: `${BASE_URL}/compliance`, priority: '0.8', changefreq: 'monthly' },
+        { loc: `${BASE_URL}/qr-kit`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/for-agencies`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/industries/clinics`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/industries/restaurants`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/industries/salons`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/industries/gyms`, priority: '0.8', changefreq: 'weekly' },
+        { loc: `${BASE_URL}/industries/coaching`, priority: '0.8', changefreq: 'weekly' },
         { loc: 'https://replyo.in/blog', priority: '0.8', changefreq: 'weekly' },
         { loc: 'https://replyo.in/blog/dr-sharma-case-study', priority: '0.7', changefreq: 'monthly' },
         { loc: 'https://replyo.in/blog/responding-to-negative-reviews', priority: '0.7', changefreq: 'monthly' },
