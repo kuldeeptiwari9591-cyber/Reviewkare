@@ -6,10 +6,10 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
   const description = options.description || "Autonomous Multi-Dialect Google Review Autopilot & In-Store QR flows for Indian clinics, cafes, restaurants, salons & gyms. 4-min AI replies, zero-liability quarantine shield, staff attribution leaderboard.";
   const canonicalPath = options.canonical || (isHomepage ? '/' : '');
-  const canonicalUrl = `https://replyo.in${canonicalPath}`;
-  const fullTitle = title.includes('Replyo') ? title : `${title} | Replyo — Autonomous Review & In-Store QR Operating System`;
+  const canonicalUrl = `https://reviewkaro.tech${canonicalPath}`;
+  const fullTitle = title.includes('ReviewKaro') ? title : `${title} | ReviewKaro — Autonomous Review & In-Store QR Operating System`;
   const ogType = options.ogType || (options.article ? 'article' : 'website');
-  const ogImage = options.ogImage || 'https://replyo.in/static/og-banner.png';
+  const ogImage = options.ogImage || 'https://reviewkaro.tech/static/og-banner.png';
   const keywords = options.keywords || 'Google review autopilot, in-store AI QR stands, Google Maps ranking, Local 3-Pack, reputation management India, clinic Google reviews, salon reviews, Hinglish AI replies, customer feedback automation';
   const robots = options.robots || (isApp ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
 
@@ -17,17 +17,17 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   const schemaGraph = [
     {
       "@type": "Organization",
-      "@id": "https://replyo.in/#organization",
-      "name": "Replyo Technologies India Private Limited",
-      "alternateName": "Replyo",
-      "url": "https://replyo.in",
+      "@id": "https://reviewkaro.tech/#organization",
+      "name": "ReviewKaro Technologies India Private Limited",
+      "alternateName": "ReviewKaro",
+      "url": "https://reviewkaro.tech",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://replyo.in/static/logo.png"
+        "url": "https://reviewkaro.tech/static/logo.png"
       },
       "sameAs": [
-        "https://twitter.com/replyo_in",
-        "https://www.linkedin.com/company/replyo"
+        "https://twitter.com/reviewkaro",
+        "https://www.linkedin.com/company/reviewkaro"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
@@ -47,18 +47,18 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
     },
     {
       "@type": "WebSite",
-      "@id": "https://replyo.in/#website",
-      "url": "https://replyo.in",
-      "name": "Replyo Operating System",
-      "publisher": { "@id": "https://replyo.in/#organization" }
+      "@id": "https://reviewkaro.tech/#website",
+      "url": "https://reviewkaro.tech",
+      "name": "ReviewKaro Operating System",
+      "publisher": { "@id": "https://reviewkaro.tech/#organization" }
     }
   ];
 
   if (isHomepage) {
     schemaGraph.push({
       "@type": "SoftwareApplication",
-      "@id": "https://replyo.in/#application",
-      "name": "Replyo Review & In-Store QR Operating System",
+      "@id": "https://reviewkaro.tech/#application",
+      "name": "ReviewKaro Review & In-Store QR Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Cloud",
       "aggregateRating": {
@@ -109,7 +109,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         "@type": "ListItem",
         "position": idx + 1,
         "name": crumb.name,
-        "item": crumb.url.startsWith('http') ? crumb.url : `https://replyo.in${crumb.url}`
+        "item": crumb.url.startsWith('http') ? crumb.url : `https://reviewkaro.tech${crumb.url}`
       }))
     });
   }
@@ -127,7 +127,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         "@type": "Person",
         "name": options.article.author || "Dr. Ananya Sharma"
       },
-      "publisher": { "@id": "https://replyo.in/#organization" }
+      "publisher": { "@id": "https://reviewkaro.tech/#organization" }
     });
   }
 
@@ -149,7 +149,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
   <!-- Open Graph Protocol (Facebook, LinkedIn, Slack, WhatsApp) -->
-  <meta property="og:site_name" content="Replyo Operating System">
+  <meta property="og:site_name" content="ReviewKaro Operating System">
   <meta property="og:title" content="${fullTitle}">
   <meta property="og:description" content="${description}">
   <meta property="og:url" content="${canonicalUrl}">
@@ -159,7 +159,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
   <!-- Twitter / X Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@replyo_in">
+  <meta name="twitter:site" content="@reviewkaro">
   <meta name="twitter:title" content="${fullTitle}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${ogImage}">
@@ -296,7 +296,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <aside class="bg-dark-950 text-slate-300 text-xs py-2.5 px-4 text-center border-b border-slate-800" aria-label="Announcement">
     <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
       <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 font-bold uppercase tracking-wider text-[10px]">
-        Replyo 2.4 Architecture
+        ReviewKaro 2.4 Architecture
       </span>
       <span class="font-medium text-slate-200">Zero-Login 30s In-Store QR, Neural Multi-Dialect Autopilot & Frontline Staff Attribution across India</span>
       <a href="/features" class="font-bold text-brand-400 hover:text-brand-300 underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded">Explore Capabilities &rarr;</a>
@@ -309,13 +309,13 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       
       <!-- Brand Logo -->
       <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl" aria-label="Replyo Homepage">
+        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl" aria-label="ReviewKaro Homepage">
           <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-black text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-md shadow-brand-500/20">
             R
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-slate-950 tracking-tight font-heading">Replyo</span>
+              <span class="font-bold text-2xl text-slate-950 tracking-tight font-heading">ReviewKaro</span>
               <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200 font-mono">
                 OS 2.4
               </span>
@@ -401,7 +401,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-xl bg-brand-600 text-white font-black text-base flex items-center justify-center font-heading">R</div>
-            <span class="font-extrabold text-white text-xl tracking-tight font-heading">Replyo Operating System</span>
+            <span class="font-extrabold text-white text-xl tracking-tight font-heading">ReviewKaro Operating System</span>
           </div>
           <p class="text-slate-400 leading-relaxed pr-6">
             Autonomous Google Review Autopilot & In-Store AI QR Platform. Built natively in India for clinics, cafes, restaurants, salons, spas, and gyms.
@@ -456,7 +456,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       </div>
 
       <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
-        <p>© 2026 Replyo Technologies India Private Limited. All rights reserved.</p>
+        <p>© 2026 ReviewKaro Technologies India Private Limited. All rights reserved.</p>
         <div class="flex items-center gap-6">
           <a href="/login" class="hover:text-slate-400">Sign In</a>
           <a href="/signup" class="hover:text-slate-400">Register</a>

@@ -69,7 +69,7 @@ export default function QRConfirmationPage() {
         </div>
 
         <div className="pt-4 border-t border-slate-100 text-[11px] text-slate-400">
-          Powered by Replyo • Fair & Transparent Local Feedback
+          Powered by ReviewKaro • Fair & Transparent Local Feedback
         </div>
       </div>
     </div>

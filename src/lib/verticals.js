@@ -1,4 +1,4 @@
-// Replyo Multi-Vertical Domain Taxonomy & Adaptive Question Engine
+// ReviewKaro Multi-Vertical Domain Taxonomy & Adaptive Question Engine
 // Calibrated for Indian Local Businesses: Friction, Cognitive Load & Compliance
 
 const VERTICAL_PROFILES = {

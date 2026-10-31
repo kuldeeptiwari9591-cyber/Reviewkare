@@ -199,6 +199,144 @@
   ],
   "reviews": [
     {
+      "id": "rev-1793458766129",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_0qzhrg",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793458766132",
+        "reviewId": "rev-1793458766129",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793458765774",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_8yi8l5",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793458765783",
+        "reviewId": "rev-1793458765774",
+        "draftText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793458119033",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_os8hzj",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793458119037",
+        "reviewId": "rev-1793458119033",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793458118751",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_efwqy",
+      "reviewerName": "Tanvi Kapur",
+      "rating": 5,
+      "text": "Got my balayage done with Master Stylist Farhan at Bounce Lavelle Road. He understood the exact ash tone I wanted. Heavenly scalp massage!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793458118758",
+        "reviewId": "rev-1793458118751",
+        "draftText": "Thank you so much Tanvi Kapur for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Tanvi Kapur for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793456693382",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_zarabn",
+      "reviewerName": "&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;",
+      "rating": 5,
+      "text": "&lt;img src=x onerror=alert(1)&gt;",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793456693386",
+        "reviewId": "rev-1793456693382",
+        "draftText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much &lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt; for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
+      "id": "rev-1793456693115",
+      "locationId": "b_cafe",
+      "googleReviewId": "gbp_sim_m25wpo",
+      "reviewerName": "Rohan Deshmukh",
+      "rating": 5,
+      "text": "IronVault Koramangala has the best barbell equipment. Coach Aryan fixed my hip hinge on deadlifts in one session. Showers are spotless!",
+      "isStarOnly": false,
+      "detectedLanguage": "en",
+      "detectedTone": "positive",
+      "createdAt": "Just now",
+      "reply": {
+        "id": "rep-1793456693126",
+        "reviewId": "rev-1793456693115",
+        "draftText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "finalText": "Thank you so much Rohan Deshmukh for taking the time to share your review! The entire team at The Roastery Artisan Cafe & Sourdough Bakery is delighted to hear about your great experience. We look forward to serving you again soon!",
+        "status": "posted",
+        "model": "gemini-1.5-flash",
+        "validatorPassed": true,
+        "isAutoPosted": true,
+        "postedAt": "Just now"
+      }
+    },
+    {
       "id": "rev-1793352790553",
       "locationId": "b_cafe",
       "googleReviewId": "gbp_jd9pue",
@@ -782,7 +920,7 @@
       "name": "Operatory Reception Stand",
       "vertical": "clinic",
       "material": "Frosted Cast Acrylic",
-      "url": "https://replyo.in/q/sharma-dent-01",
+      "url": "https://reviewkaro.tech/q/sharma-dent-01",
       "scansCount": 384,
       "reviewsGenerated": 86,
       "conversionRate": "22.4%"
@@ -793,7 +931,7 @@
       "name": "Bill Folder NFC Card",
       "vertical": "cafe",
       "material": "Brushed Champagne Gold",
-      "url": "https://replyo.in/q/roastery-main-01",
+      "url": "https://reviewkaro.tech/q/roastery-main-01",
       "scansCount": 612,
       "reviewsGenerated": 142,
       "conversionRate": "23.2%"
@@ -804,7 +942,7 @@
       "name": "Styling Mirror Stand",
       "vertical": "salon",
       "material": "Matte Walnut Wood",
-      "url": "https://replyo.in/q/bounce-lavelle-01",
+      "url": "https://reviewkaro.tech/q/bounce-lavelle-01",
       "scansCount": 420,
       "reviewsGenerated": 98,
       "conversionRate": "23.3%"
@@ -815,7 +953,7 @@
       "name": "Turnstile Check-In Stand",
       "vertical": "gym",
       "material": "Ceramic Black Obsidian",
-      "url": "https://replyo.in/q/ironvault-korm-01",
+      "url": "https://reviewkaro.tech/q/ironvault-korm-01",
       "scansCount": 310,
       "reviewsGenerated": 71,
       "conversionRate": "22.9%"
@@ -845,6 +983,27 @@
     }
   ],
   "notifications": [
+    {
+      "id": "notif-1793458765784",
+      "title": "New 5★ Review Processed",
+      "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793458118758",
+      "title": "New 5★ Review Processed",
+      "message": "Tanvi Kapur left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
+    {
+      "id": "notif-1793456693127",
+      "title": "New 5★ Review Processed",
+      "message": "Rohan Deshmukh left a 5★ review on Google Maps.",
+      "time": "Just now",
+      "unread": false
+    },
     {
       "id": "notif-1793352790375",
       "title": "New 5★ Review Processed",
@@ -1046,7 +1205,7 @@
       "outletId": "PP-IND-8041",
       "outletName": "The Roastery Artisan Cafe (12th Main)",
       "webhookUrl": "/api/webhooks/pos/petpooja",
-      "eventsCaptured": 429,
+      "eventsCaptured": 432,
       "lastSync": "Just now",
       "autoTriggerDelay": "45 mins post-bill"
     },
@@ -1057,7 +1216,7 @@
       "outletId": "ZEN-LAVELLE-02",
       "outletName": "Bounce Hair Studio & Luxury Spa",
       "webhookUrl": "/api/webhooks/pos/zenoti",
-      "eventsCaptured": 241,
+      "eventsCaptured": 244,
       "lastSync": "Just now",
       "autoTriggerDelay": "Next morning 10:00 AM"
     },
@@ -1068,7 +1227,7 @@
       "outletId": "PRAC-100FT-901",
       "outletName": "Dr. Sharma Dental & Implant Clinic",
       "webhookUrl": "/api/webhooks/pos/practo",
-      "eventsCaptured": 205,
+      "eventsCaptured": 208,
       "lastSync": "Just now",
       "autoTriggerDelay": "2 hours post-treatment"
     }
@@ -1077,7 +1236,7 @@
     "status": "connected",
     "wabaId": "WABA_992014881023",
     "phoneNumber": "+91 80 4112 9088",
-    "verifiedName": "Replyo Official Cloud Verified",
+    "verifiedName": "ReviewKaro Official Cloud Verified",
     "metaCompliance": "Meta Graph API v21.0 Live",
     "templates": [
       {

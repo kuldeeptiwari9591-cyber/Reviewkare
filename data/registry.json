@@ -6,6 +6,13 @@
       "name": "Dr. Ananya Sharma",
       "passwordHash": "a1628e78f5cc3594809243109d88092f6688a91abe7c48bc6d314288eaebc5ce165dcf3e68e0aae0c69386734eaa84586b5d8ebc8e0be1d9ebb97242f503febb",
       "passwordSalt": "033ebf7850ce938dd59dbb7e84e1c85e"
+    },
+    "dr.patel.1793458766157@patelaesthetics.in": {
+      "tenantId": "t_1793458766169",
+      "email": "dr.patel.1793458766157@patelaesthetics.in",
+      "name": "Dr. Aditi Patel",
+      "passwordHash": "eb8bfb4eddcd64c96a97b6c28685f556ec125a72f59138a1278fc3a7b955eea1e3a01b8808a3e9b05d866c6599e28de737e82c846db41261fbea988eb7165bbe",
+      "passwordSalt": "2ae05cfc96581c2d35d87f1d3d4e9773"
     }
   },
   "sessions": {
@@ -17,13 +24,32 @@
       "role": "Owner / Clinic Director",
       "createdAt": 1793352790712,
       "expiresAt": 1793957590712
+    },
+    "sess_94db654804e2f636c71c4a005beb08022393b6044363dbfc": {
+      "userId": "usr_1793458766171",
+      "tenantId": "t_1793458766169",
+      "email": "dr.patel.1793458766157@patelaesthetics.in",
+      "name": "Dr. Aditi Patel",
+      "role": "Creative Director / Salon Owner",
+      "createdAt": 1793458766308,
+      "expiresAt": 1794063566308
+    },
+    "sess_32571d737758178006ca79c545ca40218ac98dc62a2d06c0": {
+      "userId": "usr_1793458766525",
+      "tenantId": "t_1793458766524",
+      "email": "roastery_1793458766517@theartisan.in",
+      "name": "Shreyas Rao",
+      "role": "Founder / Head Barista Name",
+      "createdAt": 1793458766664,
+      "expiresAt": 1794063566664
     }
   },
   "qrLookup": {
     "sharma-dent-01": "default",
     "roastery-main-01": "default",
     "bounce-lavelle-01": "default",
-    "ironvault-korm-01": "default"
+    "ironvault-korm-01": "default",
+    "patel-aesthetics-596": "t_1793458766169"
   },
   "config": {
     "razorpayKeyId": "",

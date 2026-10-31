@@ -444,7 +444,7 @@ export default function CustomerQRPage({ params }: { params: { code: string } })
 
         {/* Footer info */}
         <div className="text-center text-[11px] text-slate-400 pb-8 space-y-1">
-          <p>Powered by Replyo • Zero Login • Direct Google Maps Handoff</p>
+          <p>Powered by ReviewKaro • Zero Login • Direct Google Maps Handoff</p>
           <p>No rewards or discounts are given in exchange for reviews.</p>
         </div>
       </div>

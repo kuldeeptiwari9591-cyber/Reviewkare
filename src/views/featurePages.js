@@ -317,7 +317,7 @@ function renderLocalPackPage(store) {
         <div class="space-y-3 text-xs text-slate-700 leading-relaxed">
           <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
             <span class="font-bold text-slate-900 block font-heading">1. Response Velocity</span>
-            <p class="text-slate-600 text-[11px]">Google rewards listings that respond to &gt;95% of reviews within hours. Replyo's 4-minute jitter beats 99% of metro rivals.</p>
+            <p class="text-slate-600 text-[11px]">Google rewards listings that respond to &gt;95% of reviews within hours. ReviewKaro's 4-minute jitter beats 99% of metro rivals.</p>
           </div>
           <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
             <span class="font-bold text-slate-900 block font-heading">2. Keyword Semantic Injection</span>
@@ -988,13 +988,13 @@ function renderHardwareStudioPage(store) {
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
           <h2 class="text-sm font-bold text-slate-900 font-heading">Web NFC Chip Encoder Utility (NTAG213 / NTAG215)</h2>
-          <p class="text-xs text-slate-500">Program existing blank NFC tags or cards with your dynamic Replyo 15-second review copilot URL.</p>
+          <p class="text-xs text-slate-500">Program existing blank NFC tags or cards with your dynamic ReviewKaro 15-second review copilot URL.</p>
         </div>
         <span class="text-xs font-mono font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-lg">Web NFC API Ready</span>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 items-center">
-        <input id="nfcUrl" type="text" readonly value="https://replyo.in/q/sharma-dent-01" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-mono bg-slate-50 text-slate-700">
+        <input id="nfcUrl" type="text" readonly value="https://reviewkaro.tech/q/sharma-dent-01" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-mono bg-slate-50 text-slate-700">
         <button type="button" onclick="programNfcTag()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-2">
           ${getSvgIcon('hardware', 'w-4 h-4 text-white')}
           <span>Tap Phone to Write NFC Tag &rarr;</span>

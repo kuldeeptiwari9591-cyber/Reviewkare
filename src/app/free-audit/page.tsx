@@ -152,7 +152,7 @@ export default function FreeAuditPage() {
           <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-emerald-950">
-                How Replyo Can Answer Your Backlog in Minutes:
+                How ReviewKaro Can Answer Your Backlog in Minutes:
               </span>
               <span className="text-emerald-700 font-medium">Hinglish Tone Mirroring</span>
             </div>
@@ -172,7 +172,7 @@ export default function FreeAuditPage() {
               href="/app"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition-all hover:scale-[1.02]"
             >
-              Connect Profile & Clear Backlog with Replyo &rarr;
+              Connect Profile & Clear Backlog with ReviewKaro &rarr;
             </Link>
           </div>
         </div>

@@ -57,7 +57,7 @@ store.whatsappStudio = {
   status: 'connected',
   wabaId: 'WABA_992014881023',
   phoneNumber: '+91 80 4112 9088',
-  verifiedName: 'Replyo Official Cloud Verified',
+  verifiedName: 'ReviewKaro Official Cloud Verified',
   metaCompliance: 'Meta Graph API v21.0 Live',
   templates: [
     {

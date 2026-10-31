@@ -122,7 +122,7 @@ export default function HomePage() {
                 <h3 className="font-bold text-base">Live Interactive Engine Sandbox</h3>
               </div>
               <p className="text-xs text-slate-400">
-                Experience how Replyo detects language, mirrors tone, and guards your reputation in real time.
+                Experience how ReviewKaro detects language, mirrors tone, and guards your reputation in real time.
               </p>
             </div>
 
@@ -344,7 +344,7 @@ export default function HomePage() {
             Built for How India Actually Does Business
           </h2>
           <p className="text-slate-600 text-base max-w-2xl mx-auto">
-            Traditional US software costs $300/mo, speaks only English, and locks you into annual contracts. Replyo solves the two hardest local reputation jobs in INR.
+            Traditional US software costs $300/mo, speaks only English, and locks you into annual contracts. ReviewKaro solves the two hardest local reputation jobs in INR.
           </p>
         </div>
 
@@ -357,7 +357,7 @@ export default function HomePage() {
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-slate-900">The Autonomous Review Responder</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Connect your Google Business Profile once. Replyo monitors incoming reviews 24/7 and crafts human-sounding replies matching the customer&apos;s exact language and slang.
+                Connect your Google Business Profile once. ReviewKaro monitors incoming reviews 24/7 and crafts human-sounding replies matching the customer&apos;s exact language and slang.
               </p>
             </div>
             <ul className="space-y-3 text-sm text-slate-700">
@@ -604,7 +604,7 @@ export default function HomePage() {
               <span className="text-slate-400 group-open:rotate-180 transition-transform">&darr;</span>
             </summary>
             <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              No. Replyo connects directly via Google’s official Business Profile API. For customer reviews, the customer taps their choices, the AI drafts their text, and the customer copies and posts it themselves from their own personal Google account. We never publish fake reviews, gate negative reviews, or incentivize ratings.
+              No. ReviewKaro connects directly via Google’s official Business Profile API. For customer reviews, the customer taps their choices, the AI drafts their text, and the customer copies and posts it themselves from their own personal Google account. We never publish fake reviews, gate negative reviews, or incentivize ratings.
             </p>
           </details>
 
@@ -624,7 +624,7 @@ export default function HomePage() {
               <span className="text-slate-400 group-open:rotate-180 transition-transform">&darr;</span>
             </summary>
             <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Yes. Replyo is natively tuned for Indian colloquialisms. It understands terms like <em>&quot;paisa wasool&quot;</em>, <em>&quot;ekdum badiya service&quot;</em>, <em>&quot;bohot time lagaya&quot;</em>, and replies respectfully with appropriate cultural phrasing.
+              Yes. ReviewKaro is natively tuned for Indian colloquialisms. It understands terms like <em>&quot;paisa wasool&quot;</em>, <em>&quot;ekdum badiya service&quot;</em>, <em>&quot;bohot time lagaya&quot;</em>, and replies respectfully with appropriate cultural phrasing.
             </p>
           </details>
 

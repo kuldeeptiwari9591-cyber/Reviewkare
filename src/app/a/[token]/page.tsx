@@ -102,7 +102,7 @@ export default function OneTapApprovalPage({ params }: { params: { token: string
           <div className="text-xs text-amber-900">
             <p className="font-bold">Held Review Needs Owner Approval</p>
             <p className="text-amber-800/90 mt-0.5">
-              This review received a low rating. Replyo held it to protect your legal and brand reputation.
+              This review received a low rating. ReviewKaro held it to protect your legal and brand reputation.
             </p>
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function OneTapApprovalPage({ params }: { params: { token: string
             href="/app/approvals"
             className="text-xs font-semibold text-slate-500 hover:text-slate-800"
           >
-            Or open full approvals desk in Replyo &rarr;
+            Or open full approvals desk in ReviewKaro &rarr;
           </Link>
         </div>
       </div>

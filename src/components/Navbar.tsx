@@ -20,7 +20,7 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
               R
             </div>
-            <span className="font-bold text-slate-900 tracking-tight text-base">Replyo</span>
+            <span className="font-bold text-slate-900 tracking-tight text-base">ReviewKaro</span>
           </div>
           <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60 flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5" /> Verified Feedback
@@ -41,7 +41,7 @@ export default function Navbar() {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xl text-slate-900 tracking-tight">Replyo</span>
+                <span className="font-extrabold text-xl text-slate-900 tracking-tight">ReviewKaro</span>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
                   India
                 </span>

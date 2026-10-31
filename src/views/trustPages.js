@@ -27,7 +27,7 @@ function renderSecurityPage() {
           </div>
           <h2 class="text-base font-bold text-slate-900 font-heading">Zero-PHI Medical Guarantee</h2>
           <p class="text-xs text-slate-600 leading-relaxed">
-            Replyo never stores or processes Protected Health Information (PHI). Review replies never confirm medical diagnoses, treatments, prescriptions, or patient confidentiality.
+            ReviewKaro never stores or processes Protected Health Information (PHI). Review replies never confirm medical diagnoses, treatments, prescriptions, or patient confidentiality.
           </p>
           <div class="pt-2 text-[11px] font-bold text-emerald-700 flex items-center gap-1.5">
             ${getSvgIcon('check', 'w-3.5 h-3.5')} NMC 2023 Ethics Compliant
@@ -53,7 +53,7 @@ function renderSecurityPage() {
           </div>
           <h2 class="text-base font-bold text-slate-900 font-heading">Official Google API Only</h2>
           <p class="text-xs text-slate-600 leading-relaxed">
-            Replyo integrates strictly via Google Business Profile official OAuth 2.0 API. We never scrape, emulate browser sessions, or perform prohibited review gating that risks account suspension.
+            ReviewKaro integrates strictly via Google Business Profile official OAuth 2.0 API. We never scrape, emulate browser sessions, or perform prohibited review gating that risks account suspension.
           </p>
           <div class="pt-2 text-[11px] font-bold text-purple-700 flex items-center gap-1.5">
             ${getSvgIcon('check', 'w-3.5 h-3.5')} 100% Anti-Gating Compliant
@@ -262,27 +262,27 @@ function renderBookDemoPage() {
 const FAQ_ITEMS = [
   {
     q: "Does auto-replying violate Google Business Profile policies?",
-    a: "No. Google encourages businesses to reply promptly to all reviews. Replyo uses official Google Business Profile APIs, introduces a human-like 4-minute jitter, and customizes every reply with local SEO keywords rather than canned repetition."
+    a: "No. Google encourages businesses to reply promptly to all reviews. ReviewKaro uses official Google Business Profile APIs, introduces a human-like 4-minute jitter, and customizes every reply with local SEO keywords rather than canned repetition."
   },
   {
     q: "What happens when an unhappy patient leaves a 1-star or 2-star review?",
-    a: "Replyo activates the Negative Quarantine Shield. The AI generates a de-escalating, zero-liability draft (never admitting fault) and immediately notifies the clinic owner via WhatsApp with a 1-tap approval link. Nothing is posted until you tap approve."
+    a: "ReviewKaro activates the Negative Quarantine Shield. The AI generates a de-escalating, zero-liability draft (never admitting fault) and immediately notifies the clinic owner via WhatsApp with a 1-tap approval link. Nothing is posted until you tap approve."
   },
   {
     q: "How does the in-clinic AI QR flow work without patient login?",
     a: "Patients scan the acrylic QR stand on your reception desk. The page loads in <0.8 seconds (under 100KB) with zero app download or login. Patients tap services received, doctor name, and ambience. The AI writes a genuine first-person review and copies it to their clipboard, opening Google Maps review prompt in 1 tap."
   },
   {
-    q: "Is Replyo compliant with India's DPDP Act 2023 and NMC guidelines?",
-    a: "Yes. Replyo never stores Protected Health Information (PHI). We never reference private clinical procedures, diagnostic findings, or patient records in review responses. All databases are hosted inside AWS Mumbai (ap-south-1)."
+    q: "Is ReviewKaro compliant with India's DPDP Act 2023 and NMC guidelines?",
+    a: "Yes. ReviewKaro never stores Protected Health Information (PHI). We never reference private clinical procedures, diagnostic findings, or patient records in review responses. All databases are hosted inside AWS Mumbai (ap-south-1)."
   },
   {
-    q: "Can Replyo handle Hindi, Hinglish, and regional languages?",
+    q: "Can ReviewKaro handle Hindi, Hinglish, and regional languages?",
     a: "Yes! Our language engine detects Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), Tamil, Telugu, Kannada, and English, mirroring the exact dialect naturally."
   },
   {
     q: "Can I manage multiple clinic branches from one dashboard?",
-    a: "Yes. Replyo supports multi-tenant branch architectures. You can switch between Indiranagar, Koramangala, and Whitefield in 1 click, track staff leaderboards across locations, and get consolidated GST billing."
+    a: "Yes. ReviewKaro supports multi-tenant branch architectures. You can switch between Indiranagar, Koramangala, and Whitefield in 1 click, track staff leaderboards across locations, and get consolidated GST billing."
   }
 ];
 
@@ -419,13 +419,13 @@ function renderTermsPage() {
     'October 2026',
     `
     <h2 class="text-base font-bold text-slate-900">1. Acceptance of Terms</h2>
-    <p>By accessing or utilizing the Replyo platform, APIs, or physical QR stands, you agree to be bound by these Terms of Service between your business entity and Replyo Technologies India Pvt Ltd (Bengaluru, Karnataka).</p>
+    <p>By accessing or utilizing the ReviewKaro platform, APIs, or physical QR stands, you agree to be bound by these Terms of Service between your business entity and ReviewKaro Technologies India Pvt Ltd (Bengaluru, Karnataka).</p>
     
     <h2 class="text-base font-bold text-slate-900 mt-4">2. Authorised Google Business Profile Usage</h2>
-    <p>Replyo accesses Google Business Profile reviews via official Google OAuth API protocols. Users retain complete ownership of their Google profiles. Replyo does not engage in fake review generation, incentivised review schemes, or review-gating prohibited under Google TOS.</p>
+    <p>ReviewKaro accesses Google Business Profile reviews via official Google OAuth API protocols. Users retain complete ownership of their Google profiles. ReviewKaro does not engage in fake review generation, incentivised review schemes, or review-gating prohibited under Google TOS.</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">3. Medical & Professional Ethics Disclaimer</h2>
-    <p>Replyo is an administrative automation software. AI-generated review responses do not constitute medical advice, diagnostic recommendations, or doctor-patient confidentiality establishment under the National Medical Commission (NMC) Act 2019.</p>
+    <p>ReviewKaro is an administrative automation software. AI-generated review responses do not constitute medical advice, diagnostic recommendations, or doctor-patient confidentiality establishment under the National Medical Commission (NMC) Act 2019.</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">4. Billing, Taxes & Cancellation</h2>
     <p>All subscription fees are denominated in Indian Rupees (INR) and subject to applicable Goods and Services Tax (18% GST). Subscriptions may be cancelled at any time with no lock-in periods.</p>
@@ -439,16 +439,16 @@ function renderPrivacyPage() {
     'October 2026',
     `
     <h2 class="text-base font-bold text-slate-900">1. Digital Personal Data Protection Act 2023 Adherence</h2>
-    <p>Replyo operates as a Data Processor adhering strictly to the Digital Personal Data Protection Act (DPDP Act) 2023 of the Republic of India. We process only publicly available Google Business Profile review text and clinic administrator contact details.</p>
+    <p>ReviewKaro operates as a Data Processor adhering strictly to the Digital Personal Data Protection Act (DPDP Act) 2023 of the Republic of India. We process only publicly available Google Business Profile review text and clinic administrator contact details.</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">2. Zero Protected Health Information (PHI) Storage</h2>
-    <p>Replyo strictly forbids and filters the storage or indexing of Protected Health Information (PHI), medical history, prescription details, or clinical diagnoses. Review drafts are synthesized purely based on general service tags selected by the patient.</p>
+    <p>ReviewKaro strictly forbids and filters the storage or indexing of Protected Health Information (PHI), medical history, prescription details, or clinical diagnoses. Review drafts are synthesized purely based on general service tags selected by the patient.</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">3. Data Localization</h2>
     <p>All databases, logs, and cryptographic keys are hosted exclusively within AWS data centres located in Mumbai, India (ap-south-1 region).</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">4. Contact Grievance Officer</h2>
-    <p>In accordance with Indian IT Rules, our designated Grievance Officer can be contacted at: <code>privacy@replyo.in</code> or at our Indiranagar, Bengaluru office.</p>
+    <p>In accordance with Indian IT Rules, our designated Grievance Officer can be contacted at: <code>privacy@reviewkaro.tech</code> or at our Indiranagar, Bengaluru office.</p>
     `
   );
 }
@@ -462,7 +462,7 @@ function renderRefundPolicyPage() {
     <p>All new clinics receive a 14-day free pilot with full access to the Autopilot engine and QR Studio. No credit card or initial deposit is required.</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">2. 30-Day Money-Back Guarantee</h2>
-    <p>If Replyo does not increase your Google review volume or improve your response velocity within your first 30 paid days, we provide a 100% unconditional refund via original payment method (UPI / Razorpay / Net Banking).</p>
+    <p>If ReviewKaro does not increase your Google review volume or improve your response velocity within your first 30 paid days, we provide a 100% unconditional refund via original payment method (UPI / Razorpay / Net Banking).</p>
 
     <h2 class="text-base font-bold text-slate-900 mt-4">3. Immediate Cancellation</h2>
     <p>Cancel your subscription in 1 tap from the Billing tab. No questions asked and no awkward sales calls.</p>
@@ -476,11 +476,11 @@ function renderDpdpConsentPage() {
     'October 2026',
     `
     <h2 class="text-base font-bold text-slate-900">Patient Consent & Autonomous Feedback Governance</h2>
-    <p>When patients scan a Replyo countertop QR code at an Indian healthcare or wellness facility:</p>
+    <p>When patients scan a ReviewKaro countertop QR code at an Indian healthcare or wellness facility:</p>
     <ul class="list-disc pl-5 space-y-2 mt-2">
       <li>Zero patient personal data (name, phone number, medical record number) is collected or stored on our servers.</li>
       <li>The feedback synthesis runs client-side, generating suggested phrasing that the patient explicitly reviews, edits, and chooses to copy.</li>
-      <li>The review is submitted directly by the patient through their personal Google account on Google Maps. Replyo never posts on behalf of an unauthenticated user.</li>
+      <li>The review is submitted directly by the patient through their personal Google account on Google Maps. ReviewKaro never posts on behalf of an unauthenticated user.</li>
     </ul>
     `
   );

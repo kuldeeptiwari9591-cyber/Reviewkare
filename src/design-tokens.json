@@ -1,7 +1,7 @@
 {
-  "name": "Replyo Design System Tokens",
+  "name": "ReviewKaro Design System Tokens",
   "version": "2.4.0",
-  "description": "Enterprise Three-Layer Token Architecture for Replyo: Swiss Precision, Electric Cobalt & Deep Obsidian",
+  "description": "Enterprise Three-Layer Token Architecture for ReviewKaro: Swiss Precision, Electric Cobalt & Deep Obsidian",
   "primitives": {
     "color": {
       "cobalt": {

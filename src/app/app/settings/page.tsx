@@ -44,7 +44,7 @@ export default function SettingsPage() {
             <h2 className="font-bold text-sm text-slate-900">Autopilot Level</h2>
           </div>
           <p className="text-xs text-slate-500">
-            Control how much autonomous authority Replyo has to publish directly to your Google profile.
+            Control how much autonomous authority ReviewKaro has to publish directly to your Google profile.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">

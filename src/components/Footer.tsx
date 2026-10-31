@@ -13,7 +13,7 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white font-extrabold text-base">
                 R
               </div>
-              <span className="font-extrabold text-white text-lg tracking-tight">Replyo India</span>
+              <span className="font-extrabold text-white text-lg tracking-tight">ReviewKaro India</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
               Autonomous Google Review Autopilot & AI QR Code Flow designed specifically for Indian clinics, salons, restaurants, and local businesses.
@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© 2026 Replyo Technologies India Pvt Ltd. All rights reserved.</p>
+          <p>© 2026 ReviewKaro Technologies India Pvt Ltd. All rights reserved.</p>
           <div className="flex gap-4">
             <span className="hover:text-slate-400 cursor-pointer">Terms of Service</span>
             <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>

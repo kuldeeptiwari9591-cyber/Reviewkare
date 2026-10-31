@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     // Generate base64 data url
     const qrDataUrl = await QRCode.toDataURL(
-      `https://replyo.in/q/${shortCode}`,
+      `https://reviewkaro.tech/q/${shortCode}`,
       {
         errorCorrectionLevel: 'H',
         margin: 2,
