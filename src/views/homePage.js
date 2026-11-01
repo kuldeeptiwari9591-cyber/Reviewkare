@@ -39,7 +39,7 @@ const HOME_FAQS = [
 function renderHomePage(store) {
   return `
   <!-- Ambient 3D Interactive Particle Background Canvas -->
-  <div class="relative overflow-hidden bg-white border-b border-slate-200">
+  <div class="relative overflow-hidden bg-white border-b border-[#e5e7eb]">
     <canvas id="heroParticles" class="absolute inset-0 pointer-events-none opacity-40 z-0" aria-hidden="true"></canvas>
 
     <!-- Hero Section -->
@@ -49,44 +49,44 @@ function renderHomePage(store) {
         <!-- Left Hero Copy -->
         <div class="lg:col-span-7 space-y-6 text-left">
           
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
-            <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
-            <span>Operating Across Clinics, Dining, Salons & Gyms in Metro India</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#f3f3f7] border border-[#b9bbc6]/40 text-[#ff5900] text-xs font-bold font-mono">
+            <span class="w-2 h-2 rounded-full bg-[#ff5900] animate-pulse"></span>
+            <span>Operating Across Clinics, Dining, Salons &amp; Gyms in Metro India</span>
           </div>
 
-          <h1 class="text-4xl sm:text-6xl font-black text-slate-950 font-heading tracking-tight leading-[1.08]" style="text-wrap: balance;">
+          <h1 class="text-4xl sm:text-6xl font-bold text-black font-heading tracking-[-0.03em] leading-[1.08]" style="text-wrap: balance;">
             Autonomous Google Review OS for High-Touch Local Businesses.
           </h1>
 
-          <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
+          <p class="text-base sm:text-lg text-[#60646c] leading-relaxed max-w-2xl font-normal">
             Turn every customer visit into an authentic 5-star Google review in 30 seconds. ReviewKaro automatically mirrors customer dialect in 4 minutes with local search keywords, quarantines negative feedback for 1-tap manager resolution, and attributes reviews to frontline staff.
           </p>
 
           <!-- Primary Call to Actions (No cheap sales hype) -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-            <a href="/login?demo=true" class="min-h-[48px] px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="/login?demo=true" class="min-h-[48px] px-6 py-3 rounded-[12px] bg-[#ff5900] hover:opacity-90 text-white font-semibold text-xs sm:text-sm transition-opacity flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] shadow-sm">
               <span>Explore Multi-Vertical Demo (1-Click)</span>
               ${getSvgIcon('arrowRight', 'w-4 h-4 text-white')}
             </a>
-            <a href="/free-audit" class="min-h-[48px] px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs sm:text-sm border border-slate-300 shadow-sm transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
-              ${getSvgIcon('search', 'w-4 h-4 text-brand-600')}
+            <a href="/free-audit" class="min-h-[48px] px-6 py-3 rounded-[12px] bg-white hover:bg-[#f3f3f7] text-black font-medium text-xs sm:text-sm border border-[#b9bbc6] transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black">
+              ${getSvgIcon('search', 'w-4 h-4 text-[#ff5900]')}
               <span>Audit My Local 3-Pack Rank</span>
             </a>
           </div>
 
           <!-- Architecture Metric Pillars -->
-          <div class="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-left">
+          <div class="pt-6 border-t border-[#e5e7eb] grid grid-cols-3 gap-4 text-left">
             <div>
-              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">4 Mins</div>
-              <div class="text-[11px] text-slate-500 font-medium">Neural Autopilot Reply Velocity</div>
+              <div class="text-2xl font-bold text-black font-heading tabular-nums tracking-[-0.02em]">4 Mins</div>
+              <div class="text-[11px] text-[#60646c] font-medium">Neural Autopilot Reply Velocity</div>
             </div>
             <div>
-              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">&lt;85 KB</div>
-              <div class="text-[11px] text-slate-500 font-medium">Zero-App In-Store QR Payload</div>
+              <div class="text-2xl font-bold text-black font-heading tabular-nums tracking-[-0.02em]">&lt;85 KB</div>
+              <div class="text-[11px] text-[#60646c] font-medium">Zero-App In-Store QR Payload</div>
             </div>
             <div>
-              <div class="text-2xl font-black text-slate-950 font-heading tabular-nums">1-Tap</div>
-              <div class="text-[11px] text-slate-500 font-medium">Quarantined Complaint Approval</div>
+              <div class="text-2xl font-bold text-black font-heading tabular-nums tracking-[-0.02em]">1-Tap</div>
+              <div class="text-[11px] text-[#60646c] font-medium">Quarantined Complaint Approval</div>
             </div>
           </div>
 
@@ -96,40 +96,40 @@ function renderHomePage(store) {
         <div class="lg:col-span-5 flex flex-col items-center">
           
           <!-- 3D Perspective Card Container -->
-          <div id="stand3D" class="w-full max-w-sm rounded-3xl p-6 transition-all duration-300 card-3d relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white shadow-2xl border border-slate-800" style="perspective: 1000px;">
+          <div id="stand3D" class="w-full max-w-sm rounded-[16px] p-6 transition-all duration-300 card-3d relative overflow-hidden bg-gradient-to-br from-[#15191e] to-[#000710] text-white shadow-2xl border border-white/10" style="perspective: 1000px;">
             
             <div class="flex items-center justify-between pb-4 border-b border-white/10">
               <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-brand-400"></span>
-                <span id="materialBadge" class="text-[10px] font-bold uppercase tracking-wider text-slate-300 font-mono">Frosted Cast Acrylic</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#ff5900]"></span>
+                <span id="materialBadge" class="text-[10px] font-bold uppercase tracking-wider text-[#b9bbc6] font-mono">Frosted Cast Acrylic</span>
               </div>
-              <span class="text-[10px] text-slate-400 font-mono">NFC + QR EMBEDDED</span>
+              <span class="text-[10px] text-[#8b8d98] font-mono">NFC + QR EMBEDDED</span>
             </div>
 
             <!-- Business Lockup -->
             <div class="text-center py-6 space-y-2">
-              <div id="standBizName" class="text-xs uppercase tracking-widest font-bold text-brand-400">Dr. Sharma Dental & Implant Clinic</div>
-              <h2 id="standTitle" class="text-lg font-black font-heading text-white">How was your visit today?</h2>
-              <p id="standSub" class="text-[11px] text-slate-300">Tap your phone or scan below • No app download required</p>
+              <div id="standBizName" class="text-xs uppercase tracking-widest font-bold text-[#ff5900]">Dr. Sharma Dental &amp; Implant Clinic</div>
+              <h2 id="standTitle" class="text-lg font-bold font-heading text-white tracking-[-0.02em]">How was your visit today?</h2>
+              <p id="standSub" class="text-[11px] text-[#b9bbc6]">Tap your phone or scan below • No app download required</p>
             </div>
 
             <!-- QR Target Mockup with 2.5D Glow -->
-            <div class="bg-white p-4 rounded-2xl shadow-inner max-w-[180px] mx-auto text-slate-900 text-center space-y-2">
-              <div class="w-32 h-32 mx-auto bg-dark-950 rounded-xl p-2.5 flex flex-col items-center justify-between">
+            <div class="bg-white p-4 rounded-[12px] shadow-inner max-w-[180px] mx-auto text-black text-center space-y-2">
+              <div class="w-32 h-32 mx-auto bg-[#000710] rounded-[8px] p-2.5 flex flex-col items-center justify-between">
                 <div class="flex justify-between w-full">
-                  <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
-                  <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
+                  <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
+                  <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
                 </div>
-                <div class="text-[9px] font-black text-brand-400 tracking-tighter font-mono">REVIEWKARO 2.4</div>
+                <div class="text-[9px] font-bold text-[#ff5900] tracking-tighter font-mono">REVIEWKARO 2.4</div>
                 <div class="flex justify-between w-full">
-                  <div class="w-6 h-6 border-2 border-brand-400 rounded-sm"></div>
-                  <div class="w-2 h-2 bg-brand-400 rounded-full"></div>
+                  <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
+                  <div class="w-2 h-2 bg-[#ff5900] rounded-full"></div>
                 </div>
               </div>
-              <div id="standPromptText" class="text-[10px] font-bold text-slate-800">Scan for 30-sec Google Review</div>
+              <div id="standPromptText" class="text-[10px] font-bold text-black">Scan for 30-sec Google Review</div>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-[#8b8d98]">
               <span id="standLocText">Indiranagar 100ft Rd</span>
               <span id="standRatingText" class="text-amber-400 font-bold">4.9 ★★★★★ (143)</span>
             </div>
@@ -137,17 +137,17 @@ function renderHomePage(store) {
           </div>
 
           <!-- Stand Material Switcher -->
-          <div class="mt-4 flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
-            <button type="button" onclick="setMaterial('acrylic')" class="mat-btn active px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all bg-white text-slate-900 shadow-sm">
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-[#f3f3f7] rounded-[12px] border border-[#b9bbc6]/40">
+            <button type="button" onclick="setMaterial('acrylic')" class="mat-btn active px-3 py-1.5 text-[11px] font-semibold rounded-[8px] transition-all bg-white text-black shadow-xs">
               Cast Acrylic
             </button>
-            <button type="button" onclick="setMaterial('gold')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
+            <button type="button" onclick="setMaterial('gold')" class="mat-btn px-3 py-1.5 text-[11px] font-medium rounded-[8px] transition-all text-[#60646c] hover:text-black">
               Champagne Gold
             </button>
-            <button type="button" onclick="setMaterial('walnut')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
+            <button type="button" onclick="setMaterial('walnut')" class="mat-btn px-3 py-1.5 text-[11px] font-medium rounded-[8px] transition-all text-[#60646c] hover:text-black">
               Solid Walnut
             </button>
-            <button type="button" onclick="setMaterial('obsidian')" class="mat-btn px-3 py-1.5 text-[11px] font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
+            <button type="button" onclick="setMaterial('obsidian')" class="mat-btn px-3 py-1.5 text-[11px] font-medium rounded-[8px] transition-all text-[#60646c] hover:text-black">
               Obsidian Black
             </button>
           </div>
@@ -722,7 +722,7 @@ function renderHomePage(store) {
       }
     }
 
-    // 4. Ambient Particle Canvas Animation (Cobalt palette)
+    // 4. Ambient Particle Canvas Animation (Brex Ember palette)
     (function initParticles() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const canvas = document.getElementById('heroParticles');
@@ -746,8 +746,8 @@ function renderHomePage(store) {
 
       function render() {
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#2563eb';
-        ctx.strokeStyle = 'rgba(37, 99, 235, 0.08)';
+        ctx.fillStyle = '#ff5900';
+        ctx.strokeStyle = 'rgba(255, 89, 0, 0.08)';
 
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
@@ -774,6 +774,23 @@ function renderHomePage(store) {
         requestAnimationFrame(render);
       }
       render();
+    })();
+
+    // 5. Dynamic Mouse-Tracking 3D Tilt for Hero Acrylic QR Standee
+    (function initStandTilt() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const stand = document.getElementById('stand3D');
+      if (!stand || !stand.parentElement) return;
+      const container = stand.parentElement;
+      container.addEventListener('mousemove', (e) => {
+        const rect = stand.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+        const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+        stand.style.transform = 'perspective(1000px) rotateX(' + (-y * 14).toFixed(2) + 'deg) rotateY(' + (x * 14).toFixed(2) + 'deg)';
+      });
+      container.addEventListener('mouseleave', () => {
+        stand.style.transform = 'perspective(1000px) rotateX(10deg) rotateY(-12deg)';
+      });
     })();
   </script>
   `;

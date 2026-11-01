@@ -140,7 +140,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <meta name="description" content="${description}">
   <meta name="keywords" content="${keywords}">
   <meta name="robots" content="${robots}">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#ff5900">
   
   <!-- Canonical & Agentic Discovery Links -->
   <link rel="canonical" href="${canonicalUrl}">
@@ -171,7 +171,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -179,28 +179,44 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       theme: {
         extend: {
           colors: {
+            ember: '#ff5900',
+            abyss: '#000710',
+            carbon: '#15191e',
+            ink: '#000000',
+            paper: '#ffffff',
+            fog: '#f3f3f7',
+            mist: '#b9bbc6',
+            steel: '#8b8d98',
+            pewter: '#6f737b',
+            graphite: '#60646c',
             brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              200: '#bfdbfe',
-              300: '#93c5fd',
-              400: '#60a5fa',
-              500: '#3b82f6',
-              600: '#2563eb', // Precision Electric Cobalt
-              700: '#1d4ed8', // Deep Royal Blue
-              800: '#1e40af',
-              900: '#1e3a8a',
-              950: '#0f172a',
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ff5900', // Brex Ember accent
+              700: '#ea580c',
+              800: '#c2410c',
+              900: '#9a3412',
+              950: '#000710', // Brex Abyss
             },
             dark: {
-              900: '#090d16', // Deep Obsidian
-              950: '#040711',
+              900: '#15191e', // Brex Carbon
+              950: '#000710', // Brex Abyss
             }
           },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-            heading: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            heading: ['Inter', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          borderRadius: {
+            'tag': '6px',
+            'card': '12px',
+            'input': '12px',
+            'btn': '12px',
           }
         }
       }
@@ -212,14 +228,51 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   ${isHomepage ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>' : ''}
   
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      touch-action: manipulation;
+    :root {
+      --color-ember: #ff5900;
+      --color-abyss: #000710;
+      --color-carbon: #15191e;
+      --color-ink: #000000;
+      --color-paper: #ffffff;
+      --color-fog: #f3f3f7;
+      --color-mist: #b9bbc6;
+      --color-steel: #8b8d98;
+      --color-pewter: #6f737b;
+      --color-graphite: #60646c;
+      --font-inter: 'Inter', system-ui, sans-serif;
     }
-    h1, h2, h3, h4, .font-heading {
-      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-      letter-spacing: -0.025em;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      letter-spacing: -0.01em;
+      touch-action: manipulation;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    h1, .text-display {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      color: #000000;
       text-wrap: balance;
+    }
+    h2, .text-heading-lg {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.025em;
+      font-weight: 700;
+      color: #000000;
+      text-wrap: balance;
+    }
+    h3, .text-heading {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.02em;
+      font-weight: 600;
+      color: #000000;
+      text-wrap: balance;
+    }
+    h4, h5, h6, .font-heading {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+      font-weight: 600;
     }
     .tabular-nums {
       font-variant-numeric: tabular-nums;
@@ -232,14 +285,14 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       will-change: transform;
     }
     .card-3d:hover {
-      box-shadow: 0 16px 36px -12px rgba(37, 99, 235, 0.12);
+      box-shadow: 0 16px 36px -12px rgba(255, 89, 0, 0.12);
     }
     
     /* 2.5D Isometric Device Mockup */
     .isometric-mockup {
       transform: rotateX(10deg) rotateY(-12deg) rotateZ(2deg);
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
-      box-shadow: -20px 30px 60px rgba(15, 23, 42, 0.15);
+      box-shadow: -20px 30px 60px rgba(0, 7, 16, 0.15);
       animation: floatSlow 6s ease-in-out infinite alternate;
     }
     .isometric-mockup:hover {
@@ -253,8 +306,8 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
     /* Ambient Clean Mesh */
     .ambient-mesh {
-      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.06), transparent 50%),
-                  radial-gradient(circle at 100% 30%, rgba(99, 102, 241, 0.04), transparent 40%);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 89, 0, 0.04), transparent 50%),
+                  radial-gradient(circle at 100% 30%, rgba(243, 243, 247, 0.8), transparent 40%);
     }
 
     /* Glare effect on 3D elements */
@@ -284,7 +337,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-brand-600 selection:text-white ambient-mesh">
+<body class="min-h-screen bg-white text-black flex flex-col selection:bg-brand-600 selection:text-white ambient-mesh">
   
   <!-- SKIP LINK FOR ACCESSIBILITY (Web Guidelines) -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 bg-brand-600 text-white px-4 py-2 rounded-xl text-xs font-bold">
@@ -292,45 +345,45 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   </a>
 
   ${!isApp ? `
-  <!-- TOP ARCHITECTURE ANNOUNCEMENT BANNER (No aggressive sales noise) -->
-  <aside class="bg-dark-950 text-slate-300 text-xs py-2.5 px-4 text-center border-b border-slate-800" aria-label="Announcement">
+  <!-- TOP ARCHITECTURE ANNOUNCEMENT BANNER (Carbon #15191e with Ember #ff5900 accent) -->
+  <aside class="bg-[#15191e] text-white text-xs py-2 px-4 text-center border-b border-[#252a32]" aria-label="Announcement">
     <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 font-bold uppercase tracking-wider text-[10px]">
+      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#ff5900]/20 text-[#ff5900] font-bold uppercase tracking-wider text-[10px]">
         ReviewKaro 2.4 Architecture
       </span>
-      <span class="font-medium text-slate-200">Zero-Login 30s In-Store QR, Neural Multi-Dialect Autopilot & Frontline Staff Attribution across India</span>
-      <a href="/features" class="font-bold text-brand-400 hover:text-brand-300 underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded">Explore Capabilities &rarr;</a>
+      <span class="font-medium text-[#f3f3f7]">Zero-Login 30s In-Store QR, Neural Multi-Dialect Autopilot &amp; Frontline Staff Attribution across India</span>
+      <a href="/features" class="font-bold text-[#ff5900] hover:underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded">Explore Capabilities &rarr;</a>
     </div>
   </aside>
 
-  <!-- NAVIGATION BAR (Minimalist Swiss Bar with Cmd+K & Multi-Vertical Directory) -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+  <!-- NAVIGATION BAR (Paper #ffffff canvas with Ink #000000 typography & Ember #ff5900 button) -->
+  <header class="bg-white border-b border-[#e5e7eb] sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
       
       <!-- Brand Logo -->
       <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl" aria-label="ReviewKaro Homepage">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-black text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-md shadow-brand-500/20">
+        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-xl" aria-label="ReviewKaro Homepage">
+          <div class="w-10 h-10 rounded-[12px] bg-[#ff5900] text-white font-bold text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm">
             R
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-slate-950 tracking-tight font-heading">ReviewKaro</span>
-              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200 font-mono">
+              <span class="font-bold text-2xl text-black tracking-tight font-heading">ReviewKaro</span>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-[#fff7ed] text-[#ff5900] border border-[#ffedd5] font-mono">
                 OS 2.4
               </span>
             </div>
-            <p class="text-[11px] text-slate-500 font-medium -mt-0.5">Autonomous Multi-Vertical Reputation OS</p>
+            <p class="text-[11px] text-[#60646c] font-medium -mt-0.5">Autonomous Multi-Vertical Reputation OS</p>
           </div>
         </a>
 
         <!-- Links -->
-        <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600" aria-label="Main Navigation">
-          <a href="/features" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'features' ? 'text-brand-600 font-bold' : ''}">Core Engine</a>
+        <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-black" aria-label="Main Navigation">
+          <a href="/features" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'features' ? 'text-[#ff5900] font-bold' : ''}">Core Engine</a>
           
           <!-- Industries Multi-Vertical Dropdown -->
           <div class="relative group cursor-pointer">
-            <span class="hover:text-brand-600 transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'industries' ? 'text-brand-600 font-bold' : ''}">
+            <span class="hover:text-[#ff5900] transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'industries' ? 'text-[#ff5900] font-bold' : ''}">
               Industries <span class="text-[9px] opacity-60">▼</span>
             </span>
             <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 hidden group-hover:block animate-in fade-in z-50">
@@ -357,30 +410,30 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
             </div>
           </div>
 
-          <a href="/free-audit" class="hover:text-brand-600 transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'audit' ? 'text-brand-600 font-bold' : ''}">
+          <a href="/free-audit" class="hover:text-[#ff5900] transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'audit' ? 'text-[#ff5900] font-bold' : ''}">
             ${getSvgIcon('search', 'w-3.5 h-3.5 text-brand-600')} Local 3-Pack Audit
           </a>
-          <a href="/for-agencies" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'agencies' ? 'text-brand-600 font-bold' : ''}">For Agencies</a>
-          <a href="/security" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'security' ? 'text-brand-600 font-bold' : ''}">Security & Trust</a>
-          <a href="/pricing" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'pricing' ? 'text-brand-600 font-bold' : ''}">Pricing</a>
-          <a href="/contact" class="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1 ${activeNav === 'contact' ? 'text-brand-600 font-bold' : ''}">Contact</a>
+          <a href="/for-agencies" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'agencies' ? 'text-[#ff5900] font-bold' : ''}">For Agencies</a>
+          <a href="/security" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'security' ? 'text-[#ff5900] font-bold' : ''}">Security & Trust</a>
+          <a href="/pricing" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'pricing' ? 'text-[#ff5900] font-bold' : ''}">Pricing</a>
+          <a href="/contact" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'contact' ? 'text-[#ff5900] font-bold' : ''}">Contact</a>
         </nav>
       </div>
 
       <!-- Action buttons & Command Palette Trigger -->
       <div class="flex items-center gap-3">
         <!-- Quick Search Cmd+K -->
-        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 px-3 min-h-[40px] rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500" aria-label="Search and Navigation">
-          ${getSvgIcon('search', 'w-3.5 h-3.5 text-slate-400')}
+        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 px-3 min-h-[40px] rounded-[12px] border border-[#b9bbc6] bg-[#f3f3f7] text-[#60646c] hover:text-black text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900]" aria-label="Search and Navigation">
+          ${getSvgIcon('search', 'w-3.5 h-3.5 text-steel')}
           <span>Quick Search</span>
-          <kbd class="px-1.5 py-0.5 text-[10px] bg-white border border-slate-200 rounded font-mono shadow-2xs">⌘K</kbd>
+          <kbd class="px-1.5 py-0.5 text-[10px] bg-white border border-[#b9bbc6] rounded font-mono shadow-2xs">⌘K</kbd>
         </button>
 
-        <a href="/login?demo=true" class="text-xs font-bold px-3.5 min-h-[44px] flex items-center text-slate-700 hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl">
+        <a href="/login?demo=true" class="text-xs font-semibold px-3.5 min-h-[44px] flex items-center text-black hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-[12px]">
           Live Demo
         </a>
 
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold px-4 min-h-[44px] rounded-xl bg-dark-950 text-white hover:bg-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 shadow-sm">
+        <a href="/app" class="inline-flex items-center gap-2 text-xs font-semibold px-4 min-h-[44px] rounded-[12px] bg-[#ff5900] text-white hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] shadow-sm">
           <span>Enterprise Desk &rarr;</span>
         </a>
       </div>
@@ -393,35 +446,35 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   </main>
 
   ${!isApp ? `
-  <!-- SAAS FOOTER (100% ZERO DEAD LINKS & TRUST GUARANTEE) -->
-  <footer class="bg-dark-950 text-slate-400 border-t border-slate-800 text-xs mt-20 pt-16 pb-12">
+  <!-- SAAS FOOTER (Brex Abyss #000710 with Mist #b9bbc6 text & Paper #ffffff headings) -->
+  <footer class="bg-[#000710] text-[#b9bbc6] border-t border-[#15191e] text-xs mt-20 pt-16 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-[#15191e]">
         
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-brand-600 text-white font-black text-base flex items-center justify-center font-heading">R</div>
+            <div class="w-8 h-8 rounded-[12px] bg-[#ff5900] text-white font-bold text-base flex items-center justify-center font-heading">R</div>
             <span class="font-extrabold text-white text-xl tracking-tight font-heading">ReviewKaro Operating System</span>
           </div>
-          <p class="text-slate-400 leading-relaxed pr-6">
-            Autonomous Google Review Autopilot & In-Store AI QR Platform. Built natively in India for clinics, cafes, restaurants, salons, spas, and gyms.
+          <p class="text-[#8b8d98] leading-relaxed pr-6">
+            Autonomous Google Review Autopilot &amp; In-Store AI QR Platform. Built natively in India for clinics, cafes, restaurants, salons, spas, and gyms.
           </p>
-          <div class="space-y-1.5 text-slate-400 text-[11px]">
-            <p class="text-brand-400 font-semibold flex items-center gap-1.5">
-              ${getSvgIcon('check', 'w-3.5 h-3.5 text-brand-400')} 100% Official Google Business Profile OAuth 2.0 API Partner
+          <div class="space-y-1.5 text-[#8b8d98] text-[11px]">
+            <p class="text-[#ff5900] font-semibold flex items-center gap-1.5">
+              ${getSvgIcon('check', 'w-3.5 h-3.5 text-[#ff5900]')} 100% Official Google Business Profile OAuth 2.0 API Partner
             </p>
-            <p class="text-slate-400 flex items-center gap-1.5">
-              ${getSvgIcon('shield', 'w-3.5 h-3.5 text-slate-400')} DPDP Act 2023 Compliant • Hosted on AWS Mumbai (ap-south-1)
+            <p class="text-[#8b8d98] flex items-center gap-1.5">
+              ${getSvgIcon('shield', 'w-3.5 h-3.5 text-[#8b8d98]')} DPDP Act 2023 Compliant • Hosted on AWS Mumbai (ap-south-1)
             </p>
-            <p class="text-slate-400 flex items-center gap-1.5">
-              ${getSvgIcon('lock', 'w-3.5 h-3.5 text-slate-400')} Zero-PHI Medical Guarantee • Strict Zero-Liability Quarantine Shield
+            <p class="text-[#8b8d98] flex items-center gap-1.5">
+              ${getSvgIcon('lock', 'w-3.5 h-3.5 text-[#8b8d98]')} Zero-PHI Medical Guarantee • Strict Zero-Liability Quarantine Shield
             </p>
           </div>
         </div>
 
         <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Engine & Capabilities</h4>
-          <ul class="space-y-2 text-slate-400">
+          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Engine &amp; Capabilities</h4>
+          <ul class="space-y-2 text-[#b9bbc6]">
             <li><a href="/features" class="hover:text-white transition-colors">Neural Dialect Autopilot</a></li>
             <li><a href="/app/qr" class="hover:text-white transition-colors">3D Physical QR Studio</a></li>
             <li><a href="/features" class="hover:text-white transition-colors">Quarantine Safety Shield</a></li>
@@ -433,38 +486,38 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
         <div class="space-y-3">
           <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Multi-Vertical</h4>
-          <ul class="space-y-2 text-slate-400">
-            <li><a href="/industries/clinics" class="hover:text-white transition-colors">Clinics & Healthcare</a></li>
-            <li><a href="/industries/restaurants" class="hover:text-white transition-colors">Cafes & Artisan Dining</a></li>
-            <li><a href="/industries/salons" class="hover:text-white transition-colors">Salons & Luxury Spas</a></li>
-            <li><a href="/industries/gyms" class="hover:text-white transition-colors">Gyms & Athletic Hubs</a></li>
-            <li><a href="/industries/coaching" class="hover:text-white transition-colors">Coaching & Academies</a></li>
+          <ul class="space-y-2 text-[#b9bbc6]">
+            <li><a href="/industries/clinics" class="hover:text-white transition-colors">Clinics &amp; Healthcare</a></li>
+            <li><a href="/industries/restaurants" class="hover:text-white transition-colors">Cafes &amp; Artisan Dining</a></li>
+            <li><a href="/industries/salons" class="hover:text-white transition-colors">Salons &amp; Luxury Spas</a></li>
+            <li><a href="/industries/gyms" class="hover:text-white transition-colors">Gyms &amp; Athletic Hubs</a></li>
+            <li><a href="/industries/coaching" class="hover:text-white transition-colors">Coaching &amp; Academies</a></li>
           </ul>
         </div>
 
         <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Trust & Compliance</h4>
-          <ul class="space-y-2 text-slate-400">
+          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Trust &amp; Compliance</h4>
+          <ul class="space-y-2 text-[#b9bbc6]">
             <li><a href="/security" class="hover:text-white transition-colors">Security Whitepaper</a></li>
             <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
             <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition-colors">Refund & Cancellation</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition-colors">Refund &amp; Cancellation</a></li>
             <li><a href="/dpdp-consent" class="hover:text-white transition-colors">DPDP Act 2023 Consent</a></li>
             <li><a href="/for-agencies" class="hover:text-white transition-colors">Agency Partner Network</a></li>
           </ul>
         </div>
       </div>
 
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#60646c] gap-4">
         <p>© 2026 ReviewKaro Technologies India Private Limited. All rights reserved.</p>
         <div class="flex items-center gap-6">
-          <a href="/login" class="hover:text-slate-400">Sign In</a>
-          <a href="/signup" class="hover:text-slate-400">Register</a>
-          <a href="/security" class="hover:text-slate-400">Security</a>
-          <a href="/privacy" class="hover:text-slate-400">Privacy</a>
-          <a href="/terms" class="hover:text-slate-400">Terms</a>
-          <span class="text-slate-600">•</span>
-          <span class="text-emerald-400 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> All Systems Operational</span>
+          <a href="/login" class="hover:text-[#b9bbc6]">Sign In</a>
+          <a href="/signup" class="hover:text-[#b9bbc6]">Register</a>
+          <a href="/security" class="hover:text-[#b9bbc6]">Security</a>
+          <a href="/privacy" class="hover:text-[#b9bbc6]">Privacy</a>
+          <a href="/terms" class="hover:text-[#b9bbc6]">Terms</a>
+          <span class="text-[#252a32]">•</span>
+          <span class="text-[#10b981] font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span> All Systems Operational</span>
         </div>
       </div>
     </div>

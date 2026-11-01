@@ -1,38 +1,35 @@
 {
   "name": "ReviewKaro Design System Tokens",
   "version": "2.4.0",
-  "description": "Enterprise Three-Layer Token Architecture for ReviewKaro: Swiss Precision, Electric Cobalt & Deep Obsidian",
+  "description": "Enterprise Three-Layer Token Architecture for ReviewKaro: Brex White Concrete, Single Ember Accent, Inter Engineered Typography",
   "primitives": {
     "color": {
-      "cobalt": {
-        "50": "#eff6ff",
-        "100": "#dbeafe",
-        "200": "#bfdbfe",
-        "300": "#93c5fd",
-        "400": "#60a5fa",
-        "500": "#3b82f6",
-        "600": "#2563eb",
-        "700": "#1d4ed8",
-        "800": "#1e40af",
-        "900": "#1e3a8a",
-        "950": "#0f172a"
+      "ember": "#ff5900",
+      "abyss": "#000710",
+      "carbon": "#15191e",
+      "ink": "#000000",
+      "paper": "#ffffff",
+      "fog": "#f3f3f7",
+      "mist": "#b9bbc6",
+      "steel": "#8b8d98",
+      "pewter": "#6f737b",
+      "graphite": "#60646c",
+      "brand": {
+        "50": "#fff7ed",
+        "100": "#ffedd5",
+        "200": "#fed7aa",
+        "300": "#fdba74",
+        "400": "#fb923c",
+        "500": "#f97316",
+        "600": "#ff5900",
+        "700": "#ea580c",
+        "800": "#c2410c",
+        "900": "#9a3412",
+        "950": "#000710"
       },
-      "obsidian": {
-        "800": "#131a29",
-        "900": "#090d16",
-        "950": "#040711"
-      },
-      "slate": {
-        "50": "#f8fafc",
-        "100": "#f1f5f9",
-        "200": "#e2e8f0",
-        "300": "#cbd5e1",
-        "400": "#94a3b8",
-        "500": "#64748b",
-        "600": "#475569",
-        "700": "#334155",
-        "800": "#1e293b",
-        "900": "#0f172a"
+      "dark": {
+        "900": "#15191e",
+        "950": "#000710"
       },
       "emerald": {
         "50": "#ecfdf5",
@@ -59,155 +56,118 @@
     },
     "typography": {
       "fontFamily": {
-        "heading": "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        "body": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "heading": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "body": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         "mono": "'JetBrains Mono', 'Fira Code', monospace"
       },
+      "letterSpacing": {
+        "display": "-0.03em",
+        "headingLg": "-0.025em",
+        "heading": "-0.02em",
+        "body": "-0.01em"
+      },
       "fontSize": {
-        "2xs": "0.6875rem",
-        "xs": "0.75rem",
-        "sm": "0.875rem",
-        "base": "1rem",
-        "lg": "1.125rem",
-        "xl": "1.25rem",
-        "2xl": "1.5rem",
-        "3xl": "1.875rem",
-        "4xl": "2.25rem",
-        "5xl": "3rem"
+        "caption": "12px",
+        "bodySm": "14px",
+        "body": "16px",
+        "subheading": "20px",
+        "headingSm": "24px",
+        "heading": "36px",
+        "headingLg": "48px",
+        "display": "72px"
       },
       "fontWeight": {
         "regular": "400",
         "medium": "500",
         "semibold": "600",
-        "bold": "700",
-        "extrabold": "800",
-        "black": "900"
+        "bold": "700"
       },
       "lineHeight": {
-        "tight": "1.15",
-        "snug": "1.25",
-        "normal": "1.5",
-        "relaxed": "1.65"
+        "display": "1.0",
+        "headingLg": "1.20",
+        "heading": "1.21",
+        "headingSm": "1.33",
+        "subheading": "1.40",
+        "bodySm": "1.43",
+        "body": "1.50"
       }
     },
     "spacing": {
-      "1": "0.25rem",
-      "1.5": "0.375rem",
-      "2": "0.5rem",
-      "3": "0.75rem",
-      "4": "1rem",
-      "5": "1.25rem",
-      "6": "1.5rem",
-      "8": "2rem",
-      "10": "2.5rem",
-      "12": "3rem",
-      "16": "4rem",
-      "20": "5rem"
+      "8": "8px",
+      "16": "16px",
+      "24": "24px",
+      "32": "32px",
+      "48": "48px",
+      "72": "72px",
+      "80": "80px",
+      "160": "160px"
     },
     "borderRadius": {
-      "none": "0",
-      "sm": "0.375rem",
-      "md": "0.5rem",
-      "lg": "0.75rem",
-      "xl": "1rem",
-      "2xl": "1.25rem",
-      "3xl": "1.5rem",
+      "none": "0px",
+      "tag": "6px",
+      "card": "12px",
+      "input": "12px",
+      "button": "12px",
       "full": "9999px"
     },
     "shadow": {
-      "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-      "md": "0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05)",
-      "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04)",
-      "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
-      "3d-cobalt": "0 16px 36px -12px rgba(37, 99, 235, 0.18)",
-      "3d-glow": "0 0 25px rgba(37, 99, 235, 0.25)"
+      "none": "none",
+      "hairline": "0 0 0 1px #b9bbc6",
+      "card": "0 1px 3px 0 rgba(0, 7, 16, 0.04)",
+      "cardHover": "0 16px 36px -12px rgba(255, 89, 0, 0.12)"
     }
   },
   "semantics": {
     "color": {
       "background": {
-        "canvas": "var(--primitive-color-slate-50)",
-        "surface": "var(--primitive-color-white)",
-        "surface-subtle": "var(--primitive-color-slate-100)",
-        "surface-inverse": "var(--primitive-color-obsidian-900)"
+        "canvas": "var(--primitive-color-paper)",
+        "surface": "var(--primitive-color-paper)",
+        "surfaceSubtle": "var(--primitive-color-fog)",
+        "surfaceInverse": "var(--primitive-color-abyss)",
+        "announcement": "var(--primitive-color-carbon)"
       },
       "text": {
-        "primary": "var(--primitive-color-slate-900)",
-        "secondary": "var(--primitive-color-slate-600)",
-        "muted": "var(--primitive-color-slate-400)",
-        "inverse": "var(--primitive-color-white)",
-        "brand": "var(--primitive-color-cobalt-600)"
-      },
-      "brand": {
-        "primary": "var(--primitive-color-cobalt-600)",
-        "primary-hover": "var(--primitive-color-cobalt-700)",
-        "primary-active": "var(--primitive-color-cobalt-800)",
-        "subtle": "var(--primitive-color-cobalt-50)",
-        "border": "var(--primitive-color-cobalt-200)"
-      },
-      "status": {
-        "success": "var(--primitive-color-emerald-600)",
-        "success-subtle": "var(--primitive-color-emerald-50)",
-        "warning": "var(--primitive-color-amber-500)",
-        "warning-subtle": "var(--primitive-color-amber-50)",
-        "danger": "var(--primitive-color-rose-600)",
-        "danger-subtle": "var(--primitive-color-rose-50)"
+        "primary": "var(--primitive-color-ink)",
+        "secondary": "var(--primitive-color-graphite)",
+        "tertiary": "var(--primitive-color-pewter)",
+        "muted": "var(--primitive-color-steel)",
+        "inverse": "var(--primitive-color-paper)",
+        "accent": "var(--primitive-color-ember)"
       },
       "border": {
-        "subtle": "var(--primitive-color-slate-200)",
-        "strong": "var(--primitive-color-slate-300)",
-        "focus": "var(--primitive-color-cobalt-500)"
+        "hairline": "var(--primitive-color-mist)",
+        "dark": "var(--primitive-color-carbon)"
       }
     }
   },
   "components": {
-    "qrPill": {
-      "default": {
-        "bg": "var(--primitive-color-slate-50)",
-        "text": "var(--primitive-color-slate-700)",
-        "border": "var(--primitive-color-slate-200)"
-      },
-      "selected": {
-        "bg": "var(--primitive-color-cobalt-600)",
-        "text": "var(--primitive-color-white)",
-        "border": "var(--primitive-color-cobalt-600)"
-      },
-      "minHeight": "40px",
-      "radius": "var(--primitive-borderRadius-lg)"
+    "topBar": {
+      "bg": "var(--primitive-color-carbon)",
+      "text": "var(--primitive-color-paper)",
+      "accent": "var(--primitive-color-ember)"
     },
     "buttonPrimary": {
-      "default": {
-        "bg": "var(--primitive-color-cobalt-600)",
-        "text": "var(--primitive-color-white)",
-        "shadow": "var(--primitive-shadow-sm)"
-      },
-      "hover": {
-        "bg": "var(--primitive-color-cobalt-700)",
-        "shadow": "var(--primitive-shadow-md)"
-      },
-      "active": {
-        "bg": "var(--primitive-color-cobalt-800)"
-      },
-      "minHeight": "44px",
-      "radius": "var(--primitive-borderRadius-xl)"
+      "bg": "var(--primitive-color-ember)",
+      "text": "var(--primitive-color-paper)",
+      "radius": "12px",
+      "padding": "8px 16px",
+      "weight": "600"
     },
-    "card3D": {
-      "bg": "var(--primitive-color-white)",
-      "border": "1px solid var(--primitive-color-slate-200)",
-      "radius": "var(--primitive-borderRadius-3xl)",
-      "shadow": "var(--primitive-shadow-sm)",
-      "hoverShadow": "var(--primitive-shadow-3d-cobalt)",
-      "hoverTransform": "translateY(-2px)"
+    "buttonGhost": {
+      "bg": "transparent",
+      "text": "var(--primitive-color-ink)",
+      "weight": "500"
     },
-    "badgeQuarantine": {
-      "bg": "var(--primitive-color-amber-50)",
-      "text": "var(--primitive-color-amber-600)",
-      "border": "1px solid var(--primitive-color-amber-400)"
+    "card": {
+      "bg": "var(--primitive-color-paper)",
+      "radius": "12px",
+      "padding": "24px 32px",
+      "border": "1px solid var(--primitive-color-mist)"
     },
-    "badgeAutopilot": {
-      "bg": "var(--primitive-color-emerald-50)",
-      "text": "var(--primitive-color-emerald-700)",
-      "border": "1px solid var(--primitive-color-emerald-500)"
+    "footer": {
+      "bg": "var(--primitive-color-abyss)",
+      "text": "var(--primitive-color-mist)",
+      "heading": "var(--primitive-color-paper)"
     }
   }
 }

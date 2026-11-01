@@ -1614,52 +1614,52 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
           <div class="text-center space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#f3f3f7] border border-[#b9bbc6]/40 text-[#ff5900] text-xs font-bold font-mono">
               Core Technical Architecture
             </div>
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Reputation Architecture Engineered for India</h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h1 class="text-4xl sm:text-5xl font-bold text-black tracking-[-0.03em] font-heading">Reputation Architecture Engineered for India</h1>
+            <p class="text-[#60646c] text-sm sm:text-base leading-relaxed">
               Every capability is built specifically to address local business challenges across high-trust consumer enterprises in India—from dental operatory sterilization to restaurant bill folders.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-              <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center">
-                ${getSvgIcon('globe', 'w-5 h-5 text-brand-600')}
+            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+              <div class="w-10 h-10 rounded-[8px] bg-[#fff7ed] text-[#ff5900] flex items-center justify-center">
+                ${getSvgIcon('globe', 'w-5 h-5 text-[#ff5900]')}
               </div>
-              <h2 class="font-bold text-xl text-slate-900 font-heading">Multi-Lingual Dialect Mirroring</h2>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Multi-Lingual Dialect Mirroring</h2>
+              <p class="text-xs text-[#60646c] leading-relaxed">
                 ReviewKaro naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone in under 4 minutes.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+              <div class="w-10 h-10 rounded-[8px] bg-amber-50 text-amber-700 flex items-center justify-center">
                 ${getSvgIcon('shield', 'w-5 h-5 text-amber-600')}
               </div>
-              <h2 class="font-bold text-xl text-slate-900 font-heading">Zero-Liability Quarantine Safety Shield</h2>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Zero-Liability Quarantine Safety Shield</h2>
+              <p class="text-xs text-[#60646c] leading-relaxed">
                 Hardcoded safety validator blocks refund offers, admissions of medical fault, or staff blame. Quarantines 1–3 star complaints into a private queue with direct manager telephone fallback.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+              <div class="w-10 h-10 rounded-[8px] bg-blue-50 text-blue-700 flex items-center justify-center">
                 ${getSvgIcon('qr', 'w-5 h-5 text-blue-600')}
               </div>
-              <h2 class="font-bold text-xl text-slate-900 font-heading">In-Clinic AI QR Studio</h2>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">In-Clinic AI QR Studio</h2>
+              <p class="text-xs text-[#60646c] leading-relaxed">
                 Download printable A6 counter cards, A4 table tents, and bill stickers. Customers scan, tap 3 choices, get an AI draft built strictly from their selections, and post on Google Maps in 30 seconds.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-              <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
+            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+              <div class="w-10 h-10 rounded-[8px] bg-teal-50 text-teal-700 flex items-center justify-center">
                 ${getSvgIcon('mapPin', 'w-5 h-5 text-teal-600')}
               </div>
-              <h2 class="font-bold text-xl text-slate-900 font-heading">Google Local 3-Pack Keyword Injection</h2>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Google Local 3-Pack Keyword Injection</h2>
+              <p class="text-xs text-[#60646c] leading-relaxed">
                 Naturally weaves your neighborhood and service terms into positive replies (e.g., <em>“best dental clinic in Indiranagar”</em>), signaling search relevance directly to the Google Local 3-Pack algorithm.
               </p>
             </div>
@@ -1687,34 +1687,34 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
           <div class="space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#f3f3f7] border border-[#b9bbc6]/40 text-[#ff5900] text-xs font-bold font-mono">
               Transparent Indian Rupee Billing
             </div>
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Transparent INR Plans. No Foreign Exchange Shock.</h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h1 class="text-4xl sm:text-5xl font-bold text-black tracking-[-0.03em] font-heading">Transparent INR Plans. No Foreign Exchange Shock.</h1>
+            <p class="text-[#60646c] text-sm sm:text-base leading-relaxed">
               Month-to-month flexibility. Pay securely with Razorpay UPI (GPay, PhonePe, Paytm, BHIM) or NetBanking. Full 18% GST tax invoices for input tax credit.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left items-stretch">
             ${PLANS.map((plan) => `
-              <div class="p-6 rounded-3xl bg-white border ${plan.isPopular ? 'border-2 border-brand-500 shadow-lg relative' : 'border-slate-200 shadow-sm'} flex flex-col justify-between card-3d">
+              <div class="p-6 rounded-[12px] bg-white border ${plan.isPopular ? 'border-2 border-[#ff5900] shadow-sm relative' : 'border-[#b9bbc6]/40 shadow-xs'} flex flex-col justify-between card-3d">
                 <div class="space-y-4">
                   <div class="flex justify-between items-center">
-                    <h2 class="font-bold text-xl text-slate-900 font-heading">${plan.name}</h2>
-                    ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 bg-brand-600 text-white rounded-full">Popular</span>' : ''}
+                    <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">${plan.name}</h2>
+                    ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#ff5900] text-white rounded-[6px]">Popular</span>' : ''}
                   </div>
                   <div>
-                    <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">
+                    <span class="text-3xl font-bold text-black font-heading tabular-nums tracking-[-0.02em]">
                       ${plan.id === 'enterprise' ? 'Custom' : '₹' + plan.monthlyPrice}
                     </span>
-                    ${plan.id !== 'enterprise' ? '<span class="text-xs text-slate-500"> / mo</span>' : ''}
+                    ${plan.id !== 'enterprise' ? '<span class="text-xs text-[#60646c]"> / mo</span>' : ''}
                   </div>
-                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                  <ul class="space-y-2 text-xs text-[#60646c] pt-3 border-t border-[#e5e7eb]">
                     ${plan.features.map((f) => `<li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>${f}</span></li>`).join('')}
                   </ul>
                 </div>
-                <a href="${session ? '/app/billing' : `/signup?plan=${plan.id}`}" class="mt-6 block w-full py-2.5 text-center rounded-xl ${plan.isPopular ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' : 'bg-slate-900 hover:bg-slate-800 text-white'} text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <a href="${session ? '/app/billing' : `/signup?plan=${plan.id}`}" class="mt-6 block w-full py-2.5 text-center rounded-[12px] ${plan.isPopular ? 'bg-[#ff5900] hover:opacity-90 text-white shadow-none' : 'bg-[#15191e] hover:bg-black text-white'} text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900]">
                   ${session ? 'Choose ' + plan.name : 'Start with ' + plan.name} &rarr;
                 </a>
               </div>
