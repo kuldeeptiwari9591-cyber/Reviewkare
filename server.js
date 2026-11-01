@@ -241,7 +241,7 @@ function destroySession(token) {
 // Helper: Get Session from Request
 function getSessionFromReq(req) {
   const cookies = parseCookies(req);
-  const token = cookies.reviewkaro_session || cookies.replyo_session;
+  const token = cookies.reviewkare_session || cookies.reviewkaro_session || cookies.replyo_session;
   if (!token) return null;
   const reg = getRegistry();
   const session = reg.sessions?.[token];
@@ -405,7 +405,7 @@ const { PLANS } = require('./dist/src/lib/store/db.js');
 const { getVerticalConfig, generateVerticalReviewDraft, VERTICAL_PROFILES } = require('./src/lib/verticals.js');
 
 const PORT = process.env.PORT || 3000;
-const BASE_URL = (process.env.BASE_URL || 'https://reviewkaro.tech').replace(/\/+$/, '');
+const BASE_URL = (process.env.BASE_URL || 'https://reviewkare.tech').replace(/\/+$/, '');
 
 // Modular View Architecture (Anti-Slop & UI/UX Pro Max Standard)
 const { getSvgIcon, getStarRatingSvg } = require('./src/views/icons.js');
@@ -650,7 +650,7 @@ const server = http.createServer((req, res) => {
     }
 
     if (pathname === '/api/contact' && method === 'POST') {
-      return sendJson(200, { success: true, message: 'Thank you for reaching out! A ReviewKaro specialist will call you within 2 business hours.' });
+      return sendJson(200, { success: true, message: 'Thank you for reaching out! A ReviewKare specialist will call you within 2 business hours.' });
     }
 
     // AUTH: Login with Rate Limiting, Multi-Tenant Session & Password Verification
@@ -713,6 +713,7 @@ const server = http.createServer((req, res) => {
         message: 'Authentication successful'
       }, {
         'Set-Cookie': [
+          `reviewkare_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `reviewkaro_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `replyo_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
         ]
@@ -832,7 +833,7 @@ const server = http.createServer((req, res) => {
         notifications: [
           {
             id: 'notif_welcome',
-            title: 'Welcome to ReviewKaro!',
+            title: 'Welcome to ReviewKare!',
             message: `Your smart review QR is live at /q/${qrSlug}. Display your digital QR code to collect Google reviews!`,
             time: 'Just now',
             unread: true,
@@ -871,6 +872,7 @@ const server = http.createServer((req, res) => {
         message: 'Account created and trial started successfully'
       }, {
         'Set-Cookie': [
+          `reviewkare_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `reviewkaro_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `replyo_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
         ]
@@ -926,9 +928,9 @@ const server = http.createServer((req, res) => {
         amount: orderResult.order.amount,
         currency: 'INR',
         keyId: config.keyId || 'rzp_test_placeholder',
-        planName: `${planNames[planId] || 'ReviewKaro Plan'} (${billingCycle})`,
+        planName: `${planNames[planId] || 'ReviewKare Plan'} (${billingCycle})`,
         userName: store.user?.name || 'Valued Partner',
-        userEmail: store.user?.email || 'partner@reviewkaro.tech',
+        userEmail: store.user?.email || 'partner@reviewkare.tech',
         userPhone: store.user?.phone || '9876543210'
       });
     }
@@ -1001,7 +1003,7 @@ const server = http.createServer((req, res) => {
     // AUTH: Logout API Endpoint (Clears Session)
     if (pathname === '/api/auth/logout' && method === 'POST') {
       const cookies = parseCookies(req);
-      const sess = cookies.reviewkaro_session || cookies.replyo_session;
+      const sess = cookies.reviewkare_session || cookies.reviewkaro_session || cookies.replyo_session;
       if (sess) {
         destroySession(sess);
       }
@@ -1011,6 +1013,7 @@ const server = http.createServer((req, res) => {
         message: 'Logged out successfully'
       }, {
         'Set-Cookie': [
+          'reviewkare_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
           'reviewkaro_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
           'replyo_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
         ]
@@ -1216,7 +1219,7 @@ const server = http.createServer((req, res) => {
     // AGENTIC DISCOVERY & MODERN SEO ENDPOINTS (llms.txt, sitemap.xml, robots.txt, ai-catalog)
     // ----------------------------------------------------
     if (pathname === '/robots.txt') {
-      const robotsTxt = `# ReviewKaro RFC 9309 Compliant Agent Access Policy & Content Signals
+      const robotsTxt = `# ReviewKare RFC 9309 Compliant Agent Access Policy & Content Signals
 # Canonical: ${BASE_URL}/robots.txt
 
 User-agent: *
@@ -1265,16 +1268,16 @@ Agentmap: ${BASE_URL}/.well-known/ai-catalog.json
         { loc: `${BASE_URL}/industries/salons`, priority: '0.8', changefreq: 'weekly' },
         { loc: `${BASE_URL}/industries/gyms`, priority: '0.8', changefreq: 'weekly' },
         { loc: `${BASE_URL}/industries/coaching`, priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://reviewkaro.tech/blog', priority: '0.8', changefreq: 'weekly' },
-        { loc: 'https://reviewkaro.tech/blog/dr-sharma-case-study', priority: '0.7', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/blog/responding-to-negative-reviews', priority: '0.7', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/blog/google-local-pack-seo-2026', priority: '0.7', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/contact', priority: '0.7', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/terms', priority: '0.5', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/privacy', priority: '0.5', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/refund-policy', priority: '0.5', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/dpdp-consent', priority: '0.5', changefreq: 'monthly' },
-        { loc: 'https://reviewkaro.tech/book-demo', priority: '0.7', changefreq: 'weekly' }
+        { loc: 'https://reviewkare.tech/blog', priority: '0.8', changefreq: 'weekly' },
+        { loc: 'https://reviewkare.tech/blog/dr-sharma-case-study', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/blog/responding-to-negative-reviews', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/blog/google-local-pack-seo-2026', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/contact', priority: '0.7', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/terms', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/privacy', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/refund-policy', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/dpdp-consent', priority: '0.5', changefreq: 'monthly' },
+        { loc: 'https://reviewkare.tech/book-demo', priority: '0.7', changefreq: 'weekly' }
       ];
 
       const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -1296,42 +1299,42 @@ ${urls.map(u => `  <url>
     }
 
     if (pathname === '/llms.txt') {
-      const llmsTxt = `# ReviewKaro — Autonomous Google Review & In-Store QR Operating System
+      const llmsTxt = `# ReviewKare — Autonomous Google Review & In-Store QR Operating System
 
-> ReviewKaro is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. ReviewKaro integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack prominence, and quarantine negative feedback for 1-tap manager resolution.
+> ReviewKare is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. ReviewKare integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack prominence, and quarantine negative feedback for 1-tap manager resolution.
 
-ReviewKaro operates strictly via official Google Business Profile OAuth 2.0 APIs with 100% data sovereignty hosted inside AWS Asia Pacific (Mumbai) in full adherence to India's DPDP Act 2023 and NMC Medical Ethics guidelines.
+ReviewKare operates strictly via official Google Business Profile OAuth 2.0 APIs with 100% data sovereignty hosted inside AWS Asia Pacific (Mumbai) in full adherence to India's DPDP Act 2023 and NMC Medical Ethics guidelines.
 
 ## Core Capabilities
 
-- [Features Architecture](https://reviewkaro.tech/features): Deep breakdown of dialect mirroring (Hindi, Hinglish, English), 4-minute response jitter, and local SEO keyword weaving.
-- [In-Store AI QR Studio](https://reviewkaro.tech/qr-kit): Medical-grade acrylic countertop stands, table tents, and zero-app 30-second customer review builder.
-- [Free Local 3-Pack Audit Tool](https://reviewkaro.tech/free-audit): Real-time reputation gap scanner for local businesses and competitor comparison.
-- [Frequently Asked Questions](https://reviewkaro.tech/faq): Authoritative answers on Google algorithm compliance, DPDP Act 2023, and response safety.
-- [Clinical Privacy & Security Whitepaper](https://reviewkaro.tech/security): Technical controls, Zero-PHI guarantee, TLS 1.3 encryption, and AWS Mumbai data residency.
+- [Features Architecture](https://reviewkare.tech/features): Deep breakdown of dialect mirroring (Hindi, Hinglish, English), 4-minute response jitter, and local SEO keyword weaving.
+- [In-Store AI QR Studio](https://reviewkare.tech/qr-kit): Medical-grade acrylic countertop stands, table tents, and zero-app 30-second customer review builder.
+- [Free Local 3-Pack Audit Tool](https://reviewkare.tech/free-audit): Real-time reputation gap scanner for local businesses and competitor comparison.
+- [Frequently Asked Questions](https://reviewkare.tech/faq): Authoritative answers on Google algorithm compliance, DPDP Act 2023, and response safety.
+- [Clinical Privacy & Security Whitepaper](https://reviewkare.tech/security): Technical controls, Zero-PHI guarantee, TLS 1.3 encryption, and AWS Mumbai data residency.
 
 ## Pricing (INR)
 
-- [Transparent Indian Rupee Plans](https://reviewkaro.tech/pricing): Month-to-month and quarterly subscriptions (Starter Solo ₹1,249/mo, Growth Autopilot ₹2,999/quarter Hero Offer, Multi-Branch Pro ₹3,499/mo). Includes 14-day free pilot and 18% GST tax invoices.
+- [Transparent Indian Rupee Plans](https://reviewkare.tech/pricing): Month-to-month and quarterly subscriptions (Starter Solo ₹1,249/mo, Growth Autopilot ₹2,999/quarter Hero Offer, Multi-Branch Pro ₹3,499/mo). Includes 14-day free pilot and 18% GST tax invoices.
 
 ## Multi-Vertical Solutions
 
-- [Healthcare & Dental Clinics](https://reviewkaro.tech/industries/clinics): Painless root canal and aesthetic treatment review automation with NMC ethics compliance.
-- [Cafes, Dining & Bakeries](https://reviewkaro.tech/industries/restaurants): Specialty coffee and artisan bakery review capture with bill-folder NFC tags.
-- [Salons & Luxury Spas](https://reviewkaro.tech/industries/salons): Balayage and styling review attribution with stylist tipping incentives.
-- [Gyms & Athletic Centers](https://reviewkaro.tech/industries/gyms): Strength training and trainer review attribution with turnstile NFC check-ins.
-- [Coaching & Academies](https://reviewkaro.tech/industries/coaching): Student testimonial and course reputation automation.
+- [Healthcare & Dental Clinics](https://reviewkare.tech/industries/clinics): Painless root canal and aesthetic treatment review automation with NMC ethics compliance.
+- [Cafes, Dining & Bakeries](https://reviewkare.tech/industries/restaurants): Specialty coffee and artisan bakery review capture with bill-folder NFC tags.
+- [Salons & Luxury Spas](https://reviewkare.tech/industries/salons): Balayage and styling review attribution with stylist tipping incentives.
+- [Gyms & Athletic Centers](https://reviewkare.tech/industries/gyms): Strength training and trainer review attribution with turnstile NFC check-ins.
+- [Coaching & Academies](https://reviewkare.tech/industries/coaching): Student testimonial and course reputation automation.
 
 ## Playbooks & Case Studies
 
-- [Dr. Sharma Clinic Case Study](https://reviewkaro.tech/blog/dr-sharma-case-study): How an Indiranagar practice gained +128 reviews and moved from 4.4 to 4.8 stars in 60 days.
-- [Zero-Liability De-escalation Guide](https://reviewkaro.tech/blog/responding-to-negative-reviews): Templates for responding to 1-star negative reviews without admitting legal fault.
-- [Google Local 3-Pack SEO 2026](https://reviewkaro.tech/blog/google-local-pack-seo-2026): Algorithmic breakdown of response velocity and keyword weaving for high-intent walk-ins.
+- [Dr. Sharma Clinic Case Study](https://reviewkare.tech/blog/dr-sharma-case-study): How an Indiranagar practice gained +128 reviews and moved from 4.4 to 4.8 stars in 60 days.
+- [Zero-Liability De-escalation Guide](https://reviewkare.tech/blog/responding-to-negative-reviews): Templates for responding to 1-star negative reviews without admitting legal fault.
+- [Google Local 3-Pack SEO 2026](https://reviewkare.tech/blog/google-local-pack-seo-2026): Algorithmic breakdown of response velocity and keyword weaving for high-intent walk-ins.
 
 ## Optional & Agency Partner Network
 
-- [Agency Partner Network](https://reviewkaro.tech/for-agencies): White-label client PDF reporting desk with 30% recurring margin share.
-- [Legal Terms & Compliance](https://reviewkaro.tech/terms): Official terms of service, DPDP consent, and refund policies.
+- [Agency Partner Network](https://reviewkare.tech/for-agencies): White-label client PDF reporting desk with 30% recurring margin share.
+- [Legal Terms & Compliance](https://reviewkare.tech/terms): Official terms of service, DPDP consent, and refund policies.
 `;
       res.writeHead(200, {
         'Content-Type': 'text/plain; charset=utf-8',
@@ -1342,10 +1345,10 @@ ReviewKaro operates strictly via official Google Business Profile OAuth 2.0 APIs
     }
 
     if (pathname === '/llms-full.txt') {
-      const llmsFullTxt = `# ReviewKaro Operating System — Full Architecture & Operational Reference
+      const llmsFullTxt = `# ReviewKare Operating System — Full Architecture & Operational Reference
 Version: 2.4 (October 2026)
-Publisher: ReviewKaro Technologies India Private Limited (Koramangala, Bengaluru, Karnataka, India)
-Canonical URL: https://reviewkaro.tech
+Publisher: ReviewKare Technologies India Private Limited (Koramangala, Bengaluru, Karnataka, India)
+Canonical URL: https://reviewkare.tech
 Compliance: India DPDP Act 2023, National Medical Commission (NMC) 2023, Google API Terms
 
 ## 1. Executive Summary & Problem Space
@@ -1354,8 +1357,8 @@ High-touch local businesses in India—especially dental clinics, aesthetic derm
 2. Dialect Disconnect: Indian customers write reviews in colloquial Hinglish, Devanagari Hindi, and English. Traditional generic SaaS tools reply with rigid robotic English templates, hurting customer rapport.
 3. Negative Review Liability: Upset patients leaving 1-star reviews are often met with public apologies that inadvertently admit medical or service fault, exposing clinics to consumer complaints and legal liability.
 
-## 2. ReviewKaro Core Architecture
-ReviewKaro provides an end-to-end autonomous operating system:
+## 2. ReviewKare Core Architecture
+ReviewKare provides an end-to-end autonomous operating system:
 - In-Store AI QR Flow (/q/:slug): Lightweight (<85KB) web app loaded via NFC tap or tabletop acrylic stand. Zero login, zero app download, zero PHI collection. Patients tap choices; AI synthesizes a first-person authentic review and copies it to clipboard while opening Google Maps.
 - Neural Dialect Autopilot: Mirrors reviewer dialect (Hinglish, Hindi, English) in under 4 minutes with a humanized response jitter, embedding local search keywords (e.g., "painless root canal in Indiranagar").
 - Negative Review Quarantine Shield: 1-3 star reviews are automatically quarantined. The engine drafts an empathetic, zero-liability resolution and notifies the owner via WhatsApp for 1-tap approval.
@@ -1386,34 +1389,34 @@ All plans include 14-day free pilot, UPI AutoPay, and 18% GST tax invoices.
         "specVersion": "1.0",
         "entries": [
           {
-            "identifier": "urn:air:reviewkaro.tech:reputation-os",
-            "displayName": "ReviewKaro Autonomous Review & Reputation Engine",
+            "identifier": "urn:air:reviewkare.tech:reputation-os",
+            "displayName": "ReviewKare Autonomous Review & Reputation Engine",
             "type": "text/markdown",
-            "url": "https://reviewkaro.tech/llms-full.txt",
+            "url": "https://reviewkare.tech/llms-full.txt",
             "representativeQueries": [
-              "How does ReviewKaro automate Google review replies?",
-              "What is the pricing for ReviewKaro in Indian Rupees?",
-              "Is ReviewKaro compliant with DPDP Act 2023 and Google API policies?"
+              "How does ReviewKare automate Google review replies?",
+              "What is the pricing for ReviewKare in Indian Rupees?",
+              "Is ReviewKare compliant with DPDP Act 2023 and Google API policies?"
             ]
           },
           {
-            "identifier": "urn:air:reviewkaro.tech:local-audit",
-            "displayName": "ReviewKaro Google Local 3-Pack Audit Tool",
+            "identifier": "urn:air:reviewkare.tech:local-audit",
+            "displayName": "ReviewKare Google Local 3-Pack Audit Tool",
             "type": "text/html",
-            "url": "https://reviewkaro.tech/free-audit",
+            "url": "https://reviewkare.tech/free-audit",
             "representativeQueries": [
               "Audit Google Maps ranking for local clinic or salon",
               "Check unanswered review count and rating gap"
             ]
           },
           {
-            "identifier": "urn:air:reviewkaro.tech:llms-manifest",
-            "displayName": "ReviewKaro LLM Agent Manifest",
+            "identifier": "urn:air:reviewkare.tech:llms-manifest",
+            "displayName": "ReviewKare LLM Agent Manifest",
             "type": "text/markdown",
-            "url": "https://reviewkaro.tech/llms.txt",
+            "url": "https://reviewkare.tech/llms.txt",
             "representativeQueries": [
-              "Summary of ReviewKaro capabilities and endpoints",
-              "ReviewKaro site map for autonomous AI agents"
+              "Summary of ReviewKare capabilities and endpoints",
+              "ReviewKare site map for autonomous AI agents"
             ]
           }
         ]
@@ -1430,12 +1433,12 @@ All plans include 14-day free pilot, UPI AutoPay, and 18% GST tax invoices.
     if (req.headers.accept && req.headers.accept.includes('text/markdown') && !pathname.startsWith('/api/') && !pathname.startsWith('/app/')) {
       const publicPaths = ['/', '/features', '/pricing', '/faq', '/security', '/compliance', '/qr-kit', '/for-agencies', '/free-audit', '/contact'];
       if (publicPaths.includes(pathname) || pathname.startsWith('/industries/') || pathname.startsWith('/blog')) {
-        const md = `# ReviewKaro Operating System — ${pathname === '/' ? 'Home' : pathname}
-Canonical URL: https://reviewkaro.tech${pathname}
+        const md = `# ReviewKare Operating System — ${pathname === '/' ? 'Home' : pathname}
+Canonical URL: https://reviewkare.tech${pathname}
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 
-ReviewKaro is the Autonomous Google Review & In-Store AI QR Operating System for high-touch Indian businesses (clinics, salons, cafes, gyms).
-Full technical context and documentation available at: https://reviewkaro.tech/llms-full.txt
+ReviewKare is the Autonomous Google Review & In-Store AI QR Operating System for high-touch Indian businesses (clinics, salons, cafes, gyms).
+Full technical context and documentation available at: https://reviewkare.tech/llms-full.txt
 `;
         res.writeHead(200, {
           'Content-Type': 'text/markdown; charset=utf-8',
@@ -1453,7 +1456,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
     if (pathname === '/') {
       const store = getStore();
       const html = renderHtmlPage(
-        'ReviewKaro — Autonomous Google Review Autopilot & In-Store AI QR Operating System',
+        'ReviewKare — Autonomous Google Review Autopilot & In-Store AI QR Operating System',
         'home',
         renderHomePage(store),
         {
@@ -1476,13 +1479,14 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
 
     if (pathname === '/logout') {
       const cookies = parseCookies(req);
-      const sess = cookies.reviewkaro_session || cookies.replyo_session;
+      const sess = cookies.reviewkare_session || cookies.reviewkaro_session || cookies.replyo_session;
       if (sess) {
         destroySession(sess);
       }
       res.writeHead(302, {
         'Location': '/login?logged_out=1',
         'Set-Cookie': [
+          'reviewkare_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
           'reviewkaro_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
           'replyo_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
         ],
@@ -1511,7 +1515,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderSecurityPage(),
         {
           canonical: '/security',
-          description: 'ReviewKaro clinical privacy and institutional security whitepaper. Strict compliance with India DPDP Act 2023, NMC Medical Ethics, Zero-PHI guarantee, TLS 1.3, and AWS Mumbai data residency.',
+          description: 'ReviewKare clinical privacy and institutional security whitepaper. Strict compliance with India DPDP Act 2023, NMC Medical Ethics, Zero-PHI guarantee, TLS 1.3, and AWS Mumbai data residency.',
           keywords: 'DPDP Act 2023 compliance, NMC medical ethics review software, healthcare data residency India, Zero PHI guarantee, clinical data security',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Security & Trust', url: '/security' }]
         }
@@ -1526,7 +1530,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderBookDemoPage(),
         {
           canonical: '/book-demo',
-          description: 'Schedule a 1-on-1 live walkthrough of ReviewKaro with our senior solutions architect. Learn how in-store AI QR stands and autonomous review replies scale your local business.',
+          description: 'Schedule a 1-on-1 live walkthrough of ReviewKare with our senior solutions architect. Learn how in-store AI QR stands and autonomous review replies scale your local business.',
           keywords: 'schedule demo, Google review software demo, clinic reputation walkthrough, local business SaaS consultation',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Book Demo', url: '/book-demo' }]
         }
@@ -1541,7 +1545,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderFaqPage(),
         {
           canonical: '/faq',
-          description: 'Frequently asked questions about ReviewKaro: Google algorithm compliance, DPDP Act 2023, zero review gating, multi-dialect support (Hindi, Hinglish, English), and multi-branch management.',
+          description: 'Frequently asked questions about ReviewKare: Google algorithm compliance, DPDP Act 2023, zero review gating, multi-dialect support (Hindi, Hinglish, English), and multi-branch management.',
           keywords: 'Google review automation FAQ, Google review policy compliance, DPDP Act 2023 review SaaS, medical ethics Google reviews, multi-branch reputation questions',
           faqItems: FAQ_ITEMS,
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
@@ -1572,7 +1576,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderTermsPage(),
         {
           canonical: '/terms',
-          description: 'ReviewKaro Terms of Service. Governs subscription agreements, Google API usage policies, multi-tenant account governance, and fair use guidelines under Indian law.',
+          description: 'ReviewKare Terms of Service. Governs subscription agreements, Google API usage policies, multi-tenant account governance, and fair use guidelines under Indian law.',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Terms of Service', url: '/terms' }]
         }
       );
@@ -1586,7 +1590,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderPrivacyPage(),
         {
           canonical: '/privacy',
-          description: 'ReviewKaro Privacy Policy in compliance with India’s Digital Personal Data Protection Act 2023. Explains data minimization, Zero-PHI guarantee, and AWS Mumbai hosting.',
+          description: 'ReviewKare Privacy Policy in compliance with India’s Digital Personal Data Protection Act 2023. Explains data minimization, Zero-PHI guarantee, and AWS Mumbai hosting.',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Privacy Policy', url: '/privacy' }]
         }
       );
@@ -1600,7 +1604,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderRefundPolicyPage(),
         {
           canonical: '/refund-policy',
-          description: 'ReviewKaro subscription refund, cancellation, and billing policies. 14-day free pilot guarantee and transparent month-to-month cancellation with no hidden lock-ins.',
+          description: 'ReviewKare subscription refund, cancellation, and billing policies. 14-day free pilot guarantee and transparent month-to-month cancellation with no hidden lock-ins.',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Refund Policy', url: '/refund-policy' }]
         }
       );
@@ -1614,7 +1618,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         renderDpdpConsentPage(),
         {
           canonical: '/dpdp-consent',
-          description: 'Official consent notice and data principal rights under India’s Digital Personal Data Protection Act 2023 for ReviewKaro reputation operating system users.',
+          description: 'Official consent notice and data principal rights under India’s Digital Personal Data Protection Act 2023 for ReviewKare reputation operating system users.',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'DPDP Consent', url: '/dpdp-consent' }]
         }
       );
@@ -1647,7 +1651,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
               </div>
               <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Multi-Lingual Dialect Mirroring</h2>
               <p class="text-xs text-[#60646c] leading-relaxed">
-                ReviewKaro naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone in under 4 minutes.
+                ReviewKare naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone in under 4 minutes.
               </p>
             </div>
 
@@ -1685,7 +1689,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       `,
         {
           canonical: '/features',
-          description: 'Explore ReviewKaro reputation architecture: multi-dialect neural mirroring, zero-liability quarantine shield, frontline staff attribution, and Google Local 3-Pack rank booster.',
+          description: 'Explore ReviewKare reputation architecture: multi-dialect neural mirroring, zero-liability quarantine shield, frontline staff attribution, and Google Local 3-Pack rank booster.',
           keywords: 'Google Business Profile AI, review automation features, dialect mirroring, negative review quarantine shield, Google Local 3-Pack SEO, local keyword injection',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Features', url: '/features' }]
         }
@@ -1741,7 +1745,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       `,
         {
           canonical: '/pricing',
-          description: 'Transparent Indian Rupee (INR) pricing for ReviewKaro Google Review Autopilot. Starter at ₹1,249/mo, Growth Hero at ₹2,999/quarter, and Pro at ₹3,499/mo. 18% GST input tax credit.',
+          description: 'Transparent Indian Rupee (INR) pricing for ReviewKare Google Review Autopilot. Starter at ₹1,249/mo, Growth Hero at ₹2,999/quarter, and Pro at ₹3,499/mo. 18% GST input tax credit.',
           keywords: 'SaaS review pricing INR, Google review software price India, clinic reputation management cost, UPI AutoPay subscription, GST invoice SaaS',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Pricing', url: '/pricing' }]
         }
@@ -1805,7 +1809,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             </div>
             <div class="text-center pt-2">
               <a href="/app" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                Manage Profile with ReviewKaro &rarr;
+                Manage Profile with ReviewKare &rarr;
               </a>
             </div>
           </div>
@@ -1824,7 +1828,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           name: 'Dental & Aesthetic Clinics',
           title: 'Google Review Autopilot for Dental & Aesthetic Clinics in India',
           hero: 'Autonomous Reputation OS for Dental, Dermatology & Healthcare Clinics',
-          desc: 'Turn everyday patient checkups and dental treatments into authentic 5-star Google reviews in 30 seconds. ReviewKaro automates clinical dialect replies with local search keywords, protects against medical malpractice liability with our quarantine shield, and strictly adheres to NMC ethics and the DPDP Act 2023.',
+          desc: 'Turn everyday patient checkups and dental treatments into authentic 5-star Google reviews in 30 seconds. ReviewKare automates clinical dialect replies with local search keywords, protects against medical malpractice liability with our quarantine shield, and strictly adheres to NMC ethics and the DPDP Act 2023.',
           keywords: 'dental clinic Google reviews, aesthetic clinic reputation management, painless root canal reviews, doctor Google rating Bangalore, clinic review QR stand, NMC ethics medical reviews',
           touchpoint: 'Billing Counter Acrylic Stand & Operatory Tray NFC Card',
           exampleSvc: 'Painless Root Canal, Clear Aligners, Laser Hair Removal, Hydrafacial',
@@ -1834,7 +1838,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           name: 'Hair Salons & Spas',
           title: 'Google Review Autopilot & Stylist Attribution for Salons & Luxury Spas',
           hero: 'Turn Styling Sessions & Hair Spa Days into Glowing Google Reviews',
-          desc: 'Empower your stylists and colorists with contactless mirror QR stands. ReviewKaro mirrors beauty influencer phrasing, credits tips and bonuses directly into staff performance ledgers, and boosts your salon to the top of Google Local 3-Pack for high-intent walk-ins.',
+          desc: 'Empower your stylists and colorists with contactless mirror QR stands. ReviewKare mirrors beauty influencer phrasing, credits tips and bonuses directly into staff performance ledgers, and boosts your salon to the top of Google Local 3-Pack for high-intent walk-ins.',
           keywords: 'salon Google reviews, spa reputation software, hair artist review attribution, balayage reviews Bangalore Mumbai, salon tipping QR, luxury spa ratings',
           touchpoint: 'Styling Station Mirror QR Sticker & Reception NFC Tap Stand',
           exampleSvc: 'Ash Blonde Balayage, Keratin Smoothing, Ayurvedic Head Massage, Gel Extensions',
@@ -1844,7 +1848,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           name: 'Restaurants, Cafes & Bakeries',
           title: 'Google Review Autopilot for Cafes, Dining & Bakeries in India',
           hero: 'Collect 5-Star Foodie Feedback Directly at the Table or Bill Folder',
-          desc: 'Capture delighted diner reviews while the aftertaste of great food is fresh. ReviewKaro puts a 30-second review builder inside the bill folder or table tent. It weaves local culinary keywords into automated owner replies and quarantines order complaints before they hit Google Maps.',
+          desc: 'Capture delighted diner reviews while the aftertaste of great food is fresh. ReviewKare puts a 30-second review builder inside the bill folder or table tent. It weaves local culinary keywords into automated owner replies and quarantines order complaints before they hit Google Maps.',
           keywords: 'restaurant Google reviews, cafe bill folder QR, specialty coffee reviews Indiranagar Bandra, dining review autopilot, Zomato alternative reputation',
           touchpoint: 'Bill Presenter Leather Folder NFC & Acrylic Table Tent QR',
           exampleSvc: 'Specialty Pour-Over, Sourdough Croissants, Wood-Fired Neapolitan Pizza, Craft Cocktails',
@@ -1864,7 +1868,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           name: 'Coaching & Tuition Centers',
           title: 'Student Testimonials & Google Review OS for Coaching & Academic Academies',
           hero: 'Turn Student Rank Achievements into Verifiable Google Search Prominence',
-          desc: 'Help parents and aspiring students discover your academic results. ReviewKaro enables student and parent review collection with zero friction, building organic trust for competitive exam prep and tuition batches.',
+          desc: 'Help parents and aspiring students discover your academic results. ReviewKare enables student and parent review collection with zero friction, building organic trust for competitive exam prep and tuition batches.',
           keywords: 'coaching center Google reviews, tuition academy reputation, student testimonials Google Maps, education institute ranking India',
           touchpoint: 'Parent Counseling Desk Stand & Student Admit Card QR',
           exampleSvc: 'JEE Advanced Foundation, NEET Biology Mentorship, Commerce Tuitions, Olympiad Prep',
@@ -1930,7 +1934,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             <div class="p-6 bg-brand-50/60 rounded-2xl border border-brand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div class="space-y-1">
                 <h3 class="font-bold text-sm text-brand-950 font-heading">Need custom physical stands or POS integration?</h3>
-                <p class="text-xs text-brand-800">ReviewKaro connects natively with Petpooja, Zenoti, Practo, and custom billing APIs.</p>
+                <p class="text-xs text-brand-800">ReviewKare connects natively with Petpooja, Zenoti, Practo, and custom billing APIs.</p>
               </div>
               <a href="/book-demo" class="px-4 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all text-center">
                 Schedule Technical Consult &rarr;
@@ -1964,7 +1968,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-3">
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Earn 30% Recurring Commission with ReviewKaro</h1>
+            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Earn 30% Recurring Commission with ReviewKare</h1>
             <p class="text-slate-600 text-sm max-w-xl mx-auto">Manage all client Google Business Profiles under one roof with white-label client PDF report cards.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
@@ -1988,7 +1992,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       `,
         {
           canonical: '/for-agencies',
-          description: 'Partner with ReviewKaro to manage client Google Business Profiles at scale. White-label client PDF reports, multi-tenant dashboard, and 30% recurring monthly margin share.',
+          description: 'Partner with ReviewKare to manage client Google Business Profiles at scale. White-label client PDF reports, multi-tenant dashboard, and 30% recurring monthly margin share.',
           keywords: 'agency review software white-label, Google Business Profile reseller, local SEO agency partner program India, review management for agencies',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'For Agencies', url: '/for-agencies' }]
         }
@@ -2002,7 +2006,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
     if (pathname.startsWith('/vs/')) {
       const comp = pathname.split('/')[2] || 'birdeye';
       const html = renderHtmlPage(
-        'ReviewKaro vs Birdeye: The Local Reputation OS Built for India',
+        'ReviewKare vs Birdeye: The Local Reputation OS Built for India',
         'vs',
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
@@ -2011,10 +2015,10 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
               Head-to-Head Architectural Comparison
             </div>
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
-              ReviewKaro vs Birdeye: Why Indian Businesses Save 85% Annually
+              ReviewKare vs Birdeye: Why Indian Businesses Save 85% Annually
             </h1>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-              Birdeye is built for enterprise US corporations billing in USD. ReviewKaro is natively engineered for clinics, salons, and cafes in India—with transparent INR billing, WhatsApp owner approvals, and Hinglish dialect mirroring.
+              Birdeye is built for enterprise US corporations billing in USD. ReviewKare is natively engineered for clinics, salons, and cafes in India—with transparent INR billing, WhatsApp owner approvals, and Hinglish dialect mirroring.
             </p>
           </div>
 
@@ -2024,7 +2028,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                 <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-heading">
                   <tr>
                     <th class="p-4 sm:p-5 font-bold">Feature / Capability</th>
-                    <th class="p-4 sm:p-5 font-bold text-brand-600 bg-brand-50/50">ReviewKaro (India Native)</th>
+                    <th class="p-4 sm:p-5 font-bold text-brand-600 bg-brand-50/50">ReviewKare (India Native)</th>
                     <th class="p-4 sm:p-5 font-bold text-slate-500">Birdeye (US Enterprise)</th>
                   </tr>
                 </thead>
@@ -2073,9 +2077,9 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       `,
         {
           canonical: '/vs/birdeye',
-          description: 'Compare ReviewKaro vs Birdeye. Why Indian clinics, salons and restaurants choose ReviewKaro for transparent INR pricing, UPI AutoPay, WhatsApp approvals, and Hinglish dialect mirroring.',
-          keywords: 'ReviewKaro vs Birdeye, Birdeye alternative India, reputation management software price India, Birdeye pricing INR',
-          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Compare', url: '/features' }, { name: 'ReviewKaro vs Birdeye', url: '/vs/birdeye' }]
+          description: 'Compare ReviewKare vs Birdeye. Why Indian clinics, salons and restaurants choose ReviewKare for transparent INR pricing, UPI AutoPay, WhatsApp approvals, and Hinglish dialect mirroring.',
+          keywords: 'ReviewKare vs Birdeye, Birdeye alternative India, reputation management software price India, Birdeye pricing INR',
+          breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Compare', url: '/features' }, { name: 'ReviewKare vs Birdeye', url: '/vs/birdeye' }]
         }
       );
       return sendHtml(200, html);
@@ -2087,7 +2091,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
     if (pathname.startsWith('/integrations/')) {
       const slug = pathname.split('/')[2] || 'petpooja';
       const html = renderHtmlPage(
-        'Petpooja POS + ReviewKaro: Automatic Google Reviews for Restaurants',
+        'Petpooja POS + ReviewKare: Automatic Google Reviews for Restaurants',
         'integrations',
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
@@ -2096,7 +2100,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
               Certified POS Webhook Connector
             </div>
             <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
-              Petpooja POS + ReviewKaro Review Autopilot
+              Petpooja POS + ReviewKare Review Autopilot
             </h1>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
               Automatically trigger feedback requests when diners pay their food bill on Petpooja POS. Collect authentic 5-star Google Maps reviews while the dining experience is fresh.
@@ -2107,12 +2111,12 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
               <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 01</span>
               <h2 class="font-bold text-base text-slate-900 font-heading">Bill Print / Settle</h2>
-              <p class="text-slate-500 leading-relaxed">Cashier settles the dining table on Petpooja POS. Webhook instantly fires to ReviewKaro with zero delay.</p>
+              <p class="text-slate-500 leading-relaxed">Cashier settles the dining table on Petpooja POS. Webhook instantly fires to ReviewKare with zero delay.</p>
             </div>
             <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
               <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 02</span>
               <h2 class="font-bold text-base text-slate-900 font-heading">Smart 30-Min Delay</h2>
-              <p class="text-slate-500 leading-relaxed">ReviewKaro holds the review invitation until diners finish dessert, preventing intrusive interruptions.</p>
+              <p class="text-slate-500 leading-relaxed">ReviewKare holds the review invitation until diners finish dessert, preventing intrusive interruptions.</p>
             </div>
             <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
               <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 03</span>
@@ -2178,7 +2182,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                 <p id="generatedUrl" class="font-mono text-xs text-brand-700 break-all select-all font-bold"></p>
               </div>
               <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 space-y-2">
-                <p><strong>Want to automate this?</strong> ReviewKaro turns this link into an interactive 30-second Hinglish builder that automatically weeds out 1-star complaints before they hit Google Maps.</p>
+                <p><strong>Want to automate this?</strong> ReviewKare turns this link into an interactive 30-second Hinglish builder that automatically weeds out 1-star complaints before they hit Google Maps.</p>
                 <a href="/signup" class="inline-block font-bold text-brand-700 hover:underline">Start 14-Day Free Pilot &rarr;</a>
               </div>
             </div>
@@ -2261,7 +2265,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           content: `
             <p>Dr. Sharma Dental & Implant Clinic in Indiranagar was receiving over 300 patient visits each month, yet only 3 or 4 patients ever took the time to leave a Google review. Dissatisfied patients, however, were quick to vent online, causing their clinic rating to drop to 4.4 stars.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Solution: In-Clinic AI QR Flow</h2>
-            <p>Dr. Sharma installed an A6 acrylic counter card at the billing counter and two table tents in the waiting lounge. Instead of asking patients to write long paragraphs, the QR code launched ReviewKaro's 30-second review builder.</p>
+            <p>Dr. Sharma installed an A6 acrylic counter card at the billing counter and two table tents in the waiting lounge. Instead of asking patients to write long paragraphs, the QR code launched ReviewKare's 30-second review builder.</p>
             <p>Patients simply tapped what they had done (e.g. “Root Canal”, “Teeth Whitening”), how comfortable they felt (“Painless Procedure”), and selected Hinglish. The AI synthesized an authentic review instantly, and with one tap, the text was copied to the patient's clipboard as Google Maps opened.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Results</h2>
             <ul class="list-disc pl-5 space-y-1">
@@ -2277,7 +2281,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           content: `
             <p>When an unhappy patient leaves a 1-star review on Google Maps, the clinic owner's natural impulse is either to write a defensive argument or to apologize profusely and offer a discount. Both approaches carry substantial legal and reputational hazards.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 1: Never Admit Medical Negligence Online</h2>
-            <p>A public apology stating “We are sorry our doctor made a mistake” can be used as evidence in consumer disputes or Medical Council inquiries. ReviewKaro's hardcoded safety validator blocks fault admission automatically.</p>
+            <p>A public apology stating “We are sorry our doctor made a mistake” can be used as evidence in consumer disputes or Medical Council inquiries. ReviewKare's hardcoded safety validator blocks fault admission automatically.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 2: Move the Discussion Offline Promptly</h2>
             <p>Provide a direct telephone number to the clinic manager or administrator. This signals to prospective patients reading the review that your clinic takes patient feedback seriously and handles concerns professionally.</p>
           `
@@ -2288,7 +2292,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           content: `
             <p>Google's local search algorithm prioritizes three primary pillars: Relevance, Distance, and Prominence. In dense metropolitan markets like Bengaluru, Mumbai, and Delhi, distance is often neutralized because many competitors operate in the same neighborhood.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Review Velocity and Owner Response Rate</h2>
-            <p>Businesses that respond to 95%+ of reviews within 24 hours receive a measurable prominence boost in local pack rankings. ReviewKaro responds to 4-5 star reviews in under 4 minutes, ensuring your profile maintains the highest response velocity in your zip code.</p>
+            <p>Businesses that respond to 95%+ of reviews within 24 hours receive a measurable prominence boost in local pack rankings. ReviewKare responds to 4-5 star reviews in under 4 minutes, ensuring your profile maintains the highest response velocity in your zip code.</p>
             <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Keyword Weaving in Official Responses</h2>
             <p>When an owner responds with natural phrases like <em>“Thank you for choosing Dr. Sharma for your painless root canal in Indiranagar”</em>, Google's semantic index connects your listing to those high-intent local search queries.</p>
           `
@@ -2311,7 +2315,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             ${article.content}
             <div class="pt-6 border-t border-slate-100 text-center">
               <a href="/signup" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                Automate Your Clinic's Reviews with ReviewKaro &rarr;
+                Automate Your Clinic's Reviews with ReviewKare &rarr;
               </a>
             </div>
           </div>
@@ -2377,7 +2381,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                 <h2 class="font-bold text-lg font-heading">Headquarters & Support</h2>
                 <div class="text-xs space-y-2 text-slate-400">
                   <p><strong class="text-white">Bengaluru HQ:</strong> 80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
-                  <p><strong class="text-white">Email:</strong> support@reviewkaro.tech</p>
+                  <p><strong class="text-white">Email:</strong> support@reviewkare.tech</p>
                   <p><strong class="text-white">Phone Support:</strong> +91 80 4719 2830 (Mon–Sat, 9am – 7pm IST)</p>
                 </div>
               </div>
@@ -2406,8 +2410,8 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       `,
         {
           canonical: '/contact',
-          description: 'Contact ReviewKaro Technologies India Private Limited. Customer support, business inquiries, and technical support in Koramangala, Bengaluru.',
-          keywords: 'contact ReviewKaro, ReviewKaro Bengaluru office, Google review customer care India, reputation support phone',
+          description: 'Contact ReviewKare Technologies India Private Limited. Customer support, business inquiries, and technical support in Koramangala, Bengaluru.',
+          keywords: 'contact ReviewKare, ReviewKare Bengaluru office, Google review customer care India, reputation support phone',
           breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
         }
       );
@@ -2426,29 +2430,29 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       };
       const title = titles[pathname];
       const descriptions = {
-        '/privacy': 'Official ReviewKaro Privacy Policy in accordance with India DPDP Act 2023. Zero-PHI guarantee and AWS Mumbai data residency.',
-        '/terms': 'Official Terms of Service governing ReviewKaro Google Business Profile automation, APIs, and multi-tenant software usage.',
-        '/refund-policy': 'Transparent refund and cancellation policy for ReviewKaro subscriptions. 14-day free pilot and hassle-free cancellation.',
+        '/privacy': 'Official ReviewKare Privacy Policy in accordance with India DPDP Act 2023. Zero-PHI guarantee and AWS Mumbai data residency.',
+        '/terms': 'Official Terms of Service governing ReviewKare Google Business Profile automation, APIs, and multi-tenant software usage.',
+        '/refund-policy': 'Transparent refund and cancellation policy for ReviewKare subscriptions. 14-day free pilot and hassle-free cancellation.',
         '/dpdp-consent': 'Consent notice, data fiduciary obligations, and user rights under the Digital Personal Data Protection Act 2023.'
       };
       const html = renderHtmlPage(title, '', `
         <div class="space-y-8 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div class="border-b border-slate-200 pb-4">
             <h1 class="text-3xl font-black text-slate-900 font-heading">${title}</h1>
-            <p class="text-xs text-slate-500 mt-1">Last Updated: October 2026 • ReviewKaro Technologies India Pvt Ltd</p>
+            <p class="text-xs text-slate-500 mt-1">Last Updated: October 2026 • ReviewKare Technologies India Pvt Ltd</p>
           </div>
           <div class="bg-white p-8 rounded-3xl border border-slate-200 text-xs leading-relaxed text-slate-700 space-y-4">
-            <p><strong>1. Compliance & Data Governance:</strong> ReviewKaro operates in full adherence to the Digital Personal Data Protection Act 2023 of India and Google API Services User Data Policy.</p>
-            <p><strong>2. Google API Data Usage:</strong> ReviewKaro accesses Google Business Profile reviews solely to ingest comments and draft or post owner-authorized review replies. Customer review drafting (/q/[code]) requires zero login and does not collect phone numbers, email addresses, or names.</p>
-            <p><strong>3. Anti-Incentivization Policy:</strong> In compliance with Google Local Guides and FTC regulations, ReviewKaro strictly prohibits offering rewards, discounts, or financial compensation in exchange for Google reviews.</p>
+            <p><strong>1. Compliance & Data Governance:</strong> ReviewKare operates in full adherence to the Digital Personal Data Protection Act 2023 of India and Google API Services User Data Policy.</p>
+            <p><strong>2. Google API Data Usage:</strong> ReviewKare accesses Google Business Profile reviews solely to ingest comments and draft or post owner-authorized review replies. Customer review drafting (/q/[code]) requires zero login and does not collect phone numbers, email addresses, or names.</p>
+            <p><strong>3. Anti-Incentivization Policy:</strong> In compliance with Google Local Guides and FTC regulations, ReviewKare strictly prohibits offering rewards, discounts, or financial compensation in exchange for Google reviews.</p>
             <p><strong>4. Invoicing & Taxes:</strong> All subscriptions are billed in Indian Rupees (INR) with 18% GST invoices generated for input tax credit.</p>
-            <p><strong>5. Contact Information:</strong> For legal inquiries or DPDP data deletion requests, contact our compliance officer at <code class="text-brand-700 font-semibold">compliance@reviewkaro.tech</code>.</p>
+            <p><strong>5. Contact Information:</strong> For legal inquiries or DPDP data deletion requests, contact our compliance officer at <code class="text-brand-700 font-semibold">compliance@reviewkare.tech</code>.</p>
           </div>
         </div>
       `, {
         canonical: pathname,
-        description: descriptions[pathname] || `${title} - ReviewKaro Technologies India Private Limited.`,
-        keywords: `${title}, ReviewKaro legal policy, DPDP Act 2023 India, Google API review guidelines`,
+        description: descriptions[pathname] || `${title} - ReviewKare Technologies India Private Limited.`,
+        keywords: `${title}, ReviewKare legal policy, DPDP Act 2023 India, Google API review guidelines`,
         breadcrumbs: [{ name: 'Home', url: '/' }, { name: title, url: pathname }]
       });
       return sendHtml(200, html);
@@ -2481,6 +2485,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
           role: store.user?.role || 'Executive Group Director'
         });
         res.setHeader('Set-Cookie', [
+          `reviewkare_session=${demoToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `reviewkaro_session=${demoToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
           `replyo_session=${demoToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
         ]);
@@ -2514,7 +2519,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                 <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">4.8</span>
                 <div class="flex gap-0.5">${getStarRatingSvg(5, 'w-3.5 h-3.5')}</div>
               </div>
-              <p class="text-[11px] text-emerald-600 font-bold tabular-nums">↑ +0.4 since activating ReviewKaro</p>
+              <p class="text-[11px] text-emerald-600 font-bold tabular-nums">↑ +0.4 since activating ReviewKare</p>
             </div>
 
             <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-1 card-3d">
@@ -2757,7 +2762,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                   <h4 class="font-extrabold text-base text-slate-900 font-heading">${store.location.name}</h4>
                   <p class="text-[11px] text-slate-600">Loved your visit? Share feedback in 30 seconds</p>
                   <div id="qrcodeCanvas" class="p-3 bg-white border border-slate-200 inline-block rounded-2xl shadow-sm"></div>
-                  <p class="text-[10px] text-slate-400 font-mono">reviewkaro.tech/q/sharma-dent-01</p>
+                  <p class="text-[10px] text-slate-400 font-mono">reviewkare.tech/q/sharma-dent-01</p>
                 </div>
               </div>
 
@@ -2948,7 +2953,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
               <div>
                 <h3 class="font-bold text-lg text-slate-900 font-heading">Reputation Health Report Card</h3>
-                <p class="text-xs text-slate-500">Period: 12 Oct 2026 – 19 Oct 2026 • Prepared by ReviewKaro</p>
+                <p class="text-xs text-slate-500">Period: 12 Oct 2026 – 19 Oct 2026 • Prepared by ReviewKare</p>
               </div>
               <span class="text-xs font-bold text-brand-800 bg-brand-100 px-3 py-1 rounded-full">Status: Excellent</span>
             </div>
@@ -3311,7 +3316,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
                 key: data.keyId,
                 amount: data.amount,
                 currency: data.currency || 'INR',
-                name: 'ReviewKaro Operating System',
+                name: 'ReviewKare Operating System',
                 description: data.planName,
                 order_id: data.orderId,
                 handler: async function (response) {
@@ -3743,7 +3748,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
             </div>
             <h1 class="text-2xl font-black text-slate-900 font-heading">You Are Offline</h1>
             <p class="text-slate-500 text-xs leading-relaxed">
-              We couldn't connect to ReviewKaro servers. Please check your mobile data or Wi-Fi connection. Any pending review approval links will automatically resume once reconnected.
+              We couldn't connect to ReviewKare servers. Please check your mobile data or Wi-Fi connection. Any pending review approval links will automatically resume once reconnected.
             </p>
             <div class="pt-2">
               <button onclick="window.location.reload()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors">
@@ -3764,7 +3769,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
         `,
         {
           canonical: '/offline',
-          description: 'Offline fallback page for ReviewKaro. Check your internet connection.',
+          description: 'Offline fallback page for ReviewKare. Check your internet connection.',
           robots: 'noindex, nofollow'
         }
       );
@@ -3800,7 +3805,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
       </div>
     `, {
       canonical: pathname,
-      description: 'Page not found - ReviewKaro Operating System',
+      description: 'Page not found - ReviewKare Operating System',
       robots: 'noindex, follow'
     }));
     } catch (err) {
@@ -3812,7 +3817,7 @@ Full technical context and documentation available at: https://reviewkaro.tech/l
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n======================================================`);
-  console.log(`🚀 ReviewKaro 2.0 (Swiss Minimalist & Fully Accessible) is LIVE on port ${PORT}`);
+  console.log(`🚀 ReviewKare 2.0 (Swiss Minimalist & Fully Accessible) is LIVE on port ${PORT}`);
   console.log(`👉 http://localhost:${PORT}`);
   console.log(`======================================================\n`);
 });

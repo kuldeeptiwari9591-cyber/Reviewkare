@@ -20,10 +20,10 @@ function renderLoginPage(query = {}) {
           <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform font-heading">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKaro</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          Sign in to ReviewKaro Enterprise
+          Sign in to ReviewKare Enterprise
         </h1>
         <p class="mt-1.5 text-xs text-slate-500 font-medium">
           Autonomous Google Review Autopilot & In-Store Smart QR Operating System
@@ -42,7 +42,7 @@ function renderLoginPage(query = {}) {
       <!-- Authentication Required Notice -->
       <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center gap-2.5 text-xs font-semibold shadow-xs animate-in fade-in" role="alert">
         ${getSvgIcon('lock', 'w-4 h-4 text-amber-600 shrink-0')}
-        <span>Please sign in with your business email to access your ReviewKaro workspace.</span>
+        <span>Please sign in with your business email to access your ReviewKare workspace.</span>
       </div>
       ` : ''}
 
@@ -201,7 +201,7 @@ function renderSignupPage() {
           <div class="w-10 h-10 rounded-xl bg-dark-950 flex items-center justify-center text-brand-400 font-black text-xl shadow-md">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKaro</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
           Start Your 14-Day Free Pilot
@@ -496,7 +496,7 @@ function renderForgotPasswordPage() {
           <div class="w-10 h-10 rounded-xl bg-dark-950 flex items-center justify-center text-brand-400 font-black text-xl shadow-md">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKaro</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
         </a>
         <h1 class="text-2xl font-extrabold text-slate-900 font-heading tracking-tight">
           Reset Clinic Password

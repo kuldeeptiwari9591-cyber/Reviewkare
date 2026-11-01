@@ -3,36 +3,36 @@ const { getSvgIcon, getStarRatingSvg } = require('./icons.js');
 
 const HOME_FAQS = [
   {
-    q: "How does ReviewKaro automate Google review replies without violating Google policies?",
-    a: "ReviewKaro operates exclusively through official Google Business Profile OAuth 2.0 APIs. Instead of instantaneous automated replies that leave a bot footprint, ReviewKaro incorporates a humanized 3-to-5 minute response jitter. Every reply is uniquely generated with dialect mirroring and localized service keywords rather than robotic canned templates, in full compliance with Google's developer terms."
+    q: "How does ReviewKare automate Google review replies without violating Google policies?",
+    a: "ReviewKare operates exclusively through official Google Business Profile OAuth 2.0 APIs. Instead of instantaneous automated replies that leave a bot footprint, ReviewKare incorporates a humanized 3-to-5 minute response jitter. Every reply is uniquely generated with dialect mirroring and localized service keywords rather than robotic canned templates, in full compliance with Google's developer terms."
   },
   {
     q: "What is the Negative Review Quarantine Shield and how does it prevent legal liability?",
-    a: "When a customer posts a 1-to-3 star review, ReviewKaro instantly halts automated publishing and routes the incident to the Negative Quarantine Shield. The AI generates a de-escalating draft that admits zero medical or legal liability, conveys empathy, and provides a direct telephone contact for the managing director or clinic head. The reply is dispatched to the owner's WhatsApp and email for 1-tap approval before anything goes live."
+    a: "When a customer posts a 1-to-3 star review, ReviewKare instantly halts automated publishing and routes the incident to the Negative Quarantine Shield. The AI generates a de-escalating draft that admits zero medical or legal liability, conveys empathy, and provides a direct telephone contact for the managing director or clinic head. The reply is dispatched to the owner's WhatsApp and email for 1-tap approval before anything goes live."
   },
   {
     q: "How does the in-store 30-second AI QR review builder work without requiring patient login?",
     a: "Customers scan an NFC or QR stand placed at your checkout counter or treatment tray. The web app loads in under 0.8 seconds (under 85KB) with zero app download, zero password prompt, and zero phone number collection. The customer taps their services, selects their attendant or doctor, and picks their preferred language. The AI generates an authentic first-person review and copies it to their clipboard while opening the official Google review dialogue in 1 tap."
   },
   {
-    q: "Does ReviewKaro support regional Indian languages like Hindi, Hinglish, Tamil, Telugu, and Kannada?",
-    a: "Yes. ReviewKaro is natively engineered for the Indian linguistic landscape. It detects and responds in Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone."
+    q: "Does ReviewKare support regional Indian languages like Hindi, Hinglish, Tamil, Telugu, and Kannada?",
+    a: "Yes. ReviewKare is natively engineered for the Indian linguistic landscape. It detects and responds in Devanagari Hindi, colloquial Hinglish ('Bohot acha treatment tha, Dr. Sharma bilkul gentle the'), English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone."
   },
   {
-    q: "How does ReviewKaro boost Google Local 3-Pack rankings on Google Maps?",
-    a: "Google's local ranking algorithm prioritizes three core factors: Relevance, Distance, and Prominence. By maintaining a 99%+ response rate in under 4 minutes and naturally weaving local search keywords (e.g., 'painless root canal in Indiranagar Bangalore') into official replies, ReviewKaro signals high prominence and relevance to the Google Maps search algorithm."
+    q: "How does ReviewKare boost Google Local 3-Pack rankings on Google Maps?",
+    a: "Google's local ranking algorithm prioritizes three core factors: Relevance, Distance, and Prominence. By maintaining a 99%+ response rate in under 4 minutes and naturally weaving local search keywords (e.g., 'painless root canal in Indiranagar Bangalore') into official replies, ReviewKare signals high prominence and relevance to the Google Maps search algorithm."
   },
   {
-    q: "Can healthcare clinics and doctors safely use ReviewKaro under NMC guidelines and DPDP Act 2023?",
-    a: "Yes. ReviewKaro enforces a strict Zero-PHI (Protected Health Information) medical guarantee in adherence to National Medical Commission (NMC) ethics regulations and India's Digital Personal Data Protection Act 2023. Review responses never mention patient diagnoses, prescription details, or medical records, and all data is hosted within AWS Asia Pacific (Mumbai) data centers."
+    q: "Can healthcare clinics and doctors safely use ReviewKare under NMC guidelines and DPDP Act 2023?",
+    a: "Yes. ReviewKare enforces a strict Zero-PHI (Protected Health Information) medical guarantee in adherence to National Medical Commission (NMC) ethics regulations and India's Digital Personal Data Protection Act 2023. Review responses never mention patient diagnoses, prescription details, or medical records, and all data is hosted within AWS Asia Pacific (Mumbai) data centers."
   },
   {
     q: "How does Frontline Staff Attribution and the tipping/incentive leaderboard operate?",
-    a: "When customers scan your in-store QR stand, they can select the staff member who attended to them (e.g. Dr. Sneha, Barista Shreyas, Stylist Farhan). When a 5-star review mentioning their service is posted, ReviewKaro credits an attribution bonus into your internal staff performance ledger, motivating frontline teams to deliver exceptional guest hospitality."
+    a: "When customers scan your in-store QR stand, they can select the staff member who attended to them (e.g. Dr. Sneha, Barista Shreyas, Stylist Farhan). When a 5-star review mentioning their service is posted, ReviewKare credits an attribution bonus into your internal staff performance ledger, motivating frontline teams to deliver exceptional guest hospitality."
   },
   {
     q: "What are the subscription pricing plans and is there a free trial?",
-    a: "ReviewKaro offers transparent Indian Rupee (INR) pricing with zero foreign exchange fees: Starter Solo at ₹1,249/month, Growth Autopilot at ₹2,999/quarter (₹999/mo Hero Offer), and Multi-Branch Pro at ₹3,499/month. All plans include a 14-day free pilot with instant UPI activation and downloadable 18% GST tax invoices."
+    a: "ReviewKare offers transparent Indian Rupee (INR) pricing with zero foreign exchange fees: Starter Solo at ₹1,249/month, Growth Autopilot at ₹2,999/quarter (₹999/mo Hero Offer), and Multi-Branch Pro at ₹3,499/month. All plans include a 14-day free pilot with instant UPI activation and downloadable 18% GST tax invoices."
   }
 ];
 
@@ -59,7 +59,7 @@ function renderHomePage(store) {
           </h1>
 
           <p class="text-base sm:text-lg text-[#60646c] leading-relaxed max-w-2xl font-normal">
-            Turn every customer visit into an authentic 5-star Google review in 30 seconds. ReviewKaro automatically mirrors customer dialect in 4 minutes with local search keywords, quarantines negative feedback for 1-tap manager resolution, and attributes reviews to frontline staff.
+            Turn every customer visit into an authentic 5-star Google review in 30 seconds. ReviewKare automatically mirrors customer dialect in 4 minutes with local search keywords, quarantines negative feedback for 1-tap manager resolution, and attributes reviews to frontline staff.
           </p>
 
           <!-- Primary Call to Actions (No cheap sales hype) -->
@@ -120,7 +120,7 @@ function renderHomePage(store) {
                   <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
                   <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
                 </div>
-                <div class="text-[9px] font-bold text-[#ff5900] tracking-tighter font-mono">REVIEWKARO 2.4</div>
+                <div class="text-[9px] font-bold text-[#ff5900] tracking-tighter font-mono">REVIEWKARE 2.4</div>
                 <div class="flex justify-between w-full">
                   <div class="w-6 h-6 border-2 border-[#ff5900] rounded-sm"></div>
                   <div class="w-2 h-2 bg-[#ff5900] rounded-full"></div>
@@ -170,7 +170,7 @@ function renderHomePage(store) {
           One Operating System. Tailored In-Store Workflows.
         </h2>
         <p class="text-slate-600 text-sm">
-          Select an industry below to see how ReviewKaro adapts its 30-second customer choices, frontline staff attribution, and Google Local 3-Pack keyword engine.
+          Select an industry below to see how ReviewKare adapts its 30-second customer choices, frontline staff attribution, and Google Local 3-Pack keyword engine.
         </p>
       </div>
 
@@ -291,7 +291,7 @@ function renderHomePage(store) {
         </div>
         <h3 class="text-lg font-bold text-slate-900 font-heading">Neural Multi-Dialect Mirroring</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Google reviews in Indian metros span colloquial Hinglish, Devanagari Hindi, Tamil, Telugu, Kannada, and English. ReviewKaro detects nuances, mirroring the customer’s exact warmth and vocabulary.
+          Google reviews in Indian metros span colloquial Hinglish, Devanagari Hindi, Tamil, Telugu, Kannada, and English. ReviewKare detects nuances, mirroring the customer’s exact warmth and vocabulary.
         </p>
         <div class="pt-2 text-[11px] font-bold text-brand-600 font-mono">
           Devanagari • Hinglish • Tamil • Telugu • Kannada
@@ -347,7 +347,7 @@ function renderHomePage(store) {
         </div>
         <h3 class="text-lg font-bold text-slate-900 font-heading">Google Local 3-Pack Algorithm Engine</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Google Local 3-Pack ranking is governed by review response velocity, keyword density in replies, and review freshness. ReviewKaro executes replies in 4 minutes with localized service keywords.
+          Google Local 3-Pack ranking is governed by review response velocity, keyword density in replies, and review freshness. ReviewKare executes replies in 4 minutes with localized service keywords.
         </p>
         <div class="pt-2 text-[11px] font-bold text-emerald-700 font-mono">
           48% Click-Through Share on Rank #1 Local Pack
@@ -383,7 +383,7 @@ function renderHomePage(store) {
           Test Autonomous Dialect Mirroring
         </h2>
         <p class="text-slate-600 text-xs sm:text-sm">
-          Click a review dialect below to watch how ReviewKaro mirrors the tone, acknowledges frontline staff, and weaves local search keywords.
+          Click a review dialect below to watch how ReviewKare mirrors the tone, acknowledges frontline staff, and weaves local search keywords.
         </p>
       </div>
 
@@ -447,10 +447,10 @@ function renderHomePage(store) {
           System Definition & Entity Specifications
         </div>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
-          What is ReviewKaro? The Autonomous Google Review & In-Store QR Operating System
+          What is ReviewKare? The Autonomous Google Review & In-Store QR Operating System
         </h2>
         <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
-          <strong>ReviewKaro</strong> is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. ReviewKaro integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack ranking prominence, and quarantine negative feedback for 1-tap manager resolution.
+          <strong>ReviewKare</strong> is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. ReviewKare integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack ranking prominence, and quarantine negative feedback for 1-tap manager resolution.
         </p>
       </div>
 
@@ -523,7 +523,7 @@ function renderHomePage(store) {
       </div>
 
       <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center space-y-3 shadow-sm">
-        <h3 class="font-bold text-base text-slate-900 font-heading">Ready to see ReviewKaro active in your business?</h3>
+        <h3 class="font-bold text-base text-slate-900 font-heading">Ready to see ReviewKare active in your business?</h3>
         <p class="text-xs text-slate-500 max-w-lg mx-auto">Start with a 14-day free pilot. Instant UPI setup, zero setup fee, and cancel anytime in one click.</p>
         <div class="pt-2 flex flex-wrap justify-center gap-3">
           <a href="/signup" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">

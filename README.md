@@ -1,4 +1,4 @@
-# ReviewKaro - Autonomous Google Review SaaS for Indian Businesses
+# ReviewKare - Autonomous Google Review SaaS for Indian Businesses
 
 > **Review Reply & In-Clinic AI QR Flow** engineered specifically for Indian clinics, salons, restaurants, gyms, and coaching centres.
 

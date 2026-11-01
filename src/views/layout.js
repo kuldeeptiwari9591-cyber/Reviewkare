@@ -6,10 +6,10 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
   const description = options.description || "Autonomous Multi-Dialect Google Review Autopilot & In-Store QR flows for Indian clinics, cafes, restaurants, salons & gyms. 4-min AI replies, zero-liability quarantine shield, staff attribution leaderboard.";
   const canonicalPath = options.canonical || (isHomepage ? '/' : '');
-  const canonicalUrl = `https://reviewkaro.tech${canonicalPath}`;
-  const fullTitle = title.includes('ReviewKaro') ? title : `${title} | ReviewKaro — Autonomous Review & In-Store QR Operating System`;
+  const canonicalUrl = `https://reviewkare.tech${canonicalPath}`;
+  const fullTitle = title.includes('ReviewKare') ? title : `${title} | ReviewKare — Autonomous Review & In-Store QR Operating System`;
   const ogType = options.ogType || (options.article ? 'article' : 'website');
-  const ogImage = options.ogImage || 'https://reviewkaro.tech/static/og-banner.png';
+  const ogImage = options.ogImage || 'https://reviewkare.tech/static/og-banner.png';
   const keywords = options.keywords || 'Google review autopilot, in-store AI QR stands, Google Maps ranking, Local 3-Pack, reputation management India, clinic Google reviews, salon reviews, Hinglish AI replies, customer feedback automation';
   const robots = options.robots || (isApp ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
 
@@ -17,17 +17,17 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   const schemaGraph = [
     {
       "@type": "Organization",
-      "@id": "https://reviewkaro.tech/#organization",
-      "name": "ReviewKaro Technologies India Private Limited",
-      "alternateName": "ReviewKaro",
-      "url": "https://reviewkaro.tech",
+      "@id": "https://reviewkare.tech/#organization",
+      "name": "ReviewKare Technologies India Private Limited",
+      "alternateName": "ReviewKare",
+      "url": "https://reviewkare.tech",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://reviewkaro.tech/static/logo.png"
+        "url": "https://reviewkare.tech/static/logo.png"
       },
       "sameAs": [
-        "https://twitter.com/reviewkaro",
-        "https://www.linkedin.com/company/reviewkaro"
+        "https://twitter.com/reviewkare",
+        "https://www.linkedin.com/company/reviewkare"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
@@ -47,18 +47,18 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
     },
     {
       "@type": "WebSite",
-      "@id": "https://reviewkaro.tech/#website",
-      "url": "https://reviewkaro.tech",
-      "name": "ReviewKaro Operating System",
-      "publisher": { "@id": "https://reviewkaro.tech/#organization" }
+      "@id": "https://reviewkare.tech/#website",
+      "url": "https://reviewkare.tech",
+      "name": "ReviewKare Operating System",
+      "publisher": { "@id": "https://reviewkare.tech/#organization" }
     }
   ];
 
   if (isHomepage) {
     schemaGraph.push({
       "@type": "SoftwareApplication",
-      "@id": "https://reviewkaro.tech/#application",
-      "name": "ReviewKaro Review & In-Store QR Operating System",
+      "@id": "https://reviewkare.tech/#application",
+      "name": "ReviewKare Review & In-Store QR Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Cloud",
       "aggregateRating": {
@@ -109,7 +109,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         "@type": "ListItem",
         "position": idx + 1,
         "name": crumb.name,
-        "item": crumb.url.startsWith('http') ? crumb.url : `https://reviewkaro.tech${crumb.url}`
+        "item": crumb.url.startsWith('http') ? crumb.url : `https://reviewkare.tech${crumb.url}`
       }))
     });
   }
@@ -127,7 +127,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         "@type": "Person",
         "name": options.article.author || "Dr. Ananya Sharma"
       },
-      "publisher": { "@id": "https://reviewkaro.tech/#organization" }
+      "publisher": { "@id": "https://reviewkare.tech/#organization" }
     });
   }
 
@@ -149,7 +149,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
   <!-- Open Graph Protocol (Facebook, LinkedIn, Slack, WhatsApp) -->
-  <meta property="og:site_name" content="ReviewKaro Operating System">
+  <meta property="og:site_name" content="ReviewKare Operating System">
   <meta property="og:title" content="${fullTitle}">
   <meta property="og:description" content="${description}">
   <meta property="og:url" content="${canonicalUrl}">
@@ -159,7 +159,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
 
   <!-- Twitter / X Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@reviewkaro">
+  <meta name="twitter:site" content="@reviewkare">
   <meta name="twitter:title" content="${fullTitle}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${ogImage}">
@@ -349,7 +349,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <aside class="bg-[#15191e] text-white text-xs py-2 px-4 text-center border-b border-[#252a32]" aria-label="Announcement">
     <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
       <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#ff5900]/20 text-[#ff5900] font-bold uppercase tracking-wider text-[10px]">
-        ReviewKaro 2.4 Architecture
+        ReviewKare 2.4 Architecture
       </span>
       <span class="font-medium text-[#f3f3f7]">Zero-Login 30s In-Store QR, Neural Multi-Dialect Autopilot &amp; Frontline Staff Attribution across India</span>
       <a href="/features" class="font-bold text-[#ff5900] hover:underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded">Explore Capabilities &rarr;</a>
@@ -362,13 +362,13 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       
       <!-- Brand Logo -->
       <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-xl" aria-label="ReviewKaro Homepage">
+        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-xl" aria-label="ReviewKare Homepage">
           <div class="w-10 h-10 rounded-[12px] bg-[#ff5900] text-white font-bold text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm">
             R
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-black tracking-tight font-heading">ReviewKaro</span>
+              <span class="font-bold text-2xl text-black tracking-tight font-heading">ReviewKare</span>
               <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-[#fff7ed] text-[#ff5900] border border-[#ffedd5] font-mono">
                 OS 2.4
               </span>
@@ -454,7 +454,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-[12px] bg-[#ff5900] text-white font-bold text-base flex items-center justify-center font-heading">R</div>
-            <span class="font-extrabold text-white text-xl tracking-tight font-heading">ReviewKaro Operating System</span>
+            <span class="font-extrabold text-white text-xl tracking-tight font-heading">ReviewKare Operating System</span>
           </div>
           <p class="text-[#8b8d98] leading-relaxed pr-6">
             Autonomous Google Review Autopilot &amp; In-Store AI QR Platform. Built natively in India for clinics, cafes, restaurants, salons, spas, and gyms.
@@ -509,7 +509,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       </div>
 
       <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#60646c] gap-4">
-        <p>© 2026 ReviewKaro Technologies India Private Limited. All rights reserved.</p>
+        <p>© 2026 ReviewKare Technologies India Private Limited. All rights reserved.</p>
         <div class="flex items-center gap-6">
           <a href="/login" class="hover:text-[#b9bbc6]">Sign In</a>
           <a href="/signup" class="hover:text-[#b9bbc6]">Register</a>

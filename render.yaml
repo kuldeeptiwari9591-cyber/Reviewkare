@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: reviewkaro
+    name: reviewkare
     runtime: node
     plan: free
     region: singapore
@@ -14,7 +14,7 @@ services:
       - key: PORT
         value: 10000
       - key: BASE_URL
-        value: https://reviewkaro.tech
+        value: https://reviewkare.tech
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET

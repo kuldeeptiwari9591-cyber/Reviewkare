@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'ReviewKaro - AI Google Review Autopilot & In-Clinic AI QR Flow for Indian Businesses',
+  title: 'ReviewKare - AI Google Review Autopilot & In-Clinic AI QR Flow for Indian Businesses',
   description:
     'Auto-reply to Google reviews in Hindi, Hinglish & English in your brand tone. Auto-post 5-star replies, hold 1-3 star reviews for 1-tap owner approval. 100% Google policy compliant.',
   keywords: [

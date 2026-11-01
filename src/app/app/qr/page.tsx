@@ -62,7 +62,7 @@ export default function QRStudioPage() {
     if (!previewDataUrl) return;
     const a = document.createElement('a');
     a.href = previewDataUrl;
-    a.download = `reviewkaro-${selectedQR.shortCode}.png`;
+    a.download = `reviewkare-${selectedQR.shortCode}.png`;
     a.click();
   };
 
@@ -214,7 +214,7 @@ export default function QRStudioPage() {
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={previewDataUrl}
-                    alt="ReviewKaro Dynamic Google Review QR Code"
+                    alt="ReviewKare Dynamic Google Review QR Code"
                     className="w-48 h-48 mx-auto"
                   />
                 ) : (
@@ -226,10 +226,10 @@ export default function QRStudioPage() {
 
               <div className="space-y-1 pt-1">
                 <p className="text-[11px] font-bold text-slate-700">
-                  Powered by <span className="text-emerald-700">ReviewKaro</span> • Zero Login
+                  Powered by <span className="text-emerald-700">ReviewKare</span> • Zero Login
                 </p>
                 <p className="text-[10px] text-slate-400 font-mono">
-                  reviewkaro.tech/q/{selectedQR.shortCode}
+                  reviewkare.tech/q/{selectedQR.shortCode}
                 </p>
               </div>
             </div>

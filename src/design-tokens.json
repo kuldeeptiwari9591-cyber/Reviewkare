@@ -1,7 +1,7 @@
 {
-  "name": "ReviewKaro Design System Tokens",
+  "name": "ReviewKare Design System Tokens",
   "version": "2.4.0",
-  "description": "Enterprise Three-Layer Token Architecture for ReviewKaro: Brex White Concrete, Single Ember Accent, Inter Engineered Typography",
+  "description": "Enterprise Three-Layer Token Architecture for ReviewKare: Brex White Concrete, Single Ember Accent, Inter Engineered Typography",
   "primitives": {
     "color": {
       "ember": "#ff5900",

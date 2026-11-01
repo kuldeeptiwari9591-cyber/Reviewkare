@@ -104,7 +104,7 @@ export default function GrowthAndCompetitorsPage() {
           </div>
 
           <p className="text-xs text-slate-500 leading-relaxed">
-            ReviewKaro naturally embeds these search terms into positive replies, signaling geographic relevance to Google Maps Local 3-Pack:
+            ReviewKare naturally embeds these search terms into positive replies, signaling geographic relevance to Google Maps Local 3-Pack:
           </p>
 
           <div className="space-y-2.5">

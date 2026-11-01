@@ -145,7 +145,7 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
             <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 hidden group-hover:block animate-in fade-in z-50 text-xs">
               <div class="px-3 py-2 border-b border-slate-100">
                 <strong class="block text-slate-900 font-bold truncate">${store.user?.name || location.name}</strong>
-                <span class="text-[10px] text-slate-500 truncate block">${store.user?.email || 'admin@reviewkaro.tech'}</span>
+                <span class="text-[10px] text-slate-500 truncate block">${store.user?.email || 'admin@reviewkare.tech'}</span>
                 <span class="inline-block mt-1 text-[9px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200 font-mono">${store.user?.plan?.name || (typeof store.user?.plan === 'string' ? store.user?.plan : 'Starter Trial')}</span>
               </div>
               <div class="py-1">

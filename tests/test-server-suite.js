@@ -12,7 +12,7 @@ setTimeout(async () => {
   let failed = 0;
 
   console.log('\n======================================================');
-  console.log('🚀 REVIEWKARO SAAS PRE-LAUNCH PRODUCTION CHECKOUT SUITE');
+  console.log('🚀 REVIEWKARE SAAS PRE-LAUNCH PRODUCTION CHECKOUT SUITE');
   console.log('======================================================\n');
 
   // 1. PUBLIC ROUTES VERIFICATION
@@ -131,7 +131,7 @@ setTimeout(async () => {
     const setCookieHeader = loginRes.headers.get('set-cookie');
     const loginData = await loginRes.json();
 
-    if (loginRes.status === 200 && loginData.success && (setCookieHeader?.includes('reviewkaro_session=') || setCookieHeader?.includes('replyo_session='))) {
+    if (loginRes.status === 200 && loginData.success && (setCookieHeader?.includes('reviewkare_session=') || setCookieHeader?.includes('reviewkaro_session=') || setCookieHeader?.includes('replyo_session='))) {
       sessionCookie = setCookieHeader.split(';')[0];
       console.log(`  ✓ POST /api/auth/login successful — issued session cookie: ${sessionCookie.substring(0, 25)}...`);
       passed++;
@@ -413,7 +413,7 @@ setTimeout(async () => {
       robotsTxt.includes('Content-Signal: search=yes, ai-input=yes, ai-train=no') &&
       robotsTxt.includes('User-agent: OAI-SearchBot') &&
       robotsTxt.includes('User-agent: PerplexityBot') &&
-      robotsTxt.includes('Sitemap: https://reviewkaro.tech/sitemap.xml')
+      robotsTxt.includes('Sitemap: https://reviewkare.tech/sitemap.xml')
     ) {
       console.log('  ✓ 200 OK: /robots.txt verified with RFC 9309 AI agent groups & Content-Signal');
       passed++;
@@ -429,9 +429,9 @@ setTimeout(async () => {
       sitemapRes.status === 200 &&
       sitemapRes.headers.get('content-type')?.includes('xml') &&
       sitemapXml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">') &&
-      sitemapXml.includes('<loc>https://reviewkaro.tech/features</loc>') &&
-      sitemapXml.includes('<loc>https://reviewkaro.tech/pricing</loc>') &&
-      sitemapXml.includes('<loc>https://reviewkaro.tech/industries/clinics</loc>')
+      sitemapXml.includes('<loc>https://reviewkare.tech/features</loc>') &&
+      sitemapXml.includes('<loc>https://reviewkare.tech/pricing</loc>') &&
+      sitemapXml.includes('<loc>https://reviewkare.tech/industries/clinics</loc>')
     ) {
       console.log('  ✓ 200 OK: /sitemap.xml verified with standard XML schema & full index coverage');
       passed++;
@@ -445,7 +445,7 @@ setTimeout(async () => {
     const llmsTxt = await llmsRes.text();
     if (
       llmsRes.status === 200 &&
-      llmsTxt.startsWith('# ReviewKaro') &&
+      llmsTxt.startsWith('# ReviewKare') &&
       llmsTxt.includes('## Core Capabilities') &&
       llmsTxt.includes('## Pricing (INR)')
     ) {
@@ -479,7 +479,7 @@ setTimeout(async () => {
       catalogRes.status === 200 &&
       catalogJson.specVersion === '1.0' &&
       Array.isArray(catalogJson.entries) &&
-      catalogJson.entries.some(e => e.identifier.includes('reviewkaro.tech'))
+      catalogJson.entries.some(e => e.identifier.includes('reviewkare.tech'))
     ) {
       console.log('  ✓ 200 OK: /.well-known/ai-catalog.json verified conforming to ARD 1.0 schema');
       passed++;
@@ -500,7 +500,7 @@ setTimeout(async () => {
       mdRes.headers.get('content-type')?.includes('text/markdown') &&
       varyHeader.includes('Accept') &&
       signalHeader.includes('search=yes') &&
-      mdText.includes('# ReviewKaro Operating System')
+      mdText.includes('# ReviewKare Operating System')
     ) {
       console.log('  ✓ 200 OK: Markdown content negotiation (Accept: text/markdown) verified with Vary & Content-Signal');
       passed++;
@@ -517,8 +517,8 @@ setTimeout(async () => {
     // 9g. Test Homepage Schema.org JSON-LD Knowledge Graph & Meta Discovery
     const homeRes = await fetch(`http://localhost:${PORT}/`);
     const homeHtml = await homeRes.text();
-    const hasCanonical = homeHtml.includes('<link rel="canonical" href="https://reviewkaro.tech/">');
-    const hasOg = homeHtml.includes('<meta property="og:site_name" content="ReviewKaro Operating System">');
+    const hasCanonical = homeHtml.includes('<link rel="canonical" href="https://reviewkare.tech/">');
+    const hasOg = homeHtml.includes('<meta property="og:site_name" content="ReviewKare Operating System">');
     const hasTwitter = homeHtml.includes('<meta name="twitter:card" content="summary_large_image">');
     const hasLdJson = homeHtml.includes('<script type="application/ld+json">') &&
                       homeHtml.includes('"@type": "Organization"') &&
@@ -538,7 +538,7 @@ setTimeout(async () => {
     const clinicHtml = await clinicRes.text();
     if (
       clinicRes.status === 200 &&
-      clinicHtml.includes('<link rel="canonical" href="https://reviewkaro.tech/industries/clinics">') &&
+      clinicHtml.includes('<link rel="canonical" href="https://reviewkare.tech/industries/clinics">') &&
       (clinicHtml.includes('Dental & Aesthetic Clinics') || clinicHtml.includes('Dental &amp; Aesthetic Clinics')) &&
       clinicHtml.includes('BreadcrumbList')
     ) {
@@ -573,7 +573,7 @@ setTimeout(async () => {
     // 9k. Test Competitor Comparison & Tool Page Rendering
     const vsRes = await fetch(`http://localhost:${PORT}/vs/birdeye`);
     const vsHtml = await vsRes.text();
-    if (vsRes.status === 200 && vsHtml.includes('ReviewKaro vs Birdeye') && vsHtml.includes('85%')) {
+    if (vsRes.status === 200 && vsHtml.includes('ReviewKare vs Birdeye') && vsHtml.includes('85%')) {
       console.log('  ✓ 200 OK: /vs/birdeye verified with comparison matrix & pricing breakdown');
       passed++;
     } else {
