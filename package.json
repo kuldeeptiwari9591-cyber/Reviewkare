@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node server.js",
+    "build": "node -e 'console.log(\"Build ready\")'",
+    "start": "node server.js",
+    "test": "node tests/test-server-suite.js",
     "lint": "next lint"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

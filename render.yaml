@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: reviewkaro
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: BASE_URL
+        value: https://reviewkaro.tech
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false

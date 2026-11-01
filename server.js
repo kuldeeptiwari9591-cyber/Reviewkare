@@ -10,12 +10,29 @@ const { AsyncLocalStorage } = require('node:async_hooks');
 const reqStoreContext = new AsyncLocalStorage();
 
 // Data file paths
-const DATA_FILE = path.join(__dirname, 'data', 'store.json');
-const TENANTS_DIR = path.join(__dirname, 'data', 'tenants');
-const REGISTRY_FILE = path.join(__dirname, 'data', 'registry.json');
+const DEFAULT_DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR || DEFAULT_DATA_DIR;
+const DATA_FILE = path.join(DATA_DIR, 'store.json');
+const TENANTS_DIR = path.join(DATA_DIR, 'tenants');
+const REGISTRY_FILE = path.join(DATA_DIR, 'registry.json');
 
 // Ensure directories exist
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(TENANTS_DIR)) fs.mkdirSync(TENANTS_DIR, { recursive: true });
+
+// Seed persistent volume if custom DATA_DIR is empty
+if (DATA_DIR !== DEFAULT_DATA_DIR) {
+  try {
+    if (!fs.existsSync(DATA_FILE) && fs.existsSync(path.join(DEFAULT_DATA_DIR, 'store.json'))) {
+      fs.copyFileSync(path.join(DEFAULT_DATA_DIR, 'store.json'), DATA_FILE);
+    }
+    if (!fs.existsSync(REGISTRY_FILE) && fs.existsSync(path.join(DEFAULT_DATA_DIR, 'registry.json'))) {
+      fs.copyFileSync(path.join(DEFAULT_DATA_DIR, 'registry.json'), REGISTRY_FILE);
+    }
+  } catch (e) {
+    console.warn('Initial data seed warning:', e.message);
+  }
+}
 
 // In-memory store caches
 let storeCache = null;
