@@ -11,21 +11,21 @@ function renderLoginPage(query = {}) {
   const redirectTarget = query.redirect || '/app';
 
   return `
-  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F3EEE3]">
     <div class="max-w-md w-full space-y-6">
       
       <!-- Brand Header -->
       <div class="text-center">
-        <a href="/" class="inline-flex items-center gap-2.5 mb-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform font-heading">
+        <a href="/" class="inline-flex items-center gap-2.5 mb-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded-xl">
+          <div class="w-10 h-10 rounded-xl bg-[#D9541E] flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform font-heading">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-[#111111]">ReviewKare</span>
         </a>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
           Sign in to ReviewKare Enterprise
         </h1>
-        <p class="mt-1.5 text-xs text-slate-500 font-medium">
+        <p class="mt-1.5 text-xs text-[#6E6E6E] font-medium">
           Autonomous Google Review Autopilot & In-Store Smart QR Operating System
         </p>
       </div>
@@ -47,10 +47,10 @@ function renderLoginPage(query = {}) {
       ` : ''}
 
       <!-- Clean Standard Login Form -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d">
+      <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm card-3d card-lift">
         <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
           <div>
-            <label for="emailInput" class="block text-xs font-bold text-slate-700 mb-1.5">
+            <label for="emailInput" class="block text-xs font-bold text-[#2B2B2B] mb-1.5">
               Registered Business Email
             </label>
             <div class="relative">
@@ -61,17 +61,17 @@ function renderLoginPage(query = {}) {
                 value="${emailVal}"
                 placeholder="owner@yourbusiness.in"
                 autocomplete="email"
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white placeholder-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-slate-400 focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
               />
             </div>
           </div>
 
           <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label for="passwordInput" class="block text-xs font-bold text-slate-700">
+              <label for="passwordInput" class="block text-xs font-bold text-[#2B2B2B]">
                 Password
               </label>
-              <a href="/forgot-password" class="text-xs font-medium text-brand-600 hover:text-brand-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded">
+              <a href="/forgot-password" class="text-xs font-medium text-[#D9541E] hover:text-[#D9541E] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded">
                 Forgot password?
               </a>
             </div>
@@ -83,12 +83,12 @@ function renderLoginPage(query = {}) {
                 value="${pwdVal}"
                 placeholder="••••••••••••"
                 autocomplete="current-password"
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white placeholder-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-slate-400 focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
               />
               <button 
                 type="button" 
                 onclick="togglePwdVisibility()" 
-                class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-slate-600 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+                class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-[#888888] hover:text-[#4A4A4A] rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]"
                 aria-label="Toggle password visibility"
               >
                 ${getSvgIcon('lock', 'w-4 h-4')}
@@ -97,8 +97,8 @@ function renderLoginPage(query = {}) {
           </div>
 
           <div class="flex items-center justify-between pt-1">
-            <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-600">
-              <input type="checkbox" id="rememberMe" checked class="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+            <label class="flex items-center gap-2 cursor-pointer text-xs text-[#4A4A4A]">
+              <input type="checkbox" id="rememberMe" checked class="w-4 h-4 rounded border-[#DFD7C7] text-[#D9541E] focus:ring-[#D9541E]">
               <span>Remember this terminal</span>
             </label>
           </div>
@@ -108,21 +108,21 @@ function renderLoginPage(query = {}) {
           <button 
             type="submit" 
             id="loginSubmitBtn"
-            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]"
           >
             <span>Sign In to Dashboard</span>
             ${getSvgIcon('arrowRight', 'w-4 h-4')}
           </button>
         </form>
 
-        <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
-          <span>New business or clinic? <a href="/signup" class="font-bold text-brand-600 hover:underline">Start 14-day free pilot &rarr;</a></span>
-          <button type="button" onclick="fillDemoAndLogin()" class="text-[11px] text-slate-400 hover:text-slate-700 underline focus-visible:outline-none">Test Demo Login</button>
+        <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6E6E6E] gap-2">
+          <span>New business or clinic? <a href="/signup" class="font-bold text-[#D9541E] hover:underline">Start 14-day free pilot &rarr;</a></span>
+          <button type="button" onclick="fillDemoAndLogin()" class="text-[11px] text-[#888888] hover:text-[#2B2B2B] underline focus-visible:outline-none">Test Demo Login</button>
         </div>
       </div>
 
       <!-- Compliance & Security Trust Footer -->
-      <div class="flex items-center justify-center gap-4 text-[11px] text-slate-500">
+      <div class="flex items-center justify-center gap-4 text-[11px] text-[#6E6E6E]">
         <span class="flex items-center gap-1.5">
           ${getSvgIcon('shield', 'w-3.5 h-3.5 text-emerald-600')} DPDP Act 2023 Compliant
         </span>
@@ -192,41 +192,41 @@ function renderLoginPage(query = {}) {
 
 function renderSignupPage() {
   return `
-  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F3EEE3]">
     <div class="max-w-xl w-full space-y-8">
       
       <!-- Brand Header -->
       <div class="text-center">
-        <a href="/" class="inline-flex items-center gap-2.5 mb-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-xl">
+        <a href="/" class="inline-flex items-center gap-2.5 mb-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded-xl">
           <div class="w-10 h-10 rounded-xl bg-dark-950 flex items-center justify-center text-brand-400 font-black text-xl shadow-md">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-[#111111]">ReviewKare</span>
         </a>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight" style="text-wrap: balance;">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
           Start Your 14-Day Free Pilot
         </h1>
-        <p class="mt-2 text-xs text-slate-500 font-medium">
+        <p class="mt-2 text-xs text-[#6E6E6E] font-medium">
           Calibrated onboarding for 8 Indian business verticals. Autonomous 4-minute replies & digital QR flow.
         </p>
       </div>
 
       <!-- Registration Multi-Step Card -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d space-y-6">
+      <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-6">
         <div class="flex items-center justify-between pb-4 border-b border-slate-100">
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-brand-600 text-white font-bold text-xs flex items-center justify-center">1</span>
-            <span class="text-xs font-bold text-slate-900">Business Profile</span>
+            <span class="w-6 h-6 rounded-full bg-[#D9541E] text-white font-bold text-xs flex items-center justify-center">1</span>
+            <span class="text-xs font-bold text-[#111111]">Business Profile</span>
           </div>
           <div class="h-0.5 w-12 bg-slate-200"></div>
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">2</span>
-            <span class="text-xs font-bold text-slate-500">QR Calibration</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 text-[#4A4A4A] font-bold text-xs flex items-center justify-center">2</span>
+            <span class="text-xs font-bold text-[#6E6E6E]">QR Calibration</span>
           </div>
           <div class="h-0.5 w-12 bg-slate-200"></div>
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">3</span>
-            <span class="text-xs font-bold text-slate-500">Live Pilot</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 text-[#4A4A4A] font-bold text-xs flex items-center justify-center">3</span>
+            <span class="text-xs font-bold text-[#6E6E6E]">Live Pilot</span>
           </div>
         </div>
 
@@ -234,13 +234,13 @@ function renderSignupPage() {
           
           <!-- Step 1: Industry Specialty Selection -->
           <div>
-            <label for="industrySelect" class="block text-xs font-bold text-slate-700 mb-1">
+            <label for="industrySelect" class="block text-xs font-bold text-[#2B2B2B] mb-1">
               Select Your Business Vertical
             </label>
             <select 
               id="industrySelect" 
               onchange="onVerticalChange(this.value)"
-              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border-2 border-brand-500 text-xs font-bold text-slate-900 focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 outline-none bg-brand-50/20"
+              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border-2 border-[#D9541E] text-xs font-bold text-[#111111] focus:border-brand-600 focus:ring-2 focus:ring-[#D9541E]/20 outline-none bg-[#FAEDE8]/20"
             >
               <option value="clinic">Healthcare & Dental Clinics (4-Step Deep Clinical Trust Flow)</option>
               <option value="cafe">Specialty Cafes & Bakeries (2-Step Micro-Flow, &lt;15s Speed)</option>
@@ -254,7 +254,7 @@ function renderSignupPage() {
           </div>
 
           <!-- Dynamic Calibration Badge -->
-          <div id="verticalCalibrationBadge" class="p-3 bg-brand-50/70 rounded-2xl border border-brand-200 flex items-start gap-2.5 text-xs text-brand-900">
+          <div id="verticalCalibrationBadge" class="p-3 bg-[#FAEDE8]/70 rounded-2xl border border-[#EFBCA8] flex items-start gap-2.5 text-xs text-brand-900">
             <span class="text-base" id="vIcon">🛡️</span>
             <div>
               <span class="font-bold block" id="vBadgeTitle">Deep Trust Clinical Flow (4 Questions)</span>
@@ -264,7 +264,7 @@ function renderSignupPage() {
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="clinicName" id="businessNameLabel" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="clinicName" id="businessNameLabel" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 Clinic / Hospital / Practice Name
               </label>
               <input 
@@ -272,11 +272,11 @@ function renderSignupPage() {
                 type="text" 
                 required 
                 placeholder="e.g. Apex Dental & Implant Clinic" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
               />
             </div>
             <div>
-              <label for="ownerName" id="ownerNameLabel" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="ownerName" id="ownerNameLabel" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 Lead Doctor / Practice Director
               </label>
               <input 
@@ -284,14 +284,14 @@ function renderSignupPage() {
                 type="text" 
                 required 
                 placeholder="e.g. Dr. Ananya Sharma, MDS" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
               />
             </div>
           </div>
 
           <!-- Dynamic Field: Specialty Treatments or Signature Bestsellers -->
           <div>
-            <label for="specialtyServices" id="customFieldLabel" class="block text-xs font-bold text-slate-700 mb-1">
+            <label for="specialtyServices" id="customFieldLabel" class="block text-xs font-bold text-[#2B2B2B] mb-1">
               Primary Treatments or Hero Services (Comma Separated)
             </label>
             <input 
@@ -299,19 +299,19 @@ function renderSignupPage() {
               type="text" 
               value="Painless Root Canal, Clear Aligners, Laser Whitening, Implants"
               placeholder="e.g. Root Canal, Clear Aligners, Dental Implants" 
-              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none font-mono"
+              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none font-mono"
             />
-            <span class="text-[10px] text-slate-400 mt-1 block">These pills will appear on your customer’s phone when scanning your digital QR.</span>
+            <span class="text-[10px] text-[#888888] mt-1 block">These pills will appear on your customer’s phone when scanning your digital QR.</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="citySelect" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="citySelect" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 City / Metro Region
               </label>
               <select 
                 id="citySelect" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none bg-white"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none bg-[#FBF8F3]"
               >
                 <option value="Bengaluru">Bengaluru (Karnataka)</option>
                 <option value="Delhi NCR">Delhi NCR (Gurugram/Noida)</option>
@@ -323,18 +323,18 @@ function renderSignupPage() {
               </select>
             </div>
             <div>
-              <label for="ownerPhone" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="ownerPhone" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 Manager WhatsApp for 1-Tap Approvals
               </label>
               <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">+91</span>
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-[#6E6E6E]">+91</span>
                 <input 
                   id="ownerPhone" 
                   type="tel" 
                   required 
                   pattern="[0-9]{10}"
                   placeholder="98765 43210" 
-                  class="w-full min-h-[44px] pl-12 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+                  class="w-full min-h-[44px] pl-12 pr-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
                 />
               </div>
             </div>
@@ -342,7 +342,7 @@ function renderSignupPage() {
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="signupEmail" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="signupEmail" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 Official Business Email
               </label>
               <input 
@@ -350,11 +350,11 @@ function renderSignupPage() {
                 type="email" 
                 required 
                 placeholder="owner@yourbusiness.in" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
               />
             </div>
             <div>
-              <label for="signupPwd" class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="signupPwd" class="block text-xs font-bold text-[#2B2B2B] mb-1">
                 Create Secure Password
               </label>
               <input 
@@ -363,18 +363,18 @@ function renderSignupPage() {
                 required 
                 minlength="8"
                 placeholder="Minimum 8 characters" 
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
               />
             </div>
           </div>
 
           <!-- Real-Time Customer QR Flow Preview Box -->
-          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2">
+          <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] text-xs space-y-2">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-slate-900 font-heading">Online QR Review Process Preview:</span>
-              <span id="previewStepCount" class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 font-bold">4 Questions</span>
+              <span class="font-bold text-[#111111] font-heading">Online QR Review Process Preview:</span>
+              <span id="previewStepCount" class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-[#1C1C1C] font-bold">4 Questions</span>
             </div>
-            <ul id="previewQuestionsList" class="space-y-1 text-slate-600 text-[11px]">
+            <ul id="previewQuestionsList" class="space-y-1 text-[#4A4A4A] text-[11px]">
               <li>• 1. Overall Patient Experience Rating (1-5★)</li>
               <li>• 2. Procedure / Treatment Received</li>
               <li>• 3. Clinical Care & Hygiene Sterility</li>
@@ -387,16 +387,16 @@ function renderSignupPage() {
           <button 
             type="submit" 
             id="signupSubmitBtn"
-            class="w-full min-h-[48px] flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            class="w-full min-h-[48px] flex items-center justify-center gap-2 px-4 py-2.5 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]"
           >
             <span>Activate 14-Day Free Pilot &rarr;</span>
           </button>
         </form>
 
         <div class="pt-4 border-t border-slate-100 text-center">
-          <p class="text-xs text-slate-500">
+          <p class="text-xs text-[#6E6E6E]">
             Already have an active account?
-            <a href="/login" class="font-bold text-brand-600 hover:text-brand-700 hover:underline ml-1">
+            <a href="/login" class="font-bold text-[#D9541E] hover:text-[#D9541E] hover:underline ml-1">
               Sign In here &rarr;
             </a>
           </p>
@@ -489,27 +489,27 @@ function renderSignupPage() {
 
 function renderForgotPasswordPage() {
   return `
-  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <main class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F3EEE3]">
     <div class="max-w-md w-full space-y-8">
       <div class="text-center">
         <a href="/" class="inline-flex items-center gap-2.5 mb-4 group">
           <div class="w-10 h-10 rounded-xl bg-dark-950 flex items-center justify-center text-brand-400 font-black text-xl shadow-md">
             R
           </div>
-          <span class="font-heading font-black text-2xl tracking-tight text-slate-900">ReviewKare</span>
+          <span class="font-heading font-black text-2xl tracking-tight text-[#111111]">ReviewKare</span>
         </a>
-        <h1 class="text-2xl font-extrabold text-slate-900 font-heading tracking-tight">
+        <h1 class="text-2xl font-extrabold text-[#111111] font-heading tracking-tight">
           Reset Clinic Password
         </h1>
-        <p class="mt-2 text-xs text-slate-500">
+        <p class="mt-2 text-xs text-[#6E6E6E]">
           Enter your registered clinic email or WhatsApp phone number to receive a secure OTP reset link.
         </p>
       </div>
 
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm card-3d space-y-4">
+      <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-4">
         <form id="forgotForm" onsubmit="handleForgotSubmit(event)" class="space-y-4">
           <div>
-            <label for="recoveryInput" class="block text-xs font-bold text-slate-700 mb-1.5">
+            <label for="recoveryInput" class="block text-xs font-bold text-[#2B2B2B] mb-1.5">
               Clinic Email or 10-digit WhatsApp Number
             </label>
             <input 
@@ -517,7 +517,7 @@ function renderForgotPasswordPage() {
               type="text" 
               required 
               placeholder="doctor@clinic.in or 9876543210" 
-              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none"
+              class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none"
             />
           </div>
 
@@ -526,14 +526,14 @@ function renderForgotPasswordPage() {
           <button 
             type="submit" 
             id="forgotSubmitBtn"
-            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-dark-950 hover:bg-brand-600 text-white font-bold text-xs rounded-xl shadow-md transition-all"
+            class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-dark-950 hover:bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-md transition-all"
           >
             <span>Send Reset OTP via WhatsApp & Email &rarr;</span>
           </button>
         </form>
 
         <div class="pt-4 border-t border-slate-100 text-center">
-          <a href="/login" class="text-xs font-bold text-slate-600 hover:text-brand-600">
+          <a href="/login" class="text-xs font-bold text-[#4A4A4A] hover:text-[#D9541E]">
             &larr; Back to Sign In
           </a>
         </div>

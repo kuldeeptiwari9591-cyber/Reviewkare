@@ -1635,52 +1635,52 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
           <div class="text-center space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#f3f3f7] border border-[#b9bbc6]/40 text-[#ff5900] text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#F3EEE3] border border-[#DFD7C7]/40 text-[#D9541E] text-xs font-bold font-mono">
               Core Technical Architecture
             </div>
             <h1 class="text-4xl sm:text-5xl font-bold text-black tracking-[-0.03em] font-heading">Reputation Architecture Engineered for India</h1>
-            <p class="text-[#60646c] text-sm sm:text-base leading-relaxed">
+            <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed">
               Every capability is built specifically to address local business challenges across high-trust consumer enterprises in India—from dental operatory sterilization to restaurant bill folders.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
-              <div class="w-10 h-10 rounded-[8px] bg-[#fff7ed] text-[#ff5900] flex items-center justify-center">
-                ${getSvgIcon('globe', 'w-5 h-5 text-[#ff5900]')}
+            <div class="p-8 bg-[#FBF8F3] rounded-[12px] border border-[#DFD7C7]/40 shadow-xs space-y-4 card-3d card-lift">
+              <div class="w-10 h-10 rounded-[8px] bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
+                ${getSvgIcon('globe', 'w-5 h-5 text-[#D9541E]')}
               </div>
               <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Multi-Lingual Dialect Mirroring</h2>
-              <p class="text-xs text-[#60646c] leading-relaxed">
+              <p class="text-xs text-[#4A4A4A] leading-relaxed">
                 ReviewKare naturally replies in Devanagari Hindi, colloquial Hinglish, English, Tamil, Telugu, and Kannada, matching reviewer colloquialisms, gratitude phrases, and cultural tone in under 4 minutes.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+            <div class="p-8 bg-[#FBF8F3] rounded-[12px] border border-[#DFD7C7]/40 shadow-xs space-y-4 card-3d card-lift">
               <div class="w-10 h-10 rounded-[8px] bg-amber-50 text-amber-700 flex items-center justify-center">
                 ${getSvgIcon('shield', 'w-5 h-5 text-amber-600')}
               </div>
               <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Zero-Liability Quarantine Safety Shield</h2>
-              <p class="text-xs text-[#60646c] leading-relaxed">
+              <p class="text-xs text-[#4A4A4A] leading-relaxed">
                 Hardcoded safety validator blocks refund offers, admissions of medical fault, or staff blame. Quarantines 1–3 star complaints into a private queue with direct manager telephone fallback.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+            <div class="p-8 bg-[#FBF8F3] rounded-[12px] border border-[#DFD7C7]/40 shadow-xs space-y-4 card-3d card-lift">
               <div class="w-10 h-10 rounded-[8px] bg-blue-50 text-blue-700 flex items-center justify-center">
                 ${getSvgIcon('qr', 'w-5 h-5 text-blue-600')}
               </div>
               <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">In-Clinic AI QR Studio</h2>
-              <p class="text-xs text-[#60646c] leading-relaxed">
+              <p class="text-xs text-[#4A4A4A] leading-relaxed">
                 Download printable A6 counter cards, A4 table tents, and bill stickers. Customers scan, tap 3 choices, get an AI draft built strictly from their selections, and post on Google Maps in 30 seconds.
               </p>
             </div>
 
-            <div class="p-8 bg-white rounded-[12px] border border-[#b9bbc6]/40 shadow-xs space-y-4 card-3d">
+            <div class="p-8 bg-[#FBF8F3] rounded-[12px] border border-[#DFD7C7]/40 shadow-xs space-y-4 card-3d card-lift">
               <div class="w-10 h-10 rounded-[8px] bg-teal-50 text-teal-700 flex items-center justify-center">
                 ${getSvgIcon('mapPin', 'w-5 h-5 text-teal-600')}
               </div>
               <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">Google Local 3-Pack Keyword Injection</h2>
-              <p class="text-xs text-[#60646c] leading-relaxed">
+              <p class="text-xs text-[#4A4A4A] leading-relaxed">
                 Naturally weaves your neighborhood and service terms into positive replies (e.g., <em>“best dental clinic in Indiranagar”</em>), signaling search relevance directly to the Google Local 3-Pack algorithm.
               </p>
             </div>
@@ -1708,34 +1708,34 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-16 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
           <div class="space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#f3f3f7] border border-[#b9bbc6]/40 text-[#ff5900] text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#F3EEE3] border border-[#DFD7C7]/40 text-[#D9541E] text-xs font-bold font-mono">
               Transparent Indian Rupee Billing
             </div>
             <h1 class="text-4xl sm:text-5xl font-bold text-black tracking-[-0.03em] font-heading">Transparent INR Plans. No Foreign Exchange Shock.</h1>
-            <p class="text-[#60646c] text-sm sm:text-base leading-relaxed">
+            <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed">
               Month-to-month flexibility. Pay securely with Razorpay UPI (GPay, PhonePe, Paytm, BHIM) or NetBanking. Full 18% GST tax invoices for input tax credit.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left items-stretch">
             ${PLANS.map((plan) => `
-              <div class="p-6 rounded-[12px] bg-white border ${plan.isPopular ? 'border-2 border-[#ff5900] shadow-sm relative' : 'border-[#b9bbc6]/40 shadow-xs'} flex flex-col justify-between card-3d">
+              <div class="p-6 rounded-[12px] bg-[#FBF8F3] border ${plan.isPopular ? 'border-2 border-[#D9541E] shadow-sm relative' : 'border-[#DFD7C7]/40 shadow-xs'} flex flex-col justify-between card-3d card-lift">
                 <div class="space-y-4">
                   <div class="flex justify-between items-center">
                     <h2 class="font-bold text-xl text-black font-heading tracking-[-0.02em]">${plan.name}</h2>
-                    ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#ff5900] text-white rounded-[6px]">Popular</span>' : ''}
+                    ${plan.isPopular ? '<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#D9541E] text-white rounded-[6px]">Popular</span>' : ''}
                   </div>
                   <div>
                     <span class="text-3xl font-bold text-black font-heading tabular-nums tracking-[-0.02em]">
                       ${plan.id === 'enterprise' ? 'Custom' : '₹' + plan.monthlyPrice}
                     </span>
-                    ${plan.id !== 'enterprise' ? '<span class="text-xs text-[#60646c]"> / mo</span>' : ''}
+                    ${plan.id !== 'enterprise' ? '<span class="text-xs text-[#4A4A4A]"> / mo</span>' : ''}
                   </div>
-                  <ul class="space-y-2 text-xs text-[#60646c] pt-3 border-t border-[#e5e7eb]">
+                  <ul class="space-y-2 text-xs text-[#4A4A4A] pt-3 border-t border-[#DFD7C7]">
                     ${plan.features.map((f) => `<li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>${f}</span></li>`).join('')}
                   </ul>
                 </div>
-                <a href="${session ? '/app/billing' : `/signup?plan=${plan.id}`}" class="mt-6 block w-full py-2.5 text-center rounded-[12px] ${plan.isPopular ? 'bg-[#ff5900] hover:opacity-90 text-white shadow-none' : 'bg-[#15191e] hover:bg-black text-white'} text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900]">
+                <a href="${session ? '/app/billing' : `/signup?plan=${plan.id}`}" class="mt-6 block w-full py-2.5 text-center rounded-[12px] ${plan.isPopular ? 'bg-[#D9541E] hover:opacity-90 text-white shadow-none' : 'bg-[#111111] hover:bg-black text-white'} text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]">
                   ${session ? 'Choose ' + plan.name : 'Start with ' + plan.name} &rarr;
                 </a>
               </div>
@@ -1763,52 +1763,52 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
           <div class="space-y-3">
-            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Audit Your Google Maps Review Gap</h1>
-            <p class="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto">
+            <h1 class="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">Audit Your Google Maps Review Gap</h1>
+            <p class="text-xs sm:text-sm text-[#4A4A4A] max-w-lg mx-auto">
               Scan your Indian clinic or salon to see how many reviews are sitting unanswered and where competitors are outranking you.
             </p>
           </div>
 
-          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm text-left space-y-4 card-3d">
+          <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm text-left space-y-4 card-3d card-lift">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div class="sm:col-span-2">
-                <label for="auditName" class="block text-xs font-semibold text-slate-700 mb-1">Business Name on Google Maps</label>
-                <input id="auditName" type="text" value="Dr. Sharma Dental & Implant Clinic" class="w-full text-xs p-3 rounded-xl border border-slate-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <label for="auditName" class="block text-xs font-semibold text-[#2B2B2B] mb-1">Business Name on Google Maps</label>
+                <input id="auditName" type="text" value="Dr. Sharma Dental & Implant Clinic" class="w-full text-xs p-3 rounded-xl border border-[#DFD7C7] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
               <div>
-                <label for="auditCity" class="block text-xs font-semibold text-slate-700 mb-1">City</label>
-                <input id="auditCity" type="text" value="Bengaluru" class="w-full text-xs p-3 rounded-xl border border-slate-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <label for="auditCity" class="block text-xs font-semibold text-[#2B2B2B] mb-1">City</label>
+                <input id="auditCity" type="text" value="Bengaluru" class="w-full text-xs p-3 rounded-xl border border-[#DFD7C7] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
             </div>
-            <button type="button" onclick="document.getElementById('auditReport').classList.remove('hidden'); if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) confetti({ particleCount: 50, spread: 50 });" class="w-full min-h-[44px] rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <button type="button" onclick="document.getElementById('auditReport').classList.remove('hidden'); if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) confetti({ particleCount: 50, spread: 50 });" class="w-full min-h-[44px] rounded-xl bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Run Instant Reputation Scan &rarr;
             </button>
           </div>
 
-          <div id="auditReport" class="hidden bg-white rounded-3xl p-6 sm:p-8 border-2 border-brand-500 shadow-xl text-left space-y-6">
-            <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
+          <div id="auditReport" class="hidden bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border-2 border-[#D9541E] shadow-xl text-left space-y-6">
+            <div class="border-b border-[#EBE5D8] pb-3 flex justify-between items-center">
               <div>
-                <h3 class="font-bold text-base text-slate-900 font-heading">Dr. Sharma Dental & Implant Clinic</h3>
-                <p class="text-xs text-slate-500">Indiranagar, Bengaluru • Google Business Profile</p>
+                <h3 class="font-bold text-base text-[#111111] font-heading">Dr. Sharma Dental & Implant Clinic</h3>
+                <p class="text-xs text-[#6E6E6E]">Indiranagar, Bengaluru • Google Business Profile</p>
               </div>
               <span class="text-xs font-bold text-brand-800 bg-brand-100 px-3 py-1 rounded-full tabular-nums">Score: 92/100</span>
             </div>
             <div class="grid grid-cols-3 gap-4 text-center text-xs">
-              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Response Rate</span>
-                <p class="text-2xl font-black text-brand-600 mt-1 tabular-nums">99.6%</p>
+              <div class="p-4 bg-[#F3EEE3] rounded-xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Response Rate</span>
+                <p class="text-2xl font-black text-[#D9541E] mt-1 tabular-nums">99.6%</p>
               </div>
-              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Unanswered</span>
+              <div class="p-4 bg-[#F3EEE3] rounded-xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Unanswered</span>
                 <p class="text-2xl font-black text-amber-600 mt-1 tabular-nums">2 reviews</p>
               </div>
-              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Avg Reply Time</span>
-                <p class="text-2xl font-black text-slate-900 mt-1 tabular-nums">4 mins</p>
+              <div class="p-4 bg-[#F3EEE3] rounded-xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Avg Reply Time</span>
+                <p class="text-2xl font-black text-[#111111] mt-1 tabular-nums">4 mins</p>
               </div>
             </div>
             <div class="text-center pt-2">
-              <a href="/app" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <a href="/app" class="inline-block px-6 py-3 rounded-xl bg-[#D9541E] text-white font-bold text-xs shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 Manage Profile with ReviewKare &rarr;
               </a>
             </div>
@@ -1885,58 +1885,58 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           
           <!-- Hero Header -->
           <div class="text-center space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-xs font-bold font-mono">
               Tailored Vertical Architecture • ${config.name}
             </div>
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading leading-tight" style="text-wrap: balance;">
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading leading-tight" style="text-wrap: balance;">
               ${config.hero}
             </h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed">
               ${config.desc}
             </p>
             <div class="pt-2 flex flex-wrap justify-center gap-3">
-              <a href="/signup" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all">
+              <a href="/signup" class="px-6 py-3 rounded-xl bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs shadow-md transition-all">
                 Start 14-Day Free Pilot for ${config.name} &rarr;
               </a>
-              <a href="/free-audit" class="px-6 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-sm transition-all">
+              <a href="/free-audit" class="px-6 py-3 rounded-xl bg-[#FBF8F3] border border-[#DFD7C7] hover:bg-[#F3EEE3] text-[#1C1C1C] font-bold text-xs shadow-sm transition-all">
                 Scan Competitor Local 3-Pack Rank
               </a>
             </div>
           </div>
 
           <!-- Vertical Operational Blueprint Card -->
-          <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-8 card-3d">
-            <div class="border-b border-slate-100 pb-4">
-              <h2 class="text-xl font-bold text-slate-900 font-heading">In-Store Reputation Workflow for ${config.name}</h2>
-              <p class="text-xs text-slate-500 mt-1">Configured for seamless touchpoint collection with zero app download.</p>
+          <div class="bg-[#FBF8F3] rounded-3xl p-8 border border-[#DFD7C7] shadow-sm space-y-8 card-3d card-lift">
+            <div class="border-b border-[#EBE5D8] pb-4">
+              <h2 class="text-xl font-bold text-[#111111] font-heading">In-Store Reputation Workflow for ${config.name}</h2>
+              <p class="text-xs text-[#6E6E6E] mt-1">Configured for seamless touchpoint collection with zero app download.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
-              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Physical Touchpoint</span>
-                <h3 class="font-bold text-sm text-slate-900 font-heading">Where Customers Tap</h3>
-                <p class="text-slate-600 leading-relaxed">${config.touchpoint}</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#2B2B2B]">
+              <div class="p-5 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2">
+                <span class="text-[#D9541E] font-bold uppercase text-[10px] font-mono">Physical Touchpoint</span>
+                <h3 class="font-bold text-sm text-[#111111] font-heading">Where Customers Tap</h3>
+                <p class="text-[#4A4A4A] leading-relaxed">${config.touchpoint}</p>
               </div>
 
-              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Service Pills Injected</span>
-                <h3 class="font-bold text-sm text-slate-900 font-heading">1-Tap Customer Choices</h3>
-                <p class="text-slate-600 leading-relaxed">${config.exampleSvc}</p>
+              <div class="p-5 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2">
+                <span class="text-[#D9541E] font-bold uppercase text-[10px] font-mono">Service Pills Injected</span>
+                <h3 class="font-bold text-sm text-[#111111] font-heading">1-Tap Customer Choices</h3>
+                <p class="text-[#4A4A4A] leading-relaxed">${config.exampleSvc}</p>
               </div>
 
-              <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <span class="text-brand-600 font-bold uppercase text-[10px] font-mono">Metro Hub Focus</span>
-                <h3 class="font-bold text-sm text-slate-900 font-heading">Local Search Prominence</h3>
-                <p class="text-slate-600 leading-relaxed">${config.geoFocus}</p>
+              <div class="p-5 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2">
+                <span class="text-[#D9541E] font-bold uppercase text-[10px] font-mono">Metro Hub Focus</span>
+                <h3 class="font-bold text-sm text-[#111111] font-heading">Local Search Prominence</h3>
+                <p class="text-[#4A4A4A] leading-relaxed">${config.geoFocus}</p>
               </div>
             </div>
 
-            <div class="p-6 bg-brand-50/60 rounded-2xl border border-brand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="p-6 bg-[#FAEDE8]/60 rounded-2xl border border-[#EFBCA8] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div class="space-y-1">
                 <h3 class="font-bold text-sm text-brand-950 font-heading">Need custom physical stands or POS integration?</h3>
                 <p class="text-xs text-brand-800">ReviewKare connects natively with Petpooja, Zenoti, Practo, and custom billing APIs.</p>
               </div>
-              <a href="/book-demo" class="px-4 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all text-center">
+              <a href="/book-demo" class="px-4 py-2.5 bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-all text-center">
                 Schedule Technical Consult &rarr;
               </a>
             </div>
@@ -1968,21 +1968,21 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-3">
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Earn 30% Recurring Commission with ReviewKare</h1>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">Manage all client Google Business Profiles under one roof with white-label client PDF report cards.</p>
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">Earn 30% Recurring Commission with ReviewKare</h1>
+            <p class="text-[#4A4A4A] text-sm max-w-xl mx-auto">Manage all client Google Business Profiles under one roof with white-label client PDF report cards.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-            <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h2 class="font-bold text-sm text-slate-900 font-heading">White-Label PDF Reports</h2>
-              <p class="text-slate-500">Send automated weekly reputation report cards branded with your marketing agency logo.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] space-y-2 card-3d card-lift">
+              <h2 class="font-bold text-sm text-[#111111] font-heading">White-Label PDF Reports</h2>
+              <p class="text-[#6E6E6E]">Send automated weekly reputation report cards branded with your marketing agency logo.</p>
             </div>
-            <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h2 class="font-bold text-sm text-slate-900 font-heading">30% Lifetime Revenue Share</h2>
-              <p class="text-slate-500">Earn 30% recurring monthly margin on every local clinic or salon you onboard.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] space-y-2 card-3d card-lift">
+              <h2 class="font-bold text-sm text-[#111111] font-heading">30% Lifetime Revenue Share</h2>
+              <p class="text-[#6E6E6E]">Earn 30% recurring monthly margin on every local clinic or salon you onboard.</p>
             </div>
-            <div class="p-6 bg-white rounded-2xl border border-slate-200 space-y-2 card-3d">
-              <h2 class="font-bold text-sm text-slate-900 font-heading">Multi-Tenant Client Desk</h2>
-              <p class="text-slate-500">Switch between 50+ client locations in one single unified dashboard.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] space-y-2 card-3d card-lift">
+              <h2 class="font-bold text-sm text-[#111111] font-heading">Multi-Tenant Client Desk</h2>
+              <p class="text-[#6E6E6E]">Switch between 50+ client locations in one single unified dashboard.</p>
             </div>
           </div>
           <div class="text-center pt-4">
@@ -2011,64 +2011,64 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold font-mono">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-xs font-bold font-mono">
               Head-to-Head Architectural Comparison
             </div>
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">
               ReviewKare vs Birdeye: Why Indian Businesses Save 85% Annually
             </h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed">
               Birdeye is built for enterprise US corporations billing in USD. ReviewKare is natively engineered for clinics, salons, and cafes in India—with transparent INR billing, WhatsApp owner approvals, and Hinglish dialect mirroring.
             </p>
           </div>
 
-          <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm card-3d">
+          <div class="bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] overflow-hidden shadow-sm card-3d card-lift">
             <div class="overflow-x-auto">
               <table class="w-full text-left text-xs">
-                <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-heading">
+                <thead class="bg-[#F3EEE3] border-b border-[#DFD7C7] text-[#2B2B2B] font-heading">
                   <tr>
                     <th class="p-4 sm:p-5 font-bold">Feature / Capability</th>
-                    <th class="p-4 sm:p-5 font-bold text-brand-600 bg-brand-50/50">ReviewKare (India Native)</th>
-                    <th class="p-4 sm:p-5 font-bold text-slate-500">Birdeye (US Enterprise)</th>
+                    <th class="p-4 sm:p-5 font-bold text-[#D9541E] bg-[#FAEDE8]/50">ReviewKare (India Native)</th>
+                    <th class="p-4 sm:p-5 font-bold text-[#6E6E6E]">Birdeye (US Enterprise)</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-slate-600">
+                <tbody class="divide-y divide-slate-100 text-[#4A4A4A]">
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Pricing & Billing Currency</td>
-                    <td class="p-4 sm:p-5 font-bold text-brand-700 bg-brand-50/30">₹999 / mo (₹2,999/quarter Hero Plan)</td>
-                    <td class="p-4 sm:p-5 text-slate-500">$299 - $399 / mo (~₹25,000 - ₹33,000/mo)</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">Pricing & Billing Currency</td>
+                    <td class="p-4 sm:p-5 font-bold text-[#D9541E] bg-[#FAEDE8]/30">₹999 / mo (₹2,999/quarter Hero Plan)</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">$299 - $399 / mo (~₹25,000 - ₹33,000/mo)</td>
                   </tr>
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Payment Modes & Taxes</td>
-                    <td class="p-4 sm:p-5 font-bold text-emerald-700 bg-brand-50/30">UPI AutoPay, NetBanking + 18% GST Invoice</td>
-                    <td class="p-4 sm:p-5 text-slate-500">International Credit Card + FX charges</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">Payment Modes & Taxes</td>
+                    <td class="p-4 sm:p-5 font-bold text-emerald-700 bg-[#FAEDE8]/30">UPI AutoPay, NetBanking + 18% GST Invoice</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">International Credit Card + FX charges</td>
                   </tr>
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Linguistic Dialect Mirroring</td>
-                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">Devanagari Hindi, Colloquial Hinglish, English, Tamil, Telugu, Kannada</td>
-                    <td class="p-4 sm:p-5 text-slate-500">Rigid US / UK English Templates</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">Linguistic Dialect Mirroring</td>
+                    <td class="p-4 sm:p-5 font-bold text-[#111111] bg-[#FAEDE8]/30">Devanagari Hindi, Colloquial Hinglish, English, Tamil, Telugu, Kannada</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">Rigid US / UK English Templates</td>
                   </tr>
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Negative Review De-escalation</td>
-                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">1-Tap Owner WhatsApp Approval & Direct Call fallback</td>
-                    <td class="p-4 sm:p-5 text-slate-500">Email blast ticketing queue</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">Negative Review De-escalation</td>
+                    <td class="p-4 sm:p-5 font-bold text-[#111111] bg-[#FAEDE8]/30">1-Tap Owner WhatsApp Approval & Direct Call fallback</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">Email blast ticketing queue</td>
                   </tr>
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">In-Store Customer QR Flow</td>
-                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">Zero App Download, <85KB, 30-Second Tap Flow</td>
-                    <td class="p-4 sm:p-5 text-slate-500">DLT SMS links (frequently blocked by TRAI)</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">In-Store Customer QR Flow</td>
+                    <td class="p-4 sm:p-5 font-bold text-[#111111] bg-[#FAEDE8]/30">Zero App Download, <85KB, 30-Second Tap Flow</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">DLT SMS links (frequently blocked by TRAI)</td>
                   </tr>
                   <tr>
-                    <td class="p-4 sm:p-5 font-semibold text-slate-900">Data Sovereignty</td>
-                    <td class="p-4 sm:p-5 font-bold text-slate-900 bg-brand-50/30">AWS Mumbai (ap-south-1) • DPDP Act 2023</td>
-                    <td class="p-4 sm:p-5 text-slate-500">US Central Cloud data residency</td>
+                    <td class="p-4 sm:p-5 font-semibold text-[#111111]">Data Sovereignty</td>
+                    <td class="p-4 sm:p-5 font-bold text-[#111111] bg-[#FAEDE8]/30">AWS Mumbai (ap-south-1) • DPDP Act 2023</td>
+                    <td class="p-4 sm:p-5 text-[#6E6E6E]">US Central Cloud data residency</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <span class="text-xs text-slate-600">Ready to save 85% on your reputation stack?</span>
-              <a href="/signup" class="px-6 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors">
+            <div class="p-6 bg-[#F3EEE3] border-t border-[#EBE5D8] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span class="text-xs text-[#4A4A4A]">Ready to save 85% on your reputation stack?</span>
+              <a href="/signup" class="px-6 py-2.5 bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors">
                 Start 14-Day Free Pilot &rarr;
               </a>
             </div>
@@ -2099,38 +2099,38 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold font-mono">
               Certified POS Webhook Connector
             </div>
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">
               Petpooja POS + ReviewKare Review Autopilot
             </h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed">
               Automatically trigger feedback requests when diners pay their food bill on Petpooja POS. Collect authentic 5-star Google Maps reviews while the dining experience is fresh.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
-              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 01</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">Bill Print / Settle</h2>
-              <p class="text-slate-500 leading-relaxed">Cashier settles the dining table on Petpooja POS. Webhook instantly fires to ReviewKare with zero delay.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift">
+              <span class="text-[#D9541E] font-bold font-mono text-[11px] uppercase">Step 01</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">Bill Print / Settle</h2>
+              <p class="text-[#6E6E6E] leading-relaxed">Cashier settles the dining table on Petpooja POS. Webhook instantly fires to ReviewKare with zero delay.</p>
             </div>
-            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
-              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 02</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">Smart 30-Min Delay</h2>
-              <p class="text-slate-500 leading-relaxed">ReviewKare holds the review invitation until diners finish dessert, preventing intrusive interruptions.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift">
+              <span class="text-[#D9541E] font-bold font-mono text-[11px] uppercase">Step 02</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">Smart 30-Min Delay</h2>
+              <p class="text-[#6E6E6E] leading-relaxed">ReviewKare holds the review invitation until diners finish dessert, preventing intrusive interruptions.</p>
             </div>
-            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d">
-              <span class="text-brand-600 font-bold font-mono text-[11px] uppercase">Step 03</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">1-Tap Google Review</h2>
-              <p class="text-slate-500 leading-relaxed">Diner selects favorite dishes and posts an authentic Hinglish or English review on Google Maps.</p>
+            <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift">
+              <span class="text-[#D9541E] font-bold font-mono text-[11px] uppercase">Step 03</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">1-Tap Google Review</h2>
+              <p class="text-[#6E6E6E] leading-relaxed">Diner selects favorite dishes and posts an authentic Hinglish or English review on Google Maps.</p>
             </div>
           </div>
 
-          <div class="p-8 bg-brand-50/60 rounded-3xl border border-brand-200 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="p-8 bg-[#FAEDE8]/60 rounded-3xl border border-[#EFBCA8] flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="space-y-1 text-center sm:text-left">
               <h3 class="font-bold text-base text-brand-950 font-heading">Ready to connect your Petpooja outlet?</h3>
               <p class="text-xs text-brand-800">Setup takes under 5 minutes with our native webhook URL. Zero code required.</p>
             </div>
-            <a href="/signup" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all whitespace-nowrap">
+            <a href="/signup" class="px-6 py-3 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-sm transition-all whitespace-nowrap">
               Connect Petpooja &rarr;
             </a>
           </div>
@@ -2159,31 +2159,31 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold font-mono">
               100% Free Lead Magnet Tool
             </div>
-            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">
+            <h1 class="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">
               Google Review Link & Digital QR Generator
             </h1>
-            <p class="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto">
+            <p class="text-[#4A4A4A] text-xs sm:text-sm max-w-lg mx-auto">
               Generate a direct 1-tap review URL and digital QR code for your clinic, salon, or restaurant in 5 seconds.
             </p>
           </div>
 
-          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 card-3d">
+          <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm space-y-4 card-3d card-lift">
             <div>
-              <label for="bizSearch" class="block text-xs font-semibold text-slate-700 mb-1">Business Name or Place ID</label>
-              <input id="bizSearch" type="text" placeholder="e.g. Dr. Sharma Dental Indiranagar" class="w-full text-xs p-3 rounded-xl border border-slate-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <label for="bizSearch" class="block text-xs font-semibold text-[#2B2B2B] mb-1">Business Name or Place ID</label>
+              <input id="bizSearch" type="text" placeholder="e.g. Dr. Sharma Dental Indiranagar" class="w-full text-xs p-3 rounded-xl border border-[#DFD7C7] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
             </div>
-            <button type="button" onclick="generateLink()" class="w-full min-h-[44px] rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <button type="button" onclick="generateLink()" class="w-full min-h-[44px] rounded-xl bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Generate Instant Review Link & QR &rarr;
             </button>
 
-            <div id="resultBox" class="hidden pt-4 border-t border-slate-100 space-y-4">
-              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <span class="text-[10px] font-mono text-slate-500 uppercase font-bold">Your Official 1-Tap Review URL</span>
-                <p id="generatedUrl" class="font-mono text-xs text-brand-700 break-all select-all font-bold"></p>
+            <div id="resultBox" class="hidden pt-4 border-t border-[#EBE5D8] space-y-4">
+              <div class="p-4 bg-[#F3EEE3] rounded-xl border border-[#DFD7C7] space-y-2">
+                <span class="text-[10px] font-mono text-[#6E6E6E] uppercase font-bold">Your Official 1-Tap Review URL</span>
+                <p id="generatedUrl" class="font-mono text-xs text-[#D9541E] break-all select-all font-bold"></p>
               </div>
               <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 space-y-2">
                 <p><strong>Want to automate this?</strong> ReviewKare turns this link into an interactive 30-second Hinglish builder that automatically weeds out 1-star complaints before they hit Google Maps.</p>
-                <a href="/signup" class="inline-block font-bold text-brand-700 hover:underline">Start 14-Day Free Pilot &rarr;</a>
+                <a href="/signup" class="inline-block font-bold text-[#D9541E] hover:underline">Start 14-Day Free Pilot &rarr;</a>
               </div>
             </div>
           </div>
@@ -2218,30 +2218,30 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div class="text-center space-y-3">
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Actionable Guides for Indian Business Owners</h1>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">Proven playbooks to protect your rating, rank in the Local 3-Pack, and automate review responses.</p>
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">Actionable Guides for Indian Business Owners</h1>
+            <p class="text-[#4A4A4A] text-sm max-w-xl mx-auto">Proven playbooks to protect your rating, rank in the Local 3-Pack, and automate review responses.</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="/blog/dr-sharma-case-study" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-              <span class="text-xs font-bold uppercase text-brand-600">Case Study</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">How Dr. Sharma Clinic Added 128 Google Reviews in 60 Days</h2>
-              <p class="text-xs text-slate-500">Learn how an Indiranagar dental practice leveraged reception QR cards to skyrocket from 4.4 to 4.8 stars.</p>
-              <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Case Study &rarr;</span>
+            <a href="/blog/dr-sharma-case-study" class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift block hover:border-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <span class="text-xs font-bold uppercase text-[#D9541E]">Case Study</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">How Dr. Sharma Clinic Added 128 Google Reviews in 60 Days</h2>
+              <p class="text-xs text-[#6E6E6E]">Learn how an Indiranagar dental practice leveraged reception QR cards to skyrocket from 4.4 to 4.8 stars.</p>
+              <span class="text-[#D9541E] font-bold text-xs inline-block pt-2">Read Case Study &rarr;</span>
             </a>
 
-            <a href="/blog/responding-to-negative-reviews" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="/blog/responding-to-negative-reviews" class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift block hover:border-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <span class="text-xs font-bold uppercase text-amber-600">Legal & De-escalation</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">Responding to 1-Star Medical Reviews Without Legal Liability</h2>
-              <p class="text-xs text-slate-500">The exact templates Indian doctors and clinics use to de-escalate upset patients without admitting negligence.</p>
-              <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">Responding to 1-Star Medical Reviews Without Legal Liability</h2>
+              <p class="text-xs text-[#6E6E6E]">The exact templates Indian doctors and clinics use to de-escalate upset patients without admitting negligence.</p>
+              <span class="text-[#D9541E] font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
             </a>
 
-            <a href="/blog/google-local-pack-seo-2026" class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3 card-3d block hover:border-brand-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="/blog/google-local-pack-seo-2026" class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift block hover:border-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <span class="text-xs font-bold uppercase text-blue-600">Local SEO Playbook</span>
-              <h2 class="font-bold text-base text-slate-900 font-heading">How to Rank #1 in Google Local 3-Pack in Indian Metro Cities</h2>
-              <p class="text-xs text-slate-500">Why review response velocity and localized keyword weaving outrank paid Google Ads for high-intent walk-ins.</p>
-              <span class="text-brand-600 font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
+              <h2 class="font-bold text-base text-[#111111] font-heading">How to Rank #1 in Google Local 3-Pack in Indian Metro Cities</h2>
+              <p class="text-xs text-[#6E6E6E]">Why review response velocity and localized keyword weaving outrank paid Google Ads for high-intent walk-ins.</p>
+              <span class="text-[#D9541E] font-bold text-xs inline-block pt-2">Read Guide &rarr;</span>
             </a>
           </div>
         </div>
@@ -2264,10 +2264,10 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           tag: 'Case Study • Indiranagar, Bengaluru',
           content: `
             <p>Dr. Sharma Dental & Implant Clinic in Indiranagar was receiving over 300 patient visits each month, yet only 3 or 4 patients ever took the time to leave a Google review. Dissatisfied patients, however, were quick to vent online, causing their clinic rating to drop to 4.4 stars.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Solution: In-Clinic AI QR Flow</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">The Solution: In-Clinic AI QR Flow</h2>
             <p>Dr. Sharma installed an A6 acrylic counter card at the billing counter and two table tents in the waiting lounge. Instead of asking patients to write long paragraphs, the QR code launched ReviewKare's 30-second review builder.</p>
             <p>Patients simply tapped what they had done (e.g. “Root Canal”, “Teeth Whitening”), how comfortable they felt (“Painless Procedure”), and selected Hinglish. The AI synthesized an authentic review instantly, and with one tap, the text was copied to the patient's clipboard as Google Maps opened.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">The Results</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">The Results</h2>
             <ul class="list-disc pl-5 space-y-1">
               <li><strong>+128 authentic Google reviews</strong> collected in the first 60 days.</li>
               <li>Rating jumped from <strong>4.4 to 4.8 stars</strong>.</li>
@@ -2280,9 +2280,9 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           tag: 'De-escalation & Legal Guide',
           content: `
             <p>When an unhappy patient leaves a 1-star review on Google Maps, the clinic owner's natural impulse is either to write a defensive argument or to apologize profusely and offer a discount. Both approaches carry substantial legal and reputational hazards.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 1: Never Admit Medical Negligence Online</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">Rule 1: Never Admit Medical Negligence Online</h2>
             <p>A public apology stating “We are sorry our doctor made a mistake” can be used as evidence in consumer disputes or Medical Council inquiries. ReviewKare's hardcoded safety validator blocks fault admission automatically.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Rule 2: Move the Discussion Offline Promptly</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">Rule 2: Move the Discussion Offline Promptly</h2>
             <p>Provide a direct telephone number to the clinic manager or administrator. This signals to prospective patients reading the review that your clinic takes patient feedback seriously and handles concerns professionally.</p>
           `
         },
@@ -2291,9 +2291,9 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           tag: 'Local SEO Strategy',
           content: `
             <p>Google's local search algorithm prioritizes three primary pillars: Relevance, Distance, and Prominence. In dense metropolitan markets like Bengaluru, Mumbai, and Delhi, distance is often neutralized because many competitors operate in the same neighborhood.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Review Velocity and Owner Response Rate</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">Review Velocity and Owner Response Rate</h2>
             <p>Businesses that respond to 95%+ of reviews within 24 hours receive a measurable prominence boost in local pack rankings. ReviewKare responds to 4-5 star reviews in under 4 minutes, ensuring your profile maintains the highest response velocity in your zip code.</p>
-            <h2 class="text-base font-bold text-slate-900 font-heading mt-4">Keyword Weaving in Official Responses</h2>
+            <h2 class="text-base font-bold text-[#111111] font-heading mt-4">Keyword Weaving in Official Responses</h2>
             <p>When an owner responds with natural phrases like <em>“Thank you for choosing Dr. Sharma for your painless root canal in Indiranagar”</em>, Google's semantic index connects your listing to those high-intent local search queries.</p>
           `
         }
@@ -2305,16 +2305,16 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         'blog',
         `
         <div class="space-y-8 py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
-          <a href="/blog" class="text-xs font-bold text-brand-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1">&larr; Back to all guides</a>
-          <div class="border-b border-slate-200 pb-4 space-y-2">
-            <span class="text-xs font-bold uppercase text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200">${article.tag}</span>
-            <h1 class="text-3xl sm:text-4xl font-black text-slate-900 font-heading">${article.title}</h1>
-            <p class="text-xs text-slate-400">Published October 2026 • 5 min read • By Dr. Ananya Sharma</p>
+          <a href="/blog" class="text-xs font-bold text-[#D9541E] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1">&larr; Back to all guides</a>
+          <div class="border-b border-[#DFD7C7] pb-4 space-y-2">
+            <span class="text-xs font-bold uppercase text-[#D9541E] bg-[#FAEDE8] px-2.5 py-0.5 rounded-full border border-[#EFBCA8]">${article.tag}</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-[#111111] font-heading">${article.title}</h1>
+            <p class="text-xs text-[#888888]">Published October 2026 • 5 min read • By Dr. Ananya Sharma</p>
           </div>
-          <div class="bg-white p-8 rounded-3xl border border-slate-200 text-xs leading-relaxed text-slate-700 space-y-4">
+          <div class="bg-[#FBF8F3] p-8 rounded-3xl border border-[#DFD7C7] text-xs leading-relaxed text-[#2B2B2B] space-y-4">
             ${article.content}
-            <div class="pt-6 border-t border-slate-100 text-center">
-              <a href="/signup" class="inline-block px-6 py-3 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <div class="pt-6 border-t border-[#EBE5D8] text-center">
+              <a href="/signup" class="inline-block px-6 py-3 rounded-xl bg-[#D9541E] text-white font-bold text-xs shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 Automate Your Clinic's Reviews with ReviewKare &rarr;
               </a>
             </div>
@@ -2351,35 +2351,35 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         `
         <div class="space-y-12 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div class="text-center space-y-3">
-            <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-heading">Talk to our Reputation Specialists</h1>
-            <p class="text-slate-600 text-sm max-w-xl mx-auto">Have questions about multi-location onboarding, UPI AutoPay, or Google Business Profile API setup?</p>
+            <h1 class="text-4xl sm:text-5xl font-black text-[#111111] tracking-tight font-heading">Talk to our Reputation Specialists</h1>
+            <p class="text-[#4A4A4A] text-sm max-w-xl mx-auto">Have questions about multi-location onboarding, UPI AutoPay, or Google Business Profile API setup?</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 text-xs card-3d">
-              <h2 class="font-bold text-base text-slate-900 font-heading">Send us a message</h2>
+            <div class="p-8 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 text-xs card-3d card-lift">
+              <h2 class="font-bold text-base text-[#111111] font-heading">Send us a message</h2>
               <div>
-                <label for="contactName" class="block font-semibold text-slate-700 mb-1">Your Name</label>
-                <input id="contactName" type="text" placeholder="Dr. Rajesh Patel" class="w-full p-3 rounded-xl border border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <label for="contactName" class="block font-semibold text-[#2B2B2B] mb-1">Your Name</label>
+                <input id="contactName" type="text" placeholder="Dr. Rajesh Patel" class="w-full p-3 rounded-xl border border-[#DFD7C7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
               <div>
-                <label for="contactPhone" class="block font-semibold text-slate-700 mb-1">Mobile Number</label>
-                <input id="contactPhone" type="tel" placeholder="+91 98765 43210" class="w-full p-3 rounded-xl border border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <label for="contactPhone" class="block font-semibold text-[#2B2B2B] mb-1">Mobile Number</label>
+                <input id="contactPhone" type="tel" placeholder="+91 98765 43210" class="w-full p-3 rounded-xl border border-[#DFD7C7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
               <div>
-                <label for="contactBiz" class="block font-semibold text-slate-700 mb-1">Clinic / Business Name</label>
-                <input id="contactBiz" type="text" placeholder="Patel Skin & Dental Care" class="w-full p-3 rounded-xl border border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <label for="contactBiz" class="block font-semibold text-[#2B2B2B] mb-1">Clinic / Business Name</label>
+                <input id="contactBiz" type="text" placeholder="Patel Skin & Dental Care" class="w-full p-3 rounded-xl border border-[#DFD7C7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
-              <button type="button" onclick="submitContact()" class="w-full min-h-[44px] bg-brand-600 text-white font-bold rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <button type="button" onclick="submitContact()" class="w-full min-h-[44px] bg-[#D9541E] text-white font-bold rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 Request Callback &rarr;
               </button>
               <p id="contactAck" class="hidden text-center text-xs font-bold text-emerald-700" aria-live="polite">✓ Request received! We will call you within 2 hours.</p>
             </div>
 
-            <div class="p-8 bg-dark-950 text-white rounded-3xl space-y-6 flex flex-col justify-between card-3d">
+            <div class="p-8 bg-[#111111] text-white rounded-3xl space-y-6 flex flex-col justify-between card-3d card-lift">
               <div class="space-y-4">
                 <h2 class="font-bold text-lg font-heading">Headquarters & Support</h2>
-                <div class="text-xs space-y-2 text-slate-400">
+                <div class="text-xs space-y-2 text-[#888888]">
                   <p><strong class="text-white">Bengaluru HQ:</strong> 80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
                   <p><strong class="text-white">Email:</strong> support@reviewkare.tech</p>
                   <p><strong class="text-white">Phone Support:</strong> +91 80 4719 2830 (Mon–Sat, 9am – 7pm IST)</p>
@@ -2437,16 +2437,16 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       };
       const html = renderHtmlPage(title, '', `
         <div class="space-y-8 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div class="border-b border-slate-200 pb-4">
-            <h1 class="text-3xl font-black text-slate-900 font-heading">${title}</h1>
-            <p class="text-xs text-slate-500 mt-1">Last Updated: October 2026 • ReviewKare Technologies India Pvt Ltd</p>
+          <div class="border-b border-[#DFD7C7] pb-4">
+            <h1 class="text-3xl font-black text-[#111111] font-heading">${title}</h1>
+            <p class="text-xs text-[#6E6E6E] mt-1">Last Updated: October 2026 • ReviewKare Technologies India Pvt Ltd</p>
           </div>
-          <div class="bg-white p-8 rounded-3xl border border-slate-200 text-xs leading-relaxed text-slate-700 space-y-4">
+          <div class="bg-[#FBF8F3] p-8 rounded-3xl border border-[#DFD7C7] text-xs leading-relaxed text-[#2B2B2B] space-y-4">
             <p><strong>1. Compliance & Data Governance:</strong> ReviewKare operates in full adherence to the Digital Personal Data Protection Act 2023 of India and Google API Services User Data Policy.</p>
             <p><strong>2. Google API Data Usage:</strong> ReviewKare accesses Google Business Profile reviews solely to ingest comments and draft or post owner-authorized review replies. Customer review drafting (/q/[code]) requires zero login and does not collect phone numbers, email addresses, or names.</p>
             <p><strong>3. Anti-Incentivization Policy:</strong> In compliance with Google Local Guides and FTC regulations, ReviewKare strictly prohibits offering rewards, discounts, or financial compensation in exchange for Google reviews.</p>
             <p><strong>4. Invoicing & Taxes:</strong> All subscriptions are billed in Indian Rupees (INR) with 18% GST invoices generated for input tax credit.</p>
-            <p><strong>5. Contact Information:</strong> For legal inquiries or DPDP data deletion requests, contact our compliance officer at <code class="text-brand-700 font-semibold">compliance@reviewkare.tech</code>.</p>
+            <p><strong>5. Contact Information:</strong> For legal inquiries or DPDP data deletion requests, contact our compliance officer at <code class="text-[#D9541E] font-semibold">compliance@reviewkare.tech</code>.</p>
           </div>
         </div>
       `, {
@@ -2501,11 +2501,11 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         <div class="space-y-6 max-w-6xl mx-auto">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Reputation Operations Dashboard</h1>
-              <p class="text-xs text-slate-500">Autonomous review response engine & QR growth metrics</p>
+              <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Reputation Operations Dashboard</h1>
+              <p class="text-xs text-[#6E6E6E]">Autonomous review response engine & QR growth metrics</p>
             </div>
             <div class="flex items-center gap-2">
-              <a href="/app/reviews" class="px-4 min-h-[40px] flex items-center bg-dark-950 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <a href="/app/reviews" class="px-4 min-h-[40px] flex items-center bg-[#111111] text-white rounded-xl text-xs font-bold shadow-sm hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 All Reviews Feed &rarr;
               </a>
             </div>
@@ -2513,33 +2513,33 @@ Full technical context and documentation available at: https://reviewkare.tech/l
 
           <!-- TOP KPI STATS (Tabular Figures) -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-1 card-3d">
-              <span class="text-[11px] font-bold uppercase text-slate-500">Google Maps Rating</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] shadow-sm space-y-1 card-3d card-lift">
+              <span class="text-[11px] font-bold uppercase text-[#6E6E6E]">Google Maps Rating</span>
               <div class="flex items-baseline gap-2">
-                <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">4.8</span>
+                <span class="text-3xl font-black text-[#111111] font-heading tabular-nums">4.8</span>
                 <div class="flex gap-0.5">${getStarRatingSvg(5, 'w-3.5 h-3.5')}</div>
               </div>
               <p class="text-[11px] text-emerald-600 font-bold tabular-nums">↑ +0.4 since activating ReviewKare</p>
             </div>
 
-            <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-1 card-3d">
-              <span class="text-[11px] font-bold uppercase text-slate-500">Response Rate</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] shadow-sm space-y-1 card-3d card-lift">
+              <span class="text-[11px] font-bold uppercase text-[#6E6E6E]">Response Rate</span>
               <div class="flex items-baseline gap-2">
-                <span class="text-3xl font-black text-brand-600 font-heading tabular-nums">99.6%</span>
+                <span class="text-3xl font-black text-[#D9541E] font-heading tabular-nums">99.6%</span>
               </div>
-              <p class="text-[11px] text-slate-400">Top 1% in Indiranagar, BLR</p>
+              <p class="text-[11px] text-[#888888]">Top 1% in Indiranagar, BLR</p>
             </div>
 
-            <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-1 card-3d">
-              <span class="text-[11px] font-bold uppercase text-slate-500">Avg Reply Speed</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] shadow-sm space-y-1 card-3d card-lift">
+              <span class="text-[11px] font-bold uppercase text-[#6E6E6E]">Avg Reply Speed</span>
               <div class="flex items-baseline gap-2">
-                <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">4 min</span>
+                <span class="text-3xl font-black text-[#111111] font-heading tabular-nums">4 min</span>
               </div>
-              <p class="text-[11px] text-slate-400">Instant Autopilot Execution</p>
+              <p class="text-[11px] text-[#888888]">Instant Autopilot Execution</p>
             </div>
 
-            <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-1 card-3d">
-              <span class="text-[11px] font-bold uppercase text-slate-500">Held for Approval</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] shadow-sm space-y-1 card-3d card-lift">
+              <span class="text-[11px] font-bold uppercase text-[#6E6E6E]">Held for Approval</span>
               <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-black text-amber-600 font-heading tabular-nums">${held.length}</span>
               </div>
@@ -2548,28 +2548,28 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           </div>
 
           <!-- RECENT ACTIVITY FEED -->
-          <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4 card-3d">
+          <div class="bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm p-6 space-y-4 card-3d card-lift">
             <div class="flex justify-between items-center">
-              <h3 class="font-bold text-sm text-slate-900 font-heading">Live Google Business Profile Feed</h3>
-              <a href="/app/reviews" class="text-xs font-bold text-brand-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1">View All (${reviews.length}) &rarr;</a>
+              <h3 class="font-bold text-sm text-[#111111] font-heading">Live Google Business Profile Feed</h3>
+              <a href="/app/reviews" class="text-xs font-bold text-[#D9541E] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1">View All (${reviews.length}) &rarr;</a>
             </div>
 
             <div class="space-y-3">
               ${reviews.slice(0, 3).map((r) => `
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/60 text-xs space-y-2">
+                <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7]/60 text-xs space-y-2">
                   <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
-                      <span class="font-bold text-slate-900">${r.reviewerName}</span>
+                      <span class="font-bold text-[#111111]">${r.reviewerName}</span>
                       <div class="flex gap-0.5">${getStarRatingSvg(r.rating, 'w-3 h-3')}</div>
-                      <span class="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-mono">${r.detectedLanguage}</span>
+                      <span class="text-[10px] bg-slate-200 text-[#2B2B2B] px-2 py-0.5 rounded-full font-mono">${r.detectedLanguage}</span>
                     </div>
                     <span class="text-[10px] font-bold ${r.reply?.status === 'posted' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} px-2.5 py-0.5 rounded-full">
                       ${r.reply?.status === 'posted' ? '✓ Auto-Posted to Google' : '⚠️ Held for Approval'}
                     </span>
                   </div>
-                  <p class="text-slate-700 italic">“${r.text || 'Star-only review'}”</p>
-                  <div class="p-3 bg-white rounded-xl border border-slate-200 text-slate-600">
-                    <strong class="text-slate-900">Official Reply:</strong> ${r.reply?.finalText || r.reply?.draftText}
+                  <p class="text-[#2B2B2B] italic">“${r.text || 'Star-only review'}”</p>
+                  <div class="p-3 bg-[#FBF8F3] rounded-xl border border-[#DFD7C7] text-[#4A4A4A]">
+                    <strong class="text-[#111111]">Official Reply:</strong> ${r.reply?.finalText || r.reply?.draftText}
                   </div>
                 </div>
               `).join('')}
@@ -2586,36 +2586,36 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         <div class="space-y-6 max-w-6xl mx-auto">
           <div class="flex justify-between items-center">
             <div>
-              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Google Reviews Feed (${store.reviews.length})</h1>
-              <p class="text-xs text-slate-500">Google Business Profile synchronized live feed</p>
+              <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Google Reviews Feed (${store.reviews.length})</h1>
+              <p class="text-xs text-[#6E6E6E]">Google Business Profile synchronized live feed</p>
             </div>
           </div>
           <div class="space-y-4">
             ${store.reviews.map((r) => `
-              <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-3 card-3d">
+              <div class="p-6 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] shadow-sm space-y-3 card-3d card-lift">
                 <div class="flex justify-between items-center text-xs">
                   <div class="flex items-center gap-2">
-                    <span class="font-bold text-sm text-slate-900">${r.reviewerName}</span>
+                    <span class="font-bold text-sm text-[#111111]">${r.reviewerName}</span>
                     <div class="flex gap-0.5">${getStarRatingSvg(r.rating, 'w-3.5 h-3.5')}</div>
-                    <span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono text-[10px]">${r.detectedLanguage}</span>
+                    <span class="bg-[#F3EEE3] text-[#4A4A4A] px-2 py-0.5 rounded font-mono text-[10px]">${r.detectedLanguage}</span>
                   </div>
                   <div class="flex items-center gap-2">
                     <span class="text-[10px] font-bold ${r.reply?.status === 'posted' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} px-2.5 py-0.5 rounded-full">
                       ${r.reply?.status === 'posted' ? '✓ Posted to Google' : '⚠️ Held for Approval'}
                     </span>
-                    <button type="button" onclick="deleteReview('${r.id}')" aria-label="Delete Review" class="text-slate-400 hover:text-rose-600 p-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
+                    <button type="button" onclick="deleteReview('${r.id}')" aria-label="Delete Review" class="text-[#888888] hover:text-rose-600 p-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
                       ${getSvgIcon('trash', 'w-4 h-4')}
                     </button>
                   </div>
                 </div>
-                <p class="text-xs text-slate-800">“${r.text || 'Star-only review'}”</p>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-2">
-                  <div class="flex justify-between font-bold text-slate-800">
+                <p class="text-xs text-[#1C1C1C]">“${r.text || 'Star-only review'}”</p>
+                <div class="p-4 bg-[#F3EEE3] rounded-xl border border-[#DFD7C7] text-xs text-[#2B2B2B] space-y-2">
+                  <div class="flex justify-between font-bold text-[#1C1C1C]">
                     <span>Official Reply:</span>
                     <div class="flex items-center gap-3">
-                      ${r.reply?.status !== 'posted' ? `<button type="button" onclick="approveReply('${r.id}')" class="text-brand-600 hover:underline focus-visible:outline-none">Approve Now &rarr;</button>` : ''}
-                      <button type="button" onclick="regenerateReply('${r.id}', 'warmer')" class="text-slate-500 hover:text-slate-800 font-normal focus-visible:outline-none">Warmer</button>
-                      <button type="button" onclick="regenerateReply('${r.id}', 'shorter')" class="text-slate-500 hover:text-slate-800 font-normal focus-visible:outline-none">Shorter</button>
+                      ${r.reply?.status !== 'posted' ? `<button type="button" onclick="approveReply('${r.id}')" class="text-[#D9541E] hover:underline focus-visible:outline-none">Approve Now &rarr;</button>` : ''}
+                      <button type="button" onclick="regenerateReply('${r.id}', 'warmer')" class="text-[#6E6E6E] hover:text-[#1C1C1C] font-normal focus-visible:outline-none">Warmer</button>
+                      <button type="button" onclick="regenerateReply('${r.id}', 'shorter')" class="text-[#6E6E6E] hover:text-[#1C1C1C] font-normal focus-visible:outline-none">Shorter</button>
                     </div>
                   </div>
                   <p id="replyText-${r.id}">${r.reply?.finalText || r.reply?.draftText}</p>
@@ -2658,30 +2658,30 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const content = `
         <div class="space-y-6 max-w-5xl mx-auto">
           <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Held Approvals Queue (${held.length})</h1>
-            <p class="text-xs text-slate-500">Reviews rated 1–3 stars quarantined with zero-liability defense</p>
+            <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Held Approvals Queue (${held.length})</h1>
+            <p class="text-xs text-[#6E6E6E]">Reviews rated 1–3 stars quarantined with zero-liability defense</p>
           </div>
           ${held.length === 0 ? `
-            <div class="p-12 bg-white rounded-3xl border border-slate-200 text-center space-y-2 card-3d">
+            <div class="p-12 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] text-center space-y-2 card-3d card-lift">
               <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mx-auto flex items-center justify-center">
                 ${getSvgIcon('check', 'w-6 h-6')}
               </div>
-              <h3 class="font-bold text-slate-900 font-heading">All Reviews Clear!</h3>
-              <p class="text-xs text-slate-500">No negative reviews currently awaiting approval.</p>
+              <h3 class="font-bold text-[#111111] font-heading">All Reviews Clear!</h3>
+              <p class="text-xs text-[#6E6E6E]">No negative reviews currently awaiting approval.</p>
             </div>
           ` : `
             <div class="space-y-5">
               ${held.map((r) => `
-                <div class="p-6 bg-white rounded-3xl border-2 border-amber-200 shadow-sm space-y-4 card-3d">
+                <div class="p-6 bg-[#FBF8F3] rounded-3xl border-2 border-amber-200 shadow-sm space-y-4 card-3d card-lift">
                   <div class="flex justify-between text-xs">
                     <div class="flex items-center gap-2">
-                      <span class="font-bold text-sm text-slate-900">${r.reviewerName}</span>
+                      <span class="font-bold text-sm text-[#111111]">${r.reviewerName}</span>
                       <div class="flex gap-0.5">${getStarRatingSvg(r.rating, 'w-3 h-3')}</div>
                     </div>
                     <span class="bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full">Requires Approval</span>
                   </div>
-                  <p class="text-xs text-slate-800 italic bg-slate-50 p-3 rounded-xl border border-slate-100">“${r.text}”</p>
-                  <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-slate-800 space-y-2">
+                  <p class="text-xs text-[#1C1C1C] italic bg-[#F3EEE3] p-3 rounded-xl border border-[#EBE5D8]">“${r.text}”</p>
+                  <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-[#1C1C1C] space-y-2">
                     <span class="font-bold text-emerald-950 font-heading">De-escalating AI Proposed Draft:</span>
                     <p>${r.reply?.draftText}</p>
                     <p class="text-[11px] text-emerald-700 flex items-center gap-1">
@@ -2694,7 +2694,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                     </span>
                     <a href="/a/${r.reply?.approvalToken || 'token'}" target="_blank" class="px-3 min-h-[36px] flex items-center bg-blue-600 text-white rounded-lg font-bold text-[11px] hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Open 1-Tap &rarr;</a>
                   </div>
-                  <button type="button" onclick="approveReply('${r.id}')" class="w-full min-h-[44px] bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                  <button type="button" onclick="approveReply('${r.id}')" class="w-full min-h-[44px] bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                     Approve & Post to Google Maps (1-Tap) &rarr;
                   </button>
                 </div>
@@ -2725,49 +2725,49 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         <div class="space-y-6 max-w-6xl mx-auto">
           <div class="flex justify-between items-center">
             <div>
-              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">3D Physical Card QR Studio</h1>
-              <p class="text-xs text-slate-500">Interactive 3D table tent and counter card visualizer with print-ready vector export</p>
+              <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">3D Physical Card QR Studio</h1>
+              <p class="text-xs text-[#6E6E6E]">Interactive 3D table tent and counter card visualizer with print-ready vector export</p>
             </div>
-            <a href="/q/sharma-dent-01" target="_blank" class="px-4 min-h-[40px] flex items-center bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="/q/sharma-dent-01" target="_blank" class="px-4 min-h-[40px] flex items-center bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               ${getSvgIcon('smartphone', 'w-4 h-4 mr-1 text-white')} Test Customer Flow
             </a>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="space-y-3">
-              <h3 class="text-xs font-bold uppercase text-slate-500">Touchpoints & Locations</h3>
+              <h3 class="text-xs font-bold uppercase text-[#6E6E6E]">Touchpoints & Locations</h3>
               ${store.qrcodes.map((q) => `
-                <div class="p-3.5 bg-white rounded-2xl border border-slate-200 text-xs space-y-1 card-3d">
-                  <div class="flex justify-between font-bold text-slate-900">
+                <div class="p-3.5 bg-[#FBF8F3] rounded-2xl border border-[#DFD7C7] text-xs space-y-1 card-3d card-lift">
+                  <div class="flex justify-between font-bold text-[#111111]">
                     <span>${q.name}</span>
                     <span class="bg-brand-100 text-brand-800 text-[10px] px-2 py-0.5 rounded-full tabular-nums">${q.scansCount} scans</span>
                   </div>
-                  <p class="text-slate-500 font-mono text-[11px]">/q/${q.shortCode}</p>
+                  <p class="text-[#6E6E6E] font-mono text-[11px]">/q/${q.shortCode}</p>
                 </div>
               `).join('')}
             </div>
 
             <!-- Interactive 3D Card Visualizer -->
-            <div class="md:col-span-2 p-8 bg-white rounded-3xl border border-slate-200 text-center space-y-6">
+            <div class="md:col-span-2 p-8 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] text-center space-y-6">
               <div class="flex justify-between items-center">
-                <h3 class="font-bold text-sm text-slate-900 font-heading">Interactive 3D Physical Card Visualizer</h3>
-                <span class="text-[11px] text-slate-400">Move mouse to tilt in 3D</span>
+                <h3 class="font-bold text-sm text-[#111111] font-heading">Interactive 3D Physical Card Visualizer</h3>
+                <span class="text-[11px] text-[#888888]">Move mouse to tilt in 3D</span>
               </div>
 
               <!-- The 3D Rendered Standee -->
               <div class="perspective-1000 py-6">
-                <div id="standee3D" class="card-3d max-w-xs mx-auto p-7 bg-white border-2 border-slate-300 rounded-[32px] shadow-2xl relative overflow-hidden space-y-3 cursor-grab">
+                <div id="standee3D" class="card-3d card-lift max-w-xs mx-auto p-7 bg-[#FBF8F3] border-2 border-[#DFD7C7] rounded-[32px] shadow-2xl relative overflow-hidden space-y-3 cursor-grab">
                   <div class="glare-effect"></div>
-                  <span class="text-[10px] uppercase font-bold text-brand-600 tracking-wider">Google Verified Partner</span>
-                  <h4 class="font-extrabold text-base text-slate-900 font-heading">${store.location.name}</h4>
-                  <p class="text-[11px] text-slate-600">Loved your visit? Share feedback in 30 seconds</p>
-                  <div id="qrcodeCanvas" class="p-3 bg-white border border-slate-200 inline-block rounded-2xl shadow-sm"></div>
-                  <p class="text-[10px] text-slate-400 font-mono">reviewkare.tech/q/sharma-dent-01</p>
+                  <span class="text-[10px] uppercase font-bold text-[#D9541E] tracking-wider">Google Verified Partner</span>
+                  <h4 class="font-extrabold text-base text-[#111111] font-heading">${store.location.name}</h4>
+                  <p class="text-[11px] text-[#4A4A4A]">Loved your visit? Share feedback in 30 seconds</p>
+                  <div id="qrcodeCanvas" class="p-3 bg-[#FBF8F3] border border-[#DFD7C7] inline-block rounded-2xl shadow-sm"></div>
+                  <p class="text-[10px] text-[#888888] font-mono">reviewkare.tech/q/sharma-dent-01</p>
                 </div>
               </div>
 
               <div class="flex justify-center gap-3 pt-2">
-                <button type="button" onclick="window.print()" class="px-5 min-h-[44px] flex items-center gap-2 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <button type="button" onclick="window.print()" class="px-5 min-h-[44px] flex items-center gap-2 bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                   ${getSvgIcon('printer', 'w-4 h-4 text-white')} Print PDF (Bleed Margins)
                 </button>
               </div>
@@ -2788,14 +2788,14 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const content = `
         <div class="space-y-6 max-w-6xl mx-auto">
           <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Growth & Competitors</h1>
-            <p class="text-xs text-slate-500">Indiranagar local market leaderboard</p>
+            <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Growth & Competitors</h1>
+            <p class="text-xs text-[#6E6E6E]">Indiranagar local market leaderboard</p>
           </div>
-          <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-            <h3 class="font-bold text-sm text-slate-900 font-heading">Local Area Competitor Benchmark</h3>
+          <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 card-3d card-lift">
+            <h3 class="font-bold text-sm text-[#111111] font-heading">Local Area Competitor Benchmark</h3>
             <div class="overflow-x-auto">
               <table class="w-full text-left text-xs">
-                <thead class="bg-slate-50 text-slate-500 uppercase border-y border-slate-100">
+                <thead class="bg-[#F3EEE3] text-[#6E6E6E] uppercase border-y border-[#EBE5D8]">
                   <tr>
                     <th class="py-2.5 px-3">Clinic</th>
                     <th class="py-2.5 px-3">Rating</th>
@@ -2805,9 +2805,9 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                     <th class="py-2.5 px-3">Reply Velocity</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                <tbody class="divide-y divide-slate-100 font-medium text-[#2B2B2B]">
                   ${store.competitors.map((c) => `
-                    <tr class="${c.name.includes('(Your Clinic)') ? 'bg-brand-50/50 font-bold text-brand-950' : ''}">
+                    <tr class="${c.name.includes('(Your Clinic)') ? 'bg-[#FAEDE8]/50 font-bold text-brand-950' : ''}">
                       <td class="py-3 px-3">${c.name}</td>
                       <td class="py-3 px-3 text-amber-500 font-bold tabular-nums">★ ${c.rating}</td>
                       <td class="py-3 px-3 tabular-nums">${c.totalReviews}</td>
@@ -2833,15 +2833,15 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const content = `
         <div class="space-y-6 max-w-5xl mx-auto">
           <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Google Business Profile Health Check</h1>
-            <p class="text-xs text-slate-500">Audit your Google Maps listing to ensure maximum local visibility and search ranking</p>
+            <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Google Business Profile Health Check</h1>
+            <p class="text-xs text-[#6E6E6E]">Audit your Google Maps listing to ensure maximum local visibility and search ranking</p>
           </div>
 
-          <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+          <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 card-3d card-lift">
+            <div class="flex justify-between items-center border-b border-[#EBE5D8] pb-4">
               <div>
-                <h3 class="font-bold text-base text-slate-900 font-heading">${store.location.name}</h3>
-                <p class="text-xs text-slate-500">${store.location.area}, ${store.location.city} • Verified Listing</p>
+                <h3 class="font-bold text-base text-[#111111] font-heading">${store.location.name}</h3>
+                <p class="text-xs text-[#6E6E6E]">${store.location.area}, ${store.location.city} • Verified Listing</p>
               </div>
               <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full tabular-nums">Health Score: 94/100</span>
             </div>
@@ -2879,13 +2879,13 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const content = `
         <div class="space-y-6 max-w-5xl mx-auto">
           <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">5-Star Review Poster Studio</h1>
-            <p class="text-xs text-slate-500">Generate high-converting social media and waiting lounge graphics from genuine 5-star Google reviews</p>
+            <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">5-Star Review Poster Studio</h1>
+            <p class="text-xs text-[#6E6E6E]">Generate high-converting social media and waiting lounge graphics from genuine 5-star Google reviews</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <!-- Poster Preview Canvas -->
-            <div class="p-8 bg-dark-950 rounded-3xl text-white shadow-xl space-y-5 border border-slate-800 card-3d">
+            <div class="p-8 bg-[#111111] rounded-3xl text-white shadow-xl space-y-5 border border-slate-800 card-3d card-lift">
               <div class="flex justify-between items-center">
                 <div class="flex gap-1">${getStarRatingSvg(5, 'w-4 h-4')}</div>
                 <span class="text-[10px] uppercase font-bold text-brand-400 bg-brand-950 px-2 py-0.5 rounded border border-brand-800">Verified Google Review</span>
@@ -2896,25 +2896,25 @@ Full technical context and documentation available at: https://reviewkare.tech/l
               <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
                 <div>
                   <h4 id="posterAuthor" class="font-bold text-white font-heading">${fiveStarReviews[0]?.reviewerName || 'Patient'}</h4>
-                  <p class="text-[10px] text-slate-400">Google Local Guide</p>
+                  <p class="text-[10px] text-[#888888]">Google Local Guide</p>
                 </div>
                 <div class="text-right">
                   <span class="font-bold text-xs text-brand-400">${store.location.name}</span>
-                  <p class="text-[10px] text-slate-500">${store.location.area}, ${store.location.city}</p>
+                  <p class="text-[10px] text-[#6E6E6E]">${store.location.area}, ${store.location.city}</p>
                 </div>
               </div>
             </div>
 
             <!-- Controls -->
-            <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 text-xs card-3d">
-              <h3 class="font-bold text-slate-900 font-heading text-sm">Select Review to Feature</h3>
+            <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 text-xs card-3d card-lift">
+              <h3 class="font-bold text-[#111111] font-heading text-sm">Select Review to Feature</h3>
               <label for="reviewSelect" class="sr-only">Choose Review</label>
-              <select id="reviewSelect" onchange="updatePoster(this.value)" class="w-full p-3 rounded-xl border border-slate-300 bg-slate-50 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <select id="reviewSelect" onchange="updatePoster(this.value)" class="w-full p-3 rounded-xl border border-[#DFD7C7] bg-[#F3EEE3] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 ${fiveStarReviews.map((r, i) => `
                   <option value="${i}">${r.reviewerName} - “${r.text.substring(0, 40)}…”</option>
                 `).join('')}
               </select>
-              <button type="button" onclick="alert('Poster exported in 2048x2048 high-res PNG for Instagram and Print!')" class="w-full min-h-[44px] flex items-center justify-center gap-2 bg-brand-600 text-white font-bold rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <button type="button" onclick="alert('Poster exported in 2048x2048 high-res PNG for Instagram and Print!')" class="w-full min-h-[44px] flex items-center justify-center gap-2 bg-[#D9541E] text-white font-bold rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 ${getSvgIcon('posters', 'w-4 h-4 text-white')} Download High-Res Graphic (PNG) &rarr;
               </button>
             </div>
@@ -2941,44 +2941,44 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         <div class="space-y-6 max-w-5xl mx-auto">
           <div class="flex justify-between items-center">
             <div>
-              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Weekly Reputation Report</h1>
-              <p class="text-xs text-slate-500">Automated performance summary for Dr. Sharma Dental Clinic</p>
+              <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Weekly Reputation Report</h1>
+              <p class="text-xs text-[#6E6E6E]">Automated performance summary for Dr. Sharma Dental Clinic</p>
             </div>
             <button type="button" onclick="window.print()" class="px-4 min-h-[40px] flex items-center gap-1.5 bg-slate-900 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               ${getSvgIcon('printer', 'w-4 h-4 text-white')} Download PDF Report
             </button>
           </div>
 
-          <div class="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-6 card-3d">
-            <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
+          <div class="p-8 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-6 card-3d card-lift">
+            <div class="border-b border-[#EBE5D8] pb-4 flex justify-between items-center">
               <div>
-                <h3 class="font-bold text-lg text-slate-900 font-heading">Reputation Health Report Card</h3>
-                <p class="text-xs text-slate-500">Period: 12 Oct 2026 – 19 Oct 2026 • Prepared by ReviewKare</p>
+                <h3 class="font-bold text-lg text-[#111111] font-heading">Reputation Health Report Card</h3>
+                <p class="text-xs text-[#6E6E6E]">Period: 12 Oct 2026 – 19 Oct 2026 • Prepared by ReviewKare</p>
               </div>
               <span class="text-xs font-bold text-brand-800 bg-brand-100 px-3 py-1 rounded-full">Status: Excellent</span>
             </div>
 
             <div class="grid grid-cols-4 gap-4 text-center text-xs">
-              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                <span class="text-slate-500">New Reviews</span>
-                <p class="text-2xl font-black text-slate-900 mt-1 tabular-nums">18</p>
+              <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">New Reviews</span>
+                <p class="text-2xl font-black text-[#111111] mt-1 tabular-nums">18</p>
               </div>
-              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                <span class="text-slate-500">Average Rating</span>
-                <p class="text-2xl font-black text-brand-600 mt-1 tabular-nums">4.8★</p>
+              <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Average Rating</span>
+                <p class="text-2xl font-black text-[#D9541E] mt-1 tabular-nums">4.8★</p>
               </div>
-              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                <span class="text-slate-500">Auto-Posted</span>
+              <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Auto-Posted</span>
                 <p class="text-2xl font-black text-emerald-600 mt-1 tabular-nums">16</p>
               </div>
-              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                <span class="text-slate-500">Held & Resolved</span>
+              <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7]">
+                <span class="text-[#6E6E6E]">Held & Resolved</span>
                 <p class="text-2xl font-black text-amber-600 mt-1 tabular-nums">2</p>
               </div>
             </div>
 
-            <div class="space-y-2 text-xs text-slate-700">
-              <h4 class="font-bold text-slate-900 font-heading">Key Insights & Takeaways</h4>
+            <div class="space-y-2 text-xs text-[#2B2B2B]">
+              <h4 class="font-bold text-[#111111] font-heading">Key Insights & Takeaways</h4>
               <p>• Patient sentiment towards “Root Canal” improved by 28% following painless protocol emphasis.</p>
               <p>• Reception QR card accounted for 72% of all new reviews generated this week.</p>
               <p>• Clinic manager successfully de-escalated 2 held complaints within 30 minutes via private telephone callback.</p>
@@ -2997,29 +2997,29 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const content = `
         <div class="space-y-6 max-w-4xl mx-auto">
           <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Autopilot & Tone Settings</h1>
-            <p class="text-xs text-slate-500">Configure response autonomy and business profile</p>
+            <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Autopilot & Tone Settings</h1>
+            <p class="text-xs text-[#6E6E6E]">Configure response autonomy and business profile</p>
           </div>
-          <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 text-xs card-3d">
+          <div class="p-6 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 text-xs card-3d card-lift">
             <div class="space-y-2">
-              <label for="setName" class="font-bold text-slate-700">Business / Clinic Name</label>
+              <label for="setName" class="font-bold text-[#2B2B2B]">Business / Clinic Name</label>
               <input id="setName" type="text" value="${store.location.name}" class="w-full p-2.5 border rounded-xl font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label for="setArea" class="font-bold text-slate-700">Area / Neighborhood</label>
+                <label for="setArea" class="font-bold text-[#2B2B2B]">Area / Neighborhood</label>
                 <input id="setArea" type="text" value="${store.location.area}" class="w-full p-2.5 border rounded-xl font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
               <div>
-                <label for="setCity" class="font-bold text-slate-700">City</label>
+                <label for="setCity" class="font-bold text-[#2B2B2B]">City</label>
                 <input id="setCity" type="text" value="${store.location.city}" class="w-full p-2.5 border rounded-xl font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               </div>
             </div>
             <div class="space-y-2">
-              <label for="setPhone" class="font-bold text-slate-700">De-escalation Manager Mobile</label>
+              <label for="setPhone" class="font-bold text-[#2B2B2B]">De-escalation Manager Mobile</label>
               <input id="setPhone" type="tel" value="${store.location.managerPhone}" class="w-full p-2.5 border rounded-xl font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
             </div>
-            <button type="button" onclick="saveClinicSettings()" class="px-6 min-h-[44px] bg-brand-600 text-white font-bold rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <button type="button" onclick="saveClinicSettings()" class="px-6 min-h-[44px] bg-[#D9541E] text-white font-bold rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Save Settings &rarr;
             </button>
           </div>
@@ -3059,8 +3059,8 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Subscription & Razorpay Billing</h1>
-              <p class="text-xs text-slate-500">Autonomous Google review autopilot plans. Instant UPI, NetBanking & Card activation.</p>
+              <h1 class="text-2xl font-black text-[#111111] tracking-tight font-heading">Subscription & Razorpay Billing</h1>
+              <p class="text-xs text-[#6E6E6E]">Autonomous Google review autopilot plans. Instant UPI, NetBanking & Card activation.</p>
             </div>
             <div class="flex items-center gap-2">
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
@@ -3071,7 +3071,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           </div>
 
           <!-- Active Plan Hero Card -->
-          <div class="p-6 sm:p-8 bg-dark-950 text-white rounded-3xl space-y-5 shadow-xl border border-slate-800 card-3d">
+          <div class="p-6 sm:p-8 bg-[#111111] text-white rounded-3xl space-y-5 shadow-xl border border-slate-800 card-3d card-lift">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <span class="text-[10px] uppercase font-bold text-brand-400 bg-brand-950/80 px-2.5 py-0.5 rounded-full border border-brand-800 tracking-wider font-mono">
@@ -3080,34 +3080,34 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                 <h2 class="text-2xl sm:text-3xl font-black mt-2 font-heading tracking-tight">
                   ${plan.name || 'Growth Autopilot Plan'}
                 </h2>
-                <p class="text-xs text-slate-400 mt-1">
+                <p class="text-xs text-[#888888] mt-1">
                   ${isActive ? `Renews on ${plan.expiresAt ? plan.expiresAt.split('T')[0] : 'Auto-renew'} via Razorpay UPI AutoPay` : `Trial active. Upgrade below to lock in the special ₹2,999 quarterly price.`}
                 </p>
               </div>
               <div class="text-right sm:text-right">
-                <span class="text-xs text-slate-400 block font-medium">Payment Channel</span>
+                <span class="text-xs text-[#888888] block font-medium">Payment Channel</span>
                 <span class="text-sm font-bold text-emerald-400 flex items-center justify-start sm:justify-end gap-1.5 mt-0.5">
                   ${getSvgIcon('check', 'w-4 h-4 text-emerald-400')} Razorpay Verified (UPI/Cards)
                 </span>
-                ${plan.paymentId ? `<span class="text-[10px] text-slate-500 font-mono block mt-1">Ref: ${plan.paymentId}</span>` : ''}
+                ${plan.paymentId ? `<span class="text-[10px] text-[#6E6E6E] font-mono block mt-1">Ref: ${plan.paymentId}</span>` : ''}
               </div>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs border-t border-slate-800/80">
               <div>
-                <span class="text-slate-400 text-[11px] block">AI Review Replies</span>
+                <span class="text-[#888888] text-[11px] block">AI Review Replies</span>
                 <strong class="text-white font-heading text-base tabular-nums">Unlimited</strong>
               </div>
               <div>
-                <span class="text-slate-400 text-[11px] block">In-Store QR Stands</span>
+                <span class="text-[#888888] text-[11px] block">In-Store QR Stands</span>
                 <strong class="text-white font-heading text-base tabular-nums">${store.qrcodes?.length || 1} Active</strong>
               </div>
               <div>
-                <span class="text-slate-400 text-[11px] block">Quarantine Shield</span>
+                <span class="text-[#888888] text-[11px] block">Quarantine Shield</span>
                 <strong class="text-emerald-400 font-heading text-base">100% Protected</strong>
               </div>
               <div>
-                <span class="text-slate-400 text-[11px] block">GST Input Tax Credit</span>
+                <span class="text-[#888888] text-[11px] block">GST Input Tax Credit</span>
                 <strong class="text-white font-heading text-base font-mono">18% Compliant</strong>
               </div>
             </div>
@@ -3116,25 +3116,25 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           <!-- Subscription Plan Selector (Razorpay Enabled) -->
           <div class="space-y-4">
             <div>
-              <h2 class="text-lg font-bold text-slate-900 font-heading">Choose or Upgrade Your Plan</h2>
-              <p class="text-xs text-slate-500">Pay securely in Indian Rupees via UPI (GPay, PhonePe, Paytm, BHIM) or Cards.</p>
+              <h2 class="text-lg font-bold text-[#111111] font-heading">Choose or Upgrade Your Plan</h2>
+              <p class="text-xs text-[#6E6E6E]">Pay securely in Indian Rupees via UPI (GPay, PhonePe, Paytm, BHIM) or Cards.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
               
               <!-- Starter Plan -->
-              <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between card-3d">
+              <div class="p-6 rounded-3xl bg-[#FBF8F3] border border-[#DFD7C7] shadow-sm flex flex-col justify-between card-3d card-lift">
                 <div class="space-y-3">
                   <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-slate-900 font-heading">Starter Solo</h3>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono">Monthly</span>
+                    <h3 class="font-bold text-lg text-[#111111] font-heading">Starter Solo</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#F3EEE3] text-[#2B2B2B] rounded-full font-mono">Monthly</span>
                   </div>
                   <div>
-                    <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">₹1,249</span>
-                    <span class="text-xs text-slate-500"> / month</span>
+                    <span class="text-3xl font-black text-[#111111] font-heading tabular-nums">₹1,249</span>
+                    <span class="text-xs text-[#6E6E6E]"> / month</span>
                   </div>
-                  <p class="text-xs text-slate-500">Ideal for single-chair clinics, independent cafes & local salons.</p>
-                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                  <p class="text-xs text-[#6E6E6E]">Ideal for single-chair clinics, independent cafes & local salons.</p>
+                  <ul class="space-y-2 text-xs text-[#4A4A4A] pt-3 border-t border-[#EBE5D8]">
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>1 Google Business Location</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Unlimited AI Multi-Lingual Replies</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Negative Review Quarantine Shield</span></li>
@@ -3147,22 +3147,22 @@ Full technical context and documentation available at: https://reviewkare.tech/l
               </div>
 
               <!-- Growth Plan (HERO SPECIAL) -->
-              <div class="p-6 rounded-3xl bg-white border-2 border-brand-600 shadow-lg relative flex flex-col justify-between card-3d">
+              <div class="p-6 rounded-3xl bg-[#FBF8F3] border-2 border-brand-600 shadow-lg relative flex flex-col justify-between card-3d card-lift">
                 <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md font-mono">
                   Recommended • Saves ₹2,998
                 </div>
                 <div class="space-y-3 mt-1">
                   <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-slate-900 font-heading">Growth Autopilot</h3>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-50 text-brand-700 rounded-full font-mono border border-brand-200">Quarterly Hero</span>
+                    <h3 class="font-bold text-lg text-[#111111] font-heading">Growth Autopilot</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#FAEDE8] text-[#D9541E] rounded-full font-mono border border-[#EFBCA8]">Quarterly Hero</span>
                   </div>
                   <div>
-                    <span class="text-3xl font-black text-brand-600 font-heading tabular-nums">₹2,999</span>
-                    <span class="text-xs text-slate-500"> / 3 Months</span>
+                    <span class="text-3xl font-black text-[#D9541E] font-heading tabular-nums">₹2,999</span>
+                    <span class="text-xs text-[#6E6E6E]"> / 3 Months</span>
                     <div class="text-[11px] text-emerald-600 font-bold mt-0.5">Just ₹999/mo (40% Savings)</div>
                   </div>
-                  <p class="text-xs text-slate-500">Full autopilot reputation OS with free physical countertop stand.</p>
-                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                  <p class="text-xs text-[#6E6E6E]">Full autopilot reputation OS with free physical countertop stand.</p>
+                  <ul class="space-y-2 text-xs text-[#4A4A4A] pt-3 border-t border-[#EBE5D8]">
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Everything in Starter + Up to 2 Branches</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>1-Tap WhatsApp Owner Approvals</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Staff Review Attribution & Leaderboard</span></li>
@@ -3170,24 +3170,24 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Weekly Executive PDF Report Card</span></li>
                   </ul>
                 </div>
-                <button type="button" onclick="startRazorpayCheckout('growth', 'quarterly')" class="mt-6 w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+                <button type="button" onclick="startRazorpayCheckout('growth', 'quarterly')" class="mt-6 w-full py-2.5 rounded-xl bg-[#D9541E] hover:bg-[#BF4615] text-white text-xs font-bold transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                   <span>Pay ₹2,999 via Razorpay UPI &rarr;</span>
                 </button>
               </div>
 
               <!-- Multi-Branch Pro -->
-              <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between card-3d">
+              <div class="p-6 rounded-3xl bg-[#FBF8F3] border border-[#DFD7C7] shadow-sm flex flex-col justify-between card-3d card-lift">
                 <div class="space-y-3">
                   <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-slate-900 font-heading">Multi-Location Pro</h3>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono">Enterprise</span>
+                    <h3 class="font-bold text-lg text-[#111111] font-heading">Multi-Location Pro</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#F3EEE3] text-[#2B2B2B] rounded-full font-mono">Enterprise</span>
                   </div>
                   <div>
-                    <span class="text-3xl font-black text-slate-900 font-heading tabular-nums">₹3,499</span>
-                    <span class="text-xs text-slate-500"> / month</span>
+                    <span class="text-3xl font-black text-[#111111] font-heading tabular-nums">₹3,499</span>
+                    <span class="text-xs text-[#6E6E6E]"> / month</span>
                   </div>
-                  <p class="text-xs text-slate-500">Multi-chair clinics, restaurant chains, and fitness franchises.</p>
-                  <ul class="space-y-2 text-xs text-slate-600 pt-3 border-t border-slate-100">
+                  <p class="text-xs text-[#6E6E6E]">Multi-chair clinics, restaurant chains, and fitness franchises.</p>
+                  <ul class="space-y-2 text-xs text-[#4A4A4A] pt-3 border-t border-[#EBE5D8]">
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Up to 5 Locations Included</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Centralized Reputation Executive Desk</span></li>
                     <li class="flex items-center gap-2">${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} <span>Google Local 3-Pack Rank Tracker</span></li>
@@ -3203,12 +3203,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           </div>
 
           <!-- Payment History & Invoices -->
-          <div class="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm card-3d">
-            <h3 class="font-bold text-sm text-slate-900 font-heading">Tax Invoices & Payment History</h3>
+          <div class="bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] p-6 space-y-4 shadow-sm card-3d card-lift">
+            <h3 class="font-bold text-sm text-[#111111] font-heading">Tax Invoices & Payment History</h3>
             ${invoices.length > 0 ? `
               <div class="overflow-x-auto">
                 <table class="w-full text-xs text-left">
-                  <thead class="text-slate-400 font-medium border-b border-slate-100">
+                  <thead class="text-[#888888] font-medium border-b border-[#EBE5D8]">
                     <tr>
                       <th class="py-2">Invoice</th>
                       <th class="py-2">Plan</th>
@@ -3220,10 +3220,10 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                   <tbody class="divide-y divide-slate-100">
                     ${invoices.map(inv => `
                       <tr>
-                        <td class="py-3 font-mono font-bold text-slate-900">${inv.id}</td>
+                        <td class="py-3 font-mono font-bold text-[#111111]">${inv.id}</td>
                         <td class="py-3">${inv.plan}</td>
-                        <td class="py-3 font-bold text-slate-900 tabular-nums">${inv.amount}</td>
-                        <td class="py-3 text-slate-500">${inv.date}</td>
+                        <td class="py-3 font-bold text-[#111111] tabular-nums">${inv.amount}</td>
+                        <td class="py-3 text-[#6E6E6E]">${inv.date}</td>
                         <td class="py-3"><span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px]">${inv.status}</span></td>
                       </tr>
                     `).join('')}
@@ -3231,18 +3231,18 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                 </table>
               </div>
             ` : `
-              <p class="text-xs text-slate-500 py-3">No previous invoices found. Payments made via Razorpay will generate downloadable 18% GST tax invoices here.</p>
+              <p class="text-xs text-[#6E6E6E] py-3">No previous invoices found. Payments made via Razorpay will generate downloadable 18% GST tax invoices here.</p>
             `}
           </div>
 
           <!-- Razorpay Gateway Integration Settings -->
-          <div class="bg-slate-50 rounded-3xl border border-slate-200 p-6 space-y-4">
+          <div class="bg-[#F3EEE3] rounded-3xl border border-[#DFD7C7] p-6 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <h4 class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">Merchant Gateway Configuration</h4>
-                <p class="text-xs text-slate-500 mt-0.5">Your Razorpay API keys for direct bank settlement into your KYC-verified bank account.</p>
+                <h4 class="text-xs font-bold text-[#111111] uppercase font-mono tracking-wider">Merchant Gateway Configuration</h4>
+                <p class="text-xs text-[#6E6E6E] mt-0.5">Your Razorpay API keys for direct bank settlement into your KYC-verified bank account.</p>
               </div>
-              <span class="text-[10px] bg-brand-50 text-brand-700 font-bold font-mono px-2 py-0.5 rounded border border-brand-200">
+              <span class="text-[10px] bg-[#FAEDE8] text-[#D9541E] font-bold font-mono px-2 py-0.5 rounded border border-[#EFBCA8]">
                 ${razorpayConfig.keyId ? 'Custom Keys Linked' : 'System Test Gateway'}
               </span>
             </div>
@@ -3250,12 +3250,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <form onsubmit="saveRazorpaySettings(event)" class="space-y-3 pt-2">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Razorpay Key ID</label>
-                  <input id="rzpKeyInput" type="text" placeholder="rzp_live_..." value="${razorpayConfig.keyId || ''}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 outline-none bg-white">
+                  <label class="block text-[11px] font-bold text-[#2B2B2B] mb-1">Razorpay Key ID</label>
+                  <input id="rzpKeyInput" type="text" placeholder="rzp_live_..." value="${razorpayConfig.keyId || ''}" class="w-full px-3 py-2 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] outline-none bg-[#FBF8F3]">
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Razorpay Key Secret</label>
-                  <input id="rzpSecretInput" type="password" placeholder="••••••••••••••••" value="${razorpayConfig.keySecret || ''}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-900 focus:border-brand-500 outline-none bg-white">
+                  <label class="block text-[11px] font-bold text-[#2B2B2B] mb-1">Razorpay Key Secret</label>
+                  <input id="rzpSecretInput" type="password" placeholder="••••••••••••••••" value="${razorpayConfig.keySecret || ''}" class="w-full px-3 py-2 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] focus:border-[#D9541E] outline-none bg-[#FBF8F3]">
                 </div>
               </div>
               <div class="flex items-center justify-between pt-1">
@@ -3443,15 +3443,15 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const defaultStaff = staffMembers[0] ? staffMembers[0].name : (vConfig.onboarding.defaultStaff[0] || 'Our Team');
 
       const html = renderHtmlPage(`${vConfig.shortName} Review Copilot`, 'qr', `
-        <div class="min-h-screen bg-slate-100 py-6 px-4">
+        <div class="min-h-screen bg-[#F3EEE3] py-6 px-4">
           <div class="max-w-md mx-auto space-y-4">
             
             <!-- Business Card Header -->
-            <div class="p-5 bg-white rounded-3xl border border-slate-200 text-center space-y-1 shadow-sm card-3d">
-              <h1 class="font-extrabold text-slate-900 text-lg font-heading">${loc.name || 'Our Center'}</h1>
-              <p class="text-xs text-slate-500">${loc.area || 'Bengaluru'}, ${loc.city || 'Karnataka'}</p>
+            <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] text-center space-y-1 shadow-sm card-3d card-lift">
+              <h1 class="font-extrabold text-[#111111] text-lg font-heading">${loc.name || 'Our Center'}</h1>
+              <p class="text-xs text-[#6E6E6E]">${loc.area || 'Bengaluru'}, ${loc.city || 'Karnataka'}</p>
               <div class="flex items-center justify-center gap-1.5 mt-1">
-                <span class="text-[10px] text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-full font-bold uppercase font-mono border border-brand-200">
+                <span class="text-[10px] text-[#D9541E] bg-[#FAEDE8] px-2.5 py-0.5 rounded-full font-bold uppercase font-mono border border-[#EFBCA8]">
                   ${vConfig.shortName}
                 </span>
                 <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-0.5 rounded-full font-bold">
@@ -3461,8 +3461,8 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             </div>
 
             <!-- Step 1: Rating -->
-            <div class="p-5 bg-white rounded-3xl border border-slate-200 text-center space-y-2 shadow-sm card-3d">
-              <span class="text-xs font-bold uppercase text-slate-500 font-heading">1. ${vConfig.qrFlow.step1Title}</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] text-center space-y-2 shadow-sm card-3d card-lift">
+              <span class="text-xs font-bold uppercase text-[#6E6E6E] font-heading">1. ${vConfig.qrFlow.step1Title}</span>
               <div class="flex justify-center gap-2 text-3xl text-amber-400">
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(1)" aria-label="1 star">★</button>
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(2)" aria-label="2 stars">★</button>
@@ -3470,7 +3470,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125" onclick="setQrRating(4)" aria-label="4 stars">★</button>
                 <button type="button" class="cursor-pointer focus-visible:outline-none p-1 transition-transform hover:scale-125 text-amber-400" onclick="setQrRating(5)" aria-label="5 stars">★</button>
               </div>
-              <p id="qrRatingLabel" class="text-xs font-bold text-slate-800 font-mono">5 Stars (Outstanding Experience!)</p>
+              <p id="qrRatingLabel" class="text-xs font-bold text-[#1C1C1C] font-mono">5 Stars (Outstanding Experience!)</p>
 
               <!-- FTC 16 CFR Part 465 Micro-Recovery Safe Harbor Banner -->
               <div id="recoveryBanner" class="hidden mt-3 p-4 bg-amber-50 rounded-2xl border border-amber-300 text-left space-y-2 text-xs animate-in fade-in">
@@ -3484,7 +3484,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                   <a href="tel:${loc.managerPhone || loc.phone || '+919845011223'}" class="px-3 py-1.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl font-bold text-[11px] shadow-sm">
                     📞 Direct Call to Manager (${loc.managerPhone || loc.phone || '+91 98450 11223'})
                   </a>
-                  <button type="button" onclick="continueToGoogle()" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-slate-700 font-bold text-[11px] hover:bg-slate-50">
+                  <button type="button" onclick="continueToGoogle()" class="px-3 py-1.5 bg-[#FBF8F3] border border-[#DFD7C7] rounded-xl text-[#2B2B2B] font-bold text-[11px] hover:bg-[#F3EEE3]">
                     Proceed to Google Maps Anyway
                   </button>
                 </div>
@@ -3492,12 +3492,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             </div>
 
             <!-- Step 2: Vertical Service / Menu / Item Pills -->
-            <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500 font-heading">2. ${vConfig.qrFlow.step2Title}</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] space-y-2 shadow-sm text-xs card-3d card-lift">
+              <span class="font-bold uppercase text-[#6E6E6E] font-heading">2. ${vConfig.qrFlow.step2Title}</span>
               <div class="flex flex-wrap gap-1.5" id="serviceTags">
                 ${services.map((svc, i) => `
                   <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-xl border text-xs font-medium focus-visible:outline-none transition-all ${
-                    i === 0 ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    i === 0 ? 'bg-[#D9541E] text-white border-brand-600 shadow-sm' : 'bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3]'
                   }">${svc}</button>
                 `).join('')}
               </div>
@@ -3505,12 +3505,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
 
             ${vConfig.qrFlow.showQuality ? `
               <!-- Step 3 (Deep Trust Flow): Clinical / Teaching Quality Tags -->
-              <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-                <span class="font-bold uppercase text-slate-500 font-heading">3. ${vConfig.qrFlow.step3Title}</span>
+              <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] space-y-2 shadow-sm text-xs card-3d card-lift">
+                <span class="font-bold uppercase text-[#6E6E6E] font-heading">3. ${vConfig.qrFlow.step3Title}</span>
                 <div class="flex flex-wrap gap-1.5" id="qualityTags">
                   ${qualities.map((q, i) => `
                     <button type="button" onclick="toggleTag(this)" class="px-3 min-h-[40px] rounded-xl border text-xs font-medium focus-visible:outline-none transition-all ${
-                      i === 0 ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      i === 0 ? 'bg-[#D9541E] text-white border-brand-600 shadow-sm' : 'bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3]'
                     }">${q}</button>
                   `).join('')}
                 </div>
@@ -3519,12 +3519,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
 
             ${vConfig.qrFlow.showStaff ? `
               <!-- Step 3 or 4: Frontline Staff Attribution Selector -->
-              <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-2 shadow-sm text-xs card-3d">
-                <span class="font-bold uppercase text-slate-500 font-heading">${vConfig.qrFlow.showQuality ? '4' : '3'}. ${vConfig.qrFlow.step4Title || vConfig.qrFlow.step3Title}</span>
+              <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] space-y-2 shadow-sm text-xs card-3d card-lift">
+                <span class="font-bold uppercase text-[#6E6E6E] font-heading">${vConfig.qrFlow.showQuality ? '4' : '3'}. ${vConfig.qrFlow.step4Title || vConfig.qrFlow.step3Title}</span>
                 <div class="flex flex-wrap gap-1.5" id="staffTags">
                   ${staffMembers.map((st, i) => `
                     <button type="button" onclick="selectStaffTag(this, '${st.name}')" class="px-3 min-h-[38px] rounded-xl border text-xs font-bold focus-visible:outline-none transition-all flex items-center gap-1.5 ${
-                      i === 0 ? 'bg-dark-950 text-white border-dark-950 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      i === 0 ? 'bg-[#111111] text-white border-dark-950 shadow-sm' : 'bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3]'
                     }">
                       <span class="w-2 h-2 rounded-full ${i === 0 ? 'bg-brand-400' : 'bg-slate-300'}"></span>
                       <span>${st.name}</span>
@@ -3535,12 +3535,12 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             ` : ''}
 
             <!-- Step ${vConfig.questionCount + 1}: Language Choice & AI Generator -->
-            <div class="p-5 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-sm text-xs card-3d">
-              <span class="font-bold uppercase text-slate-500 font-heading">${vConfig.questionCount + 1}. Preferred Review Language</span>
+            <div class="p-5 bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] space-y-3 shadow-sm text-xs card-3d card-lift">
+              <span class="font-bold uppercase text-[#6E6E6E] font-heading">${vConfig.questionCount + 1}. Preferred Review Language</span>
               <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="setLang('hi-en', this)" class="py-2.5 rounded-xl border font-bold bg-brand-600 text-white border-brand-600 shadow-sm focus-visible:outline-none">Hinglish</button>
-                <button type="button" onclick="setLang('en', this)" class="py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none">English</button>
-                <button type="button" onclick="setLang('hi', this)" class="py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none">हिंदी</button>
+                <button type="button" onclick="setLang('hi-en', this)" class="py-2.5 rounded-xl border font-bold bg-[#D9541E] text-white border-brand-600 shadow-sm focus-visible:outline-none">Hinglish</button>
+                <button type="button" onclick="setLang('en', this)" class="py-2.5 rounded-xl border font-bold bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3] focus-visible:outline-none">English</button>
+                <button type="button" onclick="setLang('hi', this)" class="py-2.5 rounded-xl border font-bold bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3] focus-visible:outline-none">हिंदी</button>
               </div>
               <button type="button" onclick="generateDraft()" class="w-full min-h-[48px] bg-slate-900 text-white font-bold rounded-xl mt-2 hover:bg-slate-800 transition-colors shadow-md flex items-center justify-center gap-2">
                 ${getSvgIcon('sparkles', 'w-4 h-4 text-brand-400')}
@@ -3552,18 +3552,18 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <div id="draftContainer" class="hidden p-5 bg-emerald-50 rounded-3xl border-2 border-emerald-500 space-y-3 text-xs animate-in fade-in">
               <div class="flex items-center justify-between">
                 <span class="font-bold text-emerald-950 font-heading">Your Ready-to-Post Review Draft:</span>
-                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-white px-2 py-0.5 rounded border border-emerald-200">Auto-Copied</span>
+                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-[#FBF8F3] px-2 py-0.5 rounded border border-emerald-200">Auto-Copied</span>
               </div>
               <label for="draftText" class="sr-only">Review Draft Content</label>
-              <textarea id="draftText" rows="4" class="w-full p-3 rounded-xl border border-emerald-300 bg-white text-xs text-slate-800 leading-relaxed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"></textarea>
+              <textarea id="draftText" rows="4" class="w-full p-3 rounded-xl border border-emerald-300 bg-[#FBF8F3] text-xs text-[#1C1C1C] leading-relaxed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"></textarea>
               
               <!-- Google Photo Booster Hint -->
-              <div class="p-2.5 bg-white/90 rounded-xl border border-emerald-200 text-[11px] text-emerald-900 flex items-center gap-2">
+              <div class="p-2.5 bg-[#FBF8F3]/90 rounded-xl border border-emerald-200 text-[11px] text-emerald-900 flex items-center gap-2">
                 <span class="text-base">📸</span>
                 <span><strong>Pro-Tip:</strong> Have a photo of your visit or dish? Add it on Google Maps for <strong>3x more views</strong>!</span>
               </div>
 
-              <button type="button" onclick="submitToGoogle()" class="w-full min-h-[50px] bg-brand-600 hover:bg-brand-700 text-white font-black rounded-xl text-sm shadow-lg transition-all flex items-center justify-center gap-2">
+              <button type="button" onclick="submitToGoogle()" class="w-full min-h-[50px] bg-[#D9541E] hover:bg-[#BF4615] text-white font-black rounded-xl text-sm shadow-lg transition-all flex items-center justify-center gap-2">
                 <span>Copy & Submit on Google Maps &rarr;</span>
               </button>
             </div>
@@ -3592,27 +3592,27 @@ Full technical context and documentation available at: https://reviewkare.tech/l
           function setLang(l, btn) {
             qrLang = l;
             btn.parentElement.querySelectorAll('button').forEach(b => {
-              b.className = 'py-2.5 rounded-xl border font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 focus-visible:outline-none';
+              b.className = 'py-2.5 rounded-xl border font-bold bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3] focus-visible:outline-none';
             });
-            btn.className = 'py-2.5 rounded-xl border font-bold bg-brand-600 text-white border-brand-600 shadow-sm focus-visible:outline-none';
+            btn.className = 'py-2.5 rounded-xl border font-bold bg-[#D9541E] text-white border-brand-600 shadow-sm focus-visible:outline-none';
           }
 
           function toggleTag(btn) {
-            if (btn.classList.contains('bg-brand-600')) {
-              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-slate-50 text-slate-700 border-slate-200 font-medium focus-visible:outline-none';
+            if (btn.classList.contains('bg-[#D9541E]')) {
+              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] font-medium focus-visible:outline-none';
             } else {
-              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-brand-600 text-white border-brand-600 font-medium shadow-sm focus-visible:outline-none';
+              btn.className = 'px-3 min-h-[40px] rounded-xl border bg-[#D9541E] text-white border-brand-600 font-medium shadow-sm focus-visible:outline-none';
             }
           }
 
           function selectStaffTag(btn, name) {
             selectedStaff = name;
             btn.parentElement.querySelectorAll('button').forEach(b => {
-              b.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 flex items-center gap-1.5 focus-visible:outline-none';
+              b.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-[#F3EEE3] text-[#2B2B2B] border-[#DFD7C7] hover:bg-[#F3EEE3] flex items-center gap-1.5 focus-visible:outline-none';
               const dot = b.querySelector('span');
               if (dot) dot.className = 'w-2 h-2 rounded-full bg-slate-300';
             });
-            btn.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-dark-950 text-white border-dark-950 shadow-sm flex items-center gap-1.5 focus-visible:outline-none';
+            btn.className = 'px-3 min-h-[38px] rounded-xl border text-xs font-bold bg-[#111111] text-white border-dark-950 shadow-sm flex items-center gap-1.5 focus-visible:outline-none';
             const dot = btn.querySelector('span');
             if (dot) dot.className = 'w-2 h-2 rounded-full bg-brand-400';
           }
@@ -3623,9 +3623,9 @@ Full technical context and documentation available at: https://reviewkare.tech/l
 
           async function generateDraft() {
             const services = [];
-            document.querySelectorAll('#serviceTags button.bg-brand-600').forEach(b => services.push(b.innerText.trim()));
+            document.querySelectorAll('#serviceTags button.bg-[#D9541E]').forEach(b => services.push(b.innerText.trim()));
             const qualities = [];
-            document.querySelectorAll('#qualityTags button.bg-brand-600').forEach(b => qualities.push(b.innerText.trim()));
+            document.querySelectorAll('#qualityTags button.bg-[#D9541E]').forEach(b => qualities.push(b.innerText.trim()));
             
             const res = await fetch('/api/ai/qr-draft', {
               method: 'POST',
@@ -3674,17 +3674,17 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const store = getTenantStore(tenantId);
       const placeId = store.location?.googlePlaceId || 'ChIJ_zX8sh8UrjsRn7w001';
       const html = renderHtmlPage('Thank You', 'qr', `
-        <div class="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-          <div class="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-sm text-center space-y-4 card-3d">
-            <div class="w-12 h-12 rounded-full bg-brand-50 text-brand-600 mx-auto flex items-center justify-center">
+        <div class="min-h-screen bg-[#F3EEE3] flex items-center justify-center p-4">
+          <div class="max-w-md w-full bg-[#FBF8F3] rounded-3xl p-8 border border-[#DFD7C7] shadow-sm text-center space-y-4 card-3d card-lift">
+            <div class="w-12 h-12 rounded-full bg-[#FAEDE8] text-[#D9541E] mx-auto flex items-center justify-center">
               ${getSvgIcon('check', 'w-6 h-6')}
             </div>
-            <h1 class="text-2xl font-black text-slate-900 font-heading">Thank You for Supporting Us!</h1>
-            <p class="text-xs text-slate-600">Your review helps genuine local customers discover ${escapeHtml(store.location?.name || 'our business')}.</p>
+            <h1 class="text-2xl font-black text-[#111111] font-heading">Thank You for Supporting Us!</h1>
+            <p class="text-xs text-[#4A4A4A]">Your review helps genuine local customers discover ${escapeHtml(store.location?.name || 'our business')}.</p>
             <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900">
               <strong>Reminder:</strong> Your text is copied to your clipboard. Simply paste it on Google Maps and tap Post!
             </div>
-            <a href="https://search.google.com/local/writereview?placeid=${placeId}" target="_blank" class="block w-full min-h-[44px] flex items-center justify-center bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <a href="https://search.google.com/local/writereview?placeid=${placeId}" target="_blank" class="block w-full min-h-[44px] flex items-center justify-center bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Open Google Review Window Again &rarr;
             </a>
           </div>
@@ -3700,23 +3700,23 @@ Full technical context and documentation available at: https://reviewkare.tech/l
       const token = pathname.split('/')[2];
       const store = getStore();
       const html = renderHtmlPage('1-Tap Mobile Approval', 'approval', `
-        <div class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-          <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-xl space-y-4 card-3d">
+        <div class="min-h-screen bg-[#F3EEE3] flex items-center justify-center p-4">
+          <div class="max-w-md w-full bg-[#FBF8F3] rounded-3xl p-6 border border-[#DFD7C7] shadow-xl space-y-4 card-3d card-lift">
             <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 font-bold flex items-center gap-1.5">
               ${getSvgIcon('approvals', 'w-4 h-4 text-amber-700')} Negative Review Held for 1-Tap Owner Approval
             </div>
             <div class="text-xs space-y-1">
-              <span class="font-bold text-slate-900">Priya Narang (1★)</span>
-              <p class="italic text-slate-600">“Waited 45 mins past appointment time. Receptionist was completely dismissive.”</p>
+              <span class="font-bold text-[#111111]">Priya Narang (1★)</span>
+              <p class="italic text-[#4A4A4A]">“Waited 45 mins past appointment time. Receptionist was completely dismissive.”</p>
             </div>
             <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs space-y-2">
               <span class="font-bold text-emerald-950 font-heading">AI Proposed De-escalation Reply:</span>
-              <p class="text-slate-800">Dear Priya Narang, thank you for sharing your feedback. We sincerely value patient comfort and punctuality. Please contact our clinic manager at ${store.location.managerPhone}.</p>
+              <p class="text-[#1C1C1C]">Dear Priya Narang, thank you for sharing your feedback. We sincerely value patient comfort and punctuality. Please contact our clinic manager at ${store.location.managerPhone}.</p>
               <p class="text-[11px] text-emerald-700 flex items-center gap-1">
                 ${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} Zero legal fault admitted • Directs to manager phone
               </p>
             </div>
-            <button id="apprBtn" type="button" onclick="doApprove()" class="w-full min-h-[48px] bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+            <button id="apprBtn" type="button" onclick="doApprove()" class="w-full min-h-[48px] bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-sm rounded-xl shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               Approve & Post to Google Maps (1-Tap) &rarr;
             </button>
             <p id="apprDone" class="hidden text-center text-xs font-bold text-emerald-700" aria-live="polite">✓ Successfully Published to Google Maps!</p>
@@ -3742,16 +3742,16 @@ Full technical context and documentation available at: https://reviewkare.tech/l
         '',
         `
         <div class="min-h-[70vh] flex items-center justify-center p-6 text-center">
-          <div class="max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
+          <div class="max-w-md bg-[#FBF8F3] p-8 rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 card-3d card-lift">
             <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xl">
               ⚡
             </div>
-            <h1 class="text-2xl font-black text-slate-900 font-heading">You Are Offline</h1>
-            <p class="text-slate-500 text-xs leading-relaxed">
+            <h1 class="text-2xl font-black text-[#111111] font-heading">You Are Offline</h1>
+            <p class="text-[#6E6E6E] text-xs leading-relaxed">
               We couldn't connect to ReviewKare servers. Please check your mobile data or Wi-Fi connection. Any pending review approval links will automatically resume once reconnected.
             </p>
             <div class="pt-2">
-              <button onclick="window.location.reload()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors">
+              <button onclick="window.location.reload()" class="w-full py-3 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-sm transition-colors">
                 Retry Connection &rarr;
               </button>
             </div>
@@ -3781,23 +3781,23 @@ Full technical context and documentation available at: https://reviewkare.tech/l
     // ----------------------------------------------------
     return sendHtml(404, renderHtmlPage('404 — Page Not Found', '', `
       <div class="min-h-[70vh] flex items-center justify-center p-6 text-center">
-        <div class="max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 card-3d">
-          <div class="text-4xl font-black text-brand-600 font-heading tabular-nums">404</div>
-          <h1 class="text-2xl font-bold text-slate-900 font-heading">Page Not Found</h1>
-          <p class="text-slate-500 text-xs leading-relaxed">
+        <div class="max-w-md bg-[#FBF8F3] p-8 rounded-3xl border border-[#DFD7C7] shadow-sm space-y-4 card-3d card-lift">
+          <div class="text-4xl font-black text-[#D9541E] font-heading tabular-nums">404</div>
+          <h1 class="text-2xl font-bold text-[#111111] font-heading">Page Not Found</h1>
+          <p class="text-[#6E6E6E] text-xs leading-relaxed">
             The link you followed may be broken or the page may have been removed. Explore our core resources below:
           </p>
           <div class="pt-2 grid grid-cols-2 gap-2 text-xs">
-            <a href="/" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+            <a href="/" class="p-3 bg-[#F3EEE3] hover:bg-[#F3EEE3] rounded-xl font-bold text-[#2B2B2B] border border-[#DFD7C7] transition-colors">
               Homepage &rarr;
             </a>
-            <a href="/free-audit" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+            <a href="/free-audit" class="p-3 bg-[#F3EEE3] hover:bg-[#F3EEE3] rounded-xl font-bold text-[#2B2B2B] border border-[#DFD7C7] transition-colors">
               Free Audit &rarr;
             </a>
-            <a href="/features" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+            <a href="/features" class="p-3 bg-[#F3EEE3] hover:bg-[#F3EEE3] rounded-xl font-bold text-[#2B2B2B] border border-[#DFD7C7] transition-colors">
               Features &rarr;
             </a>
-            <a href="/pricing" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl font-bold text-slate-700 border border-slate-200 transition-colors">
+            <a href="/pricing" class="p-3 bg-[#F3EEE3] hover:bg-[#F3EEE3] rounded-xl font-bold text-[#2B2B2B] border border-[#DFD7C7] transition-colors">
               Pricing INR &rarr;
             </a>
           </div>

@@ -140,7 +140,7 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   <meta name="description" content="${description}">
   <meta name="keywords" content="${keywords}">
   <meta name="robots" content="${robots}">
-  <meta name="theme-color" content="#ff5900">
+  <meta name="theme-color" content="#D9541E">
   
   <!-- Canonical & Agentic Discovery Links -->
   <link rel="canonical" href="${canonicalUrl}">
@@ -169,9 +169,10 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   ${JSON.stringify({ "@context": "https://schema.org", "@graph": schemaGraph }, null, 2)}
   </script>
 
+  <!-- Google Fonts: Editorial Serif (Fraunces) + Clean Sans (Plus Jakarta Sans) + Monospace (JetBrains Mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..800;1,9..144,600..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -179,44 +180,83 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       theme: {
         extend: {
           colors: {
-            ember: '#ff5900',
-            abyss: '#000710',
-            carbon: '#15191e',
-            ink: '#000000',
-            paper: '#ffffff',
-            fog: '#f3f3f7',
-            mist: '#b9bbc6',
-            steel: '#8b8d98',
-            pewter: '#6f737b',
-            graphite: '#60646c',
+            cream: {
+              DEFAULT: '#F3EEE3',
+              50: '#FBF8F3',
+              100: '#F3EEE3',
+              200: '#EBE5D8',
+              300: '#DFD7C7',
+              400: '#CFC5B2',
+              500: '#BDB19B',
+            },
+            ink: {
+              DEFAULT: '#111111',
+              50: '#F6F6F6',
+              100: '#E7E7E7',
+              200: '#D1D1D1',
+              300: '#B0B0B0',
+              400: '#888888',
+              500: '#6E6E6E',
+              600: '#4A4A4A',
+              700: '#2B2B2B',
+              800: '#1C1C1C',
+              900: '#111111',
+              950: '#0A0A0A',
+            },
+            orange: {
+              DEFAULT: '#D9541E',
+              burnt: '#D9541E',
+              50: '#FAEDE8',
+              100: '#F7DDD3',
+              200: '#EFBCA8',
+              300: '#E69B7E',
+              400: '#DE7A53',
+              500: '#D9541E',
+              600: '#D9541E',
+              700: '#BF4615',
+              800: '#9F380F',
+              900: '#7C2B0B',
+            },
             brand: {
-              50: '#fff7ed',
-              100: '#ffedd5',
-              200: '#fed7aa',
-              300: '#fdba74',
-              400: '#fb923c',
-              500: '#f97316',
-              600: '#ff5900', // Brex Ember accent
-              700: '#ea580c',
-              800: '#c2410c',
-              900: '#9a3412',
-              950: '#000710', // Brex Abyss
+              50: '#FAEDE8',
+              100: '#F7DDD3',
+              200: '#EFBCA8',
+              300: '#E69B7E',
+              400: '#DE7A53',
+              500: '#D9541E',
+              600: '#D9541E',
+              700: '#BF4615',
+              800: '#9F380F',
+              900: '#7C2B0B',
+              950: '#111111',
             },
             dark: {
-              900: '#15191e', // Brex Carbon
-              950: '#000710', // Brex Abyss
-            }
+              900: '#181818',
+              950: '#111111',
+            },
+            ember: '#D9541E',
+            abyss: '#111111',
+            carbon: '#181818',
+            paper: '#FBF8F3',
+            fog: '#F3EEE3',
+            mist: '#DFD7C7',
+            steel: '#888888',
+            pewter: '#6E6E6E',
+            graphite: '#4A4A4A',
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            heading: ['Inter', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            heading: ['Fraunces', 'Georgia', 'serif'],
+            display: ['Fraunces', 'Georgia', 'serif'],
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            grotesk: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           borderRadius: {
             'tag': '6px',
-            'card': '12px',
-            'input': '12px',
-            'btn': '12px',
+            'card': '14px',
+            'input': '10px',
+            'btn': '10px',
           }
         }
       }
@@ -229,94 +269,176 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   
   <style>
     :root {
-      --color-ember: #ff5900;
-      --color-abyss: #000710;
-      --color-carbon: #15191e;
-      --color-ink: #000000;
-      --color-paper: #ffffff;
-      --color-fog: #f3f3f7;
-      --color-mist: #b9bbc6;
-      --color-steel: #8b8d98;
-      --color-pewter: #6f737b;
-      --color-graphite: #60646c;
-      --font-inter: 'Inter', system-ui, sans-serif;
+      --color-cream: #F3EEE3;
+      --color-cream-surface: #FBF8F3;
+      --color-cream-subtle: #EBE5D8;
+      --color-cream-border: #DFD7C7;
+      --color-ink: #111111;
+      --color-ink-muted: #4A4A4A;
+      --color-ink-subtle: #6E6E6E;
+      --color-orange: #D9541E;
+      --color-orange-hover: #BF4615;
+      --color-orange-tint: #FAEDE8;
+      --font-heading: 'Fraunces', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-yc: cubic-bezier(0.22, 1, 0.36, 1);
+      
+      /* Backward compatibility mapping */
+      --color-ember: #D9541E;
+      --color-abyss: #111111;
+      --color-carbon: #181818;
+      --color-paper: #FBF8F3;
+      --color-fog: #F3EEE3;
+      --color-mist: #DFD7C7;
+      --color-steel: #888888;
+      --color-pewter: #6E6E6E;
+      --color-graphite: #4A4A4A;
     }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       letter-spacing: -0.01em;
       touch-action: manipulation;
-      background-color: #ffffff;
-      color: #000000;
+      background-color: #F3EEE3;
+      color: #111111;
+      line-height: 1.6;
+      font-size: 16px;
     }
     h1, .text-display {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fraunces', Georgia, serif;
       letter-spacing: -0.03em;
       font-weight: 700;
-      color: #000000;
+      color: #111111;
       text-wrap: balance;
     }
     h2, .text-heading-lg {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fraunces', Georgia, serif;
       letter-spacing: -0.025em;
       font-weight: 700;
-      color: #000000;
+      color: #111111;
       text-wrap: balance;
     }
     h3, .text-heading {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fraunces', Georgia, serif;
       letter-spacing: -0.02em;
       font-weight: 600;
-      color: #000000;
+      color: #111111;
       text-wrap: balance;
     }
     h4, h5, h6, .font-heading {
-      font-family: 'Inter', sans-serif;
-      letter-spacing: -0.01em;
+      font-family: 'Fraunces', Georgia, serif;
+      letter-spacing: -0.015em;
       font-weight: 600;
+      color: #111111;
+    }
+    .font-sans-clean {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     .tabular-nums {
       font-variant-numeric: tabular-nums;
     }
     
-    /* 3D Tilt & Card Perspective */
+    /* YC Hand-Drawn Animated Burnt Orange Underline */
+    .yc-highlight {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+      color: #111111;
+    }
+    .yc-underline {
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .yc-underline path {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      transition: stroke-dashoffset 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .yc-highlight.draw .yc-underline path,
+    .revealed .yc-underline path {
+      stroke-dashoffset: 0;
+    }
+
+    /* Motion & Reveal Patterns (Motionsites standard) */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-on-scroll.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stagger-1 { transition-delay: 80ms; }
+    .stagger-2 { transition-delay: 160ms; }
+    .stagger-3 { transition-delay: 240ms; }
+    .stagger-4 { transition-delay: 320ms; }
+
+    /* Button and Card Lifts */
+    .btn-lift {
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    .btn-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(217, 84, 30, 0.3);
+    }
+    .card-lift {
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+    .card-lift:hover {
+      transform: translateY(-4px);
+      border-color: #111111 !important;
+      box-shadow: 0 16px 36px -10px rgba(17, 17, 17, 0.1);
+    }
+
+    /* Infinite Marquee Ticker */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marqueeAnim 30s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+    @keyframes marqueeAnim {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Subtle Cream / Ink Grain Texture Overlay */
+    .yc-cream-canvas {
+      background-color: #F3EEE3;
+      background-image: radial-gradient(#DFD7C7 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    /* 3D Tilt Card */
     .perspective-1000 { perspective: 1000px; transform-style: preserve-3d; }
     .card-3d {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
       will-change: transform;
     }
     .card-3d:hover {
-      box-shadow: 0 16px 36px -12px rgba(255, 89, 0, 0.12);
-    }
-    
-    /* 2.5D Isometric Device Mockup */
-    .isometric-mockup {
-      transform: rotateX(10deg) rotateY(-12deg) rotateZ(2deg);
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
-      box-shadow: -20px 30px 60px rgba(0, 7, 16, 0.15);
-      animation: floatSlow 6s ease-in-out infinite alternate;
-    }
-    .isometric-mockup:hover {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.02);
-      animation-play-state: paused;
-    }
-    @keyframes floatSlow {
-      0% { transform: rotateX(10deg) rotateY(-12deg) rotateZ(2deg) translateY(0px); }
-      100% { transform: rotateX(12deg) rotateY(-10deg) rotateZ(1deg) translateY(-10px); }
+      box-shadow: 0 16px 36px -12px rgba(217, 84, 30, 0.15);
     }
 
-    /* Ambient Clean Mesh */
-    .ambient-mesh {
-      background: radial-gradient(circle at 50% 0%, rgba(255, 89, 0, 0.04), transparent 50%),
-                  radial-gradient(circle at 100% 30%, rgba(243, 243, 247, 0.8), transparent 40%);
+    /* Route Transition Animation */
+    @keyframes routeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Glare effect on 3D elements */
-    .glare-effect {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 65%);
-      pointer-events: none;
-      border-radius: inherit;
+    .route-entrance {
+      animation: routeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     /* Accessibility: Honor reduced motion */
@@ -327,113 +449,121 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
-      .isometric-mockup {
+      .reveal-on-scroll {
+        opacity: 1 !important;
         transform: none !important;
-        animation: none !important;
       }
-      .card-3d:hover {
+      .yc-underline path {
+        stroke-dashoffset: 0 !important;
+      }
+      .btn-lift:hover, .card-lift:hover, .card-3d:hover {
         transform: none !important;
+      }
+      .marquee-track {
+        animation: none !important;
       }
     }
   </style>
 </head>
-<body class="min-h-screen bg-white text-black flex flex-col selection:bg-brand-600 selection:text-white ambient-mesh">
+<body class="min-h-screen bg-[#F3EEE3] text-[#111111] flex flex-col selection:bg-[#D9541E] selection:text-white yc-cream-canvas route-entrance">
   
   <!-- SKIP LINK FOR ACCESSIBILITY (Web Guidelines) -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 bg-brand-600 text-white px-4 py-2 rounded-xl text-xs font-bold">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 z-50 bg-[#D9541E] text-white px-4 py-2 rounded-[10px] text-xs font-bold">
     Skip to main content
   </a>
 
   ${!isApp ? `
-  <!-- TOP ARCHITECTURE ANNOUNCEMENT BANNER (Carbon #15191e with Ember #ff5900 accent) -->
-  <aside class="bg-[#15191e] text-white text-xs py-2 px-4 text-center border-b border-[#252a32]" aria-label="Announcement">
-    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#ff5900]/20 text-[#ff5900] font-bold uppercase tracking-wider text-[10px]">
-        ReviewKare 2.4 Architecture
+  <!-- TOP ANNOUNCEMENT BANNER (Ink Black #111111 with Burnt Orange #D9541E accent) -->
+  <aside class="bg-[#111111] text-[#F3EEE3] text-xs py-2.5 px-4 text-center border-b border-[#222222]" aria-label="Announcement">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#D9541E]/20 text-[#D9541E] font-bold uppercase tracking-wider text-[10px] font-mono border border-[#D9541E]/30">
+        Y Combinator Look &amp; Feel
       </span>
-      <span class="font-medium text-[#f3f3f7]">Zero-Login 30s In-Store QR, Neural Multi-Dialect Autopilot &amp; Frontline Staff Attribution across India</span>
-      <a href="/features" class="font-bold text-[#ff5900] hover:underline ml-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded">Explore Capabilities &rarr;</a>
+      <span class="font-medium text-[#F3EEE3]">ReviewKare 3.0: 30-Second In-Store QR, Neural Multi-Dialect Autopilot &amp; Frontline Staff Attribution across India</span>
+      <a href="/features" class="font-bold text-[#D9541E] hover:underline ml-1 inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded">
+        Explore Capabilities &rarr;
+      </a>
     </div>
   </aside>
 
-  <!-- NAVIGATION BAR (Paper #ffffff canvas with Ink #000000 typography & Ember #ff5900 button) -->
-  <header class="bg-white border-b border-[#e5e7eb] sticky top-0 z-50">
+  <!-- NAVIGATION BAR (Cream #F3EEE3 canvas with Ink #111111 typography & Burnt Orange #D9541E button) -->
+  <header class="bg-[#F3EEE3]/95 backdrop-blur-md border-b border-[#DFD7C7] sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
       
       <!-- Brand Logo -->
       <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-xl" aria-label="ReviewKare Homepage">
-          <div class="w-10 h-10 rounded-[12px] bg-[#ff5900] text-white font-bold text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm">
+        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded-xl" aria-label="ReviewKare Homepage">
+          <div class="w-10 h-10 rounded-[10px] bg-[#D9541E] text-white font-bold text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm">
             R
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-black tracking-tight font-heading">ReviewKare</span>
-              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-[#fff7ed] text-[#ff5900] border border-[#ffedd5] font-mono">
-                OS 2.4
+              <span class="font-bold text-2xl text-[#111111] tracking-tight font-heading">ReviewKare</span>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-[#FAEDE8] text-[#D9541E] border border-[#EFBCA8] font-mono">
+                YC Edition
               </span>
             </div>
-            <p class="text-[11px] text-[#60646c] font-medium -mt-0.5">Autonomous Multi-Vertical Reputation OS</p>
+            <p class="text-[11px] text-[#6E6E6E] font-medium -mt-0.5">Autonomous Multi-Vertical Reputation OS</p>
           </div>
         </a>
 
         <!-- Links -->
-        <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-black" aria-label="Main Navigation">
-          <a href="/features" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'features' ? 'text-[#ff5900] font-bold' : ''}">Core Engine</a>
+        <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-[#111111]" aria-label="Main Navigation">
+          <a href="/features" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'features' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Core Engine</a>
           
           <!-- Industries Multi-Vertical Dropdown -->
           <div class="relative group cursor-pointer">
-            <span class="hover:text-[#ff5900] transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'industries' ? 'text-[#ff5900] font-bold' : ''}">
+            <span class="hover:text-[#D9541E] transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'industries' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">
               Industries <span class="text-[9px] opacity-60">▼</span>
             </span>
-            <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 hidden group-hover:block animate-in fade-in z-50">
-              <a href="/industries/clinics" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">
-                ${getSvgIcon('clinic', 'w-4 h-4 text-brand-600')}
-                <span>Clinics & Healthcare</span>
+            <div class="absolute top-full left-0 mt-2 w-64 bg-[#FBF8F3] rounded-2xl shadow-xl border border-[#DFD7C7] p-2 hidden group-hover:block animate-in fade-in z-50">
+              <a href="/industries/clinics" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+                ${getSvgIcon('clinic', 'w-4 h-4 text-[#D9541E]')}
+                <span>Clinics &amp; Healthcare</span>
               </a>
-              <a href="/industries/restaurants" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">
-                ${getSvgIcon('coffee', 'w-4 h-4 text-amber-600')}
-                <span>Cafes, Dining & Bakeries</span>
+              <a href="/industries/restaurants" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+                ${getSvgIcon('coffee', 'w-4 h-4 text-[#D9541E]')}
+                <span>Cafes, Dining &amp; Bakeries</span>
               </a>
-              <a href="/industries/salons" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">
-                ${getSvgIcon('scissors', 'w-4 h-4 text-purple-600')}
-                <span>Salons & Luxury Spas</span>
+              <a href="/industries/salons" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+                ${getSvgIcon('scissors', 'w-4 h-4 text-[#D9541E]')}
+                <span>Salons &amp; Luxury Spas</span>
               </a>
-              <a href="/industries/gyms" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">
-                ${getSvgIcon('dumbbell', 'w-4 h-4 text-emerald-600')}
-                <span>Gyms & Fitness Hubs</span>
+              <a href="/industries/gyms" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+                ${getSvgIcon('dumbbell', 'w-4 h-4 text-[#D9541E]')}
+                <span>Gyms &amp; Fitness Hubs</span>
               </a>
-              <a href="/industries/coaching" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-slate-50 font-medium text-slate-700">
-                ${getSvgIcon('academic', 'w-4 h-4 text-blue-600')}
-                <span>Coaching & Academies</span>
+              <a href="/industries/coaching" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+                ${getSvgIcon('academic', 'w-4 h-4 text-[#D9541E]')}
+                <span>Coaching &amp; Academies</span>
               </a>
             </div>
           </div>
 
-          <a href="/free-audit" class="hover:text-[#ff5900] transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'audit' ? 'text-[#ff5900] font-bold' : ''}">
-            ${getSvgIcon('search', 'w-3.5 h-3.5 text-brand-600')} Local 3-Pack Audit
+          <a href="/free-audit" class="hover:text-[#D9541E] transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'audit' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">
+            ${getSvgIcon('search', 'w-3.5 h-3.5 text-[#D9541E]')} Local 3-Pack Audit
           </a>
-          <a href="/for-agencies" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'agencies' ? 'text-[#ff5900] font-bold' : ''}">For Agencies</a>
-          <a href="/security" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'security' ? 'text-[#ff5900] font-bold' : ''}">Security & Trust</a>
-          <a href="/pricing" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'pricing' ? 'text-[#ff5900] font-bold' : ''}">Pricing</a>
-          <a href="/contact" class="hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded p-1 ${activeNav === 'contact' ? 'text-[#ff5900] font-bold' : ''}">Contact</a>
+          <a href="/for-agencies" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'agencies' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">For Agencies</a>
+          <a href="/security" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'security' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Security &amp; Trust</a>
+          <a href="/pricing" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'pricing' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Pricing</a>
+          <a href="/contact" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'contact' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Contact</a>
         </nav>
       </div>
 
       <!-- Action buttons & Command Palette Trigger -->
       <div class="flex items-center gap-3">
         <!-- Quick Search Cmd+K -->
-        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 px-3 min-h-[40px] rounded-[12px] border border-[#b9bbc6] bg-[#f3f3f7] text-[#60646c] hover:text-black text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900]" aria-label="Search and Navigation">
-          ${getSvgIcon('search', 'w-3.5 h-3.5 text-steel')}
+        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 px-3 min-h-[40px] rounded-[10px] border border-[#DFD7C7] bg-[#FBF8F3] text-[#4A4A4A] hover:text-[#111111] hover:border-[#111111] text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]" aria-label="Search and Navigation">
+          ${getSvgIcon('search', 'w-3.5 h-3.5 text-[#D9541E]')}
           <span>Quick Search</span>
-          <kbd class="px-1.5 py-0.5 text-[10px] bg-white border border-[#b9bbc6] rounded font-mono shadow-2xs">⌘K</kbd>
+          <kbd class="px-1.5 py-0.5 text-[10px] bg-[#EBE5D8] border border-[#DFD7C7] text-[#111111] rounded font-mono">⌘K</kbd>
         </button>
 
-        <a href="/login?demo=true" class="text-xs font-semibold px-3.5 min-h-[44px] flex items-center text-black hover:text-[#ff5900] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] rounded-[12px]">
+        <a href="/login?demo=true" class="text-xs font-bold px-3.5 min-h-[44px] flex items-center text-[#111111] hover:text-[#D9541E] border border-[#111111] bg-[#FBF8F3] hover:bg-[#EBE5D8] transition-all rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]">
           Live Demo
         </a>
 
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-semibold px-4 min-h-[44px] rounded-[12px] bg-[#ff5900] text-white hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5900] shadow-sm">
+        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold px-4 min-h-[44px] rounded-[10px] bg-[#D9541E] hover:bg-[#BF4615] text-white transition-all btn-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] shadow-sm">
           <span>Enterprise Desk &rarr;</span>
         </a>
       </div>
@@ -446,118 +576,118 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   </main>
 
   ${!isApp ? `
-  <!-- SAAS FOOTER (Brex Abyss #000710 with Mist #b9bbc6 text & Paper #ffffff headings) -->
-  <footer class="bg-[#000710] text-[#b9bbc6] border-t border-[#15191e] text-xs mt-20 pt-16 pb-12">
+  <!-- SAAS FOOTER (Ink Black #111111 with Cream #F3EEE3 text & Burnt Orange #D9541E accents) -->
+  <footer class="bg-[#111111] text-[#CFC5B2] border-t border-[#222222] text-xs mt-20 pt-16 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-[#15191e]">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-[#222222]">
         
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-[12px] bg-[#ff5900] text-white font-bold text-base flex items-center justify-center font-heading">R</div>
-            <span class="font-extrabold text-white text-xl tracking-tight font-heading">ReviewKare Operating System</span>
+            <div class="w-8 h-8 rounded-[8px] bg-[#D9541E] text-white font-bold text-base flex items-center justify-center font-heading">R</div>
+            <span class="font-bold text-[#F3EEE3] text-xl tracking-tight font-heading">ReviewKare Operating System</span>
           </div>
-          <p class="text-[#8b8d98] leading-relaxed pr-6">
-            Autonomous Google Review Autopilot &amp; In-Store AI QR Platform. Built natively in India for clinics, cafes, restaurants, salons, spas, and gyms.
+          <p class="text-[#A09A8F] leading-relaxed pr-6 font-sans-clean">
+            Autonomous Google Review Autopilot &amp; In-Store AI QR Platform. Built with Y Combinator speed and precision for clinics, cafes, restaurants, salons, spas, and gyms across India.
           </p>
-          <div class="space-y-1.5 text-[#8b8d98] text-[11px]">
-            <p class="text-[#ff5900] font-semibold flex items-center gap-1.5">
-              ${getSvgIcon('check', 'w-3.5 h-3.5 text-[#ff5900]')} 100% Official Google Business Profile OAuth 2.0 API Partner
+          <div class="space-y-1.5 text-[#A09A8F] text-[11px] font-sans-clean">
+            <p class="text-[#D9541E] font-semibold flex items-center gap-1.5">
+              ${getSvgIcon('check', 'w-3.5 h-3.5 text-[#D9541E]')} 100% Official Google Business Profile OAuth 2.0 API Partner
             </p>
-            <p class="text-[#8b8d98] flex items-center gap-1.5">
-              ${getSvgIcon('shield', 'w-3.5 h-3.5 text-[#8b8d98]')} DPDP Act 2023 Compliant • Hosted on AWS Mumbai (ap-south-1)
+            <p class="text-[#A09A8F] flex items-center gap-1.5">
+              ${getSvgIcon('shield', 'w-3.5 h-3.5 text-[#A09A8F]')} DPDP Act 2023 Compliant • Hosted on AWS Mumbai (ap-south-1)
             </p>
-            <p class="text-[#8b8d98] flex items-center gap-1.5">
-              ${getSvgIcon('lock', 'w-3.5 h-3.5 text-[#8b8d98]')} Zero-PHI Medical Guarantee • Strict Zero-Liability Quarantine Shield
+            <p class="text-[#A09A8F] flex items-center gap-1.5">
+              ${getSvgIcon('lock', 'w-3.5 h-3.5 text-[#A09A8F]')} Zero-PHI Medical Guarantee • Strict Zero-Liability Quarantine Shield
             </p>
           </div>
         </div>
 
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Engine &amp; Capabilities</h4>
-          <ul class="space-y-2 text-[#b9bbc6]">
-            <li><a href="/features" class="hover:text-white transition-colors">Neural Dialect Autopilot</a></li>
-            <li><a href="/app/qr" class="hover:text-white transition-colors">3D Physical QR Studio</a></li>
-            <li><a href="/features" class="hover:text-white transition-colors">Quarantine Safety Shield</a></li>
-            <li><a href="/app/staff" class="hover:text-white transition-colors">Staff Attribution Leaderboard</a></li>
-            <li><a href="/app/local-pack" class="hover:text-white transition-colors">Google Local 3-Pack Engine</a></li>
-            <li><a href="/book-demo" class="hover:text-white transition-colors">Schedule Solution Walkthrough</a></li>
+        <div class="space-y-3 font-sans-clean">
+          <h4 class="font-bold text-[#F3EEE3] uppercase tracking-wider text-[11px] font-mono">Engine &amp; Capabilities</h4>
+          <ul class="space-y-2 text-[#CFC5B2]">
+            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">Neural Dialect Autopilot</a></li>
+            <li><a href="/app/qr" class="hover:text-[#D9541E] transition-colors">3D Physical QR Studio</a></li>
+            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">Quarantine Safety Shield</a></li>
+            <li><a href="/app/staff" class="hover:text-[#D9541E] transition-colors">Staff Attribution Leaderboard</a></li>
+            <li><a href="/app/local-pack" class="hover:text-[#D9541E] transition-colors">Google Local 3-Pack Engine</a></li>
+            <li><a href="/book-demo" class="hover:text-[#D9541E] transition-colors">Schedule Solution Walkthrough</a></li>
           </ul>
         </div>
 
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Multi-Vertical</h4>
-          <ul class="space-y-2 text-[#b9bbc6]">
-            <li><a href="/industries/clinics" class="hover:text-white transition-colors">Clinics &amp; Healthcare</a></li>
-            <li><a href="/industries/restaurants" class="hover:text-white transition-colors">Cafes &amp; Artisan Dining</a></li>
-            <li><a href="/industries/salons" class="hover:text-white transition-colors">Salons &amp; Luxury Spas</a></li>
-            <li><a href="/industries/gyms" class="hover:text-white transition-colors">Gyms &amp; Athletic Hubs</a></li>
-            <li><a href="/industries/coaching" class="hover:text-white transition-colors">Coaching &amp; Academies</a></li>
+        <div class="space-y-3 font-sans-clean">
+          <h4 class="font-bold text-[#F3EEE3] uppercase tracking-wider text-[11px] font-mono">Multi-Vertical</h4>
+          <ul class="space-y-2 text-[#CFC5B2]">
+            <li><a href="/industries/clinics" class="hover:text-[#D9541E] transition-colors">Clinics &amp; Healthcare</a></li>
+            <li><a href="/industries/restaurants" class="hover:text-[#D9541E] transition-colors">Cafes &amp; Artisan Dining</a></li>
+            <li><a href="/industries/salons" class="hover:text-[#D9541E] transition-colors">Salons &amp; Luxury Spas</a></li>
+            <li><a href="/industries/gyms" class="hover:text-[#D9541E] transition-colors">Gyms &amp; Athletic Hubs</a></li>
+            <li><a href="/industries/coaching" class="hover:text-[#D9541E] transition-colors">Coaching &amp; Academies</a></li>
           </ul>
         </div>
 
-        <div class="space-y-3">
-          <h4 class="font-bold text-white uppercase tracking-wider text-[11px]">Trust &amp; Compliance</h4>
-          <ul class="space-y-2 text-[#b9bbc6]">
-            <li><a href="/security" class="hover:text-white transition-colors">Security Whitepaper</a></li>
-            <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
-            <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="/refund-policy" class="hover:text-white transition-colors">Refund &amp; Cancellation</a></li>
-            <li><a href="/dpdp-consent" class="hover:text-white transition-colors">DPDP Act 2023 Consent</a></li>
-            <li><a href="/for-agencies" class="hover:text-white transition-colors">Agency Partner Network</a></li>
+        <div class="space-y-3 font-sans-clean">
+          <h4 class="font-bold text-[#F3EEE3] uppercase tracking-wider text-[11px] font-mono">Trust &amp; Compliance</h4>
+          <ul class="space-y-2 text-[#CFC5B2]">
+            <li><a href="/security" class="hover:text-[#D9541E] transition-colors">Security Whitepaper</a></li>
+            <li><a href="/privacy" class="hover:text-[#D9541E] transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-[#D9541E] transition-colors">Terms of Service</a></li>
+            <li><a href="/refund-policy" class="hover:text-[#D9541E] transition-colors">Refund &amp; Cancellation</a></li>
+            <li><a href="/dpdp-consent" class="hover:text-[#D9541E] transition-colors">DPDP Act 2023 Consent</a></li>
+            <li><a href="/for-agencies" class="hover:text-[#D9541E] transition-colors">Agency Partner Network</a></li>
           </ul>
         </div>
       </div>
 
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#60646c] gap-4">
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#888888] gap-4 font-sans-clean">
         <p>© 2026 ReviewKare Technologies India Private Limited. All rights reserved.</p>
         <div class="flex items-center gap-6">
-          <a href="/login" class="hover:text-[#b9bbc6]">Sign In</a>
-          <a href="/signup" class="hover:text-[#b9bbc6]">Register</a>
-          <a href="/security" class="hover:text-[#b9bbc6]">Security</a>
-          <a href="/privacy" class="hover:text-[#b9bbc6]">Privacy</a>
-          <a href="/terms" class="hover:text-[#b9bbc6]">Terms</a>
-          <span class="text-[#252a32]">•</span>
-          <span class="text-[#10b981] font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span> All Systems Operational</span>
+          <a href="/login" class="hover:text-[#F3EEE3]">Sign In</a>
+          <a href="/signup" class="hover:text-[#F3EEE3]">Register</a>
+          <a href="/security" class="hover:text-[#F3EEE3]">Security</a>
+          <a href="/privacy" class="hover:text-[#F3EEE3]">Privacy</a>
+          <a href="/terms" class="hover:text-[#F3EEE3]">Terms</a>
+          <span class="text-[#333333]">•</span>
+          <span class="text-[#D9541E] font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#D9541E] animate-pulse"></span> All Systems Operational</span>
         </div>
       </div>
     </div>
   </footer>` : ''}
 
   <!-- GLOBAL COMMAND PALETTE MODAL (Cmd + K) -->
-  <div id="cmdPalette" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-start justify-center pt-24 px-4 hidden" onclick="if(event.target===this)closeCommandPalette()">
-    <div class="max-w-lg w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95">
-      <div class="p-4 border-b border-slate-100 flex items-center gap-3">
-        ${getSvgIcon('search', 'w-5 h-5 text-slate-400')}
-        <input id="cmdSearchInput" type="text" placeholder="Type a destination (e.g. reviews, qr, staff, security, clinic, cafe)…" oninput="filterCmdList(this.value)" class="w-full text-xs font-semibold focus:outline-none text-slate-800 placeholder:text-slate-400">
-        <kbd class="px-2 py-0.5 text-[10px] bg-slate-100 border border-slate-200 rounded font-mono text-slate-500">ESC</kbd>
+  <div id="cmdPalette" class="fixed inset-0 z-50 bg-[#111111]/70 backdrop-blur-xs flex items-start justify-center pt-24 px-4 hidden" onclick="if(event.target===this)closeCommandPalette()">
+    <div class="max-w-lg w-full bg-[#FBF8F3] rounded-2xl shadow-2xl border border-[#111111] overflow-hidden animate-in fade-in zoom-in-95">
+      <div class="p-4 border-b border-[#DFD7C7] flex items-center gap-3">
+        ${getSvgIcon('search', 'w-5 h-5 text-[#D9541E]')}
+        <input id="cmdSearchInput" type="text" placeholder="Type a destination (e.g. reviews, qr, staff, security, clinic, cafe)…" oninput="filterCmdList(this.value)" class="w-full text-xs font-semibold focus:outline-none text-[#111111] bg-transparent placeholder:text-[#888888]">
+        <kbd class="px-2 py-0.5 text-[10px] bg-[#EBE5D8] border border-[#DFD7C7] rounded font-mono text-[#111111]">ESC</kbd>
       </div>
       <div id="cmdList" class="p-2 max-h-80 overflow-y-auto space-y-1 text-xs">
-        <a href="/app" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('dashboard', 'w-4 h-4 text-slate-500')} <span>Dashboard Overview</span>
+        <a href="/app" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('dashboard', 'w-4 h-4 text-[#D9541E]')} <span>Dashboard Overview</span>
         </a>
-        <a href="/app/reviews" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('reviews', 'w-4 h-4 text-slate-500')} <span>Google Reviews Feed</span>
+        <a href="/app/reviews" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('reviews', 'w-4 h-4 text-[#D9541E]')} <span>Google Reviews Feed</span>
         </a>
-        <a href="/app/approvals" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('approvals', 'w-4 h-4 text-amber-500')} <span>Held Approvals Queue</span>
+        <a href="/app/approvals" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('approvals', 'w-4 h-4 text-[#D9541E]')} <span>Held Approvals Queue</span>
         </a>
-        <a href="/app/qr" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('qr', 'w-4 h-4 text-slate-500')} <span>3D Physical QR Studio</span>
+        <a href="/app/qr" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('qr', 'w-4 h-4 text-[#D9541E]')} <span>3D Physical QR Studio</span>
         </a>
-        <a href="/app/staff" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('staff', 'w-4 h-4 text-slate-500')} <span>Staff Leaderboard & Attribution</span>
+        <a href="/app/staff" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('staff', 'w-4 h-4 text-[#D9541E]')} <span>Staff Leaderboard &amp; Attribution</span>
         </a>
-        <a href="/app/local-pack" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('localPack', 'w-4 h-4 text-slate-500')} <span>Google Local 3-Pack Simulator</span>
+        <a href="/app/local-pack" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('localPack', 'w-4 h-4 text-[#D9541E]')} <span>Google Local 3-Pack Simulator</span>
         </a>
-        <a href="/free-audit" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('sparkles', 'w-4 h-4 text-amber-500')} <span>Free Competitor Audit Tool</span>
+        <a href="/free-audit" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('sparkles', 'w-4 h-4 text-[#D9541E]')} <span>Free Competitor Audit Tool</span>
         </a>
-        <a href="/security" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('shield', 'w-4 h-4 text-slate-500')} <span>Clinical & DPDP Security Whitepaper</span>
+        <a href="/security" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('shield', 'w-4 h-4 text-[#D9541E]')} <span>Clinical &amp; DPDP Security Whitepaper</span>
         </a>
-        <a href="/book-demo" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium text-slate-800">
-          ${getSvgIcon('arrowRight', 'w-4 h-4 text-slate-500')} <span>Schedule Solution Walkthrough</span>
+        <a href="/book-demo" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          ${getSvgIcon('arrowRight', 'w-4 h-4 text-[#D9541E]')} <span>Schedule Solution Walkthrough</span>
         </a>
       </div>
     </div>
@@ -570,8 +700,8 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      const borderClass = type === 'success' ? 'border-brand-500 bg-white text-slate-900' : 'border-slate-800 bg-dark-950 text-white';
-      toast.className = 'pointer-events-auto p-3.5 rounded-2xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transform translate-y-4 opacity-0 transition-all duration-300 ' + borderClass;
+      const borderClass = type === 'success' ? 'border-[#D9541E] bg-[#FBF8F3] text-[#111111]' : 'border-[#111111] bg-[#111111] text-[#F3EEE3]';
+      toast.className = 'pointer-events-auto p-3.5 rounded-xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transform translate-y-4 opacity-0 transition-all duration-300 ' + borderClass;
       toast.innerHTML = '<span>' + message + '</span>';
       container.appendChild(toast);
       requestAnimationFrame(() => {
@@ -607,6 +737,56 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       document.querySelectorAll('#cmdList a').forEach(item => {
         item.style.display = item.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
       });
+    }
+
+    // Motion Observer: Scroll Reveal & Hand-Drawn Underline Triggers
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            const underlines = entry.target.querySelectorAll('.yc-highlight');
+            underlines.forEach(u => u.classList.add('draw'));
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal-on-scroll, .yc-highlight').forEach(el => observer.observe(el));
+
+      // Number Count-Up Observer
+      const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const targetVal = parseFloat(el.getAttribute('data-count-up'));
+            const prefix = el.getAttribute('data-prefix') || '';
+            const suffix = el.getAttribute('data-suffix') || '';
+            const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+            const duration = 1200;
+            const startTime = performance.now();
+
+            function updateCount(currentTime) {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              // Ease out expo
+              const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+              const currentVal = targetVal * easeProgress;
+              el.innerText = prefix + (decimals > 0 ? currentVal.toFixed(decimals) : Math.round(currentVal)) + suffix;
+              if (progress < 1) {
+                requestAnimationFrame(updateCount);
+              } else {
+                countObserver.unobserve(el);
+              }
+            }
+            requestAnimationFrame(updateCount);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('[data-count-up]').forEach(el => countObserver.observe(el));
+    } else {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('revealed'));
+      document.querySelectorAll('.yc-highlight').forEach(el => el.classList.add('draw'));
     }
 
     // 3D Tilt Script (respects prefers-reduced-motion)

@@ -1,69 +1,60 @@
 {
   "name": "ReviewKare Design System Tokens",
-  "version": "2.4.0",
-  "description": "Enterprise Three-Layer Token Architecture for ReviewKare: Brex White Concrete, Single Ember Accent, Inter Engineered Typography",
+  "version": "3.0.0",
+  "description": "Y Combinator-Inspired Editorial Architecture: 60% Cream (#F3EEE3), 30% Ink Black (#111111), 10% Burnt Orange (#D9541E)",
   "primitives": {
     "color": {
-      "ember": "#ff5900",
-      "abyss": "#000710",
-      "carbon": "#15191e",
-      "ink": "#000000",
-      "paper": "#ffffff",
-      "fog": "#f3f3f7",
-      "mist": "#b9bbc6",
-      "steel": "#8b8d98",
-      "pewter": "#6f737b",
-      "graphite": "#60646c",
+      "cream": {
+        "canvas": "#F3EEE3",
+        "surface": "#FBF8F3",
+        "subtle": "#EBE5D8",
+        "border": "#DFD7C7",
+        "muted": "#CFC5B2"
+      },
+      "ink": {
+        "black": "#111111",
+        "deep": "#181818",
+        "surface": "#222222",
+        "muted": "#4A4A4A",
+        "subtle": "#6E6E6E",
+        "hairline": "#888888"
+      },
+      "orange": {
+        "burnt": "#D9541E",
+        "hover": "#BF4615",
+        "active": "#9F380F",
+        "light": "#E86835",
+        "tint": "#FAEDE8",
+        "glow": "rgba(217, 84, 30, 0.18)"
+      },
       "brand": {
-        "50": "#fff7ed",
-        "100": "#ffedd5",
-        "200": "#fed7aa",
-        "300": "#fdba74",
-        "400": "#fb923c",
-        "500": "#f97316",
-        "600": "#ff5900",
-        "700": "#ea580c",
-        "800": "#c2410c",
-        "900": "#9a3412",
-        "950": "#000710"
+        "50": "#FAEDE8",
+        "100": "#F7DDD3",
+        "200": "#EFBCA8",
+        "300": "#E69B7E",
+        "400": "#DE7A53",
+        "500": "#D9541E",
+        "600": "#D9541E",
+        "700": "#BF4615",
+        "800": "#9F380F",
+        "900": "#7C2B0B",
+        "950": "#111111"
       },
       "dark": {
-        "900": "#15191e",
-        "950": "#000710"
-      },
-      "emerald": {
-        "50": "#ecfdf5",
-        "100": "#d1fae5",
-        "500": "#10b981",
-        "600": "#059669",
-        "700": "#047857"
-      },
-      "amber": {
-        "50": "#fffbeb",
-        "100": "#fef3c7",
-        "400": "#fbbf24",
-        "500": "#f59e0b",
-        "600": "#d97706"
-      },
-      "rose": {
-        "50": "#fff1f2",
-        "100": "#ffe4e6",
-        "500": "#f43f5e",
-        "600": "#e11d48"
-      },
-      "white": "#ffffff",
-      "black": "#000000"
+        "900": "#181818",
+        "950": "#111111"
+      }
     },
     "typography": {
       "fontFamily": {
-        "heading": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        "body": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "heading": "'Fraunces', Georgia, serif",
+        "body": "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
         "mono": "'JetBrains Mono', 'Fira Code', monospace"
       },
       "letterSpacing": {
-        "display": "-0.03em",
-        "headingLg": "-0.025em",
-        "heading": "-0.02em",
+        "display": "-0.035em",
+        "headingLg": "-0.03em",
+        "heading": "-0.025em",
         "body": "-0.01em"
       },
       "fontSize": {
@@ -80,16 +71,25 @@
         "regular": "400",
         "medium": "500",
         "semibold": "600",
-        "bold": "700"
+        "bold": "700",
+        "black": "800"
       },
       "lineHeight": {
-        "display": "1.0",
-        "headingLg": "1.20",
-        "heading": "1.21",
-        "headingSm": "1.33",
+        "display": "1.05",
+        "headingLg": "1.15",
+        "heading": "1.20",
+        "headingSm": "1.30",
         "subheading": "1.40",
-        "bodySm": "1.43",
-        "body": "1.50"
+        "bodySm": "1.50",
+        "body": "1.60"
+      }
+    },
+    "motion": {
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "duration": {
+        "fast": "200ms",
+        "base": "350ms",
+        "slow": "600ms"
       }
     },
     "spacing": {
@@ -105,69 +105,75 @@
     "borderRadius": {
       "none": "0px",
       "tag": "6px",
-      "card": "12px",
-      "input": "12px",
-      "button": "12px",
+      "card": "14px",
+      "input": "10px",
+      "button": "10px",
       "full": "9999px"
     },
     "shadow": {
       "none": "none",
-      "hairline": "0 0 0 1px #b9bbc6",
-      "card": "0 1px 3px 0 rgba(0, 7, 16, 0.04)",
-      "cardHover": "0 16px 36px -12px rgba(255, 89, 0, 0.12)"
+      "hairline": "0 0 0 1px #DFD7C7",
+      "card": "0 2px 8px -2px rgba(17, 17, 17, 0.05), 0 0 0 1px #DFD7C7",
+      "cardHover": "0 14px 28px -6px rgba(17, 17, 17, 0.08), 0 0 0 1px #111111"
     }
   },
   "semantics": {
     "color": {
       "background": {
-        "canvas": "var(--primitive-color-paper)",
-        "surface": "var(--primitive-color-paper)",
-        "surfaceSubtle": "var(--primitive-color-fog)",
-        "surfaceInverse": "var(--primitive-color-abyss)",
-        "announcement": "var(--primitive-color-carbon)"
+        "canvas": "#F3EEE3",
+        "surface": "#FBF8F3",
+        "surfaceSubtle": "#EBE5D8",
+        "surfaceInverse": "#111111",
+        "announcement": "#111111"
       },
       "text": {
-        "primary": "var(--primitive-color-ink)",
-        "secondary": "var(--primitive-color-graphite)",
-        "tertiary": "var(--primitive-color-pewter)",
-        "muted": "var(--primitive-color-steel)",
-        "inverse": "var(--primitive-color-paper)",
-        "accent": "var(--primitive-color-ember)"
+        "primary": "#111111",
+        "secondary": "#4A4A4A",
+        "tertiary": "#6E6E6E",
+        "muted": "#888888",
+        "inverse": "#F3EEE3",
+        "accent": "#D9541E"
       },
       "border": {
-        "hairline": "var(--primitive-color-mist)",
-        "dark": "var(--primitive-color-carbon)"
+        "hairline": "#DFD7C7",
+        "dark": "#111111"
       }
     }
   },
   "components": {
     "topBar": {
-      "bg": "var(--primitive-color-carbon)",
-      "text": "var(--primitive-color-paper)",
-      "accent": "var(--primitive-color-ember)"
+      "bg": "#111111",
+      "text": "#F3EEE3",
+      "accent": "#D9541E"
     },
     "buttonPrimary": {
-      "bg": "var(--primitive-color-ember)",
-      "text": "var(--primitive-color-paper)",
-      "radius": "12px",
-      "padding": "8px 16px",
-      "weight": "600"
+      "bg": "#D9541E",
+      "text": "#FFFFFF",
+      "radius": "10px",
+      "padding": "10px 20px",
+      "weight": "700"
+    },
+    "buttonSecondary": {
+      "bg": "#FBF8F3",
+      "text": "#111111",
+      "border": "1px solid #111111",
+      "radius": "10px"
     },
     "buttonGhost": {
       "bg": "transparent",
-      "text": "var(--primitive-color-ink)",
-      "weight": "500"
+      "text": "#111111",
+      "weight": "600"
     },
     "card": {
-      "bg": "var(--primitive-color-paper)",
-      "radius": "12px",
+      "bg": "#FBF8F3",
+      "radius": "14px",
       "padding": "24px 32px",
-      "border": "1px solid var(--primitive-color-mist)"
+      "border": "1px solid #DFD7C7"
     },
     "footer": {
-      "bg": "var(--primitive-color-abyss)",
-      "text": "var(--primitive-color-mist)",
-      "heading": "var(--primitive-color-paper)"
+      "bg": "#111111",
+      "text": "#CFC5B2",
+      "heading": "#F3EEE3"
     }
   }
 }
