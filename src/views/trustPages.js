@@ -63,7 +63,7 @@ function renderSecurityPage() {
 
       <!-- Deep Dive Compliance Matrix -->
       <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm space-y-6">
-        <div class="border-b border-slate-100 pb-4">
+        <div class="border-b border-[#DFD7C7] pb-4">
           <h2 class="text-xl font-bold text-[#111111] font-heading">Institutional Security & Technical Controls</h2>
           <p class="text-xs text-[#6E6E6E] mt-1">Full transparency into our data architecture and defense-in-depth posture.</p>
         </div>
@@ -110,12 +110,12 @@ function renderSecurityPage() {
           </div>
         </div>
 
-        <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+        <div class="pt-4 border-t border-[#DFD7C7] flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <span class="w-3 h-3 rounded-full bg-[#FAEDE8]0 animate-pulse"></span>
             <span class="text-xs font-bold text-[#2B2B2B]">Security Audit Status: Current & Passing (All Systems Operational)</span>
           </div>
-          <a href="/contact" class="px-4 py-2 min-h-[44px] inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-[#1C1C1C] font-bold text-xs rounded-xl transition-colors">
+          <a href="/contact" class="px-4 py-2 min-h-[44px] inline-flex items-center justify-center bg-[#FBF8F3] hover:bg-[#EBE5D8] text-[#111111] border border-[#DFD7C7] font-bold text-xs rounded-xl transition-colors">
             Request Enterprise Security Assessment &rarr;
           </a>
         </div>
@@ -132,14 +132,14 @@ function renderBookDemoPage() {
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       
       <div class="text-center max-w-2xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-300 text-brand-900 text-xs font-bold uppercase tracking-wider">
-          ${getSvgIcon('sparkles', 'w-4 h-4 text-[#D9541E]')} Enterprise Multi-Location Walkthrough
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-xs font-bold uppercase tracking-wider font-mono">
+          ${getSvgIcon('sparkles', 'w-4 h-4 text-[#D9541E]')} Live Product Walkthrough
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-          Schedule an Executive Strategy Demo
+          Schedule a Live Demo
         </h1>
         <p class="text-[#4A4A4A] text-sm">
-          See how leading dental chains, dermatology clinics, and salon networks in Bengaluru, Delhi NCR, and Mumbai achieve #1 Google 3-Pack rankings.
+          See how leading clinics, salons, cafes, and gym networks in Bengaluru, Delhi NCR, and Mumbai achieve #1 Google Maps rankings.
         </p>
       </div>
 
@@ -211,8 +211,8 @@ function renderBookDemoPage() {
 
           <div id="bookingAlert" class="hidden p-4 rounded-2xl text-xs font-medium" role="alert"></div>
 
-          <button type="submit" id="bookingBtn" class="w-full min-h-[48px] flex items-center justify-center gap-2 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all">
-            <span>Confirm Live Video Demo with Solution Architect &rarr;</span>
+          <button type="submit" id="bookingBtn" class="w-full min-h-[48px] flex items-center justify-center gap-2 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all btn-lift">
+            <span>Schedule Live Demo &rarr;</span>
           </button>
         </form>
       </div>
@@ -293,25 +293,25 @@ function renderFaqPage() {
   <main class="py-12 sm:py-16 bg-[#F3EEE3]">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       <div class="text-center max-w-2xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-[#1C1C1C] text-xs font-bold uppercase tracking-wider">
-          ${getSvgIcon('sparkles', 'w-4 h-4 text-[#4A4A4A]')} Frequently Answered Questions
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FBF8F3] border border-[#DFD7C7] text-[#111111] text-xs font-bold uppercase tracking-wider font-mono">
+          ${getSvgIcon('sparkles', 'w-4 h-4 text-[#D9541E]')} Common Questions
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-          Everything Doctors & Clinic Owners Ask
+          Frequently Asked Questions
         </h1>
-        <p class="text-[#4A4A4A] text-sm">
-          Clear, honest answers about Google algorithm compliance, patient data privacy, and ROI.
+        <p class="text-[#4A4A4A] text-sm font-sans-clean">
+          Clear, honest answers about Google algorithm compliance, customer data privacy, and ROI.
         </p>
       </div>
 
       <div class="space-y-4">
         ${faqs.map((f, i) => `
-          <div class="bg-[#FBF8F3] rounded-2xl p-6 border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-2">
+          <div class="bg-[#FBF8F3] rounded-2xl p-6 border border-[#DFD7C7] shadow-xs space-y-2">
             <h2 class="text-base font-bold text-[#111111] font-heading flex items-start gap-3">
-              <span class="text-[#D9541E] font-black">Q${i+1}.</span>
+              <span class="text-[#D9541E] font-bold font-mono">0${i+1}.</span>
               <span>${f.q}</span>
             </h2>
-            <p class="text-xs sm:text-sm text-[#4A4A4A] pl-8 leading-relaxed">
+            <p class="text-sm text-[#4A4A4A] pl-8 leading-relaxed font-sans-clean">
               ${f.a}
             </p>
           </div>
@@ -347,9 +347,9 @@ function renderQrKitPage() {
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-[#FBF8F3] p-6 rounded-3xl border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-4 text-center">
-          <div class="h-44 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center border border-[#DFD7C7]/80 p-4 relative overflow-hidden">
+          <div class="h-44 bg-gradient-to-br from-[#FBF8F3] to-[#EBE5D8] rounded-2xl flex items-center justify-center border border-[#DFD7C7]/80 p-4 relative overflow-hidden">
             <div class="w-24 h-32 bg-[#FBF8F3]/90 backdrop-blur-md rounded-xl shadow-lg border border-white flex flex-col items-center justify-center p-2 transform rotate-2 hover:rotate-0 transition-transform">
-              <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white text-[10px] font-bold">QR CODE</div>
+              <div class="w-12 h-12 bg-[#111111] rounded-lg flex items-center justify-center text-white text-[10px] font-bold">QR CODE</div>
               <div class="text-[9px] font-bold text-[#1C1C1C] mt-2">Frosted Acrylic</div>
             </div>
           </div>

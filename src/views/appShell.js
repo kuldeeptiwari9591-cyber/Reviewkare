@@ -18,14 +18,14 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
 
   const navItems = [
     { id: 'dashboard', name: 'Overview', href: '/app', icon: 'dashboard' },
-    { id: 'reviews', name: 'Google Reviews Feed', href: '/app/reviews', icon: 'reviews' },
-    { id: 'approvals', name: 'Held Approvals Shield', href: '/app/approvals', icon: 'approvals', badge: heldCount > 0 ? heldCount : null },
-    { id: 'qr', name: 'In-Store Smart QR Studio', href: '/app/qr', icon: 'qr' },
-    { id: 'staff', name: 'Staff Review Attribution', href: '/app/staff', icon: 'staff' },
-    { id: 'local-pack', name: 'Local 3-Pack SEO Simulator', href: '/app/local-pack', icon: 'localPack' },
-    { id: 'sentiment', name: 'Sentiment & Root-Cause', href: '/app/sentiment', icon: 'sentiment' },
-    { id: 'settings', name: 'Autopilot Engine Rules', href: '/app/settings', icon: 'settings' },
-    { id: 'billing', name: 'Subscription & Razorpay', href: '/app/billing', icon: 'billing' },
+    { id: 'reviews', name: 'Reviews Feed', href: '/app/reviews', icon: 'reviews' },
+    { id: 'approvals', name: 'Review Approvals', href: '/app/approvals', icon: 'approvals', badge: heldCount > 0 ? heldCount : null },
+    { id: 'qr', name: 'QR Stands', href: '/app/qr', icon: 'qr' },
+    { id: 'staff', name: 'Staff Attribution', href: '/app/staff', icon: 'staff' },
+    { id: 'local-pack', name: 'Local SEO', href: '/app/local-pack', icon: 'localPack' },
+    { id: 'sentiment', name: 'Sentiment Analysis', href: '/app/sentiment', icon: 'sentiment' },
+    { id: 'settings', name: 'Settings', href: '/app/settings', icon: 'settings' },
+    { id: 'billing', name: 'Billing', href: '/app/billing', icon: 'billing' },
   ];
 
   const currentTabName = navItems.find(i => i.id === activeTab)?.name || 'Dashboard';
@@ -89,8 +89,6 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
         
         <!-- Left: Breadcrumbs -->
         <div class="flex items-center gap-2 text-xs font-medium text-[#4A4A4A] font-sans-clean">
-          <a href="/app" class="hover:text-[#111111] transition-colors">Workspace</a>
-          <span class="text-[#888888]">/</span>
           <span class="font-bold text-[#111111]">${currentTabName}</span>
         </div>
 
@@ -100,13 +98,13 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
           <!-- Plan Badge -->
           <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-[11px] font-bold font-mono">
             <span class="w-1.5 h-1.5 rounded-full bg-[#D9541E] animate-pulse"></span>
-            <span>${store.user?.plan?.name || (typeof store.user?.plan === 'string' ? store.user?.plan : '14-Day Free Pilot')}</span>
+            <span>${store.user?.plan?.name || (typeof store.user?.plan === 'string' ? store.user?.plan : '14-Day Free Trial')}</span>
           </div>
 
           <!-- Quick Simulate Review Button -->
           <button type="button" onclick="triggerSimulateReview()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FAEDE8] hover:bg-[#F7DDD3] text-[#D9541E] border border-[#EFBCA8] rounded-[10px] text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]" title="Simulate a real patient/customer review to test autopilot response">
             ${getSvgIcon('plus', 'w-3.5 h-3.5 text-[#D9541E]')}
-            <span>+ Simulate Review</span>
+            <span>Test Autopilot</span>
           </button>
 
           <!-- Notification Bell Dropdown -->
@@ -149,8 +147,8 @@ function renderAppShell(activeTab, contentHtml, store = {}) {
                 <span class="inline-block mt-1 text-[9px] bg-[#FAEDE8] text-[#D9541E] font-bold px-1.5 py-0.5 rounded border border-[#EFBCA8] font-mono">${store.user?.plan?.name || (typeof store.user?.plan === 'string' ? store.user?.plan : 'Starter Trial')}</span>
               </div>
               <div class="py-1">
-                <a href="/app/settings" class="block px-3 py-2 rounded-xl hover:bg-[#EBE5D8] text-[#111111] font-medium">Autopilot Rules</a>
-                <a href="/app/billing" class="block px-3 py-2 rounded-xl hover:bg-[#EBE5D8] text-[#111111] font-medium">Subscription &amp; Razorpay</a>
+                <a href="/app/settings" class="block px-3 py-2 rounded-xl hover:bg-[#EBE5D8] text-[#111111] font-medium">Settings</a>
+                <a href="/app/billing" class="block px-3 py-2 rounded-xl hover:bg-[#EBE5D8] text-[#111111] font-medium">Billing</a>
                 <a href="/security" class="block px-3 py-2 rounded-xl hover:bg-[#EBE5D8] text-[#111111] font-medium">Security &amp; Compliance</a>
                 <a href="/logout" class="block px-3 py-2 rounded-xl hover:bg-[#FAEDE8] text-[#D9541E] font-bold flex items-center justify-between"><span>Sign Out</span><span class="text-[10px] text-[#D9541E]/80 font-mono">Secure</span></a>
               </div>

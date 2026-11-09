@@ -61,7 +61,7 @@ function renderLoginPage(query = {}) {
                 value="${emailVal}"
                 placeholder="owner@yourbusiness.in"
                 autocomplete="email"
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-slate-400 focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-[#888888] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ function renderLoginPage(query = {}) {
                 value="${pwdVal}"
                 placeholder="••••••••••••"
                 autocomplete="current-password"
-                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-slate-400 focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-[#DFD7C7] text-xs text-[#111111] bg-[#FBF8F3] placeholder-[#888888] focus:border-[#D9541E] focus:ring-2 focus:ring-[#D9541E]/20 outline-none transition-all"
               />
               <button 
                 type="button" 
@@ -110,12 +110,12 @@ function renderLoginPage(query = {}) {
             id="loginSubmitBtn"
             class="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]"
           >
-            <span>Sign In to Dashboard</span>
+            <span>Sign In</span>
             ${getSvgIcon('arrowRight', 'w-4 h-4')}
           </button>
         </form>
 
-        <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6E6E6E] gap-2">
+        <div class="mt-6 pt-5 border-t border-[#DFD7C7] flex flex-col sm:flex-row items-center justify-between text-xs text-[#6E6E6E] gap-2">
           <span>New business or clinic? <a href="/signup" class="font-bold text-[#D9541E] hover:underline">Start 14-day free pilot &rarr;</a></span>
           <button type="button" onclick="fillDemoAndLogin()" class="text-[11px] text-[#888888] hover:text-[#2B2B2B] underline focus-visible:outline-none">Test Demo Login</button>
         </div>
@@ -126,11 +126,11 @@ function renderLoginPage(query = {}) {
         <span class="flex items-center gap-1.5">
           ${getSvgIcon('shield', 'w-3.5 h-3.5 text-emerald-600')} DPDP Act 2023 Compliant
         </span>
-        <span class="text-slate-300">•</span>
+        <span class="text-[#DFD7C7]">•</span>
         <span class="flex items-center gap-1.5">
           ${getSvgIcon('lock', 'w-3.5 h-3.5 text-emerald-600')} 256-Bit TLS 1.3
         </span>
-        <span class="text-slate-300">•</span>
+        <span class="text-[#DFD7C7]">•</span>
         <span class="flex items-center gap-1.5">
           ${getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-600')} Official Google API
         </span>
@@ -177,13 +177,13 @@ function renderLoginPage(query = {}) {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
           alert.innerText = data.error || 'Invalid clinic credentials. Try the 1-Click Demo button above.';
           btn.disabled = false;
-          btn.innerHTML = '<span>Sign In to Dashboard</span>';
+          btn.innerHTML = '<span>Sign In</span>';
         }
       } catch (err) {
         alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
         alert.innerText = 'Connection error. Please try again.';
         btn.disabled = false;
-        btn.innerHTML = '<span>Sign In to Dashboard</span>';
+        btn.innerHTML = '<span>Sign In</span>';
       }
     }
   </script>
@@ -204,7 +204,7 @@ function renderSignupPage() {
           <span class="font-heading font-black text-2xl tracking-tight text-[#111111]">ReviewKare</span>
         </a>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-          Start Your 14-Day Free Pilot
+          Start Your Free Trial
         </h1>
         <p class="mt-2 text-xs text-[#6E6E6E] font-medium">
           Calibrated onboarding for 8 Indian business verticals. Autonomous 4-minute replies & digital QR flow.
@@ -213,19 +213,19 @@ function renderSignupPage() {
 
       <!-- Registration Multi-Step Card -->
       <div class="bg-[#FBF8F3] rounded-3xl p-6 sm:p-8 border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-6">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center justify-between pb-4 border-b border-[#DFD7C7]">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-[#D9541E] text-white font-bold text-xs flex items-center justify-center">1</span>
             <span class="text-xs font-bold text-[#111111]">Business Profile</span>
           </div>
-          <div class="h-0.5 w-12 bg-slate-200"></div>
+          <div class="h-0.5 w-12 bg-[#EBE5D8]"></div>
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-slate-100 text-[#4A4A4A] font-bold text-xs flex items-center justify-center">2</span>
+            <span class="w-6 h-6 rounded-full bg-[#F3EEE3] text-[#4A4A4A] font-bold text-xs flex items-center justify-center">2</span>
             <span class="text-xs font-bold text-[#6E6E6E]">QR Calibration</span>
           </div>
-          <div class="h-0.5 w-12 bg-slate-200"></div>
+          <div class="h-0.5 w-12 bg-[#EBE5D8]"></div>
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-slate-100 text-[#4A4A4A] font-bold text-xs flex items-center justify-center">3</span>
+            <span class="w-6 h-6 rounded-full bg-[#F3EEE3] text-[#4A4A4A] font-bold text-xs flex items-center justify-center">3</span>
             <span class="text-xs font-bold text-[#6E6E6E]">Live Pilot</span>
           </div>
         </div>
@@ -372,7 +372,7 @@ function renderSignupPage() {
           <div class="p-4 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] text-xs space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-bold text-[#111111] font-heading">Online QR Review Process Preview:</span>
-              <span id="previewStepCount" class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-[#1C1C1C] font-bold">4 Questions</span>
+              <span id="previewStepCount" class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-[#EBE5D8] text-[#1C1C1C] font-bold">4 Questions</span>
             </div>
             <ul id="previewQuestionsList" class="space-y-1 text-[#4A4A4A] text-[11px]">
               <li>• 1. Overall Patient Experience Rating (1-5★)</li>
@@ -389,11 +389,11 @@ function renderSignupPage() {
             id="signupSubmitBtn"
             class="w-full min-h-[48px] flex items-center justify-center gap-2 px-4 py-2.5 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]"
           >
-            <span>Activate 14-Day Free Pilot &rarr;</span>
+            <span>Create Free Account &rarr;</span>
           </button>
         </form>
 
-        <div class="pt-4 border-t border-slate-100 text-center">
+        <div class="pt-4 border-t border-[#DFD7C7] text-center">
           <p class="text-xs text-[#6E6E6E]">
             Already have an active account?
             <a href="/login" class="font-bold text-[#D9541E] hover:text-[#D9541E] hover:underline ml-1">
@@ -474,13 +474,13 @@ function renderSignupPage() {
           alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
           alert.innerText = data.error || 'Failed to create account.';
           btn.disabled = false;
-          btn.innerText = 'Activate 14-Day Free Pilot →';
+          btn.innerText = 'Create Free Account →';
         }
       } catch (err) {
         alert.className = 'p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-800 border border-rose-200 block';
         alert.innerText = 'Network error. Please try again.';
         btn.disabled = false;
-        btn.innerText = 'Activate 14-Day Free Pilot →';
+        btn.innerText = 'Create Free Account →';
       }
     }
   </script>
@@ -532,7 +532,7 @@ function renderForgotPasswordPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-slate-100 text-center">
+        <div class="pt-4 border-t border-[#DFD7C7] text-center">
           <a href="/login" class="text-xs font-bold text-[#4A4A4A] hover:text-[#D9541E]">
             &larr; Back to Sign In
           </a>

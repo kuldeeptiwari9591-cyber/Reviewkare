@@ -32,7 +32,7 @@ const HOME_FAQS = [
   },
   {
     q: "What are the subscription pricing plans and is there a free trial?",
-    a: "ReviewKare offers transparent Indian Rupee (INR) pricing with zero foreign exchange fees: Starter Solo at ₹1,249/month, Growth Autopilot at ₹2,999/quarter (₹999/mo Hero Offer), and Multi-Branch Pro at ₹3,499/month. All plans include a 14-day free pilot with instant UPI activation and downloadable 18% GST tax invoices."
+    a: "ReviewKare offers transparent Indian Rupee (INR) pricing with zero foreign exchange fees: Starter Solo at ₹1,249/month, Growth Plan at ₹2,999/quarter (₹999/mo Hero Offer), and Multi-Branch Pro at ₹3,499/month. All plans include a 14-day free trial with instant UPI activation and downloadable 18% GST tax invoices."
   }
 ];
 
@@ -50,42 +50,42 @@ function renderHomePage(store) {
           
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-[#FBF8F3] border border-[#DFD7C7] text-[#D9541E] text-xs font-bold font-mono">
             <span class="w-2 h-2 rounded-full bg-[#D9541E] animate-pulse"></span>
-            <span>Operating Across 450+ Clinics, Dining, Salons &amp; Gyms in Metro India</span>
+            <span>450+ Businesses Across 12 Indian Cities</span>
           </div>
 
-          <h1 class="text-4xl sm:text-6xl font-bold text-[#111111] font-heading tracking-[-0.035em] leading-[1.12]" style="text-wrap: balance;">
-            Autonomous Google Review OS for <span class="yc-highlight">High-Touch<svg class="yc-underline" viewBox="0 0 100 12" preserveAspectRatio="none"><path d="M2 9 C 25 3, 75 3, 98 8" stroke="#D9541E" stroke-width="3" stroke-linecap="round" fill="none"/></svg></span> Local Businesses.
+          <h1 class="text-4xl sm:text-6xl xl:text-7xl font-bold text-[#111111] font-heading tracking-[-0.035em] leading-[1.1]" style="text-wrap: balance;">
+            Get More Google Reviews. <span class="yc-highlight">Rank Higher<svg class="yc-underline" viewBox="0 0 100 12" preserveAspectRatio="none"><path d="M2 9 C 25 3, 75 3, 98 8" stroke="#D9541E" stroke-width="3" stroke-linecap="round" fill="none"/></svg></span> on Maps.
           </h1>
 
           <p class="text-base sm:text-lg text-[#4A4A4A] leading-relaxed max-w-2xl font-sans-clean font-normal">
-            Turn in-store visits into authentic 5-star Google reviews in 30 seconds. ReviewKare automatically mirrors customer dialect in 4 minutes with local search keywords, quarantines negative feedback for 1-tap manager resolution, and attributes reviews to frontline staff.
+            ReviewKare turns every in-store visit into a 5-star Google review in 30 seconds — automatically replying in your customer's dialect, quarantining negative feedback, and crediting your frontline staff.
           </p>
 
           <!-- Primary Call to Actions -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-            <a href="/login?demo=true" class="min-h-[48px] px-6 py-3 rounded-[10px] bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs sm:text-sm transition-all btn-lift flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] shadow-sm">
-              <span>Explore Multi-Vertical Demo (1-Click)</span>
+            <a href="/signup" class="min-h-[52px] px-7 py-3.5 rounded-[10px] bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-sm transition-all btn-lift flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] shadow-sm">
+              <span>Start Free — 14 Days</span>
               ${getSvgIcon('arrowRight', 'w-4 h-4 text-white')}
             </a>
-            <a href="/free-audit" class="min-h-[48px] px-6 py-3 rounded-[10px] bg-[#FBF8F3] hover:bg-[#EBE5D8] text-[#111111] font-bold text-xs sm:text-sm border border-[#111111] transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111]">
+            <a href="/login?demo=true" class="min-h-[52px] px-6 py-3.5 rounded-[10px] bg-[#FBF8F3] hover:bg-[#EBE5D8] text-[#111111] font-bold text-sm border border-[#111111] transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111]">
               ${getSvgIcon('search', 'w-4 h-4 text-[#D9541E]')}
-              <span>Audit My Local 3-Pack Rank</span>
+              <span>See Live Demo</span>
             </a>
           </div>
 
-          <!-- Architecture Metric Pillars with Count-Up -->
+          <!-- Social Proof Stats with Count-Up -->
           <div class="pt-6 border-t border-[#DFD7C7] grid grid-cols-3 gap-4 text-left">
             <div>
-              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight" data-count-up="4" data-suffix=" Mins">4 Mins</div>
-              <div class="text-[11px] text-[#6E6E6E] font-medium font-sans-clean">Autopilot Reply Velocity</div>
+              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight" data-count-up="450" data-suffix="+">450+</div>
+              <div class="text-xs text-[#6E6E6E] font-medium font-sans-clean mt-0.5">Businesses on Platform</div>
             </div>
             <div>
-              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight" data-count-up="85" data-prefix="<" data-suffix=" KB">&lt;85 KB</div>
-              <div class="text-[11px] text-[#6E6E6E] font-medium font-sans-clean">Zero-App In-Store QR Payload</div>
+              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight" data-count-up="4" data-suffix=" Min">4 Min</div>
+              <div class="text-xs text-[#6E6E6E] font-medium font-sans-clean mt-0.5">Autopilot Reply Speed</div>
             </div>
             <div>
-              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight">1-Tap</div>
-              <div class="text-[11px] text-[#6E6E6E] font-medium font-sans-clean">Quarantined Complaint Approval</div>
+              <div class="text-2xl sm:text-3xl font-bold text-[#111111] font-heading tabular-nums tracking-tight" data-count-up="22" data-suffix="% CVR">22% CVR</div>
+              <div class="text-xs text-[#6E6E6E] font-medium font-sans-clean mt-0.5">Scan-to-Review Rate</div>
             </div>
           </div>
 
@@ -255,7 +255,7 @@ function renderHomePage(store) {
           <!-- Column 2: Autopilot 4-Min Response & Local SEO Mirroring -->
           <div class="lg:col-span-6 space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-[#DFD7C7]">
-              <span class="text-xs font-bold text-[#111111] font-heading">2. Neural Autopilot 4-Minute SEO Response</span>
+              <span class="text-xs font-bold text-[#111111] font-heading">2. Automated 4-Minute Response &amp; Local SEO</span>
               <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAEDE8] text-[#D9541E] font-bold border border-[#EFBCA8]">Auto-Posted to Google</span>
             </div>
 
@@ -292,13 +292,13 @@ function renderHomePage(store) {
     
     <div class="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FBF8F3] border border-[#DFD7C7] text-[#111111] text-xs font-bold uppercase tracking-wider font-mono">
-        Platform Architecture
+        Platform Features
       </div>
       <h2 class="text-3xl sm:text-4xl font-bold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-        Engineered for Compliance, Speed &amp; Organic Google Rank
+        Everything You Need to Dominate Google Maps
       </h2>
       <p class="text-[#4A4A4A] text-sm font-sans-clean">
-        Every component is designed to solve real operational bottlenecks across multi-location consumer businesses.
+        Six capabilities working together to get you more reviews, faster replies, and better local rankings — without any manual effort.
       </p>
     </div>
 
@@ -309,8 +309,8 @@ function renderHomePage(store) {
         <div class="w-12 h-12 rounded-xl bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
           ${getSvgIcon('globe', 'w-6 h-6 text-[#D9541E]')}
         </div>
-        <h3 class="text-lg font-bold text-[#111111] font-heading">Neural Multi-Dialect Mirroring</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <h3 class="text-lg font-bold text-[#111111] font-heading">Replies in Your Customer's Language</h3>
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           Google reviews in Indian metros span colloquial Hinglish, Devanagari Hindi, Tamil, Telugu, Kannada, and English. ReviewKare detects nuances, mirroring the customer’s exact warmth and vocabulary.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -323,8 +323,8 @@ function renderHomePage(store) {
         <div class="w-12 h-12 rounded-xl bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
           ${getSvgIcon('smartphone', 'w-6 h-6 text-[#D9541E]')}
         </div>
-        <h3 class="text-lg font-bold text-[#111111] font-heading">30-Second Zero-App In-Store Flow</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <h3 class="text-lg font-bold text-[#111111] font-heading">30-Second In-Store Review QR</h3>
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           Patients or diners scan your countertop acrylic or wood stand. Loads in &lt;85KB with zero login. Customers tap services, quality, and staff. An authentic paragraph is generated for 1-tap Google Maps copy.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -338,7 +338,7 @@ function renderHomePage(store) {
           ${getSvgIcon('award', 'w-6 h-6 text-[#D9541E]')}
         </div>
         <h3 class="text-lg font-bold text-[#111111] font-heading">Frontline Staff Attribution &amp; Incentives</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           Baristas, hair stylists, fitness trainers, and clinical nurses earn automatic review attribution when named in 5★ feedback. Increases staff retention and motivates frontline teams to deliver stellar guest hospitality.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -351,8 +351,8 @@ function renderHomePage(store) {
         <div class="w-12 h-12 rounded-xl bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
           ${getSvgIcon('shield', 'w-6 h-6 text-[#D9541E]')}
         </div>
-        <h3 class="text-lg font-bold text-[#111111] font-heading">Zero-Liability Quarantine Shield</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <h3 class="text-lg font-bold text-[#111111] font-heading">Negative Review Protection</h3>
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           1–3★ complaints are quarantined automatically. The AI draft strictly forbids admitting fault or offering rash refunds. A 1-tap approval alert is dispatched to the manager’s WhatsApp before anything is posted.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -365,8 +365,8 @@ function renderHomePage(store) {
         <div class="w-12 h-12 rounded-xl bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
           ${getSvgIcon('localPack', 'w-6 h-6 text-[#D9541E]')}
         </div>
-        <h3 class="text-lg font-bold text-[#111111] font-heading">Google Local 3-Pack Algorithm Engine</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <h3 class="text-lg font-bold text-[#111111] font-heading">Google Maps Rank Engine</h3>
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           Google Local 3-Pack ranking is governed by review response velocity, keyword density in replies, and review freshness. ReviewKare executes replies in 4 minutes with localized service keywords.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -379,8 +379,8 @@ function renderHomePage(store) {
         <div class="w-12 h-12 rounded-xl bg-[#FAEDE8] text-[#D9541E] flex items-center justify-center">
           ${getSvgIcon('building', 'w-6 h-6 text-[#D9541E]')}
         </div>
-        <h3 class="text-lg font-bold text-[#111111] font-heading">Multi-Branch Governance &amp; DPDP Act</h3>
-        <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+        <h3 class="text-lg font-bold text-[#111111] font-heading">Multi-Branch &amp; Compliance</h3>
+        <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
           Centralized executive oversight for multi-chain brands across Indiranagar, Koramangala, and Lavelle Road. Full adherence to India’s DPDP Act 2023 with data residency strictly inside AWS Mumbai.
         </p>
         <div class="pt-2 text-[11px] font-bold text-[#D9541E] font-mono">
@@ -397,7 +397,7 @@ function renderHomePage(store) {
       
       <div class="text-center max-w-2xl mx-auto space-y-3 reveal-on-scroll">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-xs font-bold uppercase tracking-wider font-mono">
-          Interactive Neural Engine
+          See It In Action
         </div>
         <h2 class="text-3xl font-bold text-[#111111] font-heading tracking-tight">
           Test Autonomous Dialect Mirroring
@@ -442,7 +442,7 @@ function renderHomePage(store) {
           <!-- Autopilot Engine Generated Reply -->
           <div class="p-5 bg-[#FAEDE8] rounded-xl border border-[#EFBCA8] space-y-3">
             <div class="flex items-center justify-between text-xs">
-              <span class="font-bold text-[#111111] font-heading">Autonomous Autopilot Output</span>
+              <span class="font-bold text-[#111111] font-heading">AI Autopilot Response</span>
               <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#D9541E] text-white font-bold" id="dStatusBadge">Auto-Posted (4m delay)</span>
             </div>
             <p id="dReplyText" class="text-xs text-[#111111] leading-relaxed font-sans-clean">
@@ -464,10 +464,10 @@ function renderHomePage(store) {
       
       <div class="max-w-3xl space-y-4 reveal-on-scroll">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDE8] border border-[#EFBCA8] text-[#D9541E] text-xs font-bold uppercase tracking-wider font-mono">
-          System Definition &amp; Entity Specifications
+          How It Works
         </div>
         <h2 class="text-3xl sm:text-4xl font-bold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-          What is ReviewKare? The Autonomous Google Review &amp; In-Store QR Operating System
+          How ReviewKare Works — The Complete Google Review Operating System
         </h2>
         <p class="text-[#4A4A4A] text-sm sm:text-base leading-relaxed font-sans-clean">
           <strong class="text-[#111111]">ReviewKare</strong> is an autonomous Google Business Profile reputation management and in-store AI QR operating system built specifically for high-touch consumer businesses in India—including dental clinics, aesthetic centers, specialty cafes, luxury salons, and fitness gyms. ReviewKare integrates with official Google APIs to mirror customer review dialects in under 4 minutes, inject local search keywords for Google Local 3-Pack ranking prominence, and quarantine negative feedback for 1-tap manager resolution.
@@ -477,9 +477,9 @@ function renderHomePage(store) {
       <!-- Verified Architectural Pillars -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="p-6 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2 card-lift reveal-on-scroll stagger-1">
-          <div class="text-[11px] font-bold text-[#D9541E] uppercase font-mono">4-Minute Autopilot Velocity</div>
+          <div class="text-[11px] font-bold text-[#D9541E] uppercase font-mono">4-Minute Reply Speed</div>
           <h3 class="text-base font-bold text-[#111111] font-heading">Humanized Algorithmic Jitter</h3>
-          <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+          <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
             Eliminates synthetic bot footprints by introducing a 3–5 minute humanized response interval with dialect mirroring in Devanagari Hindi, colloquial Hinglish, and English.
           </p>
         </div>
@@ -487,7 +487,7 @@ function renderHomePage(store) {
         <div class="p-6 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2 card-lift reveal-on-scroll stagger-2">
           <div class="text-[11px] font-bold text-[#D9541E] uppercase font-mono">Zero Review Gating</div>
           <h3 class="text-base font-bold text-[#111111] font-heading">100% Google &amp; FTC Adherent</h3>
-          <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+          <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
             Adheres strictly to FTC 16 CFR Part 465 and Google anti-incentivization policies. Every customer is guided directly to Google Maps without filtering or gating.
           </p>
         </div>
@@ -495,7 +495,7 @@ function renderHomePage(store) {
         <div class="p-6 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2 card-lift reveal-on-scroll stagger-3">
           <div class="text-[11px] font-bold text-[#D9541E] uppercase font-mono">Zero-Liability Quarantine</div>
           <h3 class="text-base font-bold text-[#111111] font-heading">1-Tap WhatsApp Approval</h3>
-          <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+          <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
             1–3★ complaints are isolated instantly. The engine generates a de-escalating draft with zero medical or legal fault admitted and routes direct manager telephone lines.
           </p>
         </div>
@@ -503,7 +503,7 @@ function renderHomePage(store) {
         <div class="p-6 bg-[#F3EEE3] rounded-2xl border border-[#DFD7C7] space-y-2 card-lift reveal-on-scroll stagger-4">
           <div class="text-[11px] font-bold text-[#D9541E] uppercase font-mono">Data Sovereignty</div>
           <h3 class="text-base font-bold text-[#111111] font-heading">AWS Mumbai &amp; DPDP 2023</h3>
-          <p class="text-xs text-[#4A4A4A] leading-relaxed font-sans-clean">
+          <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean">
             Strict adherence to India's Digital Personal Data Protection Act 2023 and NMC Medical Ethics. Hosted on AWS Mumbai (ap-south-1) with zero cross-border PHI transmission.
           </p>
         </div>
@@ -518,10 +518,10 @@ function renderHomePage(store) {
       
       <div class="text-center max-w-2xl mx-auto space-y-3 reveal-on-scroll">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FBF8F3] border border-[#DFD7C7] text-[#111111] text-xs font-bold uppercase tracking-wider font-mono">
-          Authoritative Knowledge Base
+          Common Questions
         </div>
         <h2 class="text-3xl sm:text-4xl font-bold text-[#111111] font-heading tracking-tight" style="text-wrap: balance;">
-          Frequently Asked Questions About Google Review Automation
+          Frequently Asked Questions
         </h2>
         <p class="text-[#4A4A4A] text-sm font-sans-clean">
           Technical, legal, and operational answers for business owners, clinic directors, and marketing leaders across India.
@@ -530,33 +530,36 @@ function renderHomePage(store) {
 
       <div class="space-y-4 reveal-on-scroll stagger-1">
         ${HOME_FAQS.map((faq, idx) => `
-          <div class="bg-[#FBF8F3] rounded-xl p-6 sm:p-7 border border-[#DFD7C7] card-lift space-y-2">
-            <h3 class="text-base font-bold text-[#111111] font-heading flex items-start gap-3">
-              <span class="text-[#D9541E] font-bold tabular-nums">0${idx + 1}.</span>
-              <span>${faq.q}</span>
-            </h3>
-            <p class="text-xs sm:text-sm text-[#4A4A4A] pl-8 leading-relaxed font-sans-clean">
-              ${faq.a}
-            </p>
-          </div>
+          <details class="bg-[#FBF8F3] rounded-xl border border-[#DFD7C7] overflow-hidden" ${idx < 3 ? 'open' : ''}>
+            <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 cursor-pointer list-none select-none hover:bg-[#EBE5D8] transition-colors" style="display:flex">
+              <h3 class="text-sm font-bold text-[#111111] font-heading flex items-start gap-3 text-left">
+                <span class="text-[#D9541E] font-bold tabular-nums flex-shrink-0 font-mono text-xs pt-0.5">${String(idx+1).padStart(2,'0')}</span>
+                <span>${faq.q}</span>
+              </h3>
+              <svg class="w-4 h-4 text-[#D9541E] flex-shrink-0" style="transition:transform 0.2s" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 pt-0 border-t border-[#DFD7C7]">
+              <p class="text-sm text-[#4A4A4A] leading-relaxed font-sans-clean pt-4 pl-7">${faq.a}</p>
+            </div>
+          </details>
         `).join('')}
       </div>
 
       <!-- FINAL HIGH-CONVERTING YC CTA CARD -->
       <div class="p-8 sm:p-12 bg-[#111111] text-[#F3EEE3] rounded-2xl border border-[#222222] text-center space-y-4 shadow-xl reveal-on-scroll stagger-2">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D9541E]/20 text-[#D9541E] text-xs font-bold uppercase font-mono border border-[#D9541E]/30">
-          Get Started in 60 Seconds
+          Start Free Today
         </div>
-        <h3 class="font-bold text-2xl sm:text-3xl text-[#F3EEE3] font-heading tracking-tight">Ready to dominate your city's Google Local 3-Pack?</h3>
+        <h3 class="font-bold text-2xl sm:text-3xl text-[#F3EEE3] font-heading tracking-tight">More Reviews. Higher Rankings. Zero Manual Work.</h3>
         <p class="text-xs sm:text-sm text-[#CFC5B2] max-w-lg mx-auto font-sans-clean leading-relaxed">
-          Start with a 14-day free pilot. Instant UPI setup, zero setup fee, and cancel anytime with a single click.
+          Start with a 14-day free trial. Instant UPI setup, zero setup fee, and cancel anytime with a single click.
         </p>
         <div class="pt-2 flex flex-wrap justify-center gap-3">
           <a href="/signup" class="px-6 py-3 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs sm:text-sm rounded-[10px] shadow-sm transition-all btn-lift">
-            Start 14-Day Free Pilot &rarr;
+            Start Free — 14 Days →
           </a>
           <a href="/pricing" class="px-6 py-3 bg-[#FBF8F3] hover:bg-[#EBE5D8] text-[#111111] font-bold text-xs sm:text-sm rounded-[10px] transition-all border border-[#DFD7C7]">
-            View INR Subscription Plans
+            See Pricing →
           </a>
         </div>
       </div>

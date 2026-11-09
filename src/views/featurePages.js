@@ -80,11 +80,11 @@ function renderStaffPage(store) {
               <th class="py-3 px-4 text-center">Action</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100" id="staffTableBody">
+          <tbody class="divide-y divide-[#DFD7C7]" id="staffTableBody">
             ${staffList.map((st, idx) => `
               <tr class="hover:bg-[#F3EEE3]/60 transition-colors staff-row" data-vertical="${st.vertical || 'clinic'}">
                 <td class="py-3.5 px-4 font-bold text-[#111111] flex items-center gap-2.5">
-                  <span class="w-6 h-6 rounded-full bg-slate-100 text-[#2B2B2B] font-black text-[11px] flex items-center justify-center shrink-0">
+                  <span class="w-6 h-6 rounded-full bg-[#F3EEE3] text-[#2B2B2B] font-black text-[11px] flex items-center justify-center shrink-0">
                     ${idx + 1}
                   </span>
                   <div>
@@ -94,12 +94,12 @@ function renderStaffPage(store) {
                 </td>
                 <td class="py-3.5 px-4 text-[#4A4A4A] font-medium">${st.role}</td>
                 <td class="py-3.5 px-4 text-center">
-                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold font-mono bg-slate-100 text-[#2B2B2B]">
+                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold font-mono bg-[#F3EEE3] text-[#2B2B2B]">
                     ${st.vertical || 'clinic'}
                   </span>
                 </td>
                 <td class="py-3.5 px-4 text-center font-bold text-[#111111] tabular-nums">
-                  <span class="px-2 py-0.5 rounded-full bg-slate-100">${st.reviewsCount}</span>
+                  <span class="px-2 py-0.5 rounded-full bg-[#F3EEE3]">${st.reviewsCount}</span>
                 </td>
                 <td class="py-3.5 px-4 text-center font-bold text-amber-500 tabular-nums">
                   ${st.avgRating}★
@@ -107,7 +107,7 @@ function renderStaffPage(store) {
                 <td class="py-3.5 px-4 text-[#4A4A4A] italic">“${st.compliments}”</td>
                 <td class="py-3.5 px-4 text-right font-bold text-[#D9541E] tabular-nums">${st.tipsEarned}</td>
                 <td class="py-3.5 px-4 text-center">
-                  <button type="button" onclick="generateStaffQr('${st.name}')" class="px-2.5 py-1 text-[11px] font-bold text-[#2B2B2B] bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                  <button type="button" onclick="generateStaffQr('${st.name}')" class="px-2.5 py-1 text-[11px] font-bold text-[#2B2B2B] bg-[#F3EEE3] hover:bg-[#EBE5D8] border border-[#DFD7C7] rounded-lg transition-colors">
                     Get Staff QR
                   </button>
                 </td>
@@ -134,7 +134,7 @@ function renderStaffPage(store) {
   </div>
 
   <!-- Add Staff Modal -->
-  <div id="addStaffModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="addStaffModal" class="hidden fixed inset-0 z-50 bg-[#111111]/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#FBF8F3] rounded-3xl max-w-md w-full p-6 border border-[#DFD7C7] shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-[#EBE5D8] pb-3">
         <h3 class="font-bold text-base text-[#111111] font-heading">Add Frontline Team Member</h3>
@@ -266,7 +266,7 @@ function renderLocalPackPage(store) {
           <div class="flex items-center gap-2 text-xs">
             <span class="font-bold text-amber-500">4.9 ★★★★★</span>
             <span class="text-[#6E6E6E] font-medium">(${store.location?.reviewsCount || 143} reviews)</span>
-            <span class="text-slate-300">•</span>
+            <span class="text-[#DFD7C7]">•</span>
             <span class="text-[#4A4A4A]">${store.location?.category || 'Healthcare & Aesthetic Clinic'}</span>
           </div>
           <p class="text-xs text-[#4A4A4A]">
@@ -291,7 +291,7 @@ function renderLocalPackPage(store) {
           <div class="flex items-center gap-2 text-[11px]">
             <span class="font-bold text-amber-500">4.4 ★★★★☆</span>
             <span class="text-[#6E6E6E]">(89 reviews)</span>
-            <span class="text-slate-300">•</span>
+            <span class="text-[#DFD7C7]">•</span>
             <span class="text-[#6E6E6E]">Reply velocity: 4.2 days</span>
           </div>
         </div>
@@ -305,7 +305,7 @@ function renderLocalPackPage(store) {
           <div class="flex items-center gap-2 text-[11px]">
             <span class="font-bold text-amber-500">4.3 ★★★★☆</span>
             <span class="text-[#6E6E6E]">(112 reviews)</span>
-            <span class="text-slate-300">•</span>
+            <span class="text-[#DFD7C7]">•</span>
             <span class="text-[#6E6E6E]">Reply velocity: 8.5 days</span>
           </div>
         </div>
@@ -350,12 +350,12 @@ function renderLocalPackPage(store) {
               <th class="py-3 px-4">Closest Local Rival</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100">
+          <tbody class="divide-y divide-[#DFD7C7]">
             ${keywords.map(kw => `
               <tr class="hover:bg-[#F3EEE3]/60 transition-colors">
                 <td class="py-3 px-4 font-bold text-[#111111]">“${kw.query}”</td>
                 <td class="py-3 px-4 text-center font-mono">
-                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-slate-100 text-[#2B2B2B]">${kw.vertical}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[#F3EEE3] text-[#2B2B2B]">${kw.vertical}</span>
                 </td>
                 <td class="py-3 px-4 text-[#4A4A4A] tabular-nums">${kw.volume}</td>
                 <td class="py-3 px-4 text-center">
@@ -475,7 +475,7 @@ function renderWhatsAppStudioPage(store) {
       </div>
 
       <!-- Smartphone Preview Mockup -->
-      <div class="lg:col-span-5 bg-slate-900 p-4 sm:p-6 rounded-3xl border border-slate-800 shadow-2xl space-y-4">
+      <div class="lg:col-span-5 bg-[#111111] p-4 sm:p-6 rounded-3xl border border-[#222222] shadow-2xl space-y-4">
         <div class="flex items-center justify-between text-xs text-[#888888] font-mono">
           <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Live WhatsApp Device View</span>
           <span>iPhone 15 Pro</span>
@@ -508,7 +508,7 @@ function renderWhatsAppStudioPage(store) {
               <a href="/q/sharma-dent-01" target="_blank" class="w-full py-2 bg-[#FAEDE8] text-emerald-800 font-bold rounded-lg text-center block text-[11px] border border-[#EFBCA8] hover:bg-emerald-100 transition-colors">
                 ⭐ 20-Second Review Copilot
               </a>
-              <a href="tel:${location.managerPhone || '+919845011223'}" class="w-full py-1.5 bg-[#F3EEE3] text-[#2B2B2B] font-medium rounded-lg text-center block text-[10px] border border-[#DFD7C7] hover:bg-slate-100 transition-colors">
+              <a href="tel:${location.managerPhone || '+919845011223'}" class="w-full py-1.5 bg-[#F3EEE3] text-[#2B2B2B] font-medium rounded-lg text-center block text-[10px] border border-[#DFD7C7] hover:bg-[#EBE5D8] transition-colors">
                 📞 Speak with Manager
               </a>
             </div>
@@ -593,7 +593,7 @@ function renderPosWebhooksPage(store) {
           <p class="text-xs text-[#6E6E6E]">Test live payload ingestion from Indian billing systems to verify real-time review dispatch.</p>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="simulatePosEvent('petpooja')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-sm transition-all">
+          <button type="button" onclick="simulatePosEvent('petpooja')" class="px-3 py-1.5 bg-[#111111] hover:bg-[#2B2B2B] text-white font-bold text-xs rounded-xl shadow-sm transition-all">
             Simulate Petpooja Bill (Cafe)
           </button>
           <button type="button" onclick="simulatePosEvent('zenoti')" class="px-3 py-1.5 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-sm transition-all">
@@ -619,7 +619,7 @@ function renderPosWebhooksPage(store) {
               <th class="py-3 px-4 text-center">Status</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100" id="posEventLogBody">
+          <tbody class="divide-y divide-[#DFD7C7]" id="posEventLogBody">
             <tr class="hover:bg-[#F3EEE3]/60 transition-colors font-mono">
               <td class="py-3 px-4 text-[#6E6E6E]">Just now</td>
               <td class="py-3 px-4 font-bold text-[#111111]">Petpooja POS</td>
@@ -749,8 +749,8 @@ function renderDisputesPage(store) {
           </div>
 
           <div class="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-[#EBE5D8]">
-            <button type="button" onclick="copyDisputeDossier('${d.id}')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5">
-              ${getSvgIcon('copy', 'w-3.5 h-3.5 text-slate-300')} Copy Google Legal Dossier
+            <button type="button" onclick="copyDisputeDossier('${d.id}')" class="px-4 py-2 bg-[#111111] hover:bg-[#2B2B2B] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5">
+              ${getSvgIcon('copy', 'w-3.5 h-3.5 text-[#DFD7C7]')} Copy Google Legal Dossier
             </button>
             <a href="https://support.google.com/business/workflow/9945796" target="_blank" class="px-4 py-2 bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5">
               ${getSvgIcon('dispute', 'w-3.5 h-3.5 text-white')} Open Google Dispute Portal &rarr;
@@ -783,7 +783,7 @@ function renderOrganizationsPage(store) {
         <h1 class="text-2xl font-black text-[#111111] font-heading">Multi-Location Enterprise Command Center</h1>
         <p class="text-xs text-[#6E6E6E] mt-0.5">Consolidated brand reputation, cross-branch leaderboards, and regional performance across Bengaluru.</p>
       </div>
-      <button type="button" class="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl shadow-sm">
+      <button type="button" class="px-4 py-2 bg-[#111111] text-white font-bold text-xs rounded-xl shadow-sm">
         + Add New Branch Location
       </button>
     </div>
@@ -831,7 +831,7 @@ function renderOrganizationsPage(store) {
               <th class="py-3 px-4 text-right">Switch Workspace</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100">
+          <tbody class="divide-y divide-[#DFD7C7]">
             ${branches.map(b => `
               <tr class="hover:bg-[#F3EEE3]/60 transition-colors">
                 <td class="py-3.5 px-4 font-bold text-[#111111]">
@@ -839,7 +839,7 @@ function renderOrganizationsPage(store) {
                   <div class="text-[10px] text-[#888888] font-mono">${b.area}, ${b.city}</div>
                 </td>
                 <td class="py-3.5 px-4 text-center font-mono">
-                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-slate-100 text-[#2B2B2B]">${b.vertical}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[#F3EEE3] text-[#2B2B2B]">${b.vertical}</span>
                 </td>
                 <td class="py-3.5 px-4 text-center font-bold text-amber-500">${b.rating} ★</td>
                 <td class="py-3.5 px-4 text-center font-mono text-[#D9541E] font-bold">+28 / mo</td>
@@ -886,12 +886,12 @@ function renderSentimentPage(store) {
         <div class="bg-[#FBF8F3] p-5 rounded-3xl border border-[#DFD7C7] shadow-sm card-3d card-lift space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-[#111111] font-heading">${a.aspect}</span>
-            <span class="text-xs font-mono font-bold ${a.status === 'exceptional' ? 'text-[#D9541E] bg-[#FAEDE8]' : (a.status === 'attention_needed' ? 'text-[#D9541E] bg-[#FAEDE8]' : 'text-[#2B2B2B] bg-slate-100')} px-2 py-0.5 rounded">
+            <span class="text-xs font-mono font-bold ${a.status === 'exceptional' ? 'text-[#D9541E] bg-[#FAEDE8]' : (a.status === 'attention_needed' ? 'text-[#D9541E] bg-[#FAEDE8]' : 'text-[#2B2B2B] bg-[#F3EEE3]')} px-2 py-0.5 rounded">
               ${a.score}%
             </span>
           </div>
 
-          <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+          <div class="w-full bg-[#F3EEE3] rounded-full h-2 overflow-hidden">
             <div class="h-2 rounded-full ${a.score >= 95 ? 'bg-[#FAEDE8]0' : (a.score >= 90 ? 'bg-[#D9541E]' : 'bg-[#FAEDE8]0')}" style="width: ${a.score}%"></div>
           </div>
 
@@ -960,7 +960,7 @@ function renderHardwareStudioPage(store) {
       ${hardware.map(hw => `
         <div class="bg-[#FBF8F3] rounded-3xl border border-[#DFD7C7] p-5 shadow-sm card-3d card-lift flex flex-col justify-between space-y-4">
           <div class="space-y-2">
-            <div class="w-full h-36 bg-slate-100 rounded-2xl flex items-center justify-center border border-[#DFD7C7]/80 overflow-hidden relative group">
+            <div class="w-full h-36 bg-[#F3EEE3] rounded-2xl flex items-center justify-center border border-[#DFD7C7]/80 overflow-hidden relative group">
               <div class="p-4 text-center">
                 <span class="text-3xl">🪪</span>
                 <p class="text-[11px] font-bold text-[#1C1C1C] mt-2">${hw.name}</p>
@@ -975,7 +975,7 @@ function renderHardwareStudioPage(store) {
               <span class="font-black text-[#111111] text-sm font-heading">${hw.price}</span>
               <span class="text-[10px] text-[#888888] font-mono">${hw.leadTime}</span>
             </div>
-            <button type="button" onclick="orderHardwareStand('${hw.id}')" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-sm transition-all">
+            <button type="button" onclick="orderHardwareStand('${hw.id}')" class="w-full py-2 bg-[#111111] hover:bg-[#2B2B2B] text-white font-bold text-xs rounded-xl shadow-sm transition-all">
               Order Custom Engraved &rarr;
             </button>
           </div>

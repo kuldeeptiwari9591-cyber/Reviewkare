@@ -58,7 +58,7 @@ function getStarRatingSvg(count = 5, extraClasses = 'w-3.5 h-3.5') {
   const starPath = '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>';
   return Array.from({ length: 5 }, (_, i) => {
     const isFilled = i < count;
-    const color = isFilled ? 'text-amber-400 fill-amber-400' : 'text-slate-200 fill-slate-100';
+    const color = isFilled ? 'text-amber-400 fill-amber-400' : 'text-[#DFD7C7] fill-[#DFD7C7]/40';
     return `<svg class="${extraClasses} ${color} inline-block align-middle shrink-0" aria-hidden="true" viewBox="0 0 24 24">${starPath}</svg>`;
   }).join('');
 }

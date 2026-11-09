@@ -463,6 +463,31 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         animation: none !important;
       }
     }
+
+    /* FAQ Accordion (details/summary) styling */
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary svg {
+      transform: rotate(180deg);
+    }
+    details summary svg {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    details > div {
+      animation: faqOpen 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes faqOpen {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Premium focus-visible ring */
+    :focus-visible {
+      outline: 2px solid #D9541E;
+      outline-offset: 2px;
+    }
+
+    /* Smooth scrolling for anchor links */
+    html { scroll-padding-top: 80px; }
   </style>
 </head>
 <body class="min-h-screen bg-[#F3EEE3] text-[#111111] flex flex-col selection:bg-[#D9541E] selection:text-white yc-cream-canvas route-entrance">
@@ -473,99 +498,113 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
   </a>
 
   ${!isApp ? `
-  <!-- TOP ANNOUNCEMENT BANNER (Ink Black #111111 with Burnt Orange #D9541E accent) -->
-  <aside class="bg-[#111111] text-[#F3EEE3] text-xs py-2.5 px-4 text-center border-b border-[#222222]" aria-label="Announcement">
-    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+  <!-- TOP ANNOUNCEMENT BANNER — dismissable, real message -->
+  <aside id="announceBanner" class="bg-[#111111] text-[#F3EEE3] text-xs py-2.5 px-4 text-center border-b border-[#222222]" aria-label="Announcement">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap relative">
       <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#D9541E]/20 text-[#D9541E] font-bold uppercase tracking-wider text-[10px] font-mono border border-[#D9541E]/30">
-        Y Combinator Look &amp; Feel
+        New Launch
       </span>
-      <span class="font-medium text-[#F3EEE3]">ReviewKare 3.0: 30-Second In-Store QR, Neural Multi-Dialect Autopilot &amp; Frontline Staff Attribution across India</span>
+      <span class="font-medium text-[#F3EEE3]">ReviewKare v3.0 — 30-Second In-Store QR, Dialect Autopilot &amp; Staff Attribution. Now live across India.</span>
       <a href="/features" class="font-bold text-[#D9541E] hover:underline ml-1 inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded">
-        Explore Capabilities &rarr;
+        See What's New &rarr;
       </a>
+      <button type="button" onclick="dismissBanner()" class="absolute right-0 top-1/2 -translate-y-1/2 p-1 text-[#888888] hover:text-[#F3EEE3] transition-colors" aria-label="Dismiss announcement">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
   </aside>
 
-  <!-- NAVIGATION BAR (Cream #F3EEE3 canvas with Ink #111111 typography & Burnt Orange #D9541E button) -->
+  <!-- NAVIGATION BAR -->
   <header class="bg-[#F3EEE3]/95 backdrop-blur-md border-b border-[#DFD7C7] sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
       
       <!-- Brand Logo -->
       <div class="flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded-xl" aria-label="ReviewKare Homepage">
-          <div class="w-10 h-10 rounded-[10px] bg-[#D9541E] text-white font-bold text-xl flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm">
+        <a href="/" class="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded-xl" aria-label="ReviewKare Homepage">
+          <div class="w-9 h-9 rounded-[10px] bg-[#D9541E] text-white font-bold text-lg flex items-center justify-center font-heading transition-transform group-hover:scale-105 shadow-sm flex-shrink-0">
             R
           </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-2xl text-[#111111] tracking-tight font-heading">ReviewKare</span>
-              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-[#FAEDE8] text-[#D9541E] border border-[#EFBCA8] font-mono">
-                YC Edition
-              </span>
-            </div>
-            <p class="text-[11px] text-[#6E6E6E] font-medium -mt-0.5">Autonomous Multi-Vertical Reputation OS</p>
-          </div>
+          <span class="font-bold text-xl text-[#111111] tracking-tight font-heading">ReviewKare</span>
         </a>
 
-        <!-- Links -->
-        <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-[#111111]" aria-label="Main Navigation">
-          <a href="/features" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'features' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Core Engine</a>
+        <!-- Desktop Nav Links (streamlined — 5 items max per Hick's Law) -->
+        <nav class="hidden md:flex items-center gap-5 text-xs font-semibold text-[#111111]" aria-label="Main Navigation">
+          <a href="/features" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded px-1 py-1 ${activeNav === 'features' ? 'text-[#D9541E] font-bold' : ''}">Features</a>
           
-          <!-- Industries Multi-Vertical Dropdown -->
-          <div class="relative group cursor-pointer">
-            <span class="hover:text-[#D9541E] transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'industries' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">
-              Industries <span class="text-[9px] opacity-60">▼</span>
-            </span>
-            <div class="absolute top-full left-0 mt-2 w-64 bg-[#FBF8F3] rounded-2xl shadow-xl border border-[#DFD7C7] p-2 hidden group-hover:block animate-in fade-in z-50">
-              <a href="/industries/clinics" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+          <!-- Industries Dropdown — click-accessible -->
+          <div class="relative" id="navIndustriesWrapper">
+            <button type="button" id="navIndustriesBtn" onclick="toggleIndustriesMenu()" class="hover:text-[#D9541E] transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded px-1 py-1 ${activeNav === 'industries' ? 'text-[#D9541E] font-bold' : ''}" aria-expanded="false" aria-haspopup="true">
+              Industries
+              <svg class="w-3 h-3 opacity-50 transition-transform" id="navIndustriesChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="navIndustriesMenu" class="absolute top-full left-0 mt-2 w-64 bg-[#FBF8F3] rounded-2xl shadow-xl border border-[#DFD7C7] p-2 hidden z-50" role="menu">
+              <a href="/industries/clinics" class="flex items-center gap-2.5 px-3 py-2.5 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111] transition-colors" role="menuitem">
                 ${getSvgIcon('clinic', 'w-4 h-4 text-[#D9541E]')}
                 <span>Clinics &amp; Healthcare</span>
               </a>
-              <a href="/industries/restaurants" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+              <a href="/industries/restaurants" class="flex items-center gap-2.5 px-3 py-2.5 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111] transition-colors" role="menuitem">
                 ${getSvgIcon('coffee', 'w-4 h-4 text-[#D9541E]')}
-                <span>Cafes, Dining &amp; Bakeries</span>
+                <span>Cafes &amp; Dining</span>
               </a>
-              <a href="/industries/salons" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+              <a href="/industries/salons" class="flex items-center gap-2.5 px-3 py-2.5 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111] transition-colors" role="menuitem">
                 ${getSvgIcon('scissors', 'w-4 h-4 text-[#D9541E]')}
-                <span>Salons &amp; Luxury Spas</span>
+                <span>Salons &amp; Spas</span>
               </a>
-              <a href="/industries/gyms" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+              <a href="/industries/gyms" class="flex items-center gap-2.5 px-3 py-2.5 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111] transition-colors" role="menuitem">
                 ${getSvgIcon('dumbbell', 'w-4 h-4 text-[#D9541E]')}
-                <span>Gyms &amp; Fitness Hubs</span>
+                <span>Gyms &amp; Fitness</span>
               </a>
-              <a href="/industries/coaching" class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111]">
+              <a href="/industries/coaching" class="flex items-center gap-2.5 px-3 py-2.5 text-xs rounded-xl hover:bg-[#EBE5D8] font-medium text-[#111111] transition-colors" role="menuitem">
                 ${getSvgIcon('academic', 'w-4 h-4 text-[#D9541E]')}
                 <span>Coaching &amp; Academies</span>
               </a>
             </div>
           </div>
 
-          <a href="/free-audit" class="hover:text-[#D9541E] transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'audit' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">
-            ${getSvgIcon('search', 'w-3.5 h-3.5 text-[#D9541E]')} Local 3-Pack Audit
-          </a>
-          <a href="/for-agencies" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'agencies' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">For Agencies</a>
-          <a href="/security" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'security' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Security &amp; Trust</a>
-          <a href="/pricing" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'pricing' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Pricing</a>
-          <a href="/contact" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded p-1 ${activeNav === 'contact' ? 'text-[#D9541E] font-bold underline underline-offset-4' : ''}">Contact</a>
+          <a href="/pricing" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded px-1 py-1 ${activeNav === 'pricing' ? 'text-[#D9541E] font-bold' : ''}">Pricing</a>
+          <a href="/free-audit" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded px-1 py-1 ${activeNav === 'audit' ? 'text-[#D9541E] font-bold' : ''}">Free Audit</a>
+          <a href="/contact" class="hover:text-[#D9541E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] rounded px-1 py-1 ${activeNav === 'contact' ? 'text-[#D9541E] font-bold' : ''}">Contact</a>
         </nav>
       </div>
 
-      <!-- Action buttons & Command Palette Trigger -->
-      <div class="flex items-center gap-3">
-        <!-- Quick Search Cmd+K -->
-        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 px-3 min-h-[40px] rounded-[10px] border border-[#DFD7C7] bg-[#FBF8F3] text-[#4A4A4A] hover:text-[#111111] hover:border-[#111111] text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]" aria-label="Search and Navigation">
+      <!-- Right: CTA buttons + mobile hamburger -->
+      <div class="flex items-center gap-2.5">
+        <!-- Cmd+K Search -->
+        <button type="button" onclick="openCommandPalette()" class="hidden lg:flex items-center gap-1.5 px-2.5 min-h-[40px] rounded-[10px] border border-[#DFD7C7] bg-[#FBF8F3] text-[#4A4A4A] hover:text-[#111111] hover:border-[#111111] text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]" aria-label="Quick search (Ctrl+K)">
           ${getSvgIcon('search', 'w-3.5 h-3.5 text-[#D9541E]')}
-          <span>Quick Search</span>
           <kbd class="px-1.5 py-0.5 text-[10px] bg-[#EBE5D8] border border-[#DFD7C7] text-[#111111] rounded font-mono">⌘K</kbd>
         </button>
 
-        <a href="/login?demo=true" class="text-xs font-bold px-3.5 min-h-[44px] flex items-center text-[#111111] hover:text-[#D9541E] border border-[#111111] bg-[#FBF8F3] hover:bg-[#EBE5D8] transition-all rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]">
+        <a href="/login?demo=true" class="hidden sm:flex text-xs font-bold px-3.5 min-h-[44px] items-center text-[#111111] hover:text-[#D9541E] border border-[#DFD7C7] hover:border-[#111111] bg-[#FBF8F3] hover:bg-[#EBE5D8] transition-all rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]">
           Live Demo
         </a>
 
-        <a href="/app" class="inline-flex items-center gap-2 text-xs font-bold px-4 min-h-[44px] rounded-[10px] bg-[#D9541E] hover:bg-[#BF4615] text-white transition-all btn-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] shadow-sm">
-          <span>Enterprise Desk &rarr;</span>
+        <a href="/signup" class="inline-flex items-center gap-1.5 text-xs font-bold px-4 min-h-[44px] rounded-[10px] bg-[#D9541E] hover:bg-[#BF4615] text-white transition-all btn-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E] shadow-sm">
+          Start Free &rarr;
         </a>
+
+        <!-- Mobile Hamburger -->
+        <button type="button" id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl border border-[#DFD7C7] bg-[#FBF8F3] text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9541E]" aria-label="Open menu" aria-expanded="false">
+          <svg id="hamburgerIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="closeMenuIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileMenu" class="md:hidden hidden bg-[#FBF8F3] border-t border-[#DFD7C7] px-4 pb-5 pt-3 space-y-1">
+      <a href="/features" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#111111] hover:bg-[#EBE5D8] transition-colors ${activeNav === 'features' ? 'bg-[#EBE5D8] text-[#D9541E]' : ''}">Features</a>
+      <div class="px-3 py-1 text-[10px] font-bold text-[#888888] uppercase tracking-wider font-mono">Industries</div>
+      <a href="/industries/clinics" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#4A4A4A] hover:bg-[#EBE5D8] hover:text-[#111111] transition-colors pl-5">${getSvgIcon('clinic', 'w-3.5 h-3.5 text-[#D9541E]')} Clinics &amp; Healthcare</a>
+      <a href="/industries/restaurants" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#4A4A4A] hover:bg-[#EBE5D8] hover:text-[#111111] transition-colors pl-5">${getSvgIcon('coffee', 'w-3.5 h-3.5 text-[#D9541E]')} Cafes &amp; Dining</a>
+      <a href="/industries/salons" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#4A4A4A] hover:bg-[#EBE5D8] hover:text-[#111111] transition-colors pl-5">${getSvgIcon('scissors', 'w-3.5 h-3.5 text-[#D9541E]')} Salons &amp; Spas</a>
+      <a href="/industries/gyms" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#4A4A4A] hover:bg-[#EBE5D8] hover:text-[#111111] transition-colors pl-5">${getSvgIcon('dumbbell', 'w-3.5 h-3.5 text-[#D9541E]')} Gyms &amp; Fitness</a>
+      <a href="/pricing" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#111111] hover:bg-[#EBE5D8] transition-colors ${activeNav === 'pricing' ? 'bg-[#EBE5D8] text-[#D9541E]' : ''}">Pricing</a>
+      <a href="/free-audit" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#111111] hover:bg-[#EBE5D8] transition-colors ${activeNav === 'audit' ? 'bg-[#EBE5D8] text-[#D9541E]' : ''}">Free Audit</a>
+      <a href="/contact" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#111111] hover:bg-[#EBE5D8] transition-colors ${activeNav === 'contact' ? 'bg-[#EBE5D8] text-[#D9541E]' : ''}">Contact</a>
+      <div class="pt-3 border-t border-[#DFD7C7] flex flex-col gap-2">
+        <a href="/login?demo=true" class="flex items-center justify-center min-h-[44px] px-4 rounded-[10px] text-sm font-bold text-[#111111] border border-[#DFD7C7] bg-white hover:bg-[#EBE5D8] transition-all">Live Demo</a>
+        <a href="/signup" class="flex items-center justify-center min-h-[44px] px-4 rounded-[10px] text-sm font-bold text-white bg-[#D9541E] hover:bg-[#BF4615] transition-all">Start Free &rarr;</a>
       </div>
     </div>
   </header>` : ''}
@@ -584,10 +623,10 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-[8px] bg-[#D9541E] text-white font-bold text-base flex items-center justify-center font-heading">R</div>
-            <span class="font-bold text-[#F3EEE3] text-xl tracking-tight font-heading">ReviewKare Operating System</span>
+            <span class="font-bold text-[#F3EEE3] text-xl tracking-tight font-heading">ReviewKare</span>
           </div>
           <p class="text-[#A09A8F] leading-relaxed pr-6 font-sans-clean">
-            Autonomous Google Review Autopilot &amp; In-Store AI QR Platform. Built with Y Combinator speed and precision for clinics, cafes, restaurants, salons, spas, and gyms across India.
+            Autonomous Google Review Autopilot &amp; In-Store AI QR for clinics, cafes, salons, gyms, and coaching centres across India. Get more reviews. Rank higher on Google Maps.
           </p>
           <div class="space-y-1.5 text-[#A09A8F] text-[11px] font-sans-clean">
             <p class="text-[#D9541E] font-semibold flex items-center gap-1.5">
@@ -603,14 +642,14 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         </div>
 
         <div class="space-y-3 font-sans-clean">
-          <h4 class="font-bold text-[#F3EEE3] uppercase tracking-wider text-[11px] font-mono">Engine &amp; Capabilities</h4>
+          <h4 class="font-bold text-[#F3EEE3] uppercase tracking-wider text-[11px] font-mono">Features</h4>
           <ul class="space-y-2 text-[#CFC5B2]">
-            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">Neural Dialect Autopilot</a></li>
-            <li><a href="/app/qr" class="hover:text-[#D9541E] transition-colors">3D Physical QR Studio</a></li>
-            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">Quarantine Safety Shield</a></li>
-            <li><a href="/app/staff" class="hover:text-[#D9541E] transition-colors">Staff Attribution Leaderboard</a></li>
-            <li><a href="/app/local-pack" class="hover:text-[#D9541E] transition-colors">Google Local 3-Pack Engine</a></li>
-            <li><a href="/book-demo" class="hover:text-[#D9541E] transition-colors">Schedule Solution Walkthrough</a></li>
+            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">AI Dialect Replies</a></li>
+            <li><a href="/app/qr" class="hover:text-[#D9541E] transition-colors">In-Store QR Stands</a></li>
+            <li><a href="/features" class="hover:text-[#D9541E] transition-colors">Negative Review Shield</a></li>
+            <li><a href="/app/staff" class="hover:text-[#D9541E] transition-colors">Staff Attribution</a></li>
+            <li><a href="/app/local-pack" class="hover:text-[#D9541E] transition-colors">Google Maps Ranking</a></li>
+            <li><a href="/book-demo" class="hover:text-[#D9541E] transition-colors">Book a Demo</a></li>
           </ul>
         </div>
 
@@ -641,11 +680,9 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
       <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#888888] gap-4 font-sans-clean">
         <p>© 2026 ReviewKare Technologies India Private Limited. All rights reserved.</p>
         <div class="flex items-center gap-6">
-          <a href="/login" class="hover:text-[#F3EEE3]">Sign In</a>
-          <a href="/signup" class="hover:text-[#F3EEE3]">Register</a>
-          <a href="/security" class="hover:text-[#F3EEE3]">Security</a>
-          <a href="/privacy" class="hover:text-[#F3EEE3]">Privacy</a>
-          <a href="/terms" class="hover:text-[#F3EEE3]">Terms</a>
+          <a href="/privacy" class="hover:text-[#F3EEE3] transition-colors">Privacy</a>
+          <a href="/terms" class="hover:text-[#F3EEE3] transition-colors">Terms</a>
+          <a href="/security" class="hover:text-[#F3EEE3] transition-colors">Security</a>
           <span class="text-[#333333]">•</span>
           <span class="text-[#D9541E] font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#D9541E] animate-pulse"></span> All Systems Operational</span>
         </div>
@@ -729,8 +766,97 @@ function renderHtmlPage(title, activeNav, bodyContent, options = {}) {
         if (p.classList.contains('hidden')) openCommandPalette();
         else closeCommandPalette();
       }
-      if (e.key === 'Escape') closeCommandPalette();
+      if (e.key === 'Escape') { closeCommandPalette(); closeMobileMenu(); }
     });
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('mobileMenuBtn');
+      const hamburger = document.getElementById('hamburgerIcon');
+      const closeIcon = document.getElementById('closeMenuIcon');
+      if (!menu) return;
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) {
+        menu.classList.add('hidden');
+        btn && btn.setAttribute('aria-expanded', 'false');
+        hamburger && hamburger.classList.remove('hidden');
+        closeIcon && closeIcon.classList.add('hidden');
+      } else {
+        menu.classList.remove('hidden');
+        btn && btn.setAttribute('aria-expanded', 'true');
+        hamburger && hamburger.classList.add('hidden');
+        closeIcon && closeIcon.classList.remove('hidden');
+      }
+    }
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('mobileMenuBtn');
+      if (menu) menu.classList.add('hidden');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      const hamburger = document.getElementById('hamburgerIcon');
+      const closeIcon = document.getElementById('closeMenuIcon');
+      if (hamburger) hamburger.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+    }
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('mobileMenuBtn');
+      if (menu && !menu.classList.contains('hidden') && !menu.contains(e.target) && btn && !btn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    // Industries dropdown — click-toggle on desktop
+    function toggleIndustriesMenu() {
+      const menu = document.getElementById('navIndustriesMenu');
+      const btn = document.getElementById('navIndustriesBtn');
+      const chevron = document.getElementById('navIndustriesChevron');
+      if (!menu) return;
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) {
+        menu.classList.add('hidden');
+        btn && btn.setAttribute('aria-expanded', 'false');
+        chevron && chevron.style.removeProperty('transform');
+      } else {
+        menu.classList.remove('hidden');
+        btn && btn.setAttribute('aria-expanded', 'true');
+        chevron && (chevron.style.transform = 'rotate(180deg)');
+      }
+    }
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('navIndustriesWrapper');
+      const menu = document.getElementById('navIndustriesMenu');
+      if (wrapper && menu && !wrapper.contains(e.target) && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        const btn = document.getElementById('navIndustriesBtn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        const chevron = document.getElementById('navIndustriesChevron');
+        if (chevron) chevron.style.removeProperty('transform');
+      }
+    });
+
+    // Announcement banner dismiss
+    function dismissBanner() {
+      const banner = document.getElementById('announceBanner');
+      if (banner) {
+        banner.style.transition = 'opacity 0.3s ease, max-height 0.4s ease';
+        banner.style.opacity = '0';
+        banner.style.overflow = 'hidden';
+        banner.style.maxHeight = banner.offsetHeight + 'px';
+        requestAnimationFrame(() => { banner.style.maxHeight = '0'; });
+        setTimeout(() => banner.remove(), 400);
+        try { localStorage.setItem('rk_banner_dismissed', '1'); } catch(e) {}
+      }
+    }
+    // Auto-dismiss if previously dismissed
+    try {
+      if (localStorage.getItem('rk_banner_dismissed') === '1') {
+        const banner = document.getElementById('announceBanner');
+        if (banner) banner.remove();
+      }
+    } catch(e) {}
 
     function filterCmdList(query) {
       const q = query.toLowerCase();

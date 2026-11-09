@@ -789,7 +789,7 @@ const server = http.createServer((req, res) => {
           plan: {
             status: 'trial',
             tier: 'starter',
-            name: '14-Day Free Pilot',
+            name: 'Free 14-Day Trial',
             trialDaysLeft: 14,
             expiresAt: new Date(Date.now() + 14 * 86400000).toISOString()
           }
@@ -902,7 +902,7 @@ const server = http.createServer((req, res) => {
       const amount = pricesInPaise[key] || (billingCycle === 'quarterly' ? 299900 : 124900);
       const planNames = {
         'starter': 'Starter Plan',
-        'growth': 'Growth Autopilot Plan',
+        'growth': 'Growth Plan',
         'pro': 'Multi-Branch Pro Plan'
       };
 
@@ -957,7 +957,7 @@ const server = http.createServer((req, res) => {
       const expiresDate = new Date(Date.now() + durationDays * 86400000).toISOString();
       const planNames = {
         'starter': 'Starter Active',
-        'growth': 'Growth Autopilot Active',
+        'growth': 'Growth Plan Active',
         'pro': 'Multi-Branch Pro Active'
       };
 
@@ -1496,7 +1496,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
     }
 
     if (pathname === '/signup') {
-      const html = renderHtmlPage('Start 14-Day Free Pilot', 'signup', renderSignupPage());
+      const html = renderHtmlPage('Start Free 14-Day Trial', 'signup', renderSignupPage());
       return sendHtml(200, html);
     }
 
@@ -1896,7 +1896,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             </p>
             <div class="pt-2 flex flex-wrap justify-center gap-3">
               <a href="/signup" class="px-6 py-3 rounded-xl bg-[#D9541E] hover:bg-[#BF4615] text-white font-bold text-xs shadow-md transition-all">
-                Start 14-Day Free Pilot for ${config.name} &rarr;
+                Start Free 14-Day Trial for ${config.name} &rarr;
               </a>
               <a href="/free-audit" class="px-6 py-3 rounded-xl bg-[#FBF8F3] border border-[#DFD7C7] hover:bg-[#F3EEE3] text-[#1C1C1C] font-bold text-xs shadow-sm transition-all">
                 Scan Competitor Local 3-Pack Rank
@@ -2069,7 +2069,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <div class="p-6 bg-[#F3EEE3] border-t border-[#EBE5D8] flex flex-col sm:flex-row items-center justify-between gap-4">
               <span class="text-xs text-[#4A4A4A]">Ready to save 85% on your reputation stack?</span>
               <a href="/signup" class="px-6 py-2.5 bg-[#D9541E] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#BF4615] transition-colors">
-                Start 14-Day Free Pilot &rarr;
+                Start Free — 14 Days →
               </a>
             </div>
           </div>
@@ -2183,7 +2183,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
               </div>
               <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 space-y-2">
                 <p><strong>Want to automate this?</strong> ReviewKare turns this link into an interactive 30-second Hinglish builder that automatically weeds out 1-star complaints before they hit Google Maps.</p>
-                <a href="/signup" class="inline-block font-bold text-[#D9541E] hover:underline">Start 14-Day Free Pilot &rarr;</a>
+                <a href="/signup" class="inline-block font-bold text-[#D9541E] hover:underline">Start Free — 14 Days →</a>
               </div>
             </div>
           </div>
@@ -3065,7 +3065,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
             <div class="flex items-center gap-2">
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
                 <span class="w-2 h-2 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}"></span>
-                <span>${isActive ? 'Active Subscription' : '14-Day Free Pilot'}</span>
+                <span>${isActive ? 'Active Subscription' : 'Free 14-Day Trial'}</span>
               </span>
             </div>
           </div>
@@ -3078,7 +3078,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                   ${isActive ? 'Paid Active Plan' : 'Free Trial Mode'}
                 </span>
                 <h2 class="text-2xl sm:text-3xl font-black mt-2 font-heading tracking-tight">
-                  ${plan.name || 'Growth Autopilot Plan'}
+                  ${plan.name || 'Growth Plan'}
                 </h2>
                 <p class="text-xs text-[#888888] mt-1">
                   ${isActive ? `Renews on ${plan.expiresAt ? plan.expiresAt.split('T')[0] : 'Auto-renew'} via Razorpay UPI AutoPay` : `Trial active. Upgrade below to lock in the special ₹2,999 quarterly price.`}
@@ -3153,7 +3153,7 @@ Full technical context and documentation available at: https://reviewkare.tech/l
                 </div>
                 <div class="space-y-3 mt-1">
                   <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-[#111111] font-heading">Growth Autopilot</h3>
+                    <h3 class="font-bold text-lg text-[#111111] font-heading">Growth Plan</h3>
                     <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#FAEDE8] text-[#D9541E] rounded-full font-mono border border-[#EFBCA8]">Quarterly Hero</span>
                   </div>
                   <div>
