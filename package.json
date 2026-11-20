@@ -1,35 +1,26 @@
 {
   "name": "reviewkare",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "node server.js",
-    "build": "node -e 'console.log(\"Build ready\")'",
+    "build": "node scripts/check.js",
     "start": "node server.js",
-    "test": "node tests/test-server-suite.js",
-    "lint": "next lint"
+    "test": "node --test tests/launch.test.js tests/ai.test.js tests/compose.test.js tests/google.test.js",
+    "typecheck": "tsc -p jsconfig.json",
+    "lint": "node scripts/check.js",
+    "backup": "node scripts/backup.js",
+    "reconcile": "node scripts/reconcile.js"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=24.22.1 <25"
   },
   "dependencies": {
-    "canvas-confetti": "^1.9.4",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.59.0",
-    "next": "14.2.15",
-    "qrcode": "^1.5.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwind-merge": "^3.7.0"
+    "better-sqlite3": "13.2.0",
+    "qrcode": "1.5.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.15",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
   }
 }

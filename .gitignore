@@ -34,3 +34,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Runtime data, secrets, and local repair tooling
+/.runtime/
+/.tools/
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.backup
+/backups/
+/test-results/
+/playwright-report/
+/data/
+
+# Project docs and vendored review material stay out of the repo and the web root
+/docs/
+/audit/
+/.runtime-preview/
+

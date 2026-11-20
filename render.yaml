@@ -2,26 +2,72 @@ services:
   - type: web
     name: reviewkare
     runtime: node
-    plan: free
+    plan: starter
     region: singapore
-    buildCommand: npm install
+    buildCommand: npm ci && npm run build && npm test
     startCommand: node server.js
     healthCheckPath: /api/health
-    autoDeploy: true
+    autoDeploy: false
+    disk:
+      name: reviewkare-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
-        value: 20.18.0
+        value: 24.22.1
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
       - key: BASE_URL
-        value: https://reviewkare.tech
+        value: https://reviewkare.in
+      - key: DATA_DIR
+        value: /var/data/reviewkare
+      - key: HOSTING_REGION
+        value: Singapore
+      - key: BILLING_ENABLED
+        value: "false"
+      - key: OPERATOR_NAME
+        sync: false
+      - key: SUPPORT_EMAIL
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: GOOGLE_BUSINESS_ENABLED
+        value: "false"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        value: https://reviewkare.in/api/google/callback
+      - key: TOKEN_ENCRYPTION_KEY
+        sync: false
+      - key: GOOGLE_SITE_VERIFICATION
+        sync: false
+      - key: BING_SITE_VERIFICATION
+        sync: false
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET
         sync: false
-      - key: SUPABASE_URL
+      - key: AI_DRAFTS_ENABLED
+        value: "false"
+      - key: OPENROUTER_API_KEY
         sync: false
-      - key: SUPABASE_KEY
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: AI_MODELS
+        sync: false
+      - key: AI_REDACT_PII
+        value: "true"
+      - key: AI_MONTHLY_GENERATIONS
+        value: "500"
+      - key: AI_TENANT_MONTHLY_BUDGET_USD
+        value: "1"
+      - key: AI_MONTHLY_BUDGET_USD
+        value: "20"
+      - key: AI_TENANT_ALLOWLIST
         sync: false

@@ -1,3 +1,6 @@
+if (process.env.RUN_UNSAFE_LEGACY_TESTS !== 'true') {
+  throw new Error('Archived pre-repair suite disabled: it writes seeded data and expects simulated integrations. Run npm test for isolated production-mode regressions.');
+}
 const http = require('http');
 
 const PORT = 3002;
