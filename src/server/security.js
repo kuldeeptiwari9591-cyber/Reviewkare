@@ -73,35 +73,56 @@ function redirect(value) {
     ? value
     : "/app";
 }
-function readBody(req) {
+function readRawBody(req, limit = 32768) {
   return new Promise((resolve, reject) => {
     let size = 0;
     const chunks = [];
     req.on("data", (chunk) => {
       size += chunk.length;
-      if (size <= 32768) chunks.push(chunk);
+      if (size <= limit) chunks.push(chunk);
     });
     req.on("error", reject);
     req.on("end", () => {
-      if (size > 32768) {
+      if (size > limit) {
         const error = new Error("Request body is too large.");
         error.status = 413;
         return reject(error);
       }
-      try {
-        const result = JSON.parse(Buffer.concat(chunks).toString() || "{}");
-        if (!result || Array.isArray(result) || typeof result !== "object")
-          throw new Error();
-        resolve(result);
-      } catch {
-        const error = new Error("Send a valid JSON object.");
-        error.status = 400;
-        reject(error);
-      }
+      resolve(Buffer.concat(chunks));
     });
   });
 }
-function limiter() {
+async function readBody(req) {
+  const raw = await readRawBody(req);
+  try {
+    const result = JSON.parse(raw.toString() || "{}");
+    if (!result || Array.isArray(result) || typeof result !== "object") throw new Error();
+    return result;
+  } catch {
+    fail(400, "Send a valid JSON object.");
+  }
+}
+function limiter(db) {
+  if (db)
+    return {
+      async check(key, limit, duration = 60000) {
+        const now = Date.now();
+        const result = await db
+          .prepare(
+            `
+        INSERT INTO rate_limits(bucket, window_end, count) VALUES(?,?,1)
+        ON CONFLICT(bucket) DO UPDATE SET
+          count = CASE WHEN rate_limits.window_end <= ? THEN 1 ELSE LEAST(rate_limits.count+1,?) END,
+          window_end = CASE WHEN rate_limits.window_end <= ? THEN excluded.window_end ELSE rate_limits.window_end END
+        RETURNING count
+      `,
+          )
+          .get(digest(key), now + duration, now, limit + 1, now);
+        if (result.count > limit)
+          fail(429, "Too many requests. Please wait before trying again.");
+      },
+      close() {},
+    };
   const records = new Map();
   const cleanup = setInterval(() => {
     for (const [key, r] of records)
@@ -136,5 +157,6 @@ module.exports = {
   cookies,
   redirect,
   readBody,
+  readRawBody,
   limiter,
 };

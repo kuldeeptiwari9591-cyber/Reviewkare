@@ -83,6 +83,22 @@ test("sealed tokens fail closed when tampered with or decrypted with another key
   assert.throws(() => G.seal("x", config({ encryptionKey: "too-short" })));
 });
 
+test("new tokens use the active key version and previous tokens remain readable during rotation", () => {
+  const old = G.seal("old-token", config());
+  const next = config({
+    encryptionKey: crypto.randomBytes(32).toString("base64"),
+    encryptionKeyId: "v2",
+    previousEncryptionKey: KEY,
+    previousEncryptionKeyId: "v1",
+  });
+  assert.equal(G.open(old, next), "old-token");
+  const sealed = G.seal("new-token", next);
+  assert.match(sealed, /^v2\./);
+  assert.equal(G.open(sealed, next), "new-token");
+  assert.throws(() => G.open(sealed.replace(/^v2\./, "v1."), next));
+  assert.throws(() => G.open(old, { ...next, previousEncryptionKey: undefined }));
+});
+
 test("the OAuth URL carries the offline scope, redirect, and state", () => {
   const url = new URL(G.authUrl("state-fixture", config()));
   assert.equal(url.origin + url.pathname, G.ENDPOINTS.authUrl);

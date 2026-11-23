@@ -3,7 +3,7 @@
 // one unique title, one unique description, and a sitemap decision. Duplicate
 // landing pages point their canonical at the primary URL so Google indexes one
 // version instead of reporting "crawled, currently not indexed" for the rest.
-const { PLANS } = require("./catalog");
+const { PLANS, planTerms } = require("./catalog");
 const BLOG = require("./blog");
 
 const INDEX =
@@ -16,21 +16,21 @@ const PAGES = {
     title: "ReviewKare — reviews collected and answered",
     exact: true,
     description:
-      "A QR code lets customers pick what applied and post a review from three to five drafts. Google reviews arrive with an AI reply you approve before it publishes.",
+      "A QR code lets customers pick what applied and post a review from three to five drafts. Owners can review recent Google feedback and approve a reply before publishing.",
     lastmod: SITE_MODIFIED,
     priority: "1.0",
   },
   "/features": {
     title: "Features: QR review drafts and Google replies",
     description:
-      "See both flows: a QR composer that returns three to five grounded drafts, and a Google Business Profile inbox with editable AI replies you approve.",
+      "See both flows: a QR composer that returns three to five grounded drafts, and a Google Business Profile inbox with template drafts and an approval step.",
     lastmod: SITE_MODIFIED,
     priority: "0.9",
   },
   "/pricing": {
     title: "Pricing with fixed access periods",
     description:
-      "Basic, Growth, and Pro plans for one location, one QR code, and one Business Profile. Prepaid 30 or 365 days, no auto-renewal, no card stored.",
+      "Compare prepaid review management plans for one location, one QR code, and one Business Profile. Access has a fixed end date and no automatic renewal.",
     lastmod: SITE_MODIFIED,
     priority: "0.9",
   },
@@ -48,6 +48,18 @@ const PAGES = {
     canonical: "/security",
     lastmod: SITE_MODIFIED,
     priority: "0.3",
+  },
+  "/compare/google-review-link": {
+    title: "Google review link vs QR review composer",
+    description: "Compare a direct Google review link with a QR composer for a local business. See setup, customer steps, and who publishes the review.",
+    lastmod: "2026-11-21",
+    priority: "0.6",
+  },
+  "/compare/manual-review-replies": {
+    title: "Manual Google replies vs a review reply workspace",
+    description: "Compare replying directly in Google Business Profile with drafting and approving replies in a ReviewKare workspace.",
+    lastmod: "2026-11-21",
+    priority: "0.6",
   },
   "/privacy": {
     title: "Privacy notice",
@@ -92,14 +104,7 @@ const PAGES = {
     lastmod: SITE_MODIFIED,
     priority: "0.6",
   },
-  "/book-demo": {
-    title: "Request a demo",
-    description:
-      "Ask for a walkthrough of the QR composer and the Google reply queue. Submitting the form records a request; no meeting is booked automatically.",
-    canonical: "/contact",
-    lastmod: SITE_MODIFIED,
-    priority: "0.3",
-  },
+
   "/qr-kit": {
     title: "QR kit for printed review codes",
     description:
@@ -113,13 +118,6 @@ const PAGES = {
       "A self-serve checklist for reviewing your Google presence: listing accuracy, review replies, recent photos, response time, and the gaps worth fixing first.",
     lastmod: SITE_MODIFIED,
     priority: "0.6",
-  },
-  "/for-agencies": {
-    title: "For agencies and multi-location teams",
-    description:
-      "Run one workspace per client location with separate reviews, drafts, exports, and QR codes. No shared logins, no white-label, no bulk QR generation.",
-    lastmod: SITE_MODIFIED,
-    priority: "0.7",
   },
   "/tools": {
     title: "Google review link generator",
@@ -164,7 +162,6 @@ for (const article of BLOG.ARTICLES) {
 
 const SITEMAP_EXCLUDE = new Set([
   "/offline",
-  "/book-demo",
   "/compliance",
   "/dpdp-consent",
   "/tools",
@@ -266,7 +263,7 @@ function website(origin) {
   };
 }
 
-function softwareApplication(origin) {
+function softwareApplication(origin, config) {
   return {
     "@type": "SoftwareApplication",
     "@id": origin + "/#software",
@@ -276,16 +273,16 @@ function softwareApplication(origin) {
     operatingSystem: "Web",
     url: origin + "/",
     description:
-      "Collect customer reviews through a QR composer and answer Google Business Profile reviews with AI drafts that an owner approves before publishing.",
+      "Collect customer reviews through a QR composer and draft and approve replies to Google Business Profile reviews.",
     publisher: { "@id": origin + "/#organization" },
     inLanguage: "en-IN",
-    offers: Object.entries(PLANS).map(([id, plan]) => ({
+    offers: Object.entries(config.plans || PLANS).map(([id, plan]) => ({
       "@type": "Offer",
       name: plan.name,
-      price: (plan.monthly / 100).toFixed(2),
+      price: (planTerms(plan)[0].amount / 100).toFixed(2),
       priceCurrency: "INR",
       url: origin + "/pricing#" + id,
-      availability: "https://schema.org/InStock",
+      availability: config.billingEnabled ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
     })),
   };
 }
@@ -352,7 +349,7 @@ function schemaFor({ pathname, origin, config = {}, faqs = null }) {
     webPage(origin, pathname, meta),
   ];
   if (pathname === "/" || pathname === "/pricing")
-    graph.push(softwareApplication(origin));
+    graph.push(softwareApplication(origin, config));
   if (meta.canonicalPath !== "/" && meta.indexable)
     graph.push(breadcrumb(origin, pathname));
   if (pathname === "/faq" && Array.isArray(faqs) && faqs.length)
@@ -414,6 +411,7 @@ function robots(origin) {
   ];
   const shared = [
     "Disallow: /app",
+    "Disallow: /admin",
     "Disallow: /api/",
     "Disallow: /a/",
     "Disallow: /q/",
@@ -462,7 +460,7 @@ function llms(origin, full = false) {
     "",
     "Canonical site: " + origin + "/",
     "Language: English (en-IN)",
-    "Pricing: prepaid 30-day or 365-day access periods, no automatic renewal.",
+    "Pricing: fixed prepaid access periods with no automatic renewal. See /pricing for available terms.",
     "No ranking, rating, or compliance outcome is guaranteed.",
     "",
     "## Product facts",

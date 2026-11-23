@@ -1,7 +1,7 @@
 "use strict";
 const crypto = require("node:crypto");
 const { fail } = require("./security");
-async function razorpay(endpoint, { method = "GET", body } = {}) {
+async function razorpay(endpoint, { method = "GET", body, refundKey } = {}) {
   const key = process.env.RAZORPAY_KEY_ID,
     secret = process.env.RAZORPAY_KEY_SECRET;
   if (!key || !secret || key.includes("placeholder"))
@@ -14,6 +14,7 @@ async function razorpay(endpoint, { method = "GET", body } = {}) {
       headers: {
         Authorization:
           "Basic " + Buffer.from(key + ":" + secret).toString("base64"),
+        ...(refundKey ? { "X-Refund-Idempotency": refundKey } : {}),
         "Content-Type": "application/json",
       },
       body: body ? JSON.stringify(body) : undefined,
@@ -38,7 +39,7 @@ function signature(orderId, paymentId, value) {
     .digest();
   return crypto.timingSafeEqual(expected, Buffer.from(value, "hex"));
 }
-async function sendMail(to, subject, content) {
+async function sendMail(to, subject, content, { idempotencyKey } = {}) {
   if (!process.env.RESEND_API_KEY || !process.env.EMAIL_FROM)
     fail(
       503,
@@ -51,6 +52,7 @@ async function sendMail(to, subject, content) {
       signal: AbortSignal.timeout(10000),
       headers: {
         Authorization: "Bearer " + process.env.RESEND_API_KEY,
+        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -69,4 +71,7 @@ async function sendMail(to, subject, content) {
   if (!result.ok)
     fail(503, "Email delivery could not be accepted. Please try again later.");
 }
-module.exports = { razorpay, signature, sendMail };
+function refundKey(paymentId, amount) {
+  return "rk-refund-" + crypto.createHash("sha256").update(paymentId + ":" + amount).digest("hex").slice(0, 30);
+}
+module.exports = { razorpay, signature, sendMail, refundKey };

@@ -1,10 +1,10 @@
 "use strict";
 const path = require("node:path");
-const Database = require("better-sqlite3");
+const { DatabaseSync: Database } = require("node:sqlite");
 if (!process.env.DATA_DIR) throw new Error("Set DATA_DIR explicitly.");
 const db = new Database(
   path.join(process.env.DATA_DIR, "reviewkare.sqlite"),
-  { readonly: true },
+  { readOnly: true },
 );
 if (process.argv.includes("--details")) {
   // Operator-only command. Do not send this output to public/shared logs.

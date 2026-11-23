@@ -1,13 +1,13 @@
 "use strict";
 // Read-only provider comparison; never activates access or issues a refund implicitly.
 const path = require("node:path");
-const Database = require("better-sqlite3");
+const { DatabaseSync: Database } = require("node:sqlite");
 const { razorpay } = require("../src/server/providers");
 async function main() {
   if (!process.env.DATA_DIR) throw new Error("DATA_DIR is required.");
   const db = new Database(
     path.join(process.env.DATA_DIR, "reviewkare.sqlite"),
-    { readonly: true },
+    { readOnly: true },
   );
   const orders = db
     .prepare(

@@ -6,9 +6,14 @@
     "dev": "node server.js",
     "build": "node scripts/check.js",
     "start": "node server.js",
-    "test": "node --test tests/launch.test.js tests/ai.test.js tests/compose.test.js tests/google.test.js",
+    "jobs:tick": "node scripts/run-jobs.js",
+    "refund:order": "node scripts/refund-order.js",
+    "test:load": "node scripts/load-smoke.js",
+    "test": "node --test tests/launch.test.js tests/ai.test.js tests/compose.test.js tests/google.test.js tests/postgres.test.js tests/billing.test.js tests/platform.test.js",
     "typecheck": "tsc -p jsconfig.json",
     "lint": "node scripts/check.js",
+    "migrate:postgres": "node scripts/migrate-postgres.js",
+    "import:postgres": "node scripts/import-sqlite-postgres.js",
     "backup": "node scripts/backup.js",
     "reconcile": "node scripts/reconcile.js"
   },
@@ -16,10 +21,12 @@
     "node": ">=24.22.1 <25"
   },
   "dependencies": {
-    "better-sqlite3": "13.2.0",
-    "qrcode": "1.5.4"
+    "pg": "8.23.1",
+    "qrcode": "1.5.4",
+    "web-vitals": "5.1.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.17",
     "@types/node": "24.10.1",
     "typescript": "5.9.3"
   }

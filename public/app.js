@@ -93,6 +93,14 @@ for (const form of document.querySelectorAll("form[data-api]"))
         anchor.href = result.approvalUrl;
         anchor.textContent = "Open approval link";
         output.append(anchor);
+      } else if (form.dataset.adminExport === "true" && result.export) {
+        const url = URL.createObjectURL(new Blob([JSON.stringify(result.export, null, 2)], { type: "application/json" }));
+        const file = document.createElement("a");
+        file.href = url;
+        file.download = "reviewkare-workspace.json";
+        file.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        status(output, "Download started.");
       } else if (result.orderId) {
         await checkout(result, output);
       } else if (result.redirect) {
@@ -289,7 +297,7 @@ let checkoutPromise;
 async function checkout(order, output) {
   status(
     output,
-    `Total ${order.amountDisplay} for ${order.durationDays} days. No automatic renewal. Preparing secure checkout…`,
+    `Total ${order.amountDisplay} for ${order.durationLabel || order.durationDays + " days"}. No automatic renewal. Preparing secure checkout…`,
   );
   if (!checkoutPromise)
     checkoutPromise = new Promise((resolve, reject) => {
@@ -413,3 +421,48 @@ reduceMotion.addEventListener?.("change", () => {
     if (target.dataset.counted) target.textContent = target.dataset.count;
   }
 });
+
+const renewalDialog = document.querySelector("[data-renewal-dialog]");
+if (renewalDialog && typeof renewalDialog.showModal === "function") {
+  renewalDialog.querySelector("a")?.addEventListener("click", () => renewalDialog.close());
+  const key = "reviewkare-renewal:" + renewalDialog.dataset.renewalDialog;
+  try {
+    if (!sessionStorage.getItem(key)) {
+      renewalDialog.showModal();
+      sessionStorage.setItem(key, "shown");
+    }
+  } catch {
+    // The renewal banner is available when browser storage is restricted.
+  }
+}
+const milestonesNotice = document.querySelector("[data-milestone-notifications][data-pending]");
+if (milestonesNotice) {
+  request("/api/onboarding", { action: "notifications" }).then(({ notifications }) => {
+    for (const message of notifications || []) {
+      const toast = document.createElement("p");
+      toast.className = "notice";
+      toast.textContent = message;
+      milestonesNotice.append(toast);
+    }
+  }).catch(() => {});
+}
+if (document.body.dataset.siteMetrics === "true") {
+  const report = (metric, bucket) => {
+    fetch("/api/site-metrics", {
+      method: "POST",
+      credentials: "same-origin",
+      keepalive: true,
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf },
+      body: JSON.stringify({ page: location.pathname, metric, bucket }),
+    }).catch(() => {});
+  };
+  report("view", "count");
+  const vitals = document.createElement("script");
+  vitals.src = "/static/web-vitals.js";
+  vitals.addEventListener("load", () => {
+    const collector = window.webVitals;
+    for (const metric of ["LCP", "CLS", "INP"])
+      collector?.["on" + metric]?.(entry => report(entry.name, entry.rating));
+  }, { once: true });
+  document.head.append(vitals);
+}

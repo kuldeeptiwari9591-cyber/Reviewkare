@@ -178,6 +178,78 @@ END;
 UPDATE public_profiles AS p SET document=json_object('id',p.tenant_id,'location',json_extract(t.document,'$.location'),'plan',json_extract(t.document,'$.plan'),'qr',json_extract(t.document,'$.qr'),'guest',json_extract(t.document,'$.guest')) FROM tenants AS t WHERE t.id=p.tenant_id;`);
     },
   },
+  {
+    version: 5,
+    name: "billing-receipts-and-jobs",
+    up(db) {
+      db.exec(`CREATE TABLE IF NOT EXISTS billing_receipt_counters (
+  month TEXT PRIMARY KEY,
+  value INTEGER NOT NULL CHECK (value > 0)
+);
+CREATE TABLE IF NOT EXISTS webhook_events (
+  id TEXT PRIMARY KEY,
+  kind TEXT NOT NULL,
+  processed_at INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS jobs (
+  id TEXT PRIMARY KEY,
+  kind TEXT NOT NULL,
+  tenant_id TEXT REFERENCES tenants(id) ON DELETE CASCADE,
+  payload TEXT NOT NULL,
+  run_at INTEGER NOT NULL,
+  created_at INTEGER NOT NULL,
+  attempts INTEGER NOT NULL DEFAULT 0,
+  lease TEXT,
+  locked_until INTEGER NOT NULL DEFAULT 0,
+  finished_at INTEGER,
+  failed INTEGER NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS jobs_due ON jobs(run_at,locked_until) WHERE finished_at IS NULL;
+ALTER TABLE orders ADD COLUMN refund_amount INTEGER NOT NULL DEFAULT 0;
+
+`);
+    },
+  },
+  {
+    version: 6,
+    name: "onboarding-and-site-metrics",
+    up(db) {
+      db.exec(`CREATE TABLE milestones (
+  tenant_id TEXT NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+  event TEXT NOT NULL, reached_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  seen INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (tenant_id,event)
+);
+INSERT INTO milestones(tenant_id,event,seen)
+SELECT id,'workspace_ready',1 FROM tenants WHERE json_extract(document,'$.location.placeId') <> '';
+INSERT INTO milestones(tenant_id,event,seen)
+SELECT tenant_id,'first_scan',1 FROM qr_codes WHERE scans > 0;
+INSERT INTO milestones(tenant_id,event,seen)
+SELECT tenant_id,'google_connected',1 FROM google_connections;
+INSERT INTO milestones(tenant_id,event,seen)
+SELECT tenant_id, column2, 1
+FROM (SELECT tenant_id,count(*) AS reviews,count(published_at) FILTER (WHERE google_reply_state='posted') AS replies
+      FROM reviews GROUP BY tenant_id)
+CROSS JOIN (VALUES(1,'first_review',0),(25,'reviews_25',0),(100,'reviews_100',0),
+                 (1,'first_reply',1),(10,'replies_10',1),(50,'replies_50',1),(100,'replies_100',1))
+WHERE CASE WHEN column3=1 THEN replies ELSE reviews END >= column1;
+CREATE TABLE site_metrics (
+  day TEXT NOT NULL, page TEXT NOT NULL, metric TEXT NOT NULL,
+  bucket TEXT NOT NULL, hits INTEGER NOT NULL DEFAULT 1,
+  PRIMARY KEY (day,page,metric,bucket)
+);
+CREATE TRIGGER milestone_review_insert AFTER INSERT ON reviews BEGIN
+  INSERT OR IGNORE INTO milestones(tenant_id,event)
+  SELECT NEW.tenant_id, column2 FROM (VALUES(1,'first_review'),(25,'reviews_25'),(100,'reviews_100'))
+  WHERE column1 <= (SELECT count(*) FROM reviews WHERE tenant_id=NEW.tenant_id);
+END;
+CREATE TRIGGER milestone_reply_publish AFTER UPDATE OF published_at ON reviews
+WHEN OLD.published_at IS NULL AND NEW.published_at IS NOT NULL AND NEW.google_reply_state='posted' BEGIN
+  INSERT OR IGNORE INTO milestones(tenant_id,event)
+  SELECT NEW.tenant_id, column2 FROM (VALUES(1,'first_reply'),(10,'replies_10'),(50,'replies_50'),(100,'replies_100'))
+  WHERE column1 <= (SELECT count(*) FROM reviews WHERE tenant_id=NEW.tenant_id AND published_at IS NOT NULL AND google_reply_state='posted');
+END;`);
+    },
+  },
 ];
 
 function checksum(migration) {

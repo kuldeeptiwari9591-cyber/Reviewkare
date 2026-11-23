@@ -29,8 +29,60 @@ const money = (paise) =>
     currency: "INR",
     maximumFractionDigits: 2,
   }).format(paise / 100);
-function entitlement(store) {
-  const active = Date.parse(store.plan.expiresAt) > Date.now();
-  return { active, ...(PLANS[store.plan.tier] || PLANS.basic) };
+
+const BILLING_DAYS = Object.freeze({ monthly: 30, annual: 365 });
+const PREPAID_MONTHS = Object.freeze([1, 3, 6, 12]);
+function pricedPlans(raw) {
+  if (!raw) return PLANS;
+  let prices;
+  try { prices = JSON.parse(raw); } catch {}
+  const plans = {};
+  for (const [id, plan] of Object.entries(PLANS)) {
+    const terms = PREPAID_MONTHS.map(months => {
+      const amount = prices?.[id]?.[months];
+      if (!Number.isSafeInteger(amount) || amount < 100 || amount > 100000000)
+        throw new Error("BILLING_TERM_PRICES must provide valid paise amounts for each plan and duration.");
+      return { key: String(months), months, amount, label: months + (months === 1 ? " month" : " months") };
+    });
+    const replies = { basic: 50, growth: 300, pro: 1000 }[id];
+    plans[id] = { ...plan, name: id === "basic" ? "Starter" : plan.name, reviews: replies, ai: id !== "basic", syncMinutes: id === "basic" ? 25 : 15, terms };
+  }
+  return plans;
 }
-module.exports = { PLANS, money, entitlement };
+
+function planTerms(plan) {
+  return plan.terms || Object.entries(BILLING_DAYS).map(([key, days]) => ({
+    key, days, amount: plan[key], label: days + " days",
+  }));
+}
+
+function termKey(value) {
+  if (typeof value !== "string") return null;
+  if (Object.hasOwn(BILLING_DAYS, value)) return value;
+  return /^[136]$|^12$/.test(value) ? Number(value) : null;
+}
+
+function paymentPeriod(term, currentExpiry, now = Date.now()) {
+  const previous = Date.parse(currentExpiry);
+  const start = new Date(Math.max(now, Number.isFinite(previous) ? previous : 0));
+  const end = new Date(start);
+  if (Object.hasOwn(BILLING_DAYS, term)) {
+    end.setUTCDate(end.getUTCDate() + BILLING_DAYS[term]);
+  } else if (PREPAID_MONTHS.includes(term)) {
+    const day = end.getUTCDate();
+    end.setUTCDate(1);
+    end.setUTCMonth(end.getUTCMonth() + term);
+    const lastDay = new Date(end);
+    lastDay.setUTCMonth(lastDay.getUTCMonth() + 1, 0);
+    end.setUTCDate(Math.min(day, lastDay.getUTCDate()));
+  } else {
+    throw new Error("Unsupported prepaid period.");
+  }
+  return { startsAt: start.toISOString(), expiresAt: end.toISOString() };
+}
+
+function entitlement(store, plans = PLANS) {
+  const active = !store.plan.suspendedByAdmin && Date.parse(store.plan.expiresAt) > Date.now();
+  return { active, ...(plans[store.plan.tier] || plans.basic) };
+}
+module.exports = { PLANS, planTerms, pricedPlans, termKey, paymentPeriod, money, entitlement };

@@ -112,29 +112,29 @@ async function main() {
     for (const item of prepared) {
       // Do not retain potentially weak or publicly exposed legacy credentials.
       const hp = await S.hashPassword(S.random() + S.random());
-      storage.transaction(() => {
+      await storage.transaction(async () => {
         if (
-          storage.db
+          storage.rawDb
             .prepare("SELECT 1 FROM tenants WHERE id=?")
             .get(item.store.id) ||
-          storage.db
+          storage.rawDb
             .prepare("SELECT 1 FROM users WHERE email=?")
             .get(item.email)
         )
           throw new Error(
             "Existing account would be overwritten. Migration stopped.",
           );
-        storage.db
+        storage.rawDb
           .prepare("INSERT INTO tenants(id,document) VALUES(?,?)")
           .run(item.store.id, JSON.stringify(item.store));
         for (const review of item.reviews)
-          storage.reviews.create(item.store.id, review);
-        storage.db
+          await storage.reviews.create(item.store.id, review);
+        storage.rawDb
           .prepare(
             "INSERT INTO users(email,tenant_id,hash,salt) VALUES(?,?,?,?)",
           )
           .run(item.email, item.store.id, hp.hash, hp.salt);
-        storage.event(item.store.id, "legacy_import_requires_review");
+        await storage.event(item.store.id, "legacy_import_requires_review");
       });
     }
     console.log(
@@ -146,7 +146,7 @@ async function main() {
       }),
     );
   } finally {
-    storage.close();
+    await storage.close();
   }
 }
 main().catch(() => {

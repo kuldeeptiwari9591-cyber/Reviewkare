@@ -28,6 +28,17 @@ function readConfig(env = process.env) {
   const clientSecret = String(env.GOOGLE_CLIENT_SECRET || "").trim();
   const redirectUri = String(env.GOOGLE_REDIRECT_URI || "").trim();
   const key = String(env.TOKEN_ENCRYPTION_KEY || "").trim();
+  const keyId = String(env.TOKEN_ENCRYPTION_KEY_ID || "v1").trim();
+  const previousKey = String(env.TOKEN_ENCRYPTION_PREVIOUS_KEY || "").trim();
+  const previousKeyId = String(env.TOKEN_ENCRYPTION_PREVIOUS_KEY_ID || "").trim();
+  if (!/^v[1-9][0-9]{0,8}$/.test(keyId))
+    throw new Error("TOKEN_ENCRYPTION_KEY_ID must be a version such as v1.");
+  if (previousKey || previousKeyId) {
+    if (!previousKey || !/^v[1-9][0-9]{0,8}$/.test(previousKeyId) || previousKeyId === keyId)
+      throw new Error("Configure a previous key and a distinct previous key version.");
+    keyBuffer(previousKey);
+  }
+  if (key) keyBuffer(key);
   const enabled = env.GOOGLE_BUSINESS_ENABLED === "true";
   const missing = [];
   if (!clientId) missing.push("GOOGLE_CLIENT_ID");
@@ -42,13 +53,16 @@ function readConfig(env = process.env) {
     clientSecret,
     redirectUri,
     encryptionKey: key,
+    encryptionKeyId: keyId,
+    previousEncryptionKey: previousKey,
+    previousEncryptionKeyId: previousKeyId,
     scope: String(env.GOOGLE_SCOPE || "").trim() || ENDPOINTS.scope,
     endpoints: ENDPOINTS,
   };
 }
 
-function keyBuffer(config) {
-  const key = Buffer.from(config.encryptionKey, "base64");
+function keyBuffer(encoded) {
+  const key = Buffer.from(encoded, "base64");
   if (key.length !== 32)
     throw new Error(
       "TOKEN_ENCRYPTION_KEY must be 32 bytes, base64 encoded (openssl rand -base64 32).",
@@ -59,24 +73,31 @@ function keyBuffer(config) {
 /** Encrypt a refresh token before it touches the database. */
 function seal(plain, config) {
   const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv("aes-256-gcm", keyBuffer(config), iv);
+  const version = config.encryptionKeyId || "v1";
+  const cipher = crypto.createCipheriv("aes-256-gcm", keyBuffer(config.encryptionKey), iv);
+  if (version !== "v1") cipher.setAAD(Buffer.from(version));
   const encrypted = Buffer.concat([
     cipher.update(String(plain), "utf8"),
     cipher.final(),
   ]);
   const tag = cipher.getAuthTag();
-  return `v1.${iv.toString("base64url")}.${tag.toString("base64url")}.${encrypted.toString("base64url")}`;
+  return `${version}.${iv.toString("base64url")}.${tag.toString("base64url")}.${encrypted.toString("base64url")}`;
 }
 
 function open(sealed, config) {
-  const [version, iv, tag, payload] = String(sealed).split(".");
-  if (version !== "v1" || !iv || !tag || !payload)
+  const parts = String(sealed).split(".");
+  const [version, iv, tag, payload] = parts;
+  const keys = new Map([[(config.encryptionKeyId || "v1"), config.encryptionKey]]);
+  if (config.previousEncryptionKeyId && config.previousEncryptionKey)
+    keys.set(config.previousEncryptionKeyId, config.previousEncryptionKey);
+  if (parts.length !== 4 || !keys.has(version) || !iv || !tag || !payload)
     throw new Error("Stored Google credential is not readable.");
   const decipher = crypto.createDecipheriv(
     "aes-256-gcm",
-    keyBuffer(config),
+    keyBuffer(keys.get(version)),
     Buffer.from(iv, "base64url"),
   );
+  if (version !== "v1") decipher.setAAD(Buffer.from(version));
   decipher.setAuthTag(Buffer.from(tag, "base64url"));
   return Buffer.concat([
     decipher.update(Buffer.from(payload, "base64url")),

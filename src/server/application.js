@@ -7,11 +7,17 @@ const crypto = require("node:crypto");
 const { openStorage } = require("./storage");
 const S = require("./security");
 const V = require("./views");
-const { PLANS, money, entitlement } = require("./catalog");
+const { pricedPlans, planTerms, money, entitlement } = require("./catalog");
+const { createBilling, receiptText, webhookSignature } = require("./billing");
+const { createJobs, accessPhase, HEARTBEAT } = require("./jobs");
 const providers = require("./providers");
 const A = require("./ai");
 const G = require("./google");
 const C = require("./compose");
+const { createAdmin } = require("./admin");
+const adminView = require("./views/admin");
+const { createMilestones } = require("./milestones");
+const { sentryReporter } = require("./observability");
 const seo = require("./seo");
 
 function createApplication(options = {}) {
@@ -26,14 +32,14 @@ function createApplication(options = {}) {
     options.allowHttpForTests !== true
   )
     throw new Error("Production BASE_URL must use HTTPS.");
-  if (production && !process.env.DATA_DIR)
+  if (production && !options.storage && !process.env.DATA_DIR)
     throw new Error(
       "Set DATA_DIR to a persistent disk before starting production.",
     );
   if (production) {
     const required = {
       BASE_URL: "public base URL",
-      DATA_DIR: "persistent data directory",
+      ...(!options.storage ? { DATA_DIR: "persistent data directory" } : {}),
       OPERATOR_NAME: "operator legal/business name",
       SUPPORT_EMAIL: "support or grievance email",
       HOSTING_REGION: "hosting region",
@@ -48,13 +54,29 @@ function createApplication(options = {}) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(process.env.SUPPORT_EMAIL))
       throw new Error("SUPPORT_EMAIL must be a valid email address.");
   }
-  const storage = openStorage(
-    process.env.DATA_DIR || path.join(__dirname, "../../.runtime"),
-  );
+  const storage =
+    options.storage ||
+    openStorage(process.env.DATA_DIR || path.join(__dirname, "../../.runtime"));
   const provider = options.providers || providers;
   const { db } = storage,
-    rate = S.limiter();
-  const billingEnabled = process.env.BILLING_ENABLED === "true";
+    rate = S.limiter(storage.dialect === "postgres" ? db : null);
+  const milestones = createMilestones(db);
+  const report = sentryReporter(process.env.SENTRY_DSN);
+  const accountAuth =
+    storage.dialect === "postgres"
+      ? options.accountAuth || require("./auth").createAuth(origin)
+      : null;
+  const plans = pricedPlans(process.env.BILLING_TERM_PRICES);
+  const lifecycle = process.env.LIFECYCLE_ENABLED === "true";
+  const deletes = lifecycle && process.env.LIFECYCLE_DELETE_ENABLED === "true";
+  const billingEnabled = process.env.BILLING_ENABLED === "true" &&
+    (!production || Boolean(options.providers) || Boolean(
+      process.env.BILLING_TERM_PRICES && process.env.RAZORPAY_KEY_ID &&
+      process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_WEBHOOK_SECRET &&
+      process.env.BILLING_RECEIPT_FOOTER?.trim() && (process.env.JOBS_SECRET || "").length >= 32 &&
+      process.env.TAX_POLICY_CONFIRMED === "true" &&
+      process.env.RESEND_API_KEY && process.env.EMAIL_FROM
+    ));
   const aiConfig = A.readConfig(process.env);
   if (production && aiConfig.enabled && !aiConfig.apiKey)
     throw new Error(
@@ -69,6 +91,8 @@ function createApplication(options = {}) {
     transport: options.aiTransport,
   });
   const googleConfig = G.readConfig(process.env);
+  if (production && googleConfig.enabled && process.env.GOOGLE_POLICY_VERIFIED !== "true")
+    throw new Error("Review the Google Business Profile data policy and retention before enabling the connector.");
   if (production && googleConfig.enabled && !googleConfig.configured)
     throw new Error(
       `GOOGLE_BUSINESS_ENABLED is true but these values are missing: ${googleConfig.missing.join(", ")}.`,
@@ -76,10 +100,15 @@ function createApplication(options = {}) {
   const googleFetch = options.googleFetch || fetch;
   const config = {
     origin,
-    billingEnabled,
+    billingEnabled: Boolean(billingEnabled),
+    plans, lifecycle, deletes,
+    analytics: process.env.ANALYTICS_ENABLED === "true",
     operatorName: process.env.OPERATOR_NAME || "",
     supportEmail: process.env.SUPPORT_EMAIL || "",
+    grievanceOfficer: process.env.GRIEVANCE_OFFICER || "",
     hostingRegion: process.env.HOSTING_REGION || "",
+    hostedAuth: Boolean(accountAuth),
+    databaseRegion: process.env.DATABASE_REGION || "",
     verification: {
       google: String(process.env.GOOGLE_SITE_VERIFICATION || "").trim(),
       bing: String(process.env.BING_SITE_VERIFICATION || "").trim(),
@@ -96,17 +125,44 @@ function createApplication(options = {}) {
       redirectUri: googleConfig.redirectUri,
     },
   };
+  const billing = createBilling({
+    storage, provider, plans, operatorName: config.operatorName,
+    receiptFooter: process.env.BILLING_RECEIPT_FOOTER || "",
+  });
+  const jobs = createJobs({ storage, provider, billing, config, syncGoogle, accountAuth });
+  const jobFlags = {
+    lifecycle, deletes,
+    payments: Boolean(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET),
+    google: googleConfig.enabled && googleConfig.configured,
+  };
+  function lifecycleState(store) {
+    return lifecycle && store && ["active", "expired", "readonly", "suspended", "deleting"].includes(store.plan.status)
+      ? accessPhase(store.plan)
+      : null;
+  }
+  function suspended(state) {
+    return state === "suspended" || state === "delete_due";
+  }
+  function authorizeWorkspace(userStore) {
+    if (userStore?.plan.suspendedByAdmin || suspended(lifecycleState(userStore)))
+      S.fail(403, "Workspace access is suspended. Contact support to request an export.");
+  }
+  const admin = accountAuth && process.env.ADMIN_ENABLED === "true"
+    ? createAdmin({ storage, accountAuth, plans, provider }) : null;
+  const adminCookie = production ? "__Host-reviewkare_admin" : "reviewkare_admin";
   const sessionCookie = production
     ? "__Host-reviewkare_session"
     : "reviewkare_session";
   const csrfCookie = production ? "__Host-reviewkare_csrf" : "reviewkare_csrf";
+  const analyticsCookie = production ? "__Host-reviewkare_metrics" : "reviewkare_metrics";
+  const oauthCookie = production ? "__Host-reviewkare_pkce" : "reviewkare_pkce";
   let authJobs = 0;
   const aiInFlight = new Set();
   const secure = production ? "; Secure" : "";
   function cookie(name, value, maxAge = 604800) {
     return `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure}`;
   }
-  function capability(
+  async function capability(
     kind,
     email,
     tenantId = null,
@@ -114,23 +170,25 @@ function createApplication(options = {}) {
     draftHash = null,
   ) {
     const token = S.random();
-    db.prepare(
-      "INSERT INTO capabilities(hash,kind,email,tenant_id,review_id,draft_hash,expires) VALUES(?,?,?,?,?,?,?)",
-    ).run(
-      S.digest(token),
-      kind,
-      email,
-      tenantId,
-      reviewId,
-      draftHash,
-      Date.now() + (kind === "approval" ? 86400000 : 1800000),
-    );
+    await db
+      .prepare(
+        "INSERT INTO capabilities(hash,kind,email,tenant_id,review_id,draft_hash,expires) VALUES(?,?,?,?,?,?,?)",
+      )
+      .run(
+        S.digest(token),
+        kind,
+        email,
+        tenantId,
+        reviewId,
+        draftHash,
+        Date.now() + (kind === "approval" ? 86400000 : 1800000),
+      );
     return token;
   }
-  function findCapability(token, kind) {
+  async function findCapability(token, kind) {
     if (typeof token !== "string" || token.length > 100)
       S.fail(404, "This link is invalid.");
-    const result = db
+    const result = await db
       .prepare("SELECT * FROM capabilities WHERE hash=? AND kind=?")
       .get(S.digest(token), kind);
     if (!result) S.fail(404, "This link is invalid.");
@@ -138,35 +196,99 @@ function createApplication(options = {}) {
       S.fail(410, "This link has expired or was already used.");
     return result;
   }
-  function sessionFor(req) {
+  async function sessionFor(req) {
     const token = S.cookies(req)[sessionCookie];
     if (!token || token.length > 100) return null;
     return (
-      db
+      (await db
         .prepare(
           "SELECT s.hash,s.expires,u.email,u.tenant_id,u.verified FROM sessions s JOIN users u ON u.email=s.email WHERE s.hash=? AND s.expires>?",
         )
-        .get(S.digest(token), Date.now()) || null
+        .get(S.digest(token), Date.now())) || null
     );
   }
-  function createSession(user) {
-    db.prepare("DELETE FROM sessions WHERE email=? AND expires<?").run(
-      user.email,
-      Date.now(),
-    );
-    // Bound simultaneous sessions, and keep bearer tokens out of the database.
-    const existing = db
-      .prepare("SELECT hash FROM sessions WHERE email=? ORDER BY expires DESC")
-      .all(user.email);
-    for (const row of existing.slice(9))
-      db.prepare("DELETE FROM sessions WHERE hash=?").run(row.hash);
-    const token = S.random();
-    db.prepare("INSERT INTO sessions VALUES(?,?,?)").run(
-      S.digest(token),
-      user.email,
-      Date.now() + 604800000,
-    );
-    return token;
+  async function createSession(user) {
+    return storage.transaction(async () => {
+      const owner = user.tenant_id ? user : await db.prepare("SELECT tenant_id FROM users WHERE email=?").get(user.email);
+      authorizeWorkspace(owner && await storage.tenant(owner.tenant_id));
+      await db
+        .prepare("DELETE FROM sessions WHERE email=? AND expires<?")
+        .run(user.email, Date.now());
+      // Bound simultaneous sessions, and keep bearer tokens out of the database.
+      const existing = await db
+        .prepare(
+          "SELECT hash FROM sessions WHERE email=? ORDER BY expires DESC",
+        )
+        .all(user.email);
+      for (const row of existing.slice(9))
+        await db.prepare("DELETE FROM sessions WHERE hash=?").run(row.hash);
+      const token = S.random();
+      await db
+        .prepare("INSERT INTO sessions VALUES(?,?,?)")
+        .run(S.digest(token), user.email, Date.now() + 604800000);
+      return token;
+    });
+  }
+  async function hostedUser(identity, allowCreate = false) {
+    if (!identity?.id || !identity.email_confirmed_at)
+      S.fail(403, "Verify your email before signing in.");
+    const email = S.email(identity.email);
+    return storage.transaction(async () => {
+      const found = await db
+        .prepare("SELECT * FROM users WHERE auth_user_id=?")
+        .get(identity.id);
+      if (found) return found;
+      if (!allowCreate)
+        S.fail(403, "Create a workspace before signing in with this account.");
+      if (await db.prepare("SELECT 1 FROM users WHERE email=?").get(email))
+        S.fail(409, "Contact support to link your existing workspace.");
+      const metadata = identity.user_metadata || {};
+      const name = S.text(
+        metadata.rk_business_name || "My business",
+        "business name",
+        120,
+        true,
+      );
+      const owner = S.text(
+        String(metadata.rk_owner_name || metadata.full_name || email).slice(
+          0,
+          100,
+        ),
+        "owner name",
+        100,
+        true,
+      );
+      const id = "t_" + S.random(),
+        now = new Date().toISOString();
+      const store = {
+        id,
+        location: { id, name, city: "", placeId: "", vertical: "other" },
+        user: { name: owner, email, role: "owner" },
+        plan: {
+          tier: "none",
+          name: "No plan",
+          status: "unpaid",
+          expiresAt: null,
+        },
+        guest: { vertical: "other", attributes: [] },
+        qr: { code: S.random(), scans: 0, drafts: 0 },
+        staff: [],
+        receipts: [],
+        aiDrafts: false,
+        usage: { month: now.slice(0, 7), replies: 0, drafts: 0 },
+        createdAt: now,
+      };
+      await db
+        .prepare("INSERT INTO tenants(id,document) VALUES(?,?)")
+        .run(id, JSON.stringify(store));
+      await db
+        .prepare(
+          "INSERT INTO users(email,tenant_id,auth_user_id,verified) VALUES(?,?,?,1)",
+        )
+        .run(email, id, identity.id);
+      await storage.event(id, "account_created");
+      return { email, tenant_id: id, verified: 1 };
+    });
   }
   async function authWork(fn) {
     if (authJobs >= 4) S.fail(503, "Please try signing in again shortly.");
@@ -178,7 +300,7 @@ function createApplication(options = {}) {
     }
   }
   function requireAccess(store) {
-    if (!entitlement(store).active)
+    if (!entitlement(store, plans).active)
       S.fail(
         402,
         "Your access period has ended. Export and account settings remain available.",
@@ -192,15 +314,15 @@ function createApplication(options = {}) {
       S.fail(429, "Your monthly draft allowance has been reached.");
     store.usage[key]++;
   }
-  function qrStore(code) {
+  async function qrStore(code) {
     if (!/^[a-zA-Z0-9_-]{12,80}$/.test(code))
       S.fail(404, "Review QR not found.");
     // qr codes are random identifiers bound to a single tenant, never a default tenant.
-    const row = db
+    const row = await db
       .prepare("SELECT tenant_id AS id FROM qr_codes WHERE code=?")
       .get(code);
     if (!row) S.fail(404, "Review QR not found.");
-    const store = storage.publicTenant(row.id);
+    const store = await storage.publicTenant(row.id);
     if (!store || store.qr.code !== code) S.fail(404, "Review QR not found.");
     return store;
   }
@@ -246,17 +368,22 @@ function createApplication(options = {}) {
       ([, label]) => label,
     );
     const sentiment =
-      review.rating >= 4 ? "positive" : review.rating === 3 ? "mixed" : "critical";
+      review.rating >= 4
+        ? "positive"
+        : review.rating === 3
+          ? "mixed"
+          : "critical";
     return {
       sentiment,
       topics: topics.slice(0, 3),
-      needsAttention:
-        review.rating <= 3 || NEGATIVE.test(text) || !text.trim(),
+      needsAttention: review.rating <= 3 || NEGATIVE.test(text) || !text.trim(),
     };
   }
   function guestConfig(store) {
     const vertical =
-      (store.guest && store.guest.vertical) || store.location.vertical || "other";
+      (store.guest && store.guest.vertical) ||
+      store.location.vertical ||
+      "other";
     const configured =
       store.guest && Array.isArray(store.guest.attributes)
         ? store.guest.attributes
@@ -287,14 +414,14 @@ function createApplication(options = {}) {
         googleConfig,
         googleFetch,
       );
-      storage.google.update(connection.tenantId, {
+      await storage.google.update(connection.tenantId, {
         accessToken: token.accessToken,
         accessExpires: Date.now() + token.expiresIn * 1000,
         lastError: "",
       });
       return token.accessToken;
     } catch (error) {
-      storage.google.update(connection.tenantId, {
+      await storage.google.update(connection.tenantId, {
         lastError: String(error && error.message).slice(0, 300),
       });
       S.fail(
@@ -351,10 +478,56 @@ function createApplication(options = {}) {
     "/static/logo.png": ["logo.png", "image/png"],
     "/static/og-banner.png": ["og-banner.png", "image/png"],
   };
-  const cleanup = setInterval(() => {
+  async function syncGoogle(store) {
+    const connection = await storage.google.get(store.id);
+    const accessToken = await googleAccessToken(connection);
+    let fetched;
     try {
-      storage.cleanup();
+      fetched = await G.listReviews(
+        accessToken,
+        connection,
+        googleConfig,
+        googleFetch,
+      );
+    } catch (error) {
+      await storage.google.update(store.id, {
+        lastError: String(error && error.message).slice(0, 300),
+      });
+      S.fail(502, "Google did not return reviews. Nothing was changed.");
+    }
+    if (production) {
+      const cutoff = Date.now() - 30 * 86400000;
+      fetched = fetched.filter(item => Date.parse(item.createdAt) > cutoff);
+    }
+    let added = 0;
+    await storage.transaction(async () => {
+      for (const item of fetched) {
+        const existing = await db
+          .prepare(
+            "SELECT 1 FROM reviews WHERE tenant_id=? AND google_review_id=?",
+          )
+          .get(store.id, item.googleReviewId);
+        await storage.reviews.upsertGoogle(store.id, {
+          ...item,
+          locationId: store.location.id,
+        });
+        if (!existing) added++;
+      }
+    });
+    await storage.google.update(store.id, {
+      lastSync: new Date().toISOString(),
+      lastError: "",
+    });
+    await storage.event(store.id, "google_synced");
+    return { added, fetched: fetched.length };
+  }
+
+  const cleanupStorage = () => storage.cleanup({ googleRetention: production });
+  const cleanup = setInterval(async () => {
+    try {
+      await cleanupStorage();
     } catch {
+      report("cleanup", 500);
       console.error(JSON.stringify({ event: "storage_cleanup_failed" }));
     }
   }, 3600000);
@@ -434,7 +607,7 @@ function createApplication(options = {}) {
           privatePage,
           csrf: S.cookies(req)[csrfCookie] || req.csrfToken || "",
           app: pathname.startsWith("/app"),
-          config,
+          config: { ...config, analyticsConsent: S.cookies(req)[analyticsCookie] === "yes" },
         }),
         "text/html; charset=utf-8",
       );
@@ -442,6 +615,14 @@ function createApplication(options = {}) {
     try {
       const parsed = new URL(req.url, origin);
       pathname = parsed.pathname;
+      if (
+        (req.method === "GET" || req.method === "HEAD") &&
+        /^\/(?:for-agencies|book-demo)\/*$/.test(pathname)
+      )
+        return send(301, "", "text/plain", {
+          Location: origin + (pathname.startsWith("/book-demo") ? "/contact" : "/features"),
+          "Cache-Control": "public, max-age=3600",
+        });
       const hostHeader = String(req.headers.host || "").toLowerCase();
       const bareHost = origin.replace(/^https?:\/\//, "").toLowerCase();
       if (production && hostHeader === "www." + bareHost)
@@ -474,14 +655,110 @@ function createApplication(options = {}) {
           { success: false, error: "Method not allowed." },
           { Allow: "GET, HEAD, POST, PATCH, DELETE" },
         );
+      if (pathname === "/api/webhooks/razorpay" && req.method === "POST") {
+        const secrets = [process.env.RAZORPAY_WEBHOOK_SECRET, process.env.RAZORPAY_WEBHOOK_PREVIOUS_SECRET];
+        if (!secrets[0]) S.fail(503, "Payment webhook is unavailable.");
+        const raw = await S.readRawBody(req, 131072);
+        if (!webhookSignature(raw, req.headers["x-razorpay-signature"], secrets))
+          S.fail(401, "Invalid webhook signature.");
+        const eventId = req.headers["x-razorpay-event-id"];
+        if (typeof eventId !== "string" || !/^[a-zA-Z0-9_-]{1,160}$/.test(eventId))
+          S.fail(400, "Invalid webhook event ID.");
+        let event;
+        try { event = JSON.parse(raw.toString("utf8")); }
+        catch { S.fail(400, "Invalid webhook payload."); }
+        try {
+          await billing.webhook(eventId, event);
+        } catch (error) {
+          await storage.event(null, "billing_webhook_failed").catch(() => {});
+          throw error;
+        }
+        return json(200, { success: true });
+      }
+      if (((pathname === "/api/internal/jobs/tick" && req.method === "POST") ||
+          (pathname === "/api/internal/ops" && req.method === "GET"))) {
+        const token = process.env.JOBS_SECRET;
+        if (!token || token.length < 32) S.fail(404, "Not found.");
+        const provided = req.headers.authorization || "";
+        if (!crypto.timingSafeEqual(Buffer.from(S.digest(provided)), Buffer.from(S.digest("Bearer " + token))))
+          S.fail(401, "Invalid job credentials.");
+        if (pathname === "/api/internal/ops") {
+          const since = Date.now() - 86400000;
+          const count = async (sql) => (await db.prepare(sql).get(since)).total;
+          const [jobFailures, failedPayments, webhookFailures] = await Promise.all([
+            count("SELECT count(*) AS total FROM jobs WHERE failed=1 AND finished_at>?"),
+            count("SELECT count(*) AS total FROM orders WHERE status='failed' AND expires>?"),
+            count("SELECT count(*) AS total FROM audit WHERE action='billing_webhook_failed' AND created>?"),
+          ]);
+          const databaseBytes = storage.dialect === "postgres"
+            ? (await db.prepare("SELECT pg_database_size(current_database()) AS bytes").get()).bytes : null;
+          const heartbeat = await db.prepare("SELECT finished_at FROM jobs WHERE id=?").get(HEARTBEAT);
+          return json(200, {
+            jobFailures, failedPayments, webhookFailures, databaseBytes,
+            lastWorkerTickAt: heartbeat ? new Date(heartbeat.finished_at).toISOString() : null,
+          });
+        }
+        const batch = await jobs.tick(Date.now(), jobFlags);
+        if (batch.failed) report("jobs", 503);
+        return json(200, batch);
+      }
       const forwarded = req.headers["x-forwarded-for"];
       // Forwarded addresses are ignored unless the operator explicitly trusts a sanitizing proxy.
       const ip =
         process.env.TRUST_PROXY === "true" && typeof forwarded === "string"
           ? forwarded.split(",").at(-1).trim()
           : req.socket.remoteAddress || "unknown";
-      rate.check("all:" + ip, 300);
-      session = sessionFor(req);
+      await rate.check("all:" + ip, 300);
+      if (/^\/(?:api\/)?admin(?:\/|$)/.test(pathname)) {
+        headers["X-Robots-Tag"] = "noindex, nofollow";
+        if (!admin) S.fail(404, "Page not found.");
+        const cookies = S.cookies(req);
+        const isApi = pathname.startsWith("/api/");
+        const actor = await admin.session(cookies[adminCookie]);
+        if (!isApi && req.method === "GET") {
+          if (!cookies[csrfCookie]) {
+            req.csrfToken = S.random();
+            responseCookies.push(cookie(csrfCookie, req.csrfToken));
+          }
+          if (!actor && pathname !== "/admin")
+            return send(303, "", "text/plain", { Location: "/admin" });
+          const body = actor ? adminView.render(await admin.screen(actor, pathname, parsed.searchParams), plans) : adminView.signin();
+          return html("Administration", body, true);
+        }
+        if (!isApi || req.method !== "POST") S.fail(405, "Method not allowed.");
+        const csrf = cookies[csrfCookie];
+        if (!csrf || csrf.length > 100 || req.headers["x-csrf-token"] !== csrf ||
+            (req.headers.origin && req.headers.origin !== origin))
+          S.fail(403, "Reload the administration page before submitting.");
+        if (!/^application\/json(?:;|$)/i.test(req.headers["content-type"] || ""))
+          S.fail(415, "Send application/json.");
+        const body = await S.readBody(req);
+        if (pathname === "/api/admin/sign-in") {
+          await rate.check("admin-ip:" + ip, 5, 900000);
+          await rate.check("admin-account:" + S.digest(S.email(body.email)), 5, 900000);
+          let token;
+          try { token = await admin.signIn(body); }
+          catch (error) {
+            await storage.event(null, "admin_login_failed").catch(() => {});
+            throw error;
+          }
+          responseCookies.push(cookie(adminCookie, token, 1800));
+          return json(200, { success: true, redirect: "/admin" });
+        }
+        if (!actor) S.fail(401, "Sign in to administration.");
+        if (pathname === "/api/admin/sign-out") {
+          await admin.signOut(actor);
+          responseCookies.push(cookie(adminCookie, "", 0));
+          return json(200, { success: true, redirect: "/admin" });
+        }
+        if (pathname === "/api/admin/action") {
+          await rate.check("admin-write:" + actor.admin_id, 30);
+          const result = await admin.act(actor, body);
+          return json(200, { success: true, ...result });
+        }
+        S.fail(404, "Endpoint not found.");
+      }
+      session = await sessionFor(req);
       if (
         req.method === "GET" &&
         !S.cookies(req)[csrfCookie] &&
@@ -503,11 +780,14 @@ function createApplication(options = {}) {
       const publicApis = [
         "/api/health",
         "/api/system/status",
+        "/api/site-metrics",
+        "/api/site-metrics/consent",
         "/api/auth/login",
         "/api/auth/signup",
         "/api/auth/forgot-password",
         "/api/auth/reset-password",
         "/api/auth/verify-email",
+        "/api/auth/google",
         "/api/ai/qr-draft",
         "/api/qr/drafts",
         "/api/contact",
@@ -542,22 +822,93 @@ function createApplication(options = {}) {
           !/^application\/json(?:;|$)/i.test(req.headers["content-type"] || "")
         )
           S.fail(415, "Send application/json.");
-        rate.check("write:" + ip, 80);
-        if (session) rate.check("tenant-write:" + session.tenant_id, 100);
+        await rate.check("write:" + ip, 80);
+        if (session) await rate.check("tenant-write:" + session.tenant_id, 100);
       }
       const body = unsafe ? await S.readBody(req) : {};
+      if (
+        pathname === "/auth/callback" &&
+        req.method === "GET" &&
+        accountAuth
+      ) {
+        if (parsed.searchParams.has("token_hash")) {
+          const page =
+            parsed.searchParams.get("type") === "recovery"
+              ? "/reset-password"
+              : "/verify-email";
+          const token = S.text(
+            parsed.searchParams.get("token_hash"),
+            "verification code",
+            256,
+            true,
+          );
+          return send(303, "", "text/plain", {
+            Location: page + "?token=" + encodeURIComponent(token),
+          });
+        }
+        const state = S.cookies(req)[oauthCookie];
+        const code = parsed.searchParams.get("code");
+        responseCookies.push(cookie(oauthCookie, "", 0));
+        if (!state || !code || !/^[01]\.[a-f0-9]{64}$/.test(state))
+          S.fail(400, "Sign-in expired. Start again from the sign-in page.");
+        const result = await accountAuth.exchange(
+          S.text(code, "sign-in code", 256, true),
+          state.slice(2),
+        );
+        const user = await hostedUser(result.user, state[0] === "1");
+        responseCookies.push(cookie(sessionCookie, await createSession(user)));
+        return send(303, "", "text/plain", { Location: "/app" });
+      }
+      if (pathname === "/api/auth/google" && req.method === "POST") {
+        if (!accountAuth || process.env.SUPABASE_GOOGLE_SIGN_IN !== "true")
+          S.fail(404, "Google sign-in is unavailable.");
+        await rate.check("oauth:" + ip, 10);
+        const signup = body.signup === "yes";
+        if (signup && body.termsAccepted !== "on")
+          S.fail(400, "Accept the terms before creating a workspace.");
+        const verifier = crypto.randomBytes(32).toString("hex");
+        responseCookies.push(
+          cookie(oauthCookie, (signup ? "1." : "0.") + verifier, 600),
+        );
+        return json(200, {
+          success: true,
+          redirect: accountAuth.googleUrl(verifier),
+        });
+      }
+      if (pathname === "/api/site-metrics/consent" && req.method === "POST") {
+        if (!config.analytics) S.fail(404, "Endpoint not found.");
+        const enabled = body.enabled === true || body.enabled === "true";
+        responseCookies.push(cookie(analyticsCookie, enabled ? "yes" : "", enabled ? 15552000 : 0));
+        return json(200, { success: true, message: enabled ? "Analytics enabled." : "Analytics disabled.", redirect: "/privacy#analytics" });
+      }
+      if (pathname === "/api/site-metrics" && req.method === "POST") {
+        if (!config.analytics || S.cookies(req)[analyticsCookie] !== "yes")
+          S.fail(403, "Analytics consent is required.");
+        const { page, metric, bucket } = body;
+        if (typeof page !== "string" || seo.metaFor(page)?.canonicalPath !== page ||
+            !((metric === "view" && bucket === "count") ||
+              (["LCP", "CLS", "INP"].includes(metric) && ["good", "needs-improvement", "poor"].includes(bucket))))
+          S.fail(400, "Invalid site metric.");
+        await rate.check("site-metrics:" + ip, 60);
+        await db.prepare(
+          "INSERT INTO site_metrics(day,page,metric,bucket) VALUES(?,?,?,?) ON CONFLICT(day,page,metric,bucket) DO UPDATE SET hits=site_metrics.hits+1",
+        ).run(new Date().toISOString().slice(0, 10), page, metric, bucket);
+        return send(204, "", "text/plain");
+      }
       if (pathname === "/api/health" || pathname === "/api/system/status") {
         if (req.method !== "GET" && req.method !== "HEAD")
           S.fail(405, "Method not allowed.");
         try {
-          storage.ready();
+          await storage.ready();
         } catch {
           S.fail(503, "Persistent storage is not ready.");
         }
         return json(200, {
           status: "healthy",
-          storage: "sqlite",
-          mode: googleConfig.enabled ? "google-business-profile" : "copy-and-paste",
+          storage: storage.dialect,
+          mode: googleConfig.enabled
+            ? "google-business-profile"
+            : "copy-and-paste",
           google: googleConfig.enabled
             ? googleConfig.configured
               ? "configured"
@@ -567,7 +918,7 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/signup" && req.method === "POST") {
-        rate.check("auth:" + ip, 10);
+        await rate.check("auth:" + ip, 10);
         const email = S.email(body.email),
           password = S.password(body.password);
         const name = S.text(body.clinicName, "business name", 120, true),
@@ -577,7 +928,18 @@ function createApplication(options = {}) {
             400,
             "Accept the terms and read the privacy notice before signing up.",
           );
-        if (db.prepare("SELECT 1 FROM users WHERE email=?").get(email))
+        if (accountAuth) {
+          await rate.check("signup-account:" + S.digest(email), 3, 900000);
+          await accountAuth.signup(email, password, {
+            rk_business_name: name,
+            rk_owner_name: owner,
+          });
+          return json(201, {
+            success: true,
+            message: "Check your inbox to verify your email, then sign in.",
+          });
+        }
+        if (await db.prepare("SELECT 1 FROM users WHERE email=?").get(email))
           S.fail(
             409,
             "This email cannot be registered. Try signing in or resetting your password.",
@@ -600,7 +962,12 @@ function createApplication(options = {}) {
                 status: "granted",
                 expiresAt: new Date(now + 30 * 86400000).toISOString(),
               }
-            : { tier: "none", name: "No plan", status: "unpaid", expiresAt: null },
+            : {
+                tier: "none",
+                name: "No plan",
+                status: "unpaid",
+                expiresAt: null,
+              },
           guest: { vertical: "other", attributes: [] },
           qr: { code: S.random(), scans: 0, drafts: 0 },
           staff: [],
@@ -613,17 +980,20 @@ function createApplication(options = {}) {
           },
           createdAt: new Date().toISOString(),
         };
-        storage.transaction(() => {
-          db.prepare("INSERT INTO tenants(id,document) VALUES(?,?)").run(
-            id,
-            JSON.stringify(store),
-          );
-          db.prepare(
-            "INSERT INTO users(email,tenant_id,hash,salt) VALUES(?,?,?,?)",
-          ).run(email, id, hp.hash, hp.salt);
-          storage.event(id, "account_created");
+        await storage.transaction(async () => {
+          await db
+            .prepare("INSERT INTO tenants(id,document) VALUES(?,?)")
+            .run(id, JSON.stringify(store));
+          await db
+            .prepare(
+              "INSERT INTO users(email,tenant_id,hash,salt) VALUES(?,?,?,?)",
+            )
+            .run(email, id, hp.hash, hp.salt);
+          await storage.event(id, "account_created");
         });
-        responseCookies.push(cookie(sessionCookie, createSession({ email })));
+        responseCookies.push(
+          cookie(sessionCookie, await createSession({ email })),
+        );
         return json(201, {
           success: true,
           redirect: operatorGrant ? "/app" : "/app/billing",
@@ -633,10 +1003,30 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/login" && req.method === "POST") {
-        rate.check("auth:" + ip, 10);
+        await rate.check("auth:" + ip, 10);
         const email = S.email(body.email);
-        rate.check("auth-account:" + S.digest(email), 10, 900000);
-        const user = db.prepare("SELECT * FROM users WHERE email=?").get(email);
+        await rate.check("auth-account:" + S.digest(email), 10, 900000);
+        if (accountAuth) {
+          const result = await accountAuth.login(
+            email,
+            S.password(body.password),
+          );
+          const user = await hostedUser(
+            result.user,
+            Boolean(result.user?.user_metadata?.rk_business_name),
+          );
+          responseCookies.push(
+            cookie(sessionCookie, await createSession(user)),
+          );
+          await storage.event(user.tenant_id, "login");
+          return json(200, {
+            success: true,
+            redirect: S.redirect(body.redirect),
+          });
+        }
+        const user = await db
+          .prepare("SELECT * FROM users WHERE email=?")
+          .get(email);
         const valid = await authWork(() =>
           S.verifyPassword(
             body.password,
@@ -645,10 +1035,10 @@ function createApplication(options = {}) {
           ),
         );
         if (!user || !valid) S.fail(401, "Invalid email or password.");
-        if (!storage.tenant(user.tenant_id))
+        if (!(await storage.tenant(user.tenant_id)))
           S.fail(503, "Workspace is unavailable. Contact support.");
-        responseCookies.push(cookie(sessionCookie, createSession(user)));
-        storage.event(user.tenant_id, "login");
+        responseCookies.push(cookie(sessionCookie, await createSession(user)));
+        await storage.event(user.tenant_id, "login");
         return json(200, {
           success: true,
           redirect: S.redirect(body.redirect),
@@ -656,22 +1046,32 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/logout" && req.method === "POST") {
-        db.prepare("DELETE FROM sessions WHERE hash=?").run(session.hash);
+        await db.prepare("DELETE FROM sessions WHERE hash=?").run(session.hash);
         responseCookies.push(cookie(sessionCookie, "", 0));
         return json(200, { success: true, redirect: "/login" });
       }
       if (pathname === "/api/auth/forgot-password" && req.method === "POST") {
-        rate.check("recovery:" + ip, 5, 900000);
+        await rate.check("recovery:" + ip, 5, 900000);
         const email = S.email(body.email);
-        rate.check("recovery-account:" + S.digest(email), 3, 900000);
+        await rate.check("recovery-account:" + S.digest(email), 3, 900000);
+        if (accountAuth) {
+          await accountAuth.recover(email);
+          return json(200, {
+            success: true,
+            message:
+              "If an eligible account exists, check your inbox for a reset link.",
+          });
+        }
         if (!process.env.RESEND_API_KEY || !process.env.EMAIL_FROM)
           S.fail(
             503,
             "Account email delivery is unavailable. Contact support; no reset email was sent.",
           );
-        const user = db.prepare("SELECT * FROM users WHERE email=?").get(email);
+        const user = await db
+          .prepare("SELECT * FROM users WHERE email=?")
+          .get(email);
         if (user) {
-          const token = capability("reset", email, user.tenant_id);
+          const token = await capability("reset", email, user.tenant_id);
           try {
             await provider.sendMail(
               email,
@@ -679,9 +1079,9 @@ function createApplication(options = {}) {
               `Use this single-use link within 30 minutes: ${origin}/reset-password?token=${token}\nIf you did not request this, ignore this email.`,
             );
           } catch (error) {
-            db.prepare("DELETE FROM capabilities WHERE hash=?").run(
-              S.digest(token),
-            );
+            await db
+              .prepare("DELETE FROM capabilities WHERE hash=?")
+              .run(S.digest(token));
             throw error;
           }
         }
@@ -695,8 +1095,24 @@ function createApplication(options = {}) {
         pathname === "/api/auth/resend-verification" &&
         req.method === "POST"
       ) {
-        rate.check("verify:" + session.email, 3, 900000);
-        const token = capability("verify", session.email, session.tenant_id);
+        await rate.check("verify:" + session.email, 3, 900000);
+        if (accountAuth) {
+          if (session.verified)
+            return json(200, {
+              success: true,
+              message: "Your email is verified.",
+            });
+          await accountAuth.resend(session.email);
+          return json(200, {
+            success: true,
+            message: "Check your inbox for the verification email.",
+          });
+        }
+        const token = await capability(
+          "verify",
+          session.email,
+          session.tenant_id,
+        );
         try {
           await provider.sendMail(
             session.email,
@@ -704,9 +1120,9 @@ function createApplication(options = {}) {
             `Use this single-use link within 30 minutes: ${origin}/verify-email?token=${token}`,
           );
         } catch (error) {
-          db.prepare("DELETE FROM capabilities WHERE hash=?").run(
-            S.digest(token),
-          );
+          await db
+            .prepare("DELETE FROM capabilities WHERE hash=?")
+            .run(S.digest(token));
           throw error;
         }
         return json(200, {
@@ -716,14 +1132,27 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/verify-email" && req.method === "POST") {
-        const cap = findCapability(body.token, "verify");
-        storage.transaction(() => {
-          db.prepare("UPDATE users SET verified=1 WHERE email=?").run(
-            cap.email,
+        if (accountAuth) {
+          await rate.check("verify-token:" + ip, 10);
+          const result = await accountAuth.verify(
+            S.text(body.token, "verification code", 256, true),
+            "email",
           );
-          db.prepare("UPDATE capabilities SET used=1 WHERE hash=?").run(
-            cap.hash,
-          );
+          await hostedUser(result.user, true);
+          return json(200, {
+            success: true,
+            redirect: "/login",
+            message: "Email verified. Sign in to continue.",
+          });
+        }
+        const cap = await findCapability(body.token, "verify");
+        await storage.transaction(async () => {
+          await db
+            .prepare("UPDATE users SET verified=1 WHERE email=?")
+            .run(cap.email);
+          await db
+            .prepare("UPDATE capabilities SET used=1 WHERE hash=?")
+            .run(cap.hash);
         });
         return json(200, {
           success: true,
@@ -732,23 +1161,38 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/reset-password" && req.method === "POST") {
-        rate.check("reset:" + ip, 5, 900000);
-        const cap = findCapability(body.token, "reset");
+        await rate.check("reset:" + ip, 5, 900000);
+        if (accountAuth) {
+          const password = S.password(body.password);
+          const result = await accountAuth.verify(
+            S.text(body.token, "reset code", 256, true),
+            "recovery",
+          );
+          const user = await hostedUser(result.user);
+          await accountAuth.changePassword(result.access_token, password);
+          await db
+            .prepare("DELETE FROM sessions WHERE email=?")
+            .run(user.email);
+          await storage.event(user.tenant_id, "password_reset");
+          responseCookies.push(cookie(sessionCookie, "", 0));
+          return json(200, { success: true, redirect: "/login" });
+        }
+        const cap = await findCapability(body.token, "reset");
         const hp = await authWork(() =>
           S.hashPassword(S.password(body.password)),
         );
-        storage.transaction(() => {
-          findCapability(body.token, "reset");
-          db.prepare("UPDATE users SET hash=?,salt=? WHERE email=?").run(
-            hp.hash,
-            hp.salt,
-            cap.email,
-          );
-          db.prepare(
-            "UPDATE capabilities SET used=1 WHERE email=? AND kind IN ('reset','verify')",
-          ).run(cap.email);
-          db.prepare("DELETE FROM sessions WHERE email=?").run(cap.email);
-          storage.event(cap.tenant_id, "password_reset");
+        await storage.transaction(async () => {
+          await findCapability(body.token, "reset");
+          await db
+            .prepare("UPDATE users SET hash=?,salt=? WHERE email=?")
+            .run(hp.hash, hp.salt, cap.email);
+          await db
+            .prepare(
+              "UPDATE capabilities SET used=1 WHERE email=? AND kind IN ('reset','verify')",
+            )
+            .run(cap.email);
+          await db.prepare("DELETE FROM sessions WHERE email=?").run(cap.email);
+          await storage.event(cap.tenant_id, "password_reset");
         });
         responseCookies.push(cookie(sessionCookie, "", 0));
         return json(200, {
@@ -761,28 +1205,32 @@ function createApplication(options = {}) {
         ["/api/contact", "/api/book-demo"].includes(pathname) &&
         req.method === "POST"
       ) {
-        rate.check("contact:" + ip, 5, 3600000);
+        await rate.check("contact:" + ip, 5, 3600000);
         const document = {
           name: S.text(body.name, "name", 100, true),
           email: S.email(body.email),
           message: S.text(body.message, "message", 2000, true),
         };
         const id = crypto.randomUUID();
-        db.prepare("INSERT INTO requests VALUES(?,?,?,?,?)").run(
-          id,
-          pathname.endsWith("contact") ? "contact" : "demo",
-          null,
-          JSON.stringify(document),
-          Date.now(),
-        );
+        await db
+          .prepare("INSERT INTO requests VALUES(?,?,?,?,?)")
+          .run(
+            id,
+            pathname.endsWith("contact") ? "contact" : "demo",
+            null,
+            JSON.stringify(document),
+            Date.now(),
+          );
         return json(201, {
           success: true,
           message: `Request recorded. Reference: ${id}. A meeting or response has not yet been scheduled.`,
         });
       }
       if (pathname === "/api/qr/drafts" && req.method === "POST") {
-        rate.check("draft:" + ip, 20);
-        const store = qrStore(S.text(body.shortCode, "QR code", 80, true));
+        await rate.check("draft:" + ip, 20);
+        const store = await qrStore(
+          S.text(body.shortCode, "QR code", 80, true),
+        );
         requireAccess(store);
         const rating = Number(body.rating);
         if (!Number.isInteger(rating) || rating < 1 || rating > 5)
@@ -798,7 +1246,11 @@ function createApplication(options = {}) {
           .map((value) => String(value).trim())
           .filter((value) => allowed.has(value.toLowerCase()))
           .slice(0, 5);
-        const note = S.text(String(body.note || body.feedback || ""), "note", 600);
+        const note = S.text(
+          String(body.note || body.feedback || ""),
+          "note",
+          600,
+        );
         if (!selected.length && !note)
           S.fail(400, "Pick at least one thing that applied, or write a note.");
         const drafts = C.compose({
@@ -810,11 +1262,11 @@ function createApplication(options = {}) {
         });
         if (!drafts.length) S.fail(400, "No drafts could be prepared.");
         const month = new Date().toISOString().slice(0, 7);
-        const updated = db
+        const updated = await db
           .prepare(
             "UPDATE qr_codes SET drafts=drafts+1,monthly_drafts=CASE WHEN usage_month=? THEN monthly_drafts+1 ELSE 1 END,usage_month=? WHERE code=? AND (usage_month<>? OR monthly_drafts<?)",
           )
-          .run(month, month, store.qr.code, month, entitlement(store).drafts);
+          .run(month, month, store.qr.code, month, entitlement(store, plans).drafts);
         if (updated.changes !== 1)
           S.fail(
             429,
@@ -830,23 +1282,24 @@ function createApplication(options = {}) {
         });
       }
       if (approvalApi && req.method === "POST") {
+        await rate.check("approval:" + ip, 20);
         const token = pathname.split("/")[3];
-        storage.transaction(() => {
-          const cap = findCapability(token, "approval"),
-            store = storage.tenant(cap.tenant_id);
+        await storage.transaction(async () => {
+          const cap = await findCapability(token, "approval"),
+            store = await storage.tenant(cap.tenant_id);
           const review = store
-            ? storage.reviews.get(store.id, cap.review_id)
+            ? await storage.reviews.get(store.id, cap.review_id)
             : null;
           if (!review || S.digest(review.reply.draftText) !== cap.draft_hash)
             S.fail(410, "The draft changed. Ask for a new approval link.");
           validateReply(review.reply.draftText);
           review.reply.status = "approved";
           review.reply.finalText = review.reply.draftText;
-          storage.reviews.updateReply(store.id, review.id, review.reply);
-          db.prepare("UPDATE capabilities SET used=1 WHERE hash=?").run(
-            cap.hash,
-          );
-          storage.event(store.id, "draft_approved_by_link");
+          await storage.reviews.updateReply(store.id, review.id, review.reply);
+          await db
+            .prepare("UPDATE capabilities SET used=1 WHERE hash=?")
+            .run(cap.hash);
+          await storage.event(store.id, "draft_approved_by_link");
         });
         return json(200, {
           success: true,
@@ -854,18 +1307,27 @@ function createApplication(options = {}) {
             "Draft approved for copying. Nothing has been posted to Google.",
         });
       }
-      let store = session ? storage.tenant(session.tenant_id) : null;
+      let store = session ? await storage.tenant(session.tenant_id) : null;
       if (session && !store)
         S.fail(503, "Workspace is unavailable. Contact support.");
+      if (store && pathname !== "/api/auth/logout") {
+        authorizeWorkspace(store);
+        const state = lifecycleState(store);
+        const allowed = /^\/api\/(?:auth\/|billing\/|onboarding$|account\/(?:delete|export|password|revoke-sessions))/;
+        if (unsafe && ["expired", "readonly"].includes(state) && !allowed.test(pathname))
+          S.fail(403, "This workspace is read-only. Renew access to make changes.");
+      }
       if (pathname === "/api/approval-links" && req.method === "POST") {
         requireAccess(store);
-        const review = storage.reviews.get(store.id, body.reviewId);
+        const review = await storage.reviews.get(store.id, body.reviewId);
         if (!review) S.fail(404, "Review not found.");
         validateReply(review.reply.draftText);
-        db.prepare(
-          "DELETE FROM capabilities WHERE kind=? AND tenant_id=? AND review_id=?",
-        ).run("approval", store.id, review.id);
-        const token = capability(
+        await db
+          .prepare(
+            "DELETE FROM capabilities WHERE kind=? AND tenant_id=? AND review_id=?",
+          )
+          .run("approval", store.id, review.id);
+        const token = await capability(
           "approval",
           session.email,
           store.id,
@@ -877,6 +1339,15 @@ function createApplication(options = {}) {
           message: `Approval link (expires in 24 hours): ${origin}/a/${token}`,
           approvalUrl: origin + "/a/" + token,
         });
+      }
+      if (pathname === "/api/onboarding" && req.method === "POST") {
+        if (body.action === "skip_google") {
+          await milestones.mark(store.id, "google_skipped");
+          return json(200, { success: true, redirect: "/app" });
+        }
+        if (body.action === "notifications")
+          return json(200, { success: true, notifications: await milestones.notifications(store.id) });
+        S.fail(400, "Unknown onboarding action.");
       }
       if (pathname === "/api/settings" && req.method === "POST") {
         const allowed = [
@@ -900,7 +1371,10 @@ function createApplication(options = {}) {
           store.guest = store.guest || { attributes: [] };
           store.guest.vertical = vertical;
           store.location.vertical = vertical;
-          if (vertical !== previousVertical && body.guestAttributes === undefined)
+          if (
+            vertical !== previousVertical &&
+            body.guestAttributes === undefined
+          )
             store.guest.attributes = C.presetFor(vertical);
         }
         if (body.guestAttributes !== undefined) {
@@ -945,8 +1419,11 @@ function createApplication(options = {}) {
             S.fail(400, "Invalid Google Place ID.");
           store.location.placeId = place;
         }
-        storage.save(store);
-        storage.event(store.id, "settings_updated");
+        await storage.transaction(async () => {
+          await storage.save(store);
+          if (store.location.placeId) await milestones.mark(store.id, "workspace_ready");
+        });
+        await storage.event(store.id, "settings_updated");
         return json(200, {
           success: true,
           message: "Business settings saved.",
@@ -960,7 +1437,7 @@ function createApplication(options = {}) {
             "Google Business Profile connection is not configured on this deployment.",
           );
         requireAccess(store);
-        const state = capability("google", session.email, store.id);
+        const state = await capability("google", session.email, store.id);
         return send(303, "", "text/plain", {
           Location: G.authUrl(state, googleConfig),
         });
@@ -976,7 +1453,7 @@ function createApplication(options = {}) {
           return send(303, "", "text/plain", {
             Location: "/app/settings?google=denied",
           });
-        const cap = findCapability(
+        const cap = await findCapability(
           parsed.searchParams.get("state") || "",
           "google",
         );
@@ -1028,71 +1505,40 @@ function createApplication(options = {}) {
           return send(303, "", "text/plain", {
             Location: "/app/settings?google=no_location",
           });
-        storage.google.save(store.id, {
-          googleEmail: "",
-          accountName,
-          locationName,
-          locationTitle,
-          scopes: token.scope,
-          refreshToken: G.seal(token.refreshToken, googleConfig),
-          accessToken: token.accessToken,
-          accessExpires: Date.now() + token.expiresIn * 1000,
+        await storage.transaction(async () => {
+          await storage.google.save(store.id, {
+            googleEmail: "",
+            accountName,
+            locationName,
+            locationTitle,
+            scopes: token.scope,
+            refreshToken: G.seal(token.refreshToken, googleConfig),
+            accessToken: token.accessToken,
+            accessExpires: Date.now() + token.expiresIn * 1000,
+          });
+          await db
+            .prepare("UPDATE capabilities SET used=1 WHERE hash=?")
+            .run(cap.hash);
+          await storage.event(store.id, "google_connected");
+          await milestones.mark(store.id, "google_connected");
         });
-        db.prepare("UPDATE capabilities SET used=1 WHERE hash=?").run(cap.hash);
-        storage.event(store.id, "google_connected");
         return send(303, "", "text/plain", {
           Location: "/app/settings?google=connected",
         });
       }
       if (pathname === "/api/google/sync" && req.method === "POST") {
         requireAccess(store);
-        const connection = storage.google.get(store.id);
-        const accessToken = await googleAccessToken(connection);
-        let fetched;
-        try {
-          fetched = await G.listReviews(
-            accessToken,
-            connection,
-            googleConfig,
-            googleFetch,
-          );
-        } catch (error) {
-          storage.google.update(store.id, {
-            lastError: String(error && error.message).slice(0, 300),
-          });
-          S.fail(502, "Google did not return reviews. Nothing was changed.");
-        }
-        let added = 0;
-        storage.transaction(() => {
-          for (const item of fetched) {
-            const existing = db
-              .prepare(
-                "SELECT 1 FROM reviews WHERE tenant_id=? AND google_review_id=?",
-              )
-              .get(store.id, item.googleReviewId);
-            storage.reviews.upsertGoogle(store.id, {
-              ...item,
-              locationId: store.location.id,
-            });
-            if (!existing) added++;
-          }
-        });
-        storage.google.update(store.id, {
-          lastSync: new Date().toISOString(),
-          lastError: "",
-        });
-        storage.event(store.id, "google_synced");
+        const result = await syncGoogle(store);
         return json(200, {
           success: true,
-          added,
-          fetched: fetched.length,
-          message: `${fetched.length} reviews fetched from Google. ${added} new.`,
+          ...result,
+          message: `${result.fetched} reviews fetched from Google. ${result.added} new.`,
         });
       }
       if (pathname === "/api/google/disconnect" && req.method === "POST") {
         requireAccess(store);
-        storage.google.remove(store.id);
-        storage.event(store.id, "google_disconnected");
+        await storage.google.remove(store.id);
+        await storage.event(store.id, "google_disconnected");
         return json(200, {
           success: true,
           message:
@@ -1102,7 +1548,7 @@ function createApplication(options = {}) {
       const publishRoute = pathname.match(/^\/api\/reviews\/([^/]+)\/publish$/);
       if (publishRoute && req.method === "POST") {
         requireAccess(store);
-        const review = storage.reviews.get(
+        const review = await storage.reviews.get(
           store.id,
           decodeURIComponent(publishRoute[1]),
         );
@@ -1113,9 +1559,11 @@ function createApplication(options = {}) {
             "This review was entered by hand, so there is no Google review to reply to.",
           );
         const text = validateReply(
-          String(body.text || review.reply.finalText || review.reply.draftText || ""),
+          String(
+            body.text || review.reply.finalText || review.reply.draftText || "",
+          ),
         );
-        const connection = storage.google.get(store.id);
+        const connection = await storage.google.get(store.id);
         const accessToken = await googleAccessToken(connection);
         try {
           await G.putReply(
@@ -1127,10 +1575,10 @@ function createApplication(options = {}) {
             googleFetch,
           );
         } catch {
-          storage.reviews.markPublished(store.id, review.id, "failed");
+          await storage.reviews.markPublished(store.id, review.id, "failed");
           S.fail(502, "Google rejected this reply. Nothing was published.");
         }
-        storage.reviews.updateReply(store.id, review.id, {
+        await storage.reviews.updateReply(store.id, review.id, {
           status: "approved",
           draftText: review.reply.draftText || text,
           finalText: text,
@@ -1138,8 +1586,8 @@ function createApplication(options = {}) {
           validatorPassed: true,
           isAutoPosted: false,
         });
-        storage.reviews.markPublished(store.id, review.id, "posted");
-        storage.event(store.id, "reply_published");
+        await storage.reviews.markPublished(store.id, review.id, "posted");
+        await storage.event(store.id, "reply_published");
         return json(200, {
           success: true,
           message: "Reply published to Google.",
@@ -1150,7 +1598,10 @@ function createApplication(options = {}) {
           1,
           Number.parseInt(parsed.searchParams.get("page") || "1", 10) || 1,
         );
-        const result = storage.reviews.list(store.id, { page, pageSize: 20 });
+        const result = await storage.reviews.list(store.id, {
+          page,
+          pageSize: 20,
+        });
         return json(200, {
           success: true,
           reviews: result.rows.map(sanitizedReview),
@@ -1160,7 +1611,7 @@ function createApplication(options = {}) {
       }
       if (pathname === "/api/reviews" && req.method === "POST") {
         requireAccess(store);
-        if (storage.reviews.count(store.id) >= 1000)
+        if ((await storage.reviews.count(store.id)) >= 1000)
           S.fail(
             409,
             "Workspace review capacity reached. Export and remove older records first.",
@@ -1185,10 +1636,10 @@ function createApplication(options = {}) {
           validatorPassed: true,
           isAutoPosted: false,
         };
-        storage.transaction(() => {
-          monthly(store, "replies", entitlement(store).reviews);
-          storage.reviews.create(store.id, review);
-          storage.save(store);
+        await storage.transaction(async () => {
+          monthly(store, "replies", entitlement(store, plans).reviews);
+          await storage.reviews.create(store.id, review);
+          await storage.save(store);
         });
         return json(201, {
           success: true,
@@ -1207,7 +1658,7 @@ function createApplication(options = {}) {
             503,
             "AI drafting is not enabled on this deployment. Standard templates are still available.",
           );
-        if (!ai.allowedTenant(store.id))
+        if (plans[store.plan.tier]?.ai === false || !ai.allowedTenant(store.id))
           S.fail(
             403,
             "AI drafting is not enabled for this workspace. Standard templates are still available.",
@@ -1222,11 +1673,13 @@ function createApplication(options = {}) {
             503,
             "The AI provider is not configured. No request was made; standard templates are still available.",
           );
-        const review = storage.reviews.get(store.id, draftsRoute[1]);
+        const review = await storage.reviews.get(store.id, draftsRoute[1]);
         if (!review) S.fail(404, "Review not found.");
+        if (production && review.source === "google")
+          S.fail(403, "Third-party AI is unavailable for reviews fetched through Google.");
         const month = new Date().toISOString().slice(0, 7),
-          usage = storage.aiUsage.month(store.id, month),
-          globalUsage = storage.aiUsage.total(month);
+          usage = await storage.aiUsage.month(store.id, month),
+          globalUsage = await storage.aiUsage.total(month);
         if (
           aiConfig.maxGenerationsPerMonth &&
           usage.generations >= aiConfig.maxGenerationsPerMonth
@@ -1258,14 +1711,14 @@ function createApplication(options = {}) {
           redact: aiConfig.redactPii,
           promptVersion: aiConfig.promptVersion,
         });
-        const cached = storage.candidates.byHash(
+        const cached = await storage.candidates.byHash(
           store.id,
           review.id,
           context.inputHash,
           Date.now() - 3600000,
         );
         if (cached.length >= 3) {
-          storage.event(store.id, "ai_drafts_cached");
+          await storage.event(store.id, "ai_drafts_cached");
           return json(200, {
             success: true,
             cached: true,
@@ -1276,7 +1729,7 @@ function createApplication(options = {}) {
           });
         }
         const lockKey = store.id + ":" + review.id;
-        rate.check("ai:" + store.id, 8, 60000);
+        await rate.check("ai:" + store.id, 8, 60000);
         if (aiInFlight.has(lockKey))
           S.fail(
             409,
@@ -1286,13 +1739,13 @@ function createApplication(options = {}) {
         try {
           const result = await ai.generate({ store, review });
           if (result.fatal) {
-            storage.aiUsage.add(store.id, month, {
+            await storage.aiUsage.add(store.id, month, {
               generations: 1,
               candidates: 0,
               failures: result.failures.length,
               costMicros: 0,
             });
-            storage.event(store.id, "ai_drafts_auth_failed");
+            await storage.event(store.id, "ai_drafts_auth_failed");
             S.fail(
               503,
               "The AI provider rejected the server key. No draft was generated. Contact support.",
@@ -1300,7 +1753,7 @@ function createApplication(options = {}) {
           }
           const valid = result.candidates;
           const stored = valid.length
-            ? storage.candidates.replace(
+            ? await storage.candidates.replace(
                 store.id,
                 review.id,
                 result.inputHash,
@@ -1311,7 +1764,7 @@ function createApplication(options = {}) {
             (sum, candidate) => sum + (candidate.costMicros || 0),
             0,
           );
-          storage.aiUsage.add(store.id, month, {
+          await storage.aiUsage.add(store.id, month, {
             generations: 1,
             candidates: valid.length,
             failures: result.failures.length,
@@ -1320,19 +1773,28 @@ function createApplication(options = {}) {
           if (!valid.length) {
             // A failed batch must not leave candidates from an older input
             // hash on screen. Selected candidates are retained for audit.
-            storage.candidates.replace(store.id, review.id, result.inputHash, []);
+            await storage.candidates.replace(
+              store.id,
+              review.id,
+              result.inputHash,
+              [],
+            );
             const fallback = reviewDraft(review, store.location.name);
             if (!review.reply.draftText) {
-              storage.transaction(() => {
+              await storage.transaction(async () => {
                 review.reply.draftText = fallback;
                 review.reply.status = review.rating <= 3 ? "held" : "draft";
                 review.reply.validatorPassed = true;
                 review.reply.isAutoPosted = false;
-                storage.reviews.updateReply(store.id, review.id, review.reply);
-                storage.save(store);
+                await storage.reviews.updateReply(
+                  store.id,
+                  review.id,
+                  review.reply,
+                );
+                await storage.save(store);
               });
             }
-            storage.event(store.id, "ai_drafts_fallback");
+            await storage.event(store.id, "ai_drafts_fallback");
             return json(200, {
               success: true,
               cached: false,
@@ -1343,7 +1805,7 @@ function createApplication(options = {}) {
               message: `No usable draft came back from the ${result.modelsRequested} configured models. The standard English template is shown instead. Nothing was posted.`,
             });
           }
-          storage.event(store.id, "ai_drafts_generated");
+          await storage.event(store.id, "ai_drafts_generated");
           return json(200, {
             success: true,
             cached: false,
@@ -1368,25 +1830,25 @@ function createApplication(options = {}) {
           S.fail(503, "AI drafting is not enabled on this deployment.");
         if (store.aiDrafts !== true)
           S.fail(409, "Enable AI drafts in Settings first.");
-        const review = storage.reviews.get(store.id, selectRoute[1]);
+        const review = await storage.reviews.get(store.id, selectRoute[1]);
         if (!review) S.fail(404, "Review not found.");
-        const candidate = storage.candidates.select(
+        const candidate = await storage.candidates.select(
           store.id,
           review.id,
           selectRoute[2],
         );
         if (!candidate) S.fail(404, "Draft not found.");
-        storage.transaction(() => {
+        await storage.transaction(async () => {
           review.reply.draftText = candidate.draftText;
           review.reply.finalText = null;
           review.reply.status = review.rating <= 3 ? "held" : "draft";
           review.reply.model = candidate.model;
           review.reply.validatorPassed = true;
           review.reply.isAutoPosted = false;
-          storage.reviews.updateReply(store.id, review.id, review.reply);
-          storage.save(store);
+          await storage.reviews.updateReply(store.id, review.id, review.reply);
+          await storage.save(store);
         });
-        storage.event(store.id, "ai_draft_selected");
+        await storage.event(store.id, "ai_draft_selected");
         return json(200, {
           success: true,
           review: sanitizedReview(review),
@@ -1398,20 +1860,22 @@ function createApplication(options = {}) {
         /^\/api\/reviews\/([a-zA-Z0-9-]+)(\/reply)?$/,
       );
       if (reviewRoute) {
-        const review = storage.reviews.get(store.id, reviewRoute[1]);
+        const review = await storage.reviews.get(store.id, reviewRoute[1]);
         if (!review) S.fail(404, "Review not found.");
         if (req.method === "DELETE" && !reviewRoute[2]) {
-          storage.transaction(() => {
-            storage.reviews.remove(store.id, review.id);
-            db.prepare(
-              "DELETE FROM capabilities WHERE tenant_id=? AND review_id=?",
-            ).run(store.id, review.id);
+          await storage.transaction(async () => {
+            await storage.reviews.remove(store.id, review.id);
+            await db
+              .prepare(
+                "DELETE FROM capabilities WHERE tenant_id=? AND review_id=?",
+              )
+              .run(store.id, review.id);
           });
           return json(200, { success: true, message: "Review deleted." });
         }
         if (req.method === "PATCH" && reviewRoute[2]) {
           requireAccess(store);
-          storage.transaction(() => {
+          await storage.transaction(async () => {
             if (body.action === "approve") {
               review.reply.finalText = validateReply(
                 body.text || review.reply.draftText,
@@ -1419,17 +1883,21 @@ function createApplication(options = {}) {
               review.reply.draftText = review.reply.finalText;
               review.reply.status = "approved";
             } else if (body.action === "regenerate") {
-              monthly(store, "replies", entitlement(store).reviews);
+              monthly(store, "replies", entitlement(store, plans).reviews);
               review.reply.draftText = validateReply(
                 reviewDraft(review, store.location.name),
               );
               review.reply.finalText = null;
               review.reply.status = review.rating <= 3 ? "held" : "draft";
             } else S.fail(400, "Choose approve or regenerate.");
-            storage.reviews.updateReply(store.id, review.id, review.reply);
-            storage.save(store);
+            await storage.reviews.updateReply(
+              store.id,
+              review.id,
+              review.reply,
+            );
+            await storage.save(store);
           });
-          storage.event(store.id, "reply_draft_updated");
+          await storage.event(store.id, "reply_draft_updated");
           return json(200, {
             success: true,
             review: sanitizedReview(review),
@@ -1448,7 +1916,7 @@ function createApplication(options = {}) {
           role: S.text(body.role, "role", 100, true),
         };
         store.staff.push(staff);
-        storage.save(store);
+        await storage.save(store);
         return json(201, {
           success: true,
           staff,
@@ -1457,10 +1925,26 @@ function createApplication(options = {}) {
         });
       }
       if (pathname === "/api/auth/change-password" && req.method === "POST") {
-        rate.check("password:" + session.email, 5, 900000);
-        const user = db
+        await rate.check("password:" + session.email, 5, 900000);
+        const user = await db
           .prepare("SELECT * FROM users WHERE email=?")
           .get(session.email);
+        if (accountAuth) {
+          const password = S.password(body.password);
+          const proof = await accountAuth.login(
+            session.email,
+            S.password(body.currentPassword),
+          );
+          if (proof.user?.id !== user.auth_user_id)
+            S.fail(403, "Sign in again before changing your password.");
+          await accountAuth.changePassword(proof.access_token, password);
+          await db
+            .prepare("DELETE FROM sessions WHERE email=?")
+            .run(session.email);
+          await storage.event(store.id, "password_changed");
+          responseCookies.push(cookie(sessionCookie, "", 0));
+          return json(200, { success: true, redirect: "/login" });
+        }
         const valid = await authWork(() =>
           S.verifyPassword(body.currentPassword, user.hash, user.salt),
         );
@@ -1468,36 +1952,40 @@ function createApplication(options = {}) {
         const hp = await authWork(() =>
           S.hashPassword(S.password(body.password)),
         );
-        storage.transaction(() => {
-          const changed = db
+        await storage.transaction(async () => {
+          const changed = await db
             .prepare("UPDATE users SET hash=?,salt=? WHERE email=? AND hash=?")
             .run(hp.hash, hp.salt, session.email, user.hash);
           if (changed.changes !== 1)
             S.fail(409, "Credentials changed. Sign in again before retrying.");
-          db.prepare("DELETE FROM sessions WHERE email=?").run(session.email);
-          db.prepare("UPDATE capabilities SET used=1 WHERE email=?").run(
-            session.email,
-          );
-          storage.event(store.id, "password_changed");
+          await db
+            .prepare("DELETE FROM sessions WHERE email=?")
+            .run(session.email);
+          await db
+            .prepare("UPDATE capabilities SET used=1 WHERE email=?")
+            .run(session.email);
+          await storage.event(store.id, "password_changed");
         });
         responseCookies.push(cookie(sessionCookie, "", 0));
         return json(200, { success: true, redirect: "/login" });
       }
       if (pathname === "/api/auth/revoke-sessions" && req.method === "POST") {
-        db.prepare("DELETE FROM sessions WHERE email=?").run(session.email);
+        await db
+          .prepare("DELETE FROM sessions WHERE email=?")
+          .run(session.email);
         responseCookies.push(cookie(sessionCookie, "", 0));
         return json(200, { success: true, redirect: "/login" });
       }
       if (pathname === "/api/account/export" && req.method === "GET") {
-        rate.check("export:" + session.email, 5, 60000);
+        await rate.check("export:" + session.email, 5, 60000);
         return json(
           200,
           {
             workspace: {
               ...store,
-              reviews: storage.reviews.all(store.id),
+              reviews: await storage.reviews.all(store.id),
             },
-            requests: db
+            requests: await db
               .prepare(
                 "SELECT kind,document,created FROM requests WHERE tenant_id=?",
               )
@@ -1510,10 +1998,27 @@ function createApplication(options = {}) {
         );
       }
       if (pathname === "/api/account/delete" && req.method === "POST") {
-        rate.check("delete:" + session.email, 3, 900000);
-        const user = db
+        await rate.check("delete:" + session.email, 3, 900000);
+        const user = await db
           .prepare("SELECT * FROM users WHERE email=?")
           .get(session.email);
+        if (accountAuth) {
+          if (body.confirmation !== "DELETE")
+            S.fail(400, "Type DELETE to confirm.");
+          const proof = await accountAuth.login(
+            session.email,
+            S.password(body.password),
+          );
+          if (proof.user?.id !== user.auth_user_id)
+            S.fail(403, "Sign in again before deleting your account.");
+          await accountAuth.deleteUser(user.auth_user_id);
+          responseCookies.push(cookie(sessionCookie, "", 0));
+          return json(200, {
+            success: true,
+            redirect: "/login",
+            message: "Workspace deleted.",
+          });
+        }
         if (
           body.confirmation !== "DELETE" ||
           !(await authWork(() =>
@@ -1524,21 +2029,24 @@ function createApplication(options = {}) {
             400,
             "Confirm your password and type DELETE to remove the workspace.",
           );
-        storage.transaction(() => {
+        await storage.transaction(async () => {
           // Retain payment references separately for accounting; remove direct tenant association.
           if (
-            db
-              .prepare("SELECT hash FROM users WHERE email=?")
-              .get(session.email)?.hash !== user.hash
+            (
+              await db
+                .prepare("SELECT hash FROM users WHERE email=?")
+                .get(session.email)
+            )?.hash !== user.hash
           )
             S.fail(409, "Credentials changed. Sign in again before retrying.");
-          db.prepare("UPDATE orders SET tenant_id=? WHERE tenant_id=?").run(
-            "deleted_" + S.random(),
-            store.id,
-          );
-          db.prepare("DELETE FROM requests WHERE tenant_id=?").run(store.id);
-          db.prepare("DELETE FROM audit WHERE tenant_id=?").run(store.id);
-          db.prepare("DELETE FROM tenants WHERE id=?").run(store.id);
+          await db
+            .prepare("UPDATE orders SET tenant_id=? WHERE tenant_id=?")
+            .run("deleted_" + S.random(), store.id);
+          await db
+            .prepare("DELETE FROM requests WHERE tenant_id=?")
+            .run(store.id);
+          await db.prepare("DELETE FROM audit WHERE tenant_id=?").run(store.id);
+          await db.prepare("DELETE FROM tenants WHERE id=?").run(store.id);
         });
         responseCookies.push(cookie(sessionCookie, "", 0));
         return json(200, {
@@ -1547,7 +2055,19 @@ function createApplication(options = {}) {
           message: "Workspace deleted.",
         });
       }
-      if (pathname === "/api/billing/create-order" && req.method === "POST") {
+      const receiptPath = /^\/api\/billing\/receipts\/([a-z0-9-]{1,80})$/i.exec(pathname);
+      if (receiptPath && ["GET", "HEAD"].includes(req.method)) {
+        const receipt = store.receipts.find((record) => record.id === receiptPath[1]);
+        if (!receipt) S.fail(404, "Receipt not found.");
+        return send(200, receiptText(receipt, { operatorName: config.operatorName, businessName: store.location.name }), "text/plain; charset=utf-8", {
+          "Content-Disposition": `attachment; filename="reviewkare-receipt-${receipt.id}.txt"`,
+          "X-Robots-Tag": "noindex, nofollow",
+        });
+      }
+      if (
+        ["/api/billing/order", "/api/billing/create-order", "/api/billing/renew"].includes(pathname) &&
+        req.method === "POST"
+      ) {
         if (!billingEnabled)
           S.fail(503, "Checkout is unavailable. No payment was taken.");
         if (
@@ -1558,14 +2078,15 @@ function createApplication(options = {}) {
           S.fail(503, "Checkout is awaiting operator and tax configuration.");
         if (!session.verified)
           S.fail(403, "Verify your email in Settings before payment.");
-        const plan = Object.hasOwn(PLANS, body.planId)
-            ? PLANS[body.planId]
-            : null,
+        const renewal = pathname === "/api/billing/renew";
+        const planId = renewal ? store.plan.tier : body.planId;
+        const plan = typeof planId === "string" && Object.hasOwn(plans, planId) ? plans[planId] : null,
           cycle = body.billingCycle;
-        if (!plan || !["monthly", "annual"].includes(cycle))
+        const term = plan && planTerms(plan).find(option => option.key === cycle);
+        if (!term)
           S.fail(400, "Choose a valid plan and access period.");
-        rate.check("order:" + store.id, 5, 3600000);
-        const amount = plan[cycle],
+        await rate.check("order:" + store.id, 5, 3600000);
+        const amount = term.amount,
           receipt = "rk_" + crypto.randomBytes(12).toString("hex");
         const remote = await provider.razorpay("orders", {
           method: "POST",
@@ -1575,7 +2096,7 @@ function createApplication(options = {}) {
             receipt,
             notes: {
               tenantId: store.id,
-              planId: body.planId,
+              planId,
               billingCycle: cycle,
             },
           },
@@ -1590,17 +2111,19 @@ function createApplication(options = {}) {
             502,
             "Provider order details did not match. No plan was activated.",
           );
-        db.prepare(
-          "INSERT INTO orders(id,tenant_id,plan_id,cycle,amount,currency,expires) VALUES(?,?,?,?,?,?,?)",
-        ).run(
-          remote.id,
-          store.id,
-          body.planId,
-          cycle,
-          amount,
-          "INR",
-          Date.now() + 3600000,
-        );
+        await db
+          .prepare(
+            "INSERT INTO orders(id,tenant_id,plan_id,cycle,amount,currency,expires) VALUES(?,?,?,?,?,?,?)",
+          )
+          .run(
+            remote.id,
+            store.id,
+            planId,
+            cycle,
+            amount,
+            "INR",
+            Date.now() + 3600000,
+          );
         return json(200, {
           success: true,
           orderId: remote.id,
@@ -1609,7 +2132,8 @@ function createApplication(options = {}) {
           currency: "INR",
           keyId: process.env.RAZORPAY_KEY_ID,
           planName: plan.name,
-          durationDays: cycle === "annual" ? 365 : 30,
+          durationDays: term.days,
+          durationLabel: term.label,
         });
       }
       if (pathname === "/api/billing/verify" && req.method === "POST") {
@@ -1622,73 +2146,22 @@ function createApplication(options = {}) {
           !/^pay_[a-zA-Z0-9]+$/.test(paymentId)
         )
           S.fail(400, "Invalid payment reference.");
-        const order = db
+        const order = await db
           .prepare("SELECT * FROM orders WHERE id=? AND tenant_id=?")
           .get(orderId, store.id);
         if (!order) S.fail(404, "Order not found.");
-        if (order.status !== "created")
-          S.fail(409, "Order has already been processed.");
         if (!provider.signature(orderId, paymentId, body.razorpay_signature))
           S.fail(400, "Payment signature verification failed.");
+        if (!["created", "failed"].includes(order.status)) {
+          if (order.status === "paid" && order.payment_id === paymentId)
+            return json(200, { success: true, message: "This payment has already been verified." });
+          S.fail(409, "Order has already been processed.");
+        }
         const payment = await provider.razorpay(
           "payments/" + encodeURIComponent(paymentId),
         );
-        if (
-          payment.id !== paymentId ||
-          payment.order_id !== order.id ||
-          payment.amount !== order.amount ||
-          payment.currency !== order.currency ||
-          payment.status !== "captured" ||
-          payment.captured !== true ||
-          payment.refunded ||
-          payment.amount_refunded > 0
-        )
-          S.fail(
-            409,
-            "Payment has not been captured for this order and amount. Access was not changed.",
-          );
-        storage.transaction(() => {
-          const latest = db
-            .prepare("SELECT * FROM orders WHERE id=? AND tenant_id=?")
-            .get(orderId, session.tenant_id);
-          if (latest.status !== "created")
-            S.fail(409, "Order has already been processed.");
-          const current = storage.tenant(session.tenant_id);
-          if (!current)
-            S.fail(
-              409,
-              "Workspace no longer exists. Contact support for payment reconciliation.",
-            );
-          const now = Date.now(),
-            days = order.cycle === "annual" ? 365 : 30;
-          const previous =
-            current.plan.status === "active"
-              ? Date.parse(current.plan.expiresAt)
-              : 0;
-          current.plan = {
-            tier: order.plan_id,
-            name: PLANS[order.plan_id].name,
-            status: "active",
-            billingCycle: order.cycle,
-            expiresAt: new Date(
-              Math.max(now, previous) + days * 86400000,
-            ).toISOString(),
-          };
-          current.receipts.unshift({
-            id: crypto.randomUUID(),
-            planName: PLANS[order.plan_id].name,
-            amount: order.amount,
-            currency: order.currency,
-            paidAt: new Date().toISOString(),
-            paymentId,
-            orderId,
-          });
-          db.prepare(
-            "UPDATE orders SET status='paid',payment_id=? WHERE id=? AND status='created'",
-          ).run(paymentId, orderId);
-          storage.save(current);
-          storage.event(current.id, "payment_verified");
-        });
+        if (payment.id !== paymentId) S.fail(409, "Provider payment reference did not match.");
+        await billing.confirm(order.id, payment, { tenantId: store.id, repeat: true });
         return json(200, {
           success: true,
           message:
@@ -1702,31 +2175,33 @@ function createApplication(options = {}) {
           100,
           true,
         );
-        const order = db
+        const order = await db
           .prepare(
-            "SELECT * FROM orders WHERE tenant_id=? AND payment_id=? AND status='paid'",
+            "SELECT * FROM orders WHERE tenant_id=? AND payment_id=? AND status IN ('paid','partially_refunded')",
           )
           .get(store.id, paymentId);
-        if (!order) S.fail(404, "Paid order not found.");
-        if (
-          db
-            .prepare(
-              "SELECT 1 FROM requests WHERE tenant_id=? AND kind='refund' AND json_extract(document,'$.paymentId')=?",
-            )
-            .get(store.id, paymentId)
-        )
-          S.fail(409, "A refund request is already recorded for this payment.");
         const id = crypto.randomUUID();
-        db.prepare("INSERT INTO requests VALUES(?,?,?,?,?)").run(
-          id,
-          "refund",
-          store.id,
-          JSON.stringify({
-            paymentId,
-            reason: S.text(body.reason, "reason", 1000, true),
-          }),
-          Date.now(),
-        );
+        await storage.transaction(async () => {
+          if (!order) S.fail(404, "Paid order not found.");
+          if (
+            await db
+              .prepare(
+                "SELECT 1 FROM requests WHERE tenant_id=? AND kind='refund' AND json_extract(document,'$.paymentId')=?",
+              )
+              .get(store.id, paymentId)
+          )
+            S.fail(409, "A refund request is already recorded for this payment.");
+          await db.prepare("INSERT INTO requests VALUES(?,?,?,?,?)").run(
+            id,
+            "refund",
+            store.id,
+            JSON.stringify({
+              paymentId,
+              reason: S.text(body.reason, "reason", 1000, true),
+            }),
+            Date.now(),
+          );
+        });
         return json(201, {
           success: true,
           message: `Refund request recorded: ${id}. Awaiting manual review; no refund has been processed.`,
@@ -1759,7 +2234,10 @@ function createApplication(options = {}) {
         S.fail(404, "Endpoint not found or unavailable in this release.");
       if (req.method !== "GET" && req.method !== "HEAD")
         S.fail(405, "Method not allowed.");
-      if (staticFiles[pathname]) {
+      if (pathname === "/static/web-vitals.js" && config.analytics) {
+        return send(200, fs.readFileSync(path.join(__dirname, "../../node_modules/web-vitals/dist/web-vitals.iife.js")),
+          "text/javascript; charset=utf-8", { "Cache-Control": "public, max-age=86400" });
+      }      if (staticFiles[pathname]) {
         const [file, type] = staticFiles[pathname];
         return send(
           200,
@@ -1773,9 +2251,14 @@ function createApplication(options = {}) {
           "Cache-Control": "public, max-age=3600",
         });
       if (pathname === "/sitemap.xml")
-        return send(200, seo.sitemap(origin), "application/xml; charset=utf-8", {
-          "Cache-Control": "public, max-age=3600",
-        });
+        return send(
+          200,
+          seo.sitemap(origin),
+          "application/xml; charset=utf-8",
+          {
+            "Cache-Control": "public, max-age=3600",
+          },
+        );
       if (pathname === "/llms.txt" || pathname === "/llms-full.txt")
         return send(
           200,
@@ -1800,6 +2283,9 @@ function createApplication(options = {}) {
             pathname.slice(1),
             parsed.searchParams.get("token") || "",
             S.redirect(parsed.searchParams.get("redirect")),
+            Boolean(
+              accountAuth && process.env.SUPABASE_GOOGLE_SIGN_IN === "true",
+            ),
           ),
           true,
         );
@@ -1820,7 +2306,7 @@ function createApplication(options = {}) {
         );
         if (approvalPath) {
           requireAccess(store);
-          const review = storage.reviews.get(store.id, approvalPath[1]);
+          const review = await storage.reviews.get(store.id, approvalPath[1]);
           if (!review) S.fail(404, "Review not found.");
           // This page displays a POST form; loading a GET never issues a capability.
           return html(
@@ -1836,6 +2322,7 @@ function createApplication(options = {}) {
         if (pathname === "/app/qr/print") {
           if (!store.location.placeId)
             S.fail(409, "Configure your Google Place ID first.");
+          if (req.method === "GET") await milestones.mark(store.id, "qr_printed");
           return html(
             "Print review QR",
             `<h1>${S.escape(store.location.name)}</h1><p>Share your honest experience. All feedback is welcome.</p><div class="qr-preview"><img src="/api/qr.svg" width="400" height="400" alt="Review QR for ${S.escape(store.location.name)}"></div><p class="break">${S.escape(origin + "/q/" + store.qr.code)}</p><button id="print-poster" class="no-print" type="button">Print or save as PDF</button>`,
@@ -1848,9 +2335,10 @@ function createApplication(options = {}) {
           1,
           Number.parseInt(parsed.searchParams.get("page") || "1", 10) || 1,
         );
-        const view = { ...config, page, reviews: [] };
+        const view = { ...config, page, reviews: [], accessState: lifecycleState(store) };
+        if (pathname === "/app") view.milestones = await milestones.list(store.id);
         if (pathname === "/app/reviews" || pathname === "/app/approvals") {
-          const result = storage.reviews.list(store.id, {
+          const result = await storage.reviews.list(store.id, {
             page,
             pageSize: 20,
             status: pathname === "/app/approvals" ? "held" : null,
@@ -1859,13 +2347,14 @@ function createApplication(options = {}) {
           view.total = result.total;
           view.pageSize = result.pageSize;
         } else {
-          view.total = storage.reviews.count(store.id);
+          view.total = await storage.reviews.count(store.id);
         }
-        view.stats = storage.reviews.stats(store.id);
+        view.stats = await storage.reviews.stats(store.id);
         view.ai = {
           ...config.ai,
           consented: store.aiDrafts === true,
-          allowed: ai.allowedTenant(store.id),
+          googleAllowed: !production,
+          allowed: plans[store.plan.tier]?.ai !== false && ai.allowedTenant(store.id),
         };
         view.guest = guestConfig(store);
         view.google = {
@@ -1873,7 +2362,7 @@ function createApplication(options = {}) {
           configured: config.google.configured,
           missing: config.google.missing,
           redirectUri: config.google.redirectUri,
-          connection: storage.google.get(store.id),
+          connection: await storage.google.get(store.id),
           notice: parsed.searchParams.get("google") || "",
         };
         view.candidatesByReview = {};
@@ -1884,9 +2373,9 @@ function createApplication(options = {}) {
           view.reviews.length
         ) {
           for (const item of view.reviews)
-            view.candidatesByReview[item.id] = storage.candidates
-              .list(store.id, item.id)
-              .map(publicCandidate);
+            view.candidatesByReview[item.id] = (
+              await storage.candidates.list(store.id, item.id)
+            ).map(publicCandidate);
         }
         return html(
           pathname === "/app" ? "Your workspace" : pathname.split("/").at(-1),
@@ -1896,7 +2385,7 @@ function createApplication(options = {}) {
       }
       const qrPage = pathname.match(/^\/q\/([^/]+)(\/done)?$/);
       if (qrPage) {
-        const customerStore = qrStore(qrPage[1]);
+        const customerStore = await qrStore(qrPage[1]);
         requireAccess(customerStore);
         if (qrPage[2])
           return html(
@@ -1904,18 +2393,18 @@ function createApplication(options = {}) {
             "<h1>Your feedback stays in your hands</h1><p>Opening Google does not confirm a review was published. No draft text is stored in this URL.</p>",
             true,
           );
-        if (req.method === "GET")
-          db.prepare("UPDATE qr_codes SET scans=scans+1 WHERE code=?").run(
-            customerStore.qr.code,
-          );
+        if (req.method === "GET") await storage.transaction(async () => {
+          const scan = await db.prepare("UPDATE qr_codes SET scans=scans+1 WHERE code=?").run(customerStore.qr.code);
+          if (scan.changes === 1) await milestones.mark(customerStore.id, "first_scan");
+        });
         return html("Share your feedback", V.customer(customerStore), true);
       }
       if (pathname.startsWith("/a/")) {
         const token = pathname.slice(3),
-          cap = findCapability(token, "approval"),
-          approvalStore = storage.tenant(cap.tenant_id);
+          cap = await findCapability(token, "approval"),
+          approvalStore = await storage.tenant(cap.tenant_id);
         const review = approvalStore
-          ? storage.reviews.get(approvalStore.id, cap.review_id)
+          ? await storage.reviews.get(approvalStore.id, cap.review_id)
           : null;
         if (!review || S.digest(review.reply.draftText) !== cap.draft_hash)
           S.fail(410, "The draft changed. Ask for a new link.");
@@ -1927,19 +2416,20 @@ function createApplication(options = {}) {
       }
       const meta = seo.metaFor(pathname);
       if (meta) {
-        const body = V.publicContent(pathname, config);
+        const body = V.publicContent(pathname, { ...config, analyticsConsent: S.cookies(req)[analyticsCookie] === "yes" });
         if (body) return html(meta.title, body);
       }
       S.fail(404, "Page not found.");
     } catch (error) {
       const status = Number.isInteger(error.status) ? error.status : 500;
       if (status === 429) headers["Retry-After"] = "60";
+      if (status >= 500) report(pathname.startsWith("/api/billing") || pathname === "/api/webhooks/razorpay" ? "billing" : "application", status);
       if (status >= 500)
         console.error(
           JSON.stringify({
             event: "handler_error",
             requestId,
-            code: error.code || "INTERNAL_ERROR",
+            code: /^[A-Z0-9_]{1,40}$/.test(error.code || "") ? error.code : "INTERNAL_ERROR",
           }),
         );
       const message =
@@ -1960,6 +2450,7 @@ function createApplication(options = {}) {
   // Dedicated endpoint placed ahead of the shared handler, still using its full middleware.
   const server = http.createServer((req, res) => {
     handler(req, res).catch(() => {
+      report("internal", 500);
       if (!res.headersSent)
         res.writeHead(500, {
           "Content-Type": "text/plain",
@@ -1974,12 +2465,22 @@ function createApplication(options = {}) {
   function close() {
     clearInterval(cleanup);
     rate.close();
-    storage.close();
+    return storage.close();
   }
-  return { server, storage, close, config };
+  return { server, storage, close, config, cleanupStorage, runJobs: () => jobs.tick(Date.now(), jobFlags, { limit: 100, budget: 300000 }) };
 }
-function start() {
-  const app = createApplication();
+async function start() {
+  const storage = process.env.DATABASE_URL
+    ? await require("./postgres").openPostgres(process.env.DATABASE_URL)
+    : undefined;
+  let app;
+  try {
+    app = createApplication({ storage });
+    await app.cleanupStorage();
+  } catch (error) {
+    await (app ? app.close() : storage?.close());
+    throw error;
+  }
   app.server.listen(Number(process.env.PORT) || 3000, "0.0.0.0", () =>
     console.log(
       JSON.stringify({
@@ -1995,9 +2496,13 @@ function start() {
   function shutdown() {
     if (closing) return;
     closing = true;
-    app.server.close(() => {
-      app.close();
-      process.exit(0);
+    app.server.close(async () => {
+      try {
+        await app.close();
+        process.exit(0);
+      } catch {
+        process.exit(1);
+      }
     });
     setTimeout(() => process.exit(1), 10000).unref();
   }

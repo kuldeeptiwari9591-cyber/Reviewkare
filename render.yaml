@@ -2,16 +2,12 @@ services:
   - type: web
     name: reviewkare
     runtime: node
-    plan: starter
+    plan: free
     region: singapore
-    buildCommand: npm ci && npm run build && npm test
+    buildCommand: npm ci --include=dev && npm run build && npm run typecheck && npm test
     startCommand: node server.js
     healthCheckPath: /api/health
-    autoDeploy: false
-    disk:
-      name: reviewkare-data
-      mountPath: /var/data
-      sizeGB: 1
+    autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: 24.22.1
@@ -21,12 +17,46 @@ services:
         value: 10000
       - key: BASE_URL
         value: https://reviewkare.in
-      - key: DATA_DIR
-        value: /var/data/reviewkare
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_GOOGLE_SIGN_IN
+        value: "false"
       - key: HOSTING_REGION
         value: Singapore
+      - key: DATABASE_REGION
+        sync: false
       - key: BILLING_ENABLED
         value: "false"
+      - key: BILLING_TERM_PRICES
+        sync: false
+      - key: BILLING_RECEIPT_FOOTER
+        sync: false
+      - key: TAX_POLICY_CONFIRMED
+        value: "false"
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+      - key: JOBS_SECRET
+        sync: false
+      - key: LIFECYCLE_ENABLED
+        value: "false"
+      - key: LIFECYCLE_DELETE_ENABLED
+        value: "false"
+      - key: ADMIN_ENABLED
+        value: "false"
+      - key: ANALYTICS_ENABLED
+        value: "false"
+      - key: GOOGLE_POLICY_VERIFIED
+        value: "false"
+      - key: GRIEVANCE_OFFICER
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
       - key: OPERATOR_NAME
         sync: false
       - key: SUPPORT_EMAIL

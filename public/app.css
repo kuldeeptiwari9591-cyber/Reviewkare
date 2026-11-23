@@ -2714,3 +2714,33 @@ html.js .reveal:nth-child(4) {
   border-top: 1px solid var(--line);
 }
 
+
+.onboarding-ring {
+  --progress: 0deg;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  background: conic-gradient(#2f614b var(--progress), #ddd9d0 0);
+}
+.onboarding-ring span {
+  background: #fffdf8;
+  color: #192c23;
+  border-radius: 50%;
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+}
+.onboarding-ring[data-progress="1"] { --progress: 51deg; }
+.onboarding-ring[data-progress="2"] { --progress: 103deg; }
+.onboarding-ring[data-progress="3"] { --progress: 154deg; }
+.onboarding-ring[data-progress="4"] { --progress: 206deg; }
+.onboarding-ring[data-progress="5"] { --progress: 257deg; }
+.onboarding-ring[data-progress="6"] { --progress: 309deg; }
+.onboarding-ring[data-progress="7"] { --progress: 360deg; }
+.onboarding-steps li { margin-block: 0.5rem; }
+.table-scroll { overflow-x: auto; }
+.table-scroll table { border-collapse: collapse; min-width: 100%; }
+.table-scroll th, .table-scroll td { text-align: left; border-bottom: 1px solid #ddd9d0; padding: 0.65rem; }

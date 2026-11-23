@@ -6,9 +6,29 @@ const os = require("node:os");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { spawnSync } = require("node:child_process");
-const Database = require("better-sqlite3");
+const { DatabaseSync: Database, backup } = require("node:sqlite");
 const { createApplication } = require("../src/server/application");
 const realProviders = require("../src/server/providers");
+
+test("prepaid terms clamp calendar month ends and stack on current access", () => {
+  const { paymentPeriod } = require("../src/server/catalog");
+  const start = "2024-01-31T10:30:00.000Z";
+  const now = Date.parse(start);
+  for (const [term, expected] of [
+    [1, "2024-02-29"],
+    [3, "2024-04-30"],
+    [6, "2024-07-31"],
+    [12, "2025-01-31"],
+  ]) {
+    assert.equal(paymentPeriod(term, null, now).expiresAt, expected + "T10:30:00.000Z");
+  }
+  assert.deepEqual(paymentPeriod(1, "2024-02-29T10:30:00.000Z", now), {
+    startsAt: "2024-02-29T10:30:00.000Z",
+    expiresAt: "2024-03-29T10:30:00.000Z",
+  });
+  assert.equal(paymentPeriod("monthly", "invalid", now).expiresAt, "2024-03-01T10:30:00.000Z");
+  assert.throws(() => paymentPeriod(2, null, now), /Unsupported prepaid period/);
+});
 
 test("production-mode launch regressions with disposable data", async (t) => {
   const directory = fs.mkdtempSync(
@@ -120,15 +140,15 @@ test("production-mode launch regressions with disposable data", async (t) => {
       ownerName: "Business Owner",
       termsAccepted: true,
     });
-  function grantAccess(tenantId, days = 30) {
-    const state = app.storage.tenant(tenantId);
+  async function grantAccess(tenantId, days = 30) {
+    const state = await app.storage.tenant(tenantId);
     state.plan = {
       tier: "basic",
       name: "Test access",
       status: "active",
       expiresAt: new Date(Date.now() + days * 86400000).toISOString(),
     };
-    app.storage.save(state);
+    await app.storage.save(state);
   }
   async function verify(client, email) {
     await client.post("/api/auth/resend-verification", {});
@@ -141,9 +161,12 @@ test("production-mode launch regressions with disposable data", async (t) => {
     await t.test(
       "public routes have self canonicals and no unsupported marketing promises",
       async () => {
-        const canonicalFor = {
-          "/book-demo": "/contact",
-        };
+        for (const [oldPath, destination] of [["/for-agencies", "/features"], ["/book-demo", "/contact"]]) {
+          const redirect = await anonymous.request(oldPath);
+          assert.equal(redirect.status, 301);
+          assert.equal(new URL(redirect.response.headers.get("location"), base).pathname, destination);
+        }
+        const canonicalFor = {};
         for (const route of [
           "/",
           "/features",
@@ -153,7 +176,8 @@ test("production-mode launch regressions with disposable data", async (t) => {
           "/security",
           "/faq",
           "/contact",
-          "/book-demo",
+          "/compare/google-review-link",
+          "/compare/manual-review-replies",
           "/free-audit",
           "/blog",
           "/blog/reply-to-negative-google-review",
@@ -178,7 +202,10 @@ test("production-mode launch regressions with disposable data", async (t) => {
             1,
             route + " has one title",
           );
-          assert.match(result.text, /<meta name="description" content="[^"]{40,}/);
+          assert.match(
+            result.text,
+            /<meta name="description" content="[^"]{40,}/,
+          );
           assert.match(result.text, /application\/ld\+json/);
         }
       },
@@ -318,7 +345,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
         // Accounts start unpaid; tests grant a fixed access period explicitly.
         grantAccess(aStore.id);
         grantAccess(bStore.id);
-        const sessions = app.storage.db
+        const sessions = app.storage.rawDb
           .prepare("SELECT hash FROM sessions")
           .all();
         for (const row of sessions) assert.match(row.hash, /^[a-f0-9]{64}$/);
@@ -423,7 +450,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
           "no-referrer",
         );
         const token = approvalUrl.split("/")[2],
-          cap = app.storage.db
+          cap = app.storage.rawDb
             .prepare("SELECT * FROM capabilities WHERE kind=?")
             .get("approval");
         assert.equal(
@@ -447,7 +474,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
           reviewId: review.id,
         });
         let token = new URL(result.data.approvalUrl).pathname.split("/")[2];
-        app.storage.db
+        app.storage.rawDb
           .prepare("UPDATE capabilities SET expires=0 WHERE hash=?")
           .run(crypto.createHash("sha256").update(token).digest("hex"));
         assert.equal((await anonymous.request("/a/" + token)).status, 410);
@@ -570,7 +597,8 @@ test("production-mode launch regressions with disposable data", async (t) => {
           assert.ok(response.data.message.includes("not yet been scheduled"));
         }
         assert.equal(
-          app.storage.db.prepare("SELECT count(*) AS n FROM requests").get().n,
+          app.storage.rawDb.prepare("SELECT count(*) AS n FROM requests").get()
+            .n,
           2,
         );
       },
@@ -660,16 +688,47 @@ test("production-mode launch regressions with disposable data", async (t) => {
           alice.post("/api/billing/verify", body),
           alice.post("/api/billing/verify", body),
         ]);
-        assert.deepEqual(concurrent.map((r) => r.status).sort(), [200, 409]);
+        assert.deepEqual(concurrent.map((r) => r.status).sort(), [200, 200]);
         const updated = (await alice.request("/api/account/export")).data
           .workspace;
         assert.equal(updated.plan.tier, "basic");
         assert.equal(updated.plan.billingCycle, "annual");
         assert.equal(updated.receipts.length, 1);
         assert.equal(updated.receipts[0].amount, 749000);
+        const receipt = updated.receipts[0];
+        const receiptUrl = "/api/billing/receipts/" + receipt.id;
+        const download = await alice.request(receiptUrl);
+        assert.equal(download.status, 200);
+        assert.match(download.response.headers.get("content-disposition"), /attachment/);
+        assert.equal(download.response.headers.get("cache-control"), "no-store");
+        assert.ok(download.text.includes("Access ends: " + updated.plan.expiresAt));
+        assert.equal((await bob.request(receiptUrl)).status, 404);
+        assert.equal((await anonymous.request(receiptUrl)).status, 401);
+
+        const renewal = await alice.post("/api/billing/renew", {
+          planId: "pro",
+          billingCycle: "monthly",
+        });
+        assert.equal(renewal.status, 200);
+        assert.equal(renewal.data.amount, 74900);
+        const renewalPayment = "pay_TestRenewal";
+        const renewalSignature = crypto
+          .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+          .update(renewal.data.orderId + "|" + renewalPayment)
+          .digest("hex");
+        assert.equal((await alice.post("/api/billing/verify", {
+          razorpay_order_id: renewal.data.orderId,
+          razorpay_payment_id: renewalPayment,
+          razorpay_signature: renewalSignature,
+        })).status, 200);
+        const renewed = (await alice.request("/api/account/export")).data.workspace;
+        assert.equal(renewed.plan.tier, "basic");
+        assert.equal(renewed.plan.startsAt, updated.plan.expiresAt);
+        assert.equal(Date.parse(renewed.plan.expiresAt) - Date.parse(renewed.plan.startsAt), 30 * 86400000);
+        assert.equal(renewed.receipts.length, 2);
         assert.equal(
           (await alice.post("/api/billing/verify", body)).status,
-          409,
+          200,
         );
         assert.equal(
           (
@@ -694,21 +753,21 @@ test("production-mode launch regressions with disposable data", async (t) => {
     await t.test(
       "storage optimistic locking rejects stale state and write errors are not successes",
       async () => {
-        const first = app.storage.tenant(aStore.id),
-          stale = app.storage.tenant(aStore.id);
+        const first = await app.storage.tenant(aStore.id),
+          stale = await app.storage.tenant(aStore.id);
         first.location.city = "Persisted City";
-        app.storage.save(first);
+        await app.storage.save(first);
         stale.location.city = "Stale City";
-        assert.throws(
+        await assert.rejects(
           () => app.storage.save(stale),
           (error) => error.status === 409,
         );
         assert.equal(
-          app.storage.tenant(aStore.id).location.city,
+          (await app.storage.tenant(aStore.id)).location.city,
           "Persisted City",
         );
-        assert.equal(app.storage.tenant("missing-tenant"), null);
-        app.storage.db.exec("PRAGMA query_only=ON");
+        assert.equal(await app.storage.tenant("missing-tenant"), null);
+        app.storage.rawDb.exec("PRAGMA query_only=ON");
         try {
           assert.equal(
             (await alice.post("/api/settings", { city: "Not committed" }))
@@ -717,10 +776,10 @@ test("production-mode launch regressions with disposable data", async (t) => {
           );
           assert.equal((await anonymous.request("/api/health")).status, 503);
         } finally {
-          app.storage.db.exec("PRAGMA query_only=OFF");
+          app.storage.rawDb.exec("PRAGMA query_only=OFF");
         }
         assert.equal(
-          app.storage.tenant(aStore.id).location.city,
+          (await app.storage.tenant(aStore.id)).location.city,
           "Persisted City",
         );
       },
@@ -729,7 +788,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
       "data and sessions persist after a complete application restart",
       async () => {
         await new Promise((resolve) => app.server.close(resolve));
-        app.close();
+        await app.close();
         app = createApplication({ providers, allowHttpForTests: true });
         await new Promise((resolve) =>
           app.server.listen(0, "127.0.0.1", resolve),
@@ -746,8 +805,8 @@ test("production-mode launch regressions with disposable data", async (t) => {
       "backup restores an intact database with tenant records",
       async () => {
         const file = path.join(directory, "verified-copy.sqlite");
-        await app.storage.db.backup(file);
-        const copy = new Database(file, { readonly: true });
+        await backup(app.storage.rawDb, file);
+        const copy = new Database(file, { readOnly: true });
         assert.equal(
           copy.prepare("PRAGMA integrity_check").get().integrity_check,
           "ok",
@@ -816,10 +875,9 @@ test("production-mode launch regressions with disposable data", async (t) => {
           { env, encoding: "utf8" },
         );
         assert.equal(applied.status, 0, applied.stderr);
-        const copy = new Database(
-          path.join(destination, "reviewkare.sqlite"),
-          { readonly: true },
-        );
+        const copy = new Database(path.join(destination, "reviewkare.sqlite"), {
+          readOnly: true,
+        });
         const imported = JSON.parse(
           copy.prepare("SELECT document FROM tenants").get().document,
         );
@@ -897,11 +955,15 @@ test("production-mode launch regressions with disposable data", async (t) => {
         assert.ok(robots.text.includes("Disallow: /q/"));
         assert.ok(robots.text.includes("User-agent: *"));
         assert.ok(!/^Disallow: \/$/m.test(robots.text));
-        assert.ok(robots.text.includes("Sitemap: http://127.0.0.1:3000/sitemap.xml"));
+        assert.ok(
+          robots.text.includes("Sitemap: http://127.0.0.1:3000/sitemap.xml"),
+        );
         const sitemap = await anonymous.request("/sitemap.xml");
         assert.ok(sitemap.text.includes("/features"));
         assert.ok(!sitemap.text.includes("/app"));
-        assert.ok(sitemap.text.includes("/blog/reply-to-negative-google-review"));
+        assert.ok(
+          sitemap.text.includes("/blog/reply-to-negative-google-review"),
+        );
         assert.ok(!sitemap.text.includes("/book-demo"));
         assert.ok(!sitemap.text.includes("/compliance"));
         assert.ok(!sitemap.text.includes("/offline"));
@@ -925,6 +987,12 @@ test("production-mode launch regressions with disposable data", async (t) => {
     await t.test(
       "seo metadata, schema, and crawl files stay consistent",
       async () => {
+        const retired = await anonymous.request("/for-agencies");
+        assert.equal(retired.status, 301);
+        assert.equal(
+          new URL(retired.response.headers.get("location")).pathname,
+          "/features",
+        );
         const routes = [
           "/",
           "/features",
@@ -936,7 +1004,6 @@ test("production-mode launch regressions with disposable data", async (t) => {
           "/faq",
           "/contact",
           "/qr-kit",
-          "/for-agencies",
           "/free-audit",
           "/tools/google-review-link-generator",
           "/blog",
@@ -986,7 +1053,10 @@ test("production-mode launch regressions with disposable data", async (t) => {
             route + " webpage",
           );
           assert.ok(
-            graph.every((node) => node["@type"] !== "BlogPosting" || route.startsWith("/blog/")),
+            graph.every(
+              (node) =>
+                node["@type"] !== "BlogPosting" || route.startsWith("/blog/"),
+            ),
             route + " article schema only on articles",
           );
           if (route === "/blog/reply-to-negative-google-review")
@@ -994,7 +1064,9 @@ test("production-mode launch regressions with disposable data", async (t) => {
         }
         const faq = await anonymous.request("/faq");
         const faqGraph = JSON.parse(
-          faq.text.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1],
+          faq.text.match(
+            /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+          )[1],
         )["@graph"];
         const faqPage = faqGraph.find((node) => node["@type"] === "FAQPage");
         assert.ok(faqPage);
@@ -1006,13 +1078,14 @@ test("production-mode launch regressions with disposable data", async (t) => {
         ]) {
           const page = await anonymous.request(alias[0]);
           assert.ok(
-            page.text.includes(
-              `href="http://127.0.0.1:3000${alias[1]}"`,
-            ),
+            page.text.includes(`href="http://127.0.0.1:3000${alias[1]}"`),
             alias[0] + " canonical",
           );
         }
-        assert.equal((await anonymous.request("/blog/unknown-guide")).status, 404);
+        assert.equal(
+          (await anonymous.request("/blog/unknown-guide")).status,
+          404,
+        );
         for (const blocked of [
           "/docs/OPERATIONS.md",
           "/README.md",
@@ -1021,11 +1094,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
           "/data/app.sqlite",
           "/docs/",
         ])
-          assert.equal(
-            (await anonymous.request(blocked)).status,
-            404,
-            blocked,
-          );
+          assert.equal((await anonymous.request(blocked)).status, 404, blocked);
         const slash = await anonymous.request("/features/");
         assert.equal(slash.status, 301);
         assert.match(
@@ -1064,14 +1133,14 @@ test("production-mode launch regressions with disposable data", async (t) => {
     await t.test(
       "unpaid accounts stay read-only until access is purchased or granted",
       async () => {
-        const unpaid = app.storage.tenant(bStore.id);
+        const unpaid = await app.storage.tenant(bStore.id);
         unpaid.plan = {
           tier: "none",
           name: "No plan",
           status: "unpaid",
           expiresAt: null,
         };
-        app.storage.save(unpaid);
+        await app.storage.save(unpaid);
         assert.equal(
           (
             await bob.post("/api/reviews", {
@@ -1095,9 +1164,9 @@ test("production-mode launch regressions with disposable data", async (t) => {
           ).status,
           201,
         );
-        const limited = app.storage.tenant(aStore.id);
+        const limited = await app.storage.tenant(aStore.id);
         limited.usage.replies = 80;
-        app.storage.save(limited);
+        await app.storage.save(limited);
         assert.equal(
           (
             await alice.post("/api/reviews", {
@@ -1256,7 +1325,7 @@ test("production-mode launch regressions with disposable data", async (t) => {
     );
   } finally {
     await new Promise((resolve) => app.server.close(resolve));
-    app.close();
+    await app.close();
     for (const key of Object.keys(process.env))
       if (!(key in original)) delete process.env[key];
     Object.assign(process.env, original);
